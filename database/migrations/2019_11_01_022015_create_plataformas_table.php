@@ -17,8 +17,7 @@ class CreatePlataformasTable extends Migration
             $table->increments('idPlataformas');
             $table->string('nombrePlataformas', 15);
             $table->string('descripcionPlataformas', 100);
-            $table->integer('cantNuevoPlataformas');
-            $table->integer('cantUsadoPlataformas');
+            $table->integer('cantidadPlataformas');
             $table->timestamps();
         });
     }

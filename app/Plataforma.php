@@ -8,7 +8,7 @@ class Plataforma extends Model
 {
     protected $table= 'plataformas';
     protected $primaryKey= 'idPlataformas';
-    protected $fillable= ['nombrePlataformas', 'descripcionPlataformas', 'cantNuevoPlataformas', 'cantUsadoPlataformas'];
+    protected $fillable= ['nombrePlataformas', 'descripcionPlataformas', 'cantidadPlataformas'];
 
    
 

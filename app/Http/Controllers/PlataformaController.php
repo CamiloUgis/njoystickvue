@@ -11,26 +11,29 @@ class PlataformaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $plataformas = Plataforma::all();
-        return $plataformas;
-    }
+        if(!$request->ajax()) return redirect('/');
+        $buscar= $request->buscar;
+        $criterio = $request->criterio;
 
-    public function lista(){
-        $plataformas=Plataforma::simplePaginate(20)->all();
-        return view('plataformas.listaPlataforma')->with('plataformas', $plataformas);
-    }
-    public function agregar()
-    {
-        $plataformas=Plataforma::all();
-        return view('plataformas.plataformaingresar')->with('plataformas', $plataformas);
-    }
-    public function actualizar($idPlataformas)
-    {
-        $plataformas=Plataforma::all();
-        $pla=Plataforma::where('idPlataformas',$idPlataformas)->first();
-        return view('plataformas.plataformaactualizar')->with('plataformas', $plataformas)->with('pla',$pla);
+        if($buscar==''){
+            $plataformas = Plataforma::orderBy('idPlataformas', 'desc')->paginate(5);
+        }else{
+            $plataformas = Plataforma::where($criterio, 'like', '%'. $buscar . '%')->orderBy('idPlataformas', 'desc')->paginate(5);
+        }
+        return [
+            'pagination' =>[
+                'total' => $plataformas->total(),
+                'current_page'=> $plataformas->currentPage(),
+                'per_page'=> $plataformas->perPage(),
+                'last_page'=>$plataformas->lastPage(),
+                'from'=>$plataformas->firstItem(),
+                'to'=>$plataformas->lastItem(),
+            ],
+            'plataformas'=>$plataformas
+
+        ] ;
     }
     
 
@@ -42,44 +45,24 @@ class PlataformaController extends Controller
      */
     public function store(Request $request)
     {
-        $plataformas=Plataforma::all();
-
-        $validar= $request->validate([
-            'nombrePlataformas'=>'required|unique:plataformas,nombrePlataformas',
-            'descripcionPlataformas'=>'required',
-          
-        ]);
+        if(!$request->ajax()) return redirect('/');
         $plataforma = new Plataforma();
         $plataforma->nombrePlataformas = $request->input('nombrePlataformas');
         $plataforma->descripcionPlataformas = $request->input('descripcionPlataformas');
-        $plataforma->cantNuevoPlataformas= 0;
-        $plataforma->cantUsadoPlataformas= 0;
-
+       
         $plataforma->save();
-        return redirect('/plataformas');
-
-        
     }
 
     
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $plataformas=Plataforma::all();
 
-        $validar= $request->validate([
-            'nombrePlataformas'=>'required',
-            'descripcionPlataformas'=>'required',
-            
-            
-            
-        ]);
+        if(!$request->ajax()) return redirect('/');
         $plataforma = Plataforma::findOrFail($request->idPlataformas);;
         $plataforma->nombrePlataformas = $request->input("nombrePlataformas");
         $plataforma->descripcionPlataformas = $request->input("descripcionPlataformas");
-        
-        $plataforma->save();
-        return redirect('/plataformas');
-        
+       
+        $plataforma->save();       
     }
 
     

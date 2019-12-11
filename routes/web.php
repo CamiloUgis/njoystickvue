@@ -31,14 +31,10 @@ Route::get('/generos','GeneroController@index');
 Route::post('generos/registrar', 'GeneroController@store');
 Route::put('generos/actualizar','GeneroController@update');
 
+Route::get('/plataformas','PlataformaController@index');
+Route::post('/plataformas/registrar', 'PlataformaController@store');
+Route::put('/plataformas/actualizar','PlataformaController@update');
 
-
-
-Route::get('/plataformas','PlataformaController@lista');
-Route::get('/nuevaplataforma', 'PlataformaController@agregar');
-Route::post('/nuevaplataforma', 'PlataformaController@store');
-Route::get('/actualizaplataforma/{idPlataformas}','PlataformaController@actualizar');
-Route::post('/actualizaplataforma/{idPlataformas}','PlataformaController@update');
 
 Route::get('/productos','ProductoController@lista');
 Route::get('/nuevoproducto', 'ProductoController@agregar');
