@@ -294,9 +294,9 @@
                 if(this.idPlataformas==0) this.errorMsjProducto.push("Seleccione una plataforma");
                 if(!this.nombreProductos) this.errorMsjProducto.push("El nombre del Producto no debe estar vacío");
                 if(!this.stockNuevoProductos) this.errorMsjProducto.push("El stock debe ser un número")
-                if(this.errorMsjProducto.length) this.errorProderrorMsjProducto=1;
+                if(this.errorMsjProducto.length) this.errorMsjProducto=1;
 
-                return this.errorProderrorMsjProducto;
+                return this.errorMsjProducto;
             },
             cerrarModal(){
                 this.modal=0;
