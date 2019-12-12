@@ -46792,7 +46792,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.modal-content{\n    width: 100% !important;\n    position: absolute !important;\n}\n.mostrar{\n    display: list-item !important;\n    opacity: 1 !important;\n    position: absolute !important;\n    background-color: #3c29297a !important;\n}\n.div-error{\n    display: flex;\n    justify-content: center;\n}\n.text-error{\n    color: red !important;\n    font-weight: bold;\n}\n", ""]);
+exports.push([module.i, "\n.modal-content{\n    width: 100% !important;\n    position: absolute !important;\n}\n.mostrar{\n    display: list-item !important;\n    opacity: 1 !important;\n    position: absolute !important;\n    background-color: #3c29297a !important;\n}\n.div-error{\n    display: flex;\n    justify-content: center;\n}\n.text-error{\n    color: red !important;\n    font-weight: bold;\n}\n\n", ""]);
 
 // exports
 
@@ -46803,6 +46803,18 @@ exports.push([module.i, "\n.modal-content{\n    width: 100% !important;\n    pos
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -47032,14 +47044,10 @@ var render = function() {
       _c("div", { staticClass: "col-sm-6" }, [
         _c("div", { staticClass: "card" }, [
           _c(
-            "button",
+            "div",
             {
-              attrs: { type: "card-block" },
-              on: {
-                click: function($event) {
-                  _vm.menu = 7
-                }
-              }
+              staticClass: "card-block",
+              staticStyle: { "background-color": "#e5e5e4" }
             },
             [
               _vm._m(1),
@@ -47054,13 +47062,15 @@ var render = function() {
                 [_vm._v("Últimas Transacciones")]
               )
             ]
-          )
+          ),
+          _vm._v(" "),
+          _vm._m(2)
         ])
       ]),
       _vm._v(" "),
-      _vm._m(2),
+      _vm._m(3),
       _vm._v(" "),
-      _vm._m(3)
+      _vm._m(4)
     ])
   ])
 }
@@ -47071,19 +47081,38 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-sm-6" }, [
       _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-block" }, [
-          _c("div", { staticClass: "h1 text-muted text-right mb-2" }, [
-            _c("i", { staticClass: "icon-game-controller" })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "h4 mb-0" }, [_vm._v("87.500")]),
-          _vm._v(" "),
-          _c(
-            "small",
-            { staticClass: "text-muted text-uppercase font-weight-bold" },
-            [_vm._v("Videojuegos en Inventario")]
-          )
-        ])
+        _c(
+          "div",
+          {
+            staticClass: "card-block",
+            staticStyle: { "background-color": "#e5e5e4" }
+          },
+          [
+            _c("div", { staticClass: "h1 text-muted text-right mb-2" }, [
+              _c("i", { staticClass: "icon-game-controller" })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "h4 mb-0" }, [_vm._v("87.500")]),
+            _vm._v(" "),
+            _c(
+              "small",
+              { staticClass: "text-muted text-uppercase font-weight-bold" },
+              [_vm._v("Videojuegos en Inventario")]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "card-footer text-center",
+            staticStyle: { "background-color": "#66CCFF" }
+          },
+          [
+            _vm._v("\n            Ver "),
+            _c("i", { staticClass: "fa fa-arrow-circle-right" })
+          ]
+        )
       ])
     ])
   },
@@ -47099,21 +47128,56 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "card-footer text-center",
+        staticStyle: { "background-color": "#66CCFF" }
+      },
+      [
+        _vm._v("\n            Ver  "),
+        _c("i", { staticClass: "fa fa-arrow-circle-right" })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-sm-6" }, [
       _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-block" }, [
-          _c("div", { staticClass: "h1 text-muted text-right mb-2" }, [
-            _c("i", { staticClass: "icon-user-follow" })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "h4 mb-0" }, [_vm._v("1238")]),
-          _vm._v(" "),
-          _c(
-            "small",
-            { staticClass: "text-muted text-uppercase font-weight-bold" },
-            [_vm._v("Clientes Registrados")]
-          )
-        ])
+        _c(
+          "div",
+          {
+            staticClass: "card-block",
+            staticStyle: { "background-color": "#e5e5e4" }
+          },
+          [
+            _c("div", { staticClass: "h1 text-muted text-right mb-2" }, [
+              _c("i", { staticClass: "icon-user-follow" })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "h4 mb-0" }, [_vm._v("1238")]),
+            _vm._v(" "),
+            _c(
+              "small",
+              { staticClass: "text-muted text-uppercase font-weight-bold" },
+              [_vm._v("Clientes Registrados")]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "card-footer text-center",
+            staticStyle: { "background-color": "#66CCFF" }
+          },
+          [
+            _vm._v("\n            Ver "),
+            _c("i", { staticClass: "fa fa-arrow-circle-right" })
+          ]
+        )
       ])
     ])
   },
@@ -47123,19 +47187,38 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-sm-6" }, [
       _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-block" }, [
-          _c("div", { staticClass: "h1 text-muted text-right mb-2" }, [
-            _c("i", { staticClass: "icon-people" })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "h4 mb-0" }, [_vm._v("28%")]),
-          _vm._v(" "),
-          _c(
-            "small",
-            { staticClass: "text-muted text-uppercase font-weight-bold" },
-            [_vm._v("Socios registrados en redes Njoystick")]
-          )
-        ])
+        _c(
+          "div",
+          {
+            staticClass: "card-block",
+            staticStyle: { "background-color": "#e5e5e4" }
+          },
+          [
+            _c("div", { staticClass: "h1 text-muted text-right mb-2" }, [
+              _c("i", { staticClass: "icon-people" })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "h4 mb-0" }, [_vm._v("28%")]),
+            _vm._v(" "),
+            _c(
+              "small",
+              { staticClass: "text-muted text-uppercase font-weight-bold" },
+              [_vm._v("Socios registrados en redes Njoystick")]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "card-footer text-center",
+            staticStyle: { "background-color": "#66CCFF" }
+          },
+          [
+            _vm._v("\n            Ver "),
+            _c("i", { staticClass: "fa fa-arrow-circle-right" })
+          ]
+        )
       ])
     ])
   }
