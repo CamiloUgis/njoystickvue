@@ -36,11 +36,9 @@ Route::post('/plataformas/registrar', 'PlataformaController@store');
 Route::put('/plataformas/actualizar','PlataformaController@update');
 
 
-Route::get('/productos','ProductoController@lista');
-Route::get('/nuevoproducto', 'ProductoController@agregar');
-Route::post('/nuevoproducto', 'ProductoController@store');
-Route::get('/actualizaproducto/{idProductos}','ProductoController@actualizar');
-Route::post('/actualizaproducto/{idProductos}','ProductoController@update');
+Route::get('/productos','ProductoController@index');
+Route::post('/productos/registrar', 'ProductoController@store');
+Route::put('/productos/actualizar','ProductoController@update');
 
 Route::get('/listaclientes','ClienteController@lista');
 Route::get('/nuevocliente', 'ClienteController@agregar');

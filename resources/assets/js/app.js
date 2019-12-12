@@ -18,6 +18,8 @@ window.Vue = require('vue');
 Vue.component('plataformas', require('./components/Plataforma.vue'));
 Vue.component('generos', require('./components/Genero.vue'));
 Vue.component('inicio', require('./components/Inicio.vue'));
+Vue.component('productos', require('./components/Producto.vue'));
+
 
 
 const app = new Vue({
