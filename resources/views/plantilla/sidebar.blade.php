@@ -1,4 +1,4 @@
-<div class="sidebar">
+<div class="sidebar" style="background-color: #2D3046">
             <nav class="sidebar-nav">
                 <ul class="nav">
                 <li class="nav-title">

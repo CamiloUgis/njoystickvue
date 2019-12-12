@@ -4,19 +4,22 @@
            <div class="row">
   <div class="col-sm-6">
     <div class="card">
-      <div class="card-block">
+      <div class="card-block" style="background-color: #e5e5e4">
         <div class="h1 text-muted text-right mb-2">
           <i class= "icon-game-controller" ></i>
         </div>
         <div class="h4 mb-0">87.500</div>
         <small class="text-muted text-uppercase font-weight-bold">Videojuegos en Inventario</small>
-        
+         
       </div>
+      <div class="card-footer text-center" style="background-color:  #66CCFF">
+            Ver <i class="fa fa-arrow-circle-right"></i>
+        </div>
     </div>
   </div><!--/.col-->
   <div class="col-sm-6">
     <div class="card">
-      <div class="card-block"  >
+      <div class="card-block" style="background-color: #e5e5e4" >
         <div class="h1 text-muted text-right mb-2">
           <i class="icon-bag"></i>
         </div>
@@ -24,11 +27,14 @@
         <small class="text-muted text-uppercase font-weight-bold">Últimas Transacciones</small>
         
       </div>
+       <div  class="card-footer text-center" style="background-color:  #66CCFF">
+            Ver  <i  class="fa fa-arrow-circle-right"></i>
+        </div>
     </div>
   </div><!--/.col-->
   <div class="col-sm-6">
     <div class="card">
-      <div class="card-block">
+      <div class="card-block"  style="background-color: #e5e5e4">
         <div class="h1 text-muted text-right mb-2">
           <i class="icon-user-follow"></i>
         </div>
@@ -36,11 +42,14 @@
         <small class="text-muted text-uppercase font-weight-bold">Clientes Registrados</small>
         
       </div>
+      <div class="card-footer text-center" style="background-color:  #66CCFF">
+            Ver <i class="fa fa-arrow-circle-right"></i>
+        </div>
     </div>
   </div><!--/.col-->
   <div class="col-sm-6">
     <div class="card">
-      <div class="card-block">
+      <div class="card-block" style="background-color: #e5e5e4">
         <div class="h1 text-muted text-right mb-2">
           <i class="icon-people"></i>
         </div>
@@ -48,6 +57,9 @@
         <small class="text-muted text-uppercase font-weight-bold">Socios registrados en redes Njoystick</small>
         
       </div>
+      <div class="card-footer text-center" style="background-color:  #66CCFF">
+            Ver <i class="fa fa-arrow-circle-right"></i>
+        </div>
     </div>
   </div><!--/.col-->
   
@@ -111,6 +123,7 @@
             }
         },
         methods:{
+          
             listarGenero(page, buscar, criterio){
                 let me=this;
                 var url= '/generos?page='+page + '&buscar='+ buscar + '&criterio=' + criterio;
@@ -230,4 +243,5 @@
         color: red !important;
         font-weight: bold;
     }
+   
 </style>
