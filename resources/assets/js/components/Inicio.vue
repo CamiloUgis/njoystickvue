@@ -16,14 +16,14 @@
   </div><!--/.col-->
   <div class="col-sm-6">
     <div class="card">
-      <button type="card-block" @click="menu=7" >
+      <div class="card-block"  >
         <div class="h1 text-muted text-right mb-2">
           <i class="icon-bag"></i>
         </div>
         <div class="h4 mb-0">{{arrayGeneros.length}}</div>
         <small class="text-muted text-uppercase font-weight-bold">Últimas Transacciones</small>
         
-      </button>
+      </div>
     </div>
   </div><!--/.col-->
   <div class="col-sm-6">

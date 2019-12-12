@@ -47030,30 +47030,19 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "col-sm-6" }, [
         _c("div", { staticClass: "card" }, [
-          _c(
-            "button",
-            {
-              attrs: { type: "card-block" },
-              on: {
-                click: function($event) {
-                  _vm.menu = 7
-                }
-              }
-            },
-            [
-              _vm._m(1),
-              _vm._v(" "),
-              _c("div", { staticClass: "h4 mb-0" }, [
-                _vm._v(_vm._s(_vm.arrayGeneros.length))
-              ]),
-              _vm._v(" "),
-              _c(
-                "small",
-                { staticClass: "text-muted text-uppercase font-weight-bold" },
-                [_vm._v("Últimas Transacciones")]
-              )
-            ]
-          )
+          _c("div", { staticClass: "card-block" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c("div", { staticClass: "h4 mb-0" }, [
+              _vm._v(_vm._s(_vm.arrayGeneros.length))
+            ]),
+            _vm._v(" "),
+            _c(
+              "small",
+              { staticClass: "text-muted text-uppercase font-weight-bold" },
+              [_vm._v("Últimas Transacciones")]
+            )
+          ])
         ])
       ]),
       _vm._v(" "),
