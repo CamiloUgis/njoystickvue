@@ -47472,11 +47472,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            idProductos: '0',
+            idProductos: 0,
+            idPlataformas: 0,
             nombreProductos: '',
             descripcionProductos: '',
             stockNuevoProductos: '',
@@ -47499,7 +47516,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             },
             offset: 3,
             criterio: 'nombre',
-            buscar: ''
+            buscar: '',
+            arrayPlataformas: []
 
         };
     },
@@ -47539,7 +47557,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 me.arrayProductos = respuesta.productos.data;
                 me.pagination = respuesta.pagination;
             }).catch(function (error) {
-                console.log(error);
+                console.log(error.response);
+            });
+        },
+        selectPlataformas: function selectPlataformas() {
+            var me = this;
+            var url = '/plataformas/selectPlataformas';
+            axios.get(url).then(function (response) {
+                //console.log(response);
+                var respuesta = response.data;
+                me.arrayPlataformas = respuesta.plataformas;
+            }).catch(function (error) {
+                console.log(error.response);
             });
         },
         cambiarPagina: function cambiarPagina(page, buscar, criterio) {
@@ -47551,10 +47580,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (this.validarProducto()) {
                 return;
             }
-
             var me = this;
             axios.post('productos/registrar', {
                 'nombreProductos': this.nombreProductos,
+                'idPlataformas': this.idPlataformas,
                 'descripcionProductos': this.descripcionProductos,
                 'stockNuevoProductos': this.stockNuevoProductos,
                 'stockUsadoProductos': this.stockUsadoProductos,
@@ -47564,7 +47593,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 me.cerrarModal();
                 me.listarProducto(1, '', 'nombre');
             }).catch(function (error) {
-                console.log(error);
+                console.log(error.response);
             });
         },
         actualizarProducto: function actualizarProducto() {
@@ -47574,6 +47603,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var me = this;
             axios.put('productos/actualizar', {
                 'nombreProductos': this.nombreProductos,
+                'idPlataformas': this.idPlataformas,
                 'descripcionProductos': this.descripcionProductos,
                 'stockNuevoProductos': this.stockNuevoProductos,
                 'stockUsadoProductos': this.stockUsadoProductos,
@@ -47584,23 +47614,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 me.cerrarModal();
                 me.listarProducto(1, '', 'nombre');
             }).catch(function (error) {
-                console.log(error);
+                console.log(error.response);
             });
         },
         validarProducto: function validarProducto() {
             this.errorProducto = 0;
             this.errorMsjProducto = [];
 
+            if (this.idPlataformas == 0) this.errorMsjProducto.push("Seleccione una plataforma");
             if (!this.nombreProductos) this.errorMsjProducto.push("El nombre del Producto no debe estar vacío");
-
+            if (!this.stockNuevoProductos) this.errorMsjProducto.push("El stock debe ser un número");
             if (this.errorMsjProducto.length) this.errorProderrorMsjProducto = 1;
+
             return this.errorProderrorMsjProducto;
         },
         cerrarModal: function cerrarModal() {
             this.modal = 0;
             this.tituloModal = '';
             this.nombreProductos = '';
-            this.descripcionProductos = '';
+            this.idPlataformas = 0, this.descripcionProductos = '';
             this.stockNuevoProductos = '';
             this.stockUsadoProductos = '';
             this.precioNuevoProductos = '';
@@ -47617,6 +47649,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                                 {
                                     this.modal = 1;
                                     this.tituloModal = "Registrar Producto";
+                                    this.idPlataformas = 0;
                                     this.nombreProductos = '';
                                     this.descripcionProductos = '';
                                     this.stockNuevoProductos = '';
@@ -47632,6 +47665,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                                     this.tipoAccion = 2;
                                     this.tituloModal = "Actualizar Producto";
                                     this.idProductos = data['idProductos'];
+                                    this.idPlataformas = data['idPlataformas'];
                                     this.nombreProductos = data['nombreProductos'];
                                     this.descripcionProductos = data['descripcionProductos'];
                                     this.stockNuevoProductos = data['stockNuevoProductos'];
@@ -47643,6 +47677,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         }
                     }
             }
+            this.selectPlataformas();
         }
     },
 
@@ -47793,6 +47828,12 @@ var render = function() {
                     _c("td", {
                       domProps: {
                         textContent: _vm._s(producto.descripcionProductos)
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("td", {
+                      domProps: {
+                        textContent: _vm._s(producto.nombrePlataformas)
                       }
                     }),
                     _vm._v(" "),
@@ -48035,7 +48076,7 @@ var render = function() {
                         "label",
                         {
                           staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "email-input" }
+                          attrs: { for: "text-input" }
                         },
                         [_vm._v("Descripción")]
                       ),
@@ -48074,7 +48115,70 @@ var render = function() {
                         "label",
                         {
                           staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "email-input" }
+                          attrs: { for: "number-input" }
+                        },
+                        [_vm._v("Plataforma")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-9" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.idPlataformas,
+                                expression: "idPlataformas"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.idPlataformas = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { value: "0", disabled: "" } },
+                              [_vm._v("Seleccione")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.arrayPlataformas, function(plataforma) {
+                              return _c("option", {
+                                key: plataforma.idPlataformas,
+                                domProps: {
+                                  value: plataforma.idPlataformas,
+                                  textContent: _vm._s(
+                                    plataforma.nombrePlataformas
+                                  )
+                                }
+                              })
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "number-input" }
                         },
                         [_vm._v("Stock Nuevo")]
                       ),
@@ -48113,7 +48217,7 @@ var render = function() {
                         "label",
                         {
                           staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "email-input" }
+                          attrs: { for: "number-input" }
                         },
                         [_vm._v("Stock Usado")]
                       ),
@@ -48152,7 +48256,7 @@ var render = function() {
                         "label",
                         {
                           staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "email-input" }
+                          attrs: { for: "number-input" }
                         },
                         [_vm._v("Precio Nuevo")]
                       ),
@@ -48191,7 +48295,7 @@ var render = function() {
                         "label",
                         {
                           staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "email-input" }
+                          attrs: { for: "number-input" }
                         },
                         [_vm._v("Precio Usado")]
                       ),
@@ -48320,6 +48424,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("Nombre")]),
         _vm._v(" "),
         _c("th", [_vm._v("Descripción")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Plataforma")]),
         _vm._v(" "),
         _c("th", [_vm._v("Stock Nuevo")]),
         _vm._v(" "),

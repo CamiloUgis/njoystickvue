@@ -28,6 +28,7 @@
                                 <tr>
                                     <th>Nombre</th>
                                     <th>Descripción</th>
+                                    <th>Plataforma</th>
                                     <th>Stock Nuevo</th>
                                     <th>Stock Usado</th>
                                     <th>Precio Nuevo</th>
@@ -39,6 +40,7 @@
                                 <tr v-for="producto in arrayProductos" :key="producto.idProductos">
                                     <td v-text="producto.nombreProductos"></td>
                                     <td v-text="producto.descripcionProductos"></td>
+                                    <td v-text="producto.nombrePlataformas"></td>
                                     <td v-text="producto.stockNuevoProductos"></td>
                                     <td v-text="producto.stockUsadoProductos"></td>
                                     <td v-text="producto.precioNuevoProductos"></td>
@@ -89,31 +91,45 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="email-input">Descripción</label>
+                                    <label class="col-md-3 form-control-label" for="text-input">Descripción</label>
                                     <div class="col-md-9">
                                         <input type="text" v-model="descripcionProductos" name="descripcion" class="form-control" placeholder="Descripción de género">
                                     </div>
                                 </div>
+
                                 <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="email-input">Stock Nuevo</label>
+                                    <label class="col-md-3 form-control-label" for="number-input">Plataforma</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control" v-model="idPlataformas">
+                                            <option value="0" disabled>Seleccione</option>
+                                            <option v-for="plataforma in arrayPlataformas" :key="plataforma.idPlataformas"
+                                            :value="plataforma.idPlataformas" v-text="plataforma.nombrePlataformas"></option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="number-input">Stock Nuevo</label>
                                     <div class="col-md-9">
                                         <input type="number" v-model="stockNuevoProductos" name="stocknuevo" class="form-control" placeholder="Descripción de género">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="email-input">Stock Usado</label>
+                                    <label class="col-md-3 form-control-label" for="number-input">Stock Usado</label>
                                     <div class="col-md-9">
                                         <input type="number" v-model="stockUsadoProductos" name="stockusado" class="form-control" placeholder="Descripción de género">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="email-input">Precio Nuevo</label>
+                                    <label class="col-md-3 form-control-label" for="number-input">Precio Nuevo</label>
                                     <div class="col-md-9">
                                         <input type="number" v-model="precioNuevoProductos" name="precionuevo" class="form-control" placeholder="Descripción de género">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="email-input">Precio Usado</label>
+                                    <label class="col-md-3 form-control-label" for="number-input">Precio Usado</label>
                                     <div class="col-md-9">
                                         <input type="number" v-model="precioUsadoProductos" name="preciousado" class="form-control" placeholder="Descripción de género">
                                     </div>
@@ -145,7 +161,8 @@
     export default {
         data(){
             return{
-                idProductos:'0',
+                idProductos:0,
+                idPlataformas:0,
                 nombreProductos:'',
                 descripcionProductos:'',
                 stockNuevoProductos:'',
@@ -168,7 +185,8 @@
                 },
                 offset: 3,
                 criterio: 'nombre',
-                buscar : ''
+                buscar : '',
+                arrayPlataformas:[]
 
             }
         },
@@ -208,7 +226,19 @@
                     me.pagination=respuesta.pagination;
                 })
                 .catch(function (error){
-                    console.log(error);
+                    console.log(error.response);
+                })
+            },
+            selectPlataformas(){
+                let me=this;
+                var url= '/plataformas/selectPlataformas';
+                axios.get(url).then(function (response){
+                    //console.log(response);
+                    var respuesta = response.data;
+                    me.arrayPlataformas = respuesta.plataformas;
+                })
+                .catch(function (error){
+                    console.log(error.response);
                 })
             },
             cambiarPagina(page, buscar, criterio){
@@ -220,10 +250,10 @@
                 if(this.validarProducto()){
                     return;
                 }
-
                 let me=this;
                 axios.post('productos/registrar',{
                     'nombreProductos': this.nombreProductos,
+                    'idPlataformas': this.idPlataformas,    
                     'descripcionProductos': this.descripcionProductos,
                     'stockNuevoProductos': this.stockNuevoProductos,
                     'stockUsadoProductos': this.stockUsadoProductos,
@@ -233,7 +263,7 @@
                         me.cerrarModal();
                         me.listarProducto(1,'', 'nombre');
                 }).catch(function (error){
-                    console.log(error);
+                    console.log(error.response);
                 })
             },
             actualizarProducto(){
@@ -243,32 +273,36 @@
                 let me=this;
                 axios.put('productos/actualizar',{
                     'nombreProductos': this.nombreProductos,
+                    'idPlataformas': this.idPlataformas,
                     'descripcionProductos': this.descripcionProductos,
                     'stockNuevoProductos': this.stockNuevoProductos,
                     'stockUsadoProductos': this.stockUsadoProductos,
                     'precioNuevoProductos': this.precioNuevoProductos,
                     'precioUsadoProductos': this.precioUsadoProductos,
-                    'idProductos': this.idProductos
+                    'idProductos': this.idProductos,
                     }).then(function (response){
                         me.cerrarModal();
                         me.listarProducto(1,'', 'nombre');
                 }).catch(function (error){
-                    console.log(error);
+                    console.log(error.response);
                 })
             },
             validarProducto(){
                 this.errorProducto=0;
                 this.errorMsjProducto = [];
-
+                
+                if(this.idPlataformas==0) this.errorMsjProducto.push("Seleccione una plataforma");
                 if(!this.nombreProductos) this.errorMsjProducto.push("El nombre del Producto no debe estar vacío");
-
+                if(!this.stockNuevoProductos) this.errorMsjProducto.push("El stock debe ser un número")
                 if(this.errorMsjProducto.length) this.errorProderrorMsjProducto=1;
+
                 return this.errorProderrorMsjProducto;
             },
             cerrarModal(){
                 this.modal=0;
                 this.tituloModal='';
                 this.nombreProductos='';
+                this.idPlataformas=0,
                 this.descripcionProductos='';
                 this.stockNuevoProductos='';
                 this.stockUsadoProductos='';
@@ -283,6 +317,7 @@
                             case 'registrar':{
                                 this.modal = 1;
                                 this.tituloModal = "Registrar Producto";
+                                this.idPlataformas=0;
                                 this.nombreProductos='';
                                 this.descripcionProductos='';
                                 this.stockNuevoProductos='';
@@ -298,6 +333,7 @@
                                 this.tipoAccion = 2;
                                 this.tituloModal = "Actualizar Producto";
                                 this.idProductos=data['idProductos'];
+                                this.idPlataformas=data['idPlataformas'];
                                 this.nombreProductos=data['nombreProductos'];
                                 this.descripcionProductos=data['descripcionProductos'];
                                 this.stockNuevoProductos=data['stockNuevoProductos'];
@@ -310,6 +346,7 @@
                         }
                     }
                 }
+                this.selectPlataformas();
             }
         },
         

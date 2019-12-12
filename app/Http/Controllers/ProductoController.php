@@ -16,14 +16,14 @@ class ProductoController extends Controller
 
         if($buscar==''){
             $productos = Producto::join('plataformas','productos.idPlataformas','=','plataformas.idPlataformas')
-            ->select('productos.idProductos', 'productos.idPlataformas', 'productos.descripcionProductos',
+            ->select('productos.idProductos', 'productos.idPlataformas','productos.nombreProductos', 'productos.descripcionProductos',
             'productos.stockNuevoProductos', 'productos.stockUsadoProductos','productos.precioNuevoProductos',
             'productos.precioUsadoProductos','plataformas.nombrePlataformas')
             ->orderBy('productos.idProductos', 'desc')->paginate(8);
         }else{
             $productos = Producto::join('plataformas','productos.idPlataformas','=','plataformas.idPlataformas')
             ->select('productos.idProductos', 'productos.idPlataformas', 'productos.descripcionProductos',
-            'productos.stockNuevoProductos', 'productos.stockUsadoProductos','productos.precioNuevoProductos',
+            'productos.stockNuevoProductos', 'productos.stockUsadoProductos','productos.nombreProductos','productos.precioNuevoProductos',
             'productos.precioUsadoProductos','plataformas.nombrePlataformas')
             ->where('productos.'.$criterio, 'like', '%'. $buscar . '%')
             ->orderBy('productos.idProductos', 'desc')->paginate(8);
@@ -47,7 +47,7 @@ class ProductoController extends Controller
 
         if(!$request->ajax()) return redirect('/');
         $producto = new Producto();
-        $producto->idPlataforma = $request->input('idPlataforma');
+        $producto->idPlataformas = $request->input('idPlataformas');
         $producto->nombreProductos = $request->input('nombreProductos');
         $producto->descripcionProductos = $request->input('descripcionProductos');
         $producto->precioNuevoProductos = $request->input('precioNuevoProductos');
@@ -63,8 +63,8 @@ class ProductoController extends Controller
 
         if(!$request->ajax()) return redirect('/');
         $producto = Producto::findOrFail($request->idProductos);;
-        $producto->idPlataforma = $request->input('idPlataforma');
         $producto->nombreProductos = $request->input('nombreProductos');
+        $producto->idPlataformas = $request->input('idPlataformas');
         $producto->descripcionProductos = $request->input('descripcionProductos');
         $producto->precioNuevoProductos = $request->input('precioNuevoProductos');
         $producto->precioUsadoProductos = $request->input('precioUsadoProductos');

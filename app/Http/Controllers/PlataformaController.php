@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Plataforma;
 class PlataformaController extends Controller
 {
@@ -11,8 +12,7 @@ class PlataformaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
+    public function index(Request $request){
         if(!$request->ajax()) return redirect('/');
         $buscar= $request->buscar;
         $criterio = $request->criterio;
@@ -36,13 +36,15 @@ class PlataformaController extends Controller
         ] ;
     }
     
+    public function selectPlataformas(Request $request){
+        if(!$request->ajax()) return redirect('/');
+        $plataformas = DB::table('plataformas')
+        ->select('idPlataformas', 'nombrePlataformas')->orderBy('nombrePlataformas', 'asc')->get();
+        return ['plataformas' => $plataformas];
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    }
+
+    
     public function store(Request $request)
     {
         if(!$request->ajax()) return redirect('/');

@@ -17,10 +17,10 @@ class CreateProductosTable extends Migration
             $table->increments('idProductos');
                 $table->string('nombreProductos', 100);
                 $table->string('descripcionProductos', 200);
-                $table->integer('precioNuevoProductos');
-                $table->integer('precioUsadoProductos');
                 $table->integer('stockNuevoProductos');
                 $table->integer('stockUsadoProductos');
+                $table->integer('precioNuevoProductos');
+                $table->integer('precioUsadoProductos');
                 $table->timestamps();
                 $table->unsignedInteger('idPlataformas');
                 $table->foreign('idPlataformas')->references('idPlataformas')->on('plataformas');

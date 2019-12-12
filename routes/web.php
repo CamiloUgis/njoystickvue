@@ -34,6 +34,7 @@ Route::put('generos/actualizar','GeneroController@update');
 Route::get('/plataformas','PlataformaController@index');
 Route::post('/plataformas/registrar', 'PlataformaController@store');
 Route::put('/plataformas/actualizar','PlataformaController@update');
+Route::get('/plataformas/selectPlataformas','PlataformaController@selectPlataformas');
 
 
 Route::get('/productos','ProductoController@index');
