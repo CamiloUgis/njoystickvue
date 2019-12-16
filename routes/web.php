@@ -41,10 +41,17 @@ Route::get('/productos','ProductoController@index');
 Route::post('/productos/registrar', 'ProductoController@store');
 Route::put('/productos/actualizar','ProductoController@update');
 
-Route::get('/listaclientes','ClienteController@lista');
-Route::get('/nuevocliente', 'ClienteController@agregar');
-Route::post('/nuevocliente','ClienteController@store');
-Route::get('/cliente/{idClientes}', 'ClienteController@datos');
+Route::get('/clientes','ClienteController@index');
+Route::post('/clientes/registrar','ClienteController@store');
+Route::put('/clientes/actualizar', 'ClienteController@update');
+
+
+Route::get('/roles','RolController@index');
+Route::get('/roles/selectRoles','RolController@selectRoles');
+
+
+Route::get('/usuarios','UserController@index');
+Route::post('/usuarios/registrar','UserController@store');
 
 
 Route::get('/inicio', function () {

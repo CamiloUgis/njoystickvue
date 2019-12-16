@@ -26,17 +26,17 @@
                         <table class="table table-bordered table-striped table-sm">
                             <thead>
                                 <tr>
-                                    <th>Nombre</th>
-                                    <th>Descripción</th>
-                                    <th>Plataforma</th>
-                                    <th>Stock Nuevo</th>
-                                    <th>Stock Usado</th>
-                                    <th>Precio Nuevo</th>
-                                    <th>Precio Usado</th>
-                                    <th>Actualizar</th>
+                                    <th class="text-center">Nombre</th>
+                                    <th class="text-center">Descripción</th>
+                                    <th class="text-center">Plataforma</th>
+                                    <th class="text-center">Stock Nuevo</th>
+                                    <th class="text-center">Stock Usado</th>
+                                    <th class="text-center">Precio Nuevo</th>
+                                    <th class="text-center">Precio Usado</th>
+                                    <th class="text-center">Modificar</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="text-center">
                                 <tr v-for="producto in arrayProductos" :key="producto.idProductos">
                                     <td v-text="producto.nombreProductos"></td>
                                     <td v-text="producto.descripcionProductos"></td>
@@ -87,13 +87,13 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Nombre</label>
                                     <div class="col-md-9">
-                                        <input type="text" v-model="nombreProductos" name="nombre" class="form-control" placeholder="Nombre de género">
+                                        <input type="text" v-model="nombreProductos" name="nombre" class="form-control" placeholder="Nombre de producto">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Descripción</label>
                                     <div class="col-md-9">
-                                        <input type="text" v-model="descripcionProductos" name="descripcion" class="form-control" placeholder="Descripción de género">
+                                        <input type="text" v-model="descripcionProductos" name="descripcion" class="form-control" placeholder="Descripción de producto">
                                     </div>
                                 </div>
 
@@ -113,25 +113,25 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="number-input">Stock Nuevo</label>
                                     <div class="col-md-9">
-                                        <input type="number" v-model="stockNuevoProductos" name="stocknuevo" class="form-control" placeholder="Descripción de género">
+                                        <input type="number" v-model="stockNuevoProductos" name="stocknuevo" class="form-control" placeholder="Cantidad de stock nuevo">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="number-input">Stock Usado</label>
                                     <div class="col-md-9">
-                                        <input type="number" v-model="stockUsadoProductos" name="stockusado" class="form-control" placeholder="Descripción de género">
+                                        <input type="number" v-model="stockUsadoProductos" name="stockusado" class="form-control" placeholder="Cantidad de stock usado">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="number-input">Precio Nuevo</label>
                                     <div class="col-md-9">
-                                        <input type="number" v-model="precioNuevoProductos" name="precionuevo" class="form-control" placeholder="Descripción de género">
+                                        <input type="number" v-model="precioNuevoProductos" name="precionuevo" class="form-control" placeholder="Precio de juego nuevo">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="number-input">Precio Usado</label>
                                     <div class="col-md-9">
-                                        <input type="number" v-model="precioUsadoProductos" name="preciousado" class="form-control" placeholder="Descripción de género">
+                                        <input type="number" v-model="precioUsadoProductos" name="preciousado" class="form-control" placeholder="Precio de juego usado">
                                     </div>
                                 </div>
                                 <div v-show="errorProducto" class="form-group row div-error">

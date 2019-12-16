@@ -10,76 +10,58 @@ use Malahierba\ChileRut\Rules\ValidChileanRut;
 
 class ClienteController extends Controller
 {
-    public function agregar()
+    public function index(Request $request)
     {
-        $clientes=Cliente::all();
-        return view('clientes.clienteingresar')->with('clientes', $clientes);
-    }
-    public function actualizar($idClientes)
-    {
-        $clientes=Cliente::all();
-        $cli=Cliente::where('idClientes',$idClientes)->first();
-        return view('clientes.clienteactualizar')->with('clientes', $clientes)->with('cli',$cli);
-    }
-    public function datos($idClientes){
-        $clientes=Cliente::all();
-        $cli=Cliente::where('idClientes',$idClientes)->first();
-        return view('clientes.clientedatos')->with('clientes', $clientes)->with('cli', $cli);
+        if(!$request->ajax()) return redirect('/');
+        $buscar= $request->buscar;
+        $criterio = $request->criterio;
+
+        if($buscar==''){
+            $clientes = Cliente::orderBy('idClientes', 'desc')->paginate(5);
+        }else{
+            $clientes = Cliente::where($criterio, 'like', '%'. $buscar . '%')->orderBy('idClientes', 'desc')->paginate(5);
+        }
+        return [
+            'pagination' =>[
+                'total' => $clientes->total(),
+                'current_page'=> $clientes->currentPage(),
+                'per_page'=> $clientes->perPage(),
+                'last_page'=>$clientes->lastPage(),
+                'from'=>$clientes->firstItem(),
+                'to'=>$clientes->lastItem(),
+            ],
+            'clientes'=>$clientes
+
+        ] ;
     }
     public function store(Request $request)
     {
-        $clientes=Cliente::all();
-        $validar= $request->validate([
-            'nombre'=>'required',
-            'rut' => ['required', 'string', new ValidChileanRut(new ChileRut)],
-            'rut' =>'required|unique:clientes,rutClientes',
-            'telefono'=>'required|unique:clientes,telefonoClientes',
-            'telefono'=>'integer|min:0',
-            'comuna'=>'required',
-            'correo'=>'required',
 
-        ]);
-        $cliente=new Cliente;
-        $cliente->nombreClientes = $request->input("nombre");
-        $cliente->rutClientes = $request->input("rut");
-        $cliente->telefonoClientes = $request->input("telefono");
-        $cliente->comunaClientes = $request->input("comuna");
-        $cliente->correoClientes = $request->input("correo");
+        if(!$request->ajax()) return redirect('/');
+        $cliente = new Cliente();
+        $cliente->nombreClientes = $request->input('nombreClientes');
+        $cliente->rutClientes = $request->input('rutClientes');
+        $cliente->telefonoClientes = $request->input('telefonoClientes');
+        $cliente->comunaClientes = $request->input('comunaClientes');
+        $cliente->correoClientes = $request->input('correoClientes');
+      //  $cliente->anfitrionClientes = $request->input('anfitrionClientes');
         $cliente->save();
-        
-        $request->session()->flash('alert-success', 'User was successful added!');    
-        return view('clientes.clienteingresar')->with('clientes', $clientes);
-
     }
+
+
     public function update(Request $request)
     {
-       $clientes=Cliente::all();
-        
-       $validar= $request->validate([
-        'nombre'=>'required',
-        'rut' => ['required', 'string', new ValidChileanRut(new ChileRut)],
-        'rut' =>'required|unique:clientes,rutClientes',
-        'telefono'=>'required|unique:clientes,telefonoClientes',
-        'telefono'=>'integer|min:0',
-        'comuna'=>'required',
-        'correo'=>'required',
-
-    ]);
-        $cliente=Cliente::where('idClientes',$request->input("id"))->first();
-        $cliente->nombreClientes = $request->input("nombre");
-        $cliente->rutClientes = $request->input("rut");
-        $cliente->telefonoClientes = $request->input("telefono");
-        $cliente->comunaClientes = $request->input("comuna");
-        $cliente->correoClientes = $request->input("correo");
+        if(!$request->ajax()) return redirect('/');
+        $cliente = Cliente::findOrFail($request->idClientes);;
+        $cliente->nombreClientes = $request->input('nombreClientes');
+        $cliente->rutClientes = $request->input('rutClientes');
+        $cliente->telefonoClientes = $request->input('telefonoClientes');
+        $cliente->comunaClientes = $request->input('comunaClientes');
+        $cliente->correoClientes = $request->input('correoClientes');
+      //  $cliente->anfitrionClientes = $request->input('anfitrionClientes');
         $cliente->save();
-        $clientes=Cliente::all();
-
-        return redirect('/');
 
     }
-    public function lista(){
-        $clientes=Cliente::all();
-        return view('clientes.listaCliente')->with('clientes', $clientes);
-    }
+
 
 }

@@ -17,6 +17,9 @@
                             <li @click="menu=2" class="nav-item">
                                 <a class="nav-link" href="#"><i class="icon-user-following"></i>Listado de Socios</a>
                             </li>
+                            <li @click="menu=8" class="nav-item">
+                                <a class="nav-link" href="#"><i class="icon-user"></i>Usuarios</a>
+                            </li>
                         </ul>
                     </li>
                     <li class="nav-item nav-dropdown">
@@ -42,6 +45,7 @@
                             <li @click="menu=7" class="nav-item">
                                 <a class="nav-link" href="#"><i class="icon-game-controller"></i>Plataformas</a>
                             </li>
+                            
                         </ul>
                     </li>
                 </ul>

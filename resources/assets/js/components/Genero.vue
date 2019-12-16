@@ -26,12 +26,12 @@
                         <table class="table table-bordered table-striped table-sm">
                             <thead>
                                 <tr>
-                                    <th>Nombre</th>
-                                    <th>Descripción</th>
-                                    <th>Actualizar</th>
+                                    <th class="text-center">Nombre</th>
+                                    <th class="text-center">Descripción</th>
+                                    <th class="text-center">Modificar</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="text-center">
                                 <tr v-for="genero in arrayGeneros" :key="genero.idGeneros">
                                     <td v-text="genero.nombreGeneros"></td>
                                     <td v-text="genero.descripcionGeneros"></td>

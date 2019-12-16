@@ -19,6 +19,8 @@ Vue.component('plataformas', require('./components/Plataforma.vue'));
 Vue.component('generos', require('./components/Genero.vue'));
 Vue.component('inicio', require('./components/Inicio.vue'));
 Vue.component('productos', require('./components/Producto.vue'));
+Vue.component('clientes', require('./components/Cliente.vue'));
+Vue.component('usuarios', require('./components/Usuario.vue'));
 
 
 

@@ -5,45 +5,23 @@
                 <!-- Ejemplo de tabla Listado -->
                 <div class="card">
                     <div class="card-header">
-                        <i class="fa fa-align-justify"></i> Plataformas
-                        <button type="button" @click="abrirModal('plataforma', 'registrar')" class="btn btn-secondary">
+                        <i class="fa fa-align-justify"></i> Usuario
+                        <button type="button" @click="abrirModal('usuarios', 'registrar')" class="btn btn-secondary">
                             <i class="icon-plus"></i>&nbsp;Nuevo
                         </button>
                     </div>
                     <div class="card-body">
-                        <div class="form-group row">
-                            <div class="col-md-6">
-                                <div class="input-group">
-                                    <select class="form-control col-md-3" v-model="criterio">
-                                      <option value="nombrePlataformas">Nombre</option>
-                                      <option value="descripcionPlataformas">Descripción</option>
-                                    </select>
-                                    <input type="text" v-model="buscar" @keyup.enter="listarPlataforma(1,buscar,criterio)" class="form-control" placeholder="Texto a buscar">
-                                    <button type="submit" @click="listarPlataforma(1,buscar,criterio)" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
-                                </div>
-                            </div>
-                        </div>
                         <table class="table table-bordered table-striped table-sm">
                             <thead>
                                 <tr>
-                                    <th class="text-center">Nombre</th>
-                                    <th class="text-center">Descripción</th>
-                                    <th class="text-center">Cantidad de juegos</th>
-                                    <th class="text-center">Modificar</th>
+                                    <th class="text-center">Usuario</th>
+                                    <th class="text-center">Rol</th>
                                 </tr>
                             </thead>
                             <tbody class="text-center">
-                                <tr v-for="plataforma in arrayPlataformas" :key="plataforma.idPlataformas">
-                                    <td v-text="plataforma.nombrePlataformas"></td>
-                                    <td v-text="plataforma.descripcionPlataformas"></td>
-                                    <td v-text="plataforma.cantidadPlataformas"></td>
-
-
-                                    <td>
-                                        <button type="button" @click="abrirModal('plataforma', 'actualizar', plataforma)" class="btn btn-warning btn-sm">
-                                          <i class="icon-pencil"></i>
-                                        </button> &nbsp;
-                                    </td>
+                                <tr v-for="usuario in arrayUsuarios" :key="usuario.idUsuarios">
+                                    <td v-text="usuario.nickUsuarios"></td>
+                                    <td v-text="usuario.nombreRoles"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -81,28 +59,30 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Nombre</label>
                                     <div class="col-md-9">
-                                        <input type="text" v-model="nombrePlataformas" name="nombre" class="form-control" placeholder="Nombre de plataforma">
+                                        <input type="text" v-model="nickUsuarios" name="nombre" class="form-control" placeholder="Nombre de usuario">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="email-input">Descripción</label>
+                                    <label class="col-md-3 form-control-label" for="number-input">Contraseña</label>
                                     <div class="col-md-9">
-                                        <input type="text" v-model="descripcionPlataformas" name="descripcion" class="form-control" placeholder="Descripción de plataforma">
+                                        <input type="password" v-model="passwordUsuarios" name="pass" class="form-control" placeholder="Contraseña del usuario">
                                     </div>
                                 </div>
-                                <div v-show="errorPlataforma" class="form-group row div-error">
-                                    <div class="text-center text-error">
-                                        <div v-for="error in errorMsjPlataforma" :key="error" v-text="error">
-                                        </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="number-input">Rol</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control" v-model="idRoles">
+                                            <option value="0" disabled>Seleccione</option>
+                                            <option v-for="roles in arrayRoles" :key="roles.idRoles"
+                                            :value="roles.idRoles" v-text="roles.nombreRoles"></option>
+                                        </select>
                                     </div>
                                 </div>
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" @click="cerrarModal()" >Cerrar</button>
-                            <button type="button" v-if="tipoAccion==1" class="btn btn-primary" @click="registrarPlataforma()" >Guardar</button>
-                            <button type="button" v-if="tipoAccion==2" class="btn btn-primary" @click="actualizarPlataforma()">Actualizar</button>
-
+                            <button type="button" v-if="tipoAccion==1" class="btn btn-primary" @click="registrarUsuarios()" >Guardar</button>
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -117,15 +97,14 @@
     export default {
         data(){
             return{
-                idPlataformas:'0',
-                nombrePlataformas:'',
-                descripcionPlataformas:'',
-                arrayPlataformas:[],
+                idUsuarios:0,
+                idRoles:0,
+                nickUsuarios:'',
+                passwordUsuarios:'',
+                arrayUsuarios:[],
                 modal : 0,
                 tituloModal : '',
                 tipoAccion : 0,
-                errorPlataforma : 0,
-                errorMsjPlataforma : [],
                 pagination : {
                 'total' :0 ,
                 'current_page':0 ,
@@ -136,7 +115,8 @@
                 },
                 offset: 3,
                 criterio: 'nombre',
-                buscar : ''
+                buscar : '',
+                arrayRoles:[]
 
             }
         },
@@ -167,102 +147,82 @@
             }
         },
         methods:{
-            listarPlataforma(page, buscar, criterio){
+            listarUsuarios(page, buscar, criterio){
                 let me=this;
-                var url= '/plataformas?page='+page + '&buscar='+ buscar + '&criterio=' + criterio;
+                var url= '/usuarios?page='+page + '&buscar='+ buscar + '&criterio=' + criterio;
                 axios.get(url).then(function (response){
                     var respuesta = response.data;
-                    me.arrayPlataformas = respuesta.plataformas.data;
+                    me.arrayUsuarios = respuesta.usuarios.data;
                     me.pagination=respuesta.pagination;
+                                        console.log(error.response);
+
                 })
                 .catch(function (error){
-                    console.log(error);
+                    console.log(error.response);
+                })
+            },
+            selectRoles(){
+                let me=this;
+                var url= '/roles/selectRoles';
+                axios.get(url).then(function (response){
+                    //console.log(response);
+                    var respuesta = response.data;
+                    me.arrayRoles = respuesta.roles;
+                })
+                .catch(function (error){
+                    console.log(error.response);
                 })
             },
             cambiarPagina(page, buscar, criterio){
                 let me=this;
                 me.pagination.current_page=page;
-                me.listarPlataforma(page, buscar, criterio);
+                me.listarUsuarios(page, buscar, criterio);
             },
-            registrarPlataforma(){
-                if(this.validarPlataforma()){
-                    return;
-                }
-
+            registrarUsuarios(){
                 let me=this;
-                axios.post('plataformas/registrar',{
-                    'nombrePlataformas': this.nombrePlataformas,
-                    'descripcionPlataformas': this.descripcionPlataformas
+                axios.post('usuarios/registrar',{
+                    'nickUsuarios': this.nickUsuarios,
+                    'passwordUsuarios': this.passwordUsuarios,    
+                    'idRoles': this.idRoles,
                     }).then(function (response){
                         me.cerrarModal();
-                        me.listarPlataforma(1,'', 'nombre');
+                        me.listarUsuarios(1,'', 'nombre');
                 }).catch(function (error){
-                    console.log(error);
+                    console.log(error.response);
                 })
-            },
-            actualizarPlataforma(){
-                if(this.validarPlataforma()){
-                    return;
-                }
-                let me=this;
-                axios.put('plataformas/actualizar',{
-                    'nombrePlataformas': this.nombrePlataformas,
-                    'descripcionPlataformas': this.descripcionPlataformas,
-                    'idPlataformas': this.idPlataformas
-                    }).then(function (response){
-                        me.cerrarModal();
-                        me.listarPlataforma(1,'', 'nombre');
-                }).catch(function (error){
-                    console.log(error);
-                })
-            },
-            validarPlataforma(){
-                this.errorPlataforma=0;
-                this.errorMsjPlataforma = [];
 
-                if(!this.nombrePlataformas) this.errorMsjPlataforma.push("El nombre de la plataforma no debe estar vacío");
-
-                if(this.errorMsjPlataforma.length) this.errorPlataforma=1;
-                return this.errorPlataforma;
             },
             cerrarModal(){
                 this.modal=0;
                 this.tituloModal='';
-                this.nombrePlataformas='';
-                this.descripcionPlataformas='';
+                this.nickUsuarios='';
+                this.idRoles=0,
+                this.passwordUsuarios='';
             },
             abrirModal(modelo, accion, data = []){
                 switch(modelo){
-                    case "plataforma":
+                    case "usuarios":
                         {
                         switch(accion){
                             case 'registrar':{
                                 this.modal = 1;
-                                this.tituloModal = "Registrar Plataforma";
-                                this.nombrePlataformas='';
-                                this.descripcionPlataformas='';
-                                this.tipoAccion = 1;
-                                break;
-
-                            }
-                            case 'actualizar':{
-                                this.modal = 1;
-                                this.tipoAccion = 2;
-                                this.tituloModal = "Actualizar Plataforma";
-                                this.idPlataformas=data['idPlataformas'];
-                                this.nombrePlataformas=data['nombrePlataformas'];
-                                this.descripcionPlataformas=data['descripcionPlataformas'];
+                                this.tituloModal = "Registrar usuarios";
+                                this.tituloModal='';
+                                this.nickUsuarios='';
+                                this.idRoles=0,
+                                  this.tipoAccion = 1;
                                 break;
 
                             }
                         }
                     }
                 }
+                this.selectRoles();
             }
         },
         
         mounted() {
-            this.listarPlataforma(1, this.buscar, this.criterio);
+            this.listarUsuarios(1, this.buscar, this.criterio);
         }
     }
 </script>

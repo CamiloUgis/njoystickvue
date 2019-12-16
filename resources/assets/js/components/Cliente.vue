@@ -5,8 +5,8 @@
                 <!-- Ejemplo de tabla Listado -->
                 <div class="card">
                     <div class="card-header">
-                        <i class="fa fa-align-justify"></i> Plataformas
-                        <button type="button" @click="abrirModal('plataforma', 'registrar')" class="btn btn-secondary">
+                        <i class="fa fa-align-justify"></i> Clientes
+                        <button type="button" @click="abrirModal('cliente', 'registrar')" class="btn btn-secondary">
                             <i class="icon-plus"></i>&nbsp;Nuevo
                         </button>
                     </div>
@@ -15,32 +15,36 @@
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <select class="form-control col-md-3" v-model="criterio">
-                                      <option value="nombrePlataformas">Nombre</option>
-                                      <option value="descripcionPlataformas">Descripción</option>
+                                      <option value="nombreClientes">Nombre</option>
+                                      <option value="comunaClientes">Comuna</option>
                                     </select>
-                                    <input type="text" v-model="buscar" @keyup.enter="listarPlataforma(1,buscar,criterio)" class="form-control" placeholder="Texto a buscar">
-                                    <button type="submit" @click="listarPlataforma(1,buscar,criterio)" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                                    <input type="text" v-model="buscar" @keyup.enter="listarCliente(1,buscar,criterio)" class="form-control" placeholder="Texto a buscar">
+                                    <button type="submit" @click="listarCliente(1,buscar,criterio)" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
                                 </div>
                             </div>
                         </div>
                         <table class="table table-bordered table-striped table-sm">
                             <thead>
                                 <tr>
+                                    <th class="text-center">Código Njoystick</th>
                                     <th class="text-center">Nombre</th>
-                                    <th class="text-center">Descripción</th>
-                                    <th class="text-center">Cantidad de juegos</th>
+                                    <th class="text-center">Rut</th>
+                                    <th class="text-center">Teléfono</th>
+                                    <th class="text-center">Comuna</th>
+                                    <th class="text-center">Correo Electrónico</th>
                                     <th class="text-center">Modificar</th>
                                 </tr>
                             </thead>
                             <tbody class="text-center">
-                                <tr v-for="plataforma in arrayPlataformas" :key="plataforma.idPlataformas">
-                                    <td v-text="plataforma.nombrePlataformas"></td>
-                                    <td v-text="plataforma.descripcionPlataformas"></td>
-                                    <td v-text="plataforma.cantidadPlataformas"></td>
-
-
+                                <tr v-for="cliente in arrayClientes" :key="cliente.idClientes">
+                                    <td v-text="'NJ'+cliente.idClientes"></td>
+                                    <td v-text="cliente.nombreClientes"></td>
+                                    <td v-text="cliente.rutClientes"></td>
+                                    <td v-text="cliente.telefonoClientes"></td>
+                                    <td v-text="cliente.comunaClientes"></td>
+                                    <td v-text="cliente.correoClientes"></td>
                                     <td>
-                                        <button type="button" @click="abrirModal('plataforma', 'actualizar', plataforma)" class="btn btn-warning btn-sm">
+                                        <button type="button" @click="abrirModal('cliente', 'actualizar', cliente)" class="btn btn-warning btn-sm">
                                           <i class="icon-pencil"></i>
                                         </button> &nbsp;
                                     </td>
@@ -81,18 +85,36 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Nombre</label>
                                     <div class="col-md-9">
-                                        <input type="text" v-model="nombrePlataformas" name="nombre" class="form-control" placeholder="Nombre de plataforma">
+                                        <input type="text" v-model="nombreClientes" name="nombre" class="form-control" placeholder="Nombre de cliente">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="email-input">Descripción</label>
+                                    <label class="col-md-3 form-control-label" for="email-input">Rut</label>
                                     <div class="col-md-9">
-                                        <input type="text" v-model="descripcionPlataformas" name="descripcion" class="form-control" placeholder="Descripción de plataforma">
+                                        <input type="text" v-model="rutClientes" name="rut" class="form-control" placeholder="Rut de Cliente">
                                     </div>
                                 </div>
-                                <div v-show="errorPlataforma" class="form-group row div-error">
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="email-input">Teléfono</label>
+                                    <div class="col-md-9">
+                                        <input type="number" v-model="telefonoClientes" name="telefono" class="form-control" placeholder="Teléfono de cliente">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="email-input">Comuna</label>
+                                    <div class="col-md-9">
+                                        <input type="text" v-model="comunaClientes" name="comuna" class="form-control" placeholder="Comuna de cliente">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="email-input">Correo Electrónico</label>
+                                    <div class="col-md-9">
+                                        <input type="text" v-model="correoClientes" name="correo" class="form-control" placeholder="Correo electrónico de cliente">
+                                    </div>
+                                </div>
+                                <div v-show="errorCliente" class="form-group row div-error">
                                     <div class="text-center text-error">
-                                        <div v-for="error in errorMsjPlataforma" :key="error" v-text="error">
+                                        <div v-for="error in errorMsjCliente" :key="error" v-text="error">
                                         </div>
                                     </div>
                                 </div>
@@ -100,8 +122,8 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" @click="cerrarModal()" >Cerrar</button>
-                            <button type="button" v-if="tipoAccion==1" class="btn btn-primary" @click="registrarPlataforma()" >Guardar</button>
-                            <button type="button" v-if="tipoAccion==2" class="btn btn-primary" @click="actualizarPlataforma()">Actualizar</button>
+                            <button type="button" v-if="tipoAccion==1" class="btn btn-primary" @click="registrarCliente()" >Guardar</button>
+                            <button type="button" v-if="tipoAccion==2" class="btn btn-primary" @click="actualizarCliente()">Actualizar</button>
 
                         </div>
                     </div>
@@ -117,15 +139,18 @@
     export default {
         data(){
             return{
-                idPlataformas:'0',
-                nombrePlataformas:'',
-                descripcionPlataformas:'',
-                arrayPlataformas:[],
+                idClientes:'0',
+                nombreClientes:'',
+                rutClientes:'',
+                telefonoClientes:'',
+                comunaClientes:'',
+                correoClientes:'',
+                arrayClientes:[],
                 modal : 0,
                 tituloModal : '',
                 tipoAccion : 0,
-                errorPlataforma : 0,
-                errorMsjPlataforma : [],
+                errorCliente : 0,
+                errorMsjCliente : [],
                 pagination : {
                 'total' :0 ,
                 'current_page':0 ,
@@ -167,80 +192,93 @@
             }
         },
         methods:{
-            listarPlataforma(page, buscar, criterio){
+            listarCliente(page, buscar, criterio){
                 let me=this;
-                var url= '/plataformas?page='+page + '&buscar='+ buscar + '&criterio=' + criterio;
+                var url= '/clientes?page='+page + '&buscar='+ buscar + '&criterio=' + criterio;
                 axios.get(url).then(function (response){
                     var respuesta = response.data;
-                    me.arrayPlataformas = respuesta.plataformas.data;
+                    me.arrayClientes = respuesta.clientes.data;
                     me.pagination=respuesta.pagination;
                 })
                 .catch(function (error){
-                    console.log(error);
+                    console.log(error.response);
                 })
             },
             cambiarPagina(page, buscar, criterio){
                 let me=this;
                 me.pagination.current_page=page;
-                me.listarPlataforma(page, buscar, criterio);
+                me.listarCliente(page, buscar, criterio);
             },
-            registrarPlataforma(){
-                if(this.validarPlataforma()){
+            registrarCliente(){
+                if(this.validarCliente()){
                     return;
                 }
 
                 let me=this;
-                axios.post('plataformas/registrar',{
-                    'nombrePlataformas': this.nombrePlataformas,
-                    'descripcionPlataformas': this.descripcionPlataformas
+                axios.post('clientes/registrar',{
+                    'nombreClientes': this.nombreClientes,
+                    'rutClientes': this.rutClientes,
+                    'telefonoClientes': this.telefonoClientes,
+                    'comunaClientes': this.comunaClientes,
+                    'correoClientes': this.correoClientes,
                     }).then(function (response){
                         me.cerrarModal();
-                        me.listarPlataforma(1,'', 'nombre');
+                        me.listarCliente(1,'', 'nombre');
                 }).catch(function (error){
-                    console.log(error);
+                    console.log(error.response);
                 })
             },
-            actualizarPlataforma(){
-                if(this.validarPlataforma()){
+            actualizarCliente(){
+                if(this.validarCliente()){
                     return;
                 }
                 let me=this;
-                axios.put('plataformas/actualizar',{
-                    'nombrePlataformas': this.nombrePlataformas,
-                    'descripcionPlataformas': this.descripcionPlataformas,
-                    'idPlataformas': this.idPlataformas
+                axios.put('clientes/actualizar',{
+                    'nombreClientes': this.nombreClientes,
+                    'rutClientes': this.rutClientes,
+                    'telefonoClientes': this.telefonoClientes,
+                    'comunaClientes': this.comunaClientes,
+                    'correoClientes': this.correoClientes,
+                    'idClientes': this.idClientes
                     }).then(function (response){
                         me.cerrarModal();
-                        me.listarPlataforma(1,'', 'nombre');
+                        me.listarCliente(1,'', 'nombre');
                 }).catch(function (error){
-                    console.log(error);
+                    console.log(error.response);
                 })
             },
-            validarPlataforma(){
-                this.errorPlataforma=0;
-                this.errorMsjPlataforma = [];
+            validarCliente(){
+                this.errorCliente=0;
+                this.errorMsjCliente = [];
 
-                if(!this.nombrePlataformas) this.errorMsjPlataforma.push("El nombre de la plataforma no debe estar vacío");
+                if(!this.nombreClientes) this.errorMsjCliente.push("El nombre del cliente no debe estar vacío");
 
-                if(this.errorMsjPlataforma.length) this.errorPlataforma=1;
-                return this.errorPlataforma;
+                if(this.errorMsjCliente.length) this.errorCliente=1;
+                return this.errorCliente;
             },
             cerrarModal(){
                 this.modal=0;
                 this.tituloModal='';
-                this.nombrePlataformas='';
-                this.descripcionPlataformas='';
+                this.nombreClientes='';
+                this.rutClientes='';
+                this.telefonoClientes='';
+                this.comunaClientes='';
+                this.correoClientes='';
+                this.errorMsjCliente='';
             },
             abrirModal(modelo, accion, data = []){
                 switch(modelo){
-                    case "plataforma":
+                    case "cliente":
                         {
                         switch(accion){
                             case 'registrar':{
                                 this.modal = 1;
-                                this.tituloModal = "Registrar Plataforma";
-                                this.nombrePlataformas='';
-                                this.descripcionPlataformas='';
+                                this.tituloModal = "Registrar Cliente";
+                                this.nombreClientes='';
+                                this.rutClientes='';
+                                this.telefonoClientes='';
+                                this.comunaClientes='';
+                                this.correoClientes='';
                                 this.tipoAccion = 1;
                                 break;
 
@@ -248,10 +286,13 @@
                             case 'actualizar':{
                                 this.modal = 1;
                                 this.tipoAccion = 2;
-                                this.tituloModal = "Actualizar Plataforma";
-                                this.idPlataformas=data['idPlataformas'];
-                                this.nombrePlataformas=data['nombrePlataformas'];
-                                this.descripcionPlataformas=data['descripcionPlataformas'];
+                                this.tituloModal = "Actualizar Cliente";
+                                this.idClientes=data['idClientes'];
+                                this.nombreClientes=data['nombreClientes'];
+                                this.rutClientes=data['rutClientes'];
+                                this.telefonoClientes=data['telefonoClientes'];
+                                this.comunaClientes=data['comunaClientes'];
+                                this.correoClientes=data['correoClientes'];
                                 break;
 
                             }
@@ -262,7 +303,7 @@
         },
         
         mounted() {
-            this.listarPlataforma(1, this.buscar, this.criterio);
+            this.listarCliente(1, this.buscar, this.criterio);
         }
     }
 </script>
