@@ -11,7 +11,6 @@ class Plataforma extends Model
     protected $fillable= ['nombrePlataformas', 'descripcionPlataformas', 'cantidadPlataformas'];
 
    
-
     public function producto(){
         return $this->hasMany('App\Producto');
     }
