@@ -8,11 +8,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     protected $table='usuarios';
-    protected $primarykey='idUsuarios';
-    protected $fillable =['nickUsuarios', 'passwordUsuarios'];
+    protected $primarykey='id';
+    protected $fillable =['nickUsuarios', 'password'];
     
     protected $hidden=[
-        'passwordUsuarios', 'remember_token',
+        'password', 'remember_token',
     ];
 
     public function rol(){

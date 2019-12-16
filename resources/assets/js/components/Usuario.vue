@@ -65,7 +65,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="number-input">Contraseña</label>
                                     <div class="col-md-9">
-                                        <input type="password" v-model="passwordUsuarios" name="pass" class="form-control" placeholder="Contraseña del usuario">
+                                        <input type="password" v-model="password" name="pass" class="form-control" placeholder="Contraseña del usuario">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -100,7 +100,7 @@
                 idUsuarios:0,
                 idRoles:0,
                 nickUsuarios:'',
-                passwordUsuarios:'',
+                password:'',
                 arrayUsuarios:[],
                 modal : 0,
                 tituloModal : '',
@@ -154,7 +154,6 @@
                     var respuesta = response.data;
                     me.arrayUsuarios = respuesta.usuarios.data;
                     me.pagination=respuesta.pagination;
-                                        console.log(error.response);
 
                 })
                 .catch(function (error){
@@ -182,7 +181,7 @@
                 let me=this;
                 axios.post('usuarios/registrar',{
                     'nickUsuarios': this.nickUsuarios,
-                    'passwordUsuarios': this.passwordUsuarios,    
+                    'password': this.password,    
                     'idRoles': this.idRoles,
                     }).then(function (response){
                         me.cerrarModal();
@@ -197,7 +196,7 @@
                 this.tituloModal='';
                 this.nickUsuarios='';
                 this.idRoles=0,
-                this.passwordUsuarios='';
+                this.password='';
             },
             abrirModal(modelo, accion, data = []){
                 switch(modelo){
@@ -210,7 +209,7 @@
                                 this.tituloModal='';
                                 this.nickUsuarios='';
                                 this.idRoles=0,
-                                  this.tipoAccion = 1;
+                                this.tipoAccion = 1;
                                 break;
 
                             }

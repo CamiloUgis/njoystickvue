@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/main', function () {
     return view('contenido/contenido');
-});
+})->name('main');
 
 Route::get('/nuevoreferido', 'SocioController@agregar');
 Route::get('/puntos', 'TransaccionController@viewPuntos');
@@ -54,6 +54,13 @@ Route::get('/usuarios','UserController@index');
 Route::post('/usuarios/registrar','UserController@store');
 
 
-Route::get('/inicio', function () {
+/*Route::get('/inicio', function () {
     return view('main');
-});
+});*/
+
+
+
+Route::get('/', 'Auth\LoginController@showLoginForm');
+Route::post('/login', 'Auth\LoginController@login')->name('login');
+
+Route::get('/home', 'HomeController@index')->name('home');

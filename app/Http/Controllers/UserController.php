@@ -46,7 +46,7 @@ class UserController extends Controller
             $usuario = new User();
             $usuario->idUsuarios = $request->input('idUsuarios');
             $usuario->nickUsuarios = $request->input('nickUsuarios');
-            $usuario->passwordUsuarios = bcrypt($request->input('passwordUsuarios'));
+            $usuario->password = bcrypt($request->input('password'));
             $usuario->idRoles = $request->input('idRoles');
             $usuario->save();
     }

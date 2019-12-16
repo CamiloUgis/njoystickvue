@@ -49711,7 +49711,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             idUsuarios: 0,
             idRoles: 0,
             nickUsuarios: '',
-            passwordUsuarios: '',
+            password: '',
             arrayUsuarios: [],
             modal: 0,
             tituloModal: '',
@@ -49766,7 +49766,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 var respuesta = response.data;
                 me.arrayUsuarios = respuesta.usuarios.data;
                 me.pagination = respuesta.pagination;
-                console.log(error.response);
             }).catch(function (error) {
                 console.log(error.response);
             });
@@ -49791,7 +49790,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var me = this;
             axios.post('usuarios/registrar', {
                 'nickUsuarios': this.nickUsuarios,
-                'passwordUsuarios': this.passwordUsuarios,
+                'password': this.password,
                 'idRoles': this.idRoles
             }).then(function (response) {
                 me.cerrarModal();
@@ -49804,7 +49803,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.modal = 0;
             this.tituloModal = '';
             this.nickUsuarios = '';
-            this.idRoles = 0, this.passwordUsuarios = '';
+            this.idRoles = 0, this.password = '';
         },
         abrirModal: function abrirModal(modelo, accion) {
             var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
@@ -50091,8 +50090,8 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.passwordUsuarios,
-                              expression: "passwordUsuarios"
+                              value: _vm.password,
+                              expression: "password"
                             }
                           ],
                           staticClass: "form-control",
@@ -50101,13 +50100,13 @@ var render = function() {
                             name: "pass",
                             placeholder: "Contraseña del usuario"
                           },
-                          domProps: { value: _vm.passwordUsuarios },
+                          domProps: { value: _vm.password },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.passwordUsuarios = $event.target.value
+                              _vm.password = $event.target.value
                             }
                           }
                         })
