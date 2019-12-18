@@ -44,7 +44,6 @@ class ClienteController extends Controller
         $cliente->telefonoClientes = $request->input('telefonoClientes');
         $cliente->comunaClientes = $request->input('comunaClientes');
         $cliente->correoClientes = $request->input('correoClientes');
-      //  $cliente->anfitrionClientes = $request->input('anfitrionClientes');
         $cliente->save();
     }
 
@@ -58,7 +57,6 @@ class ClienteController extends Controller
         $cliente->telefonoClientes = $request->input('telefonoClientes');
         $cliente->comunaClientes = $request->input('comunaClientes');
         $cliente->correoClientes = $request->input('correoClientes');
-      //  $cliente->anfitrionClientes = $request->input('anfitrionClientes');
         $cliente->save();
 
     }

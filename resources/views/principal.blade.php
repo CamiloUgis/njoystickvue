@@ -28,7 +28,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <ul class="nav navbar-nav ml-auto">
-            <li class="nav-item d-md-down-none">
+         <!--   <li class="nav-item d-md-down-none">
                 <a class="nav-link" href="#" data-toggle="dropdown">
                     <i class="icon-bell"></i>
                     <span class="badge badge-pill badge-danger">5</span>
@@ -46,18 +46,24 @@
                         <span class="badge badge-danger">2</span>
                     </a>
                 </div>
-            </li>
+            </li> -->
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    <img src="img/avatars/6.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                    <span class="d-md-down-none">admin </span>
+                    <img src="img/logo.png" class="img-avatar" alt="admin@bootstrapmaster.com">
+                    <span class="d-md-down-none"> Njoystick</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <div class="dropdown-header text-center">
                         <strong>Cuenta</strong>
                     </div>
-                    <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Perfil</a>
-                    <a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Cerrar sesión</a>
+                    <a class="dropdown-item" href="{{ route('logout') }}"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-lock"></i> Cerrar sesión</a>
+                
+                    <form id="logout-form" action="{{ route('logout') }} " method="POST" style="display: none;">
+                        
+                    </style>>
+
+                    </form>
                 </div>
             </li>
         </ul>
