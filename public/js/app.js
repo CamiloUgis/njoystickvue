@@ -47630,9 +47630,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (this.idPlataformas == 0) this.errorMsjProducto.push("Seleccione una plataforma");
             if (!this.nombreProductos) this.errorMsjProducto.push("El nombre del Producto no debe estar vacío");
             if (!this.stockNuevoProductos) this.errorMsjProducto.push("El stock debe ser un número");
-            if (this.errorMsjProducto.length) this.errorMsjProducto = 1;
+            if (this.errorMsjProducto.length) this.errorProducto = 1;
 
-            return this.errorMsjProducto;
+            return this.errorProducto;
         },
         cerrarModal: function cerrarModal() {
             this.modal = 0;
@@ -48334,35 +48334,7 @@ var render = function() {
                           }
                         })
                       ])
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.errorProducto,
-                            expression: "errorProducto"
-                          }
-                        ],
-                        staticClass: "form-group row div-error"
-                      },
-                      [
-                        _c(
-                          "div",
-                          { staticClass: "text-center text-error" },
-                          _vm._l(_vm.errorMsjProducto, function(error) {
-                            return _c("div", {
-                              key: error,
-                              domProps: { textContent: _vm._s(error) }
-                            })
-                          }),
-                          0
-                        )
-                      ]
-                    )
+                    ])
                   ]
                 )
               ]),

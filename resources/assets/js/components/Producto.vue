@@ -134,12 +134,12 @@
                                         <input type="number" v-model="precioUsadoProductos" name="preciousado" class="form-control" placeholder="Precio de juego usado">
                                     </div>
                                 </div>
-                                <div v-show="errorProducto" class="form-group row div-error">
+                           <!--     <div v-show="errorProducto" class="form-group row div-error">
                                     <div class="text-center text-error">
                                         <div v-for="error in errorMsjProducto" :key="error" v-text="error">
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -287,17 +287,17 @@
                     console.log(error.response);
                 })
             },
-            validarProducto(){
+             validarProducto(){
                 this.errorProducto=0;
                 this.errorMsjProducto = [];
                 
-                if(this.idPlataformas==0) this.errorMsjProducto.push("Seleccione una plataforma");
+               if(this.idPlataformas==0) this.errorMsjProducto.push("Seleccione una plataforma");
                 if(!this.nombreProductos) this.errorMsjProducto.push("El nombre del Producto no debe estar vacío");
                 if(!this.stockNuevoProductos) this.errorMsjProducto.push("El stock debe ser un número")
-                if(this.errorMsjProducto.length) this.errorMsjProducto=1;
+                if(this.errorMsjProducto.length) this.errorProducto=1;
 
-                return this.errorMsjProducto;
-            },
+                return this.errorProducto;
+            }, 
             cerrarModal(){
                 this.modal=0;
                 this.tituloModal='';
