@@ -25,9 +25,9 @@ class CreateClientesTable extends Migration
             $table->increments('idClientes');
             $table->string('nombreClientes', 100);
             $table->string('rutClientes', 100)->unique();
-            $table->string('comunaClientes', 100);
-            $table->string('correoClientes', 100);
-            $table->integer('telefonoClientes');
+            $table->string('comunaClientes', 100)->nullable();
+            $table->string('correoClientes', 100)->nullable();
+            $table->integer('telefonoClientes')->nullable();
             $table->timestamps();
 
             
