@@ -36,7 +36,16 @@ class ClienteController extends Controller
     }
     public function store(Request $request)
     {
-
+        $validar= $request->validate([
+            'nombre'=>'required',
+            'rut' => ['required', 'string', new ValidChileanRut(new ChileRut)],
+            'rut' =>'required|unique:clientes,rutClientes',
+            'telefono'=>'required|unique:clientes,telefonoClientes',
+            'telefono'=>'integer|min:0',
+            'comuna'=>'required',
+            'correo'=>'required',
+    
+            ]);
         if(!$request->ajax()) return redirect('/');
         $cliente = new Cliente();
         $cliente->nombreClientes = $request->input('nombreClientes');
@@ -50,6 +59,15 @@ class ClienteController extends Controller
 
     public function update(Request $request)
     {
+        $validar= $request->validate([
+            'nombre'=>'required',
+            'rut' => ['required', 'string', new ValidChileanRut(new ChileRut)],
+            'rut' =>'required|unique:clientes,rutClientes',
+            'telefono'=>'required|unique:clientes,telefonoClientes',
+            'telefono'=>'integer|min:0',
+            'comuna'=>'required',
+            'correo'=>'required',
+            ]);
         if(!$request->ajax()) return redirect('/');
         $cliente = Cliente::findOrFail($request->idClientes);;
         $cliente->nombreClientes = $request->input('nombreClientes');

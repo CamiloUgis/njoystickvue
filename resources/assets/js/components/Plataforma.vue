@@ -82,6 +82,7 @@
                                     <label class="col-md-3 form-control-label" for="text-input">Nombre</label>
                                     <div class="col-md-9">
                                         <input type="text" v-model="nombrePlataformas" name="nombre" class="form-control" placeholder="Nombre de plataforma">
+                                        <span v-if="errors.nombrePlataformas" class="error">{{errors.nombrePlataformas[0]}}</span>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -90,12 +91,11 @@
                                         <input type="text" v-model="descripcionPlataformas" name="descripcion" class="form-control" placeholder="Descripción de plataforma">
                                     </div>
                                 </div>
-                                <div v-show="errorPlataforma" class="form-group row div-error">
+                                <!-- <div v-show="errorPlataforma" class="form-group row div-error">
                                     <div class="text-center text-error">
-                                        <div v-for="error in errorMsjPlataforma" :key="error" v-text="error">
-                                        </div>
+                                        <div v-for="error in errorMsjPlataforma" :key="error" v-text="error"></div>
                                     </div>
-                                </div>
+                                </div> -->
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -114,6 +114,7 @@
 </template>
 
 <script>
+import { required, minLength, between } from 'vuelidate/lib/validators'
     export default {
         data(){
             return{
@@ -124,8 +125,9 @@
                 modal : 0,
                 tituloModal : '',
                 tipoAccion : 0,
-                errorPlataforma : 0,
-                errorMsjPlataforma : [],
+                errors: [],
+                // errorPlataforma : 0,
+                // errorMsjPlataforma : [],
                 pagination : {
                 'total' :0 ,
                 'current_page':0 ,
@@ -140,6 +142,7 @@
 
             }
         },
+        
         computed:{
             isActived: function(){
                 return this.pagination.current_page;
@@ -185,9 +188,10 @@
                 me.listarPlataforma(page, buscar, criterio);
             },
             registrarPlataforma(){
-                if(this.validarPlataforma()){
-                    return;
-                }
+                // if(this.validarPlataforma()){
+                //     return;
+                // }
+                this.errors =[]
 
                 let me=this;
                 axios.post('plataformas/registrar',{
@@ -196,14 +200,16 @@
                     }).then(function (response){
                         me.cerrarModal();
                         me.listarPlataforma(1,'', 'nombre');
-                }).catch(function (error){
-                    console.log(error);
+                }).catch(error=>{
+                    if(error.response.status == 422){
+                        this.errors = error.response.data.errors
+                    }
                 })
             },
             actualizarPlataforma(){
-                if(this.validarPlataforma()){
-                    return;
-                }
+                // if(this.validarPlataforma()){
+                //     return;
+                // }
                 let me=this;
                 axios.put('plataformas/actualizar',{
                     'nombrePlataformas': this.nombrePlataformas,
@@ -212,19 +218,21 @@
                     }).then(function (response){
                         me.cerrarModal();
                         me.listarPlataforma(1,'', 'nombre');
-                }).catch(function (error){
-                    console.log(error);
+                }).catch(error=>{
+                    if(error.response.status == 422){
+                        this.errors = error.response.data.errors
+                    }
                 })
             },
-            validarPlataforma(){
-                this.errorPlataforma=0;
-                this.errorMsjPlataforma = [];
+            // validarPlataforma(){
+            //     this.errorPlataforma=0;
+            //     this.errorMsjPlataforma = [];
 
-                if(!this.nombrePlataformas) this.errorMsjPlataforma.push("El nombre de la plataforma no debe estar vacío");
+            //     if(!this.nombrePlataformas) this.errorMsjPlataforma.push("El nombre de la plataforma no debe estar vacío");
 
-                if(this.errorMsjPlataforma.length) this.errorPlataforma=1;
-                return this.errorPlataforma;
-            },
+            //     if(this.errorMsjPlataforma.length) this.errorPlataforma=1;
+            //     return this.errorPlataforma;
+            // },
             cerrarModal(){
                 this.modal=0;
                 this.tituloModal='';

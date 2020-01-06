@@ -86,38 +86,43 @@
                                     <label class="col-md-3 form-control-label" for="text-input">Nombre</label>
                                     <div class="col-md-9">
                                         <input type="text" v-model="nombreClientes" name="nombre" class="form-control" placeholder="Nombre de cliente">
+                                        <span v-if="errors.nombreClientes" class="error">{{errors.nombreClientes[0]}}</span>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="email-input">Rut</label>
                                     <div class="col-md-9">
                                         <input type="text" v-model="rutClientes" name="rut" class="form-control" placeholder="Rut de Cliente">
+                                        <span v-if="errors.rutClientes" class="error">{{errors.rutClientes[0]}}</span>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="email-input">Teléfono</label>
                                     <div class="col-md-9">
                                         <input type="number" v-model="telefonoClientes" name="telefono" class="form-control" placeholder="Teléfono de cliente">
+                                        <span v-if="errors.telefonoClientes" class="error">{{errors.telefonoClientes[0]}}</span>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="email-input">Comuna</label>
                                     <div class="col-md-9">
                                         <input type="text" v-model="comunaClientes" name="comuna" class="form-control" placeholder="Comuna de cliente">
+                                        <span v-if="errors.comunaClientes" class="error">{{errors.comunaClientes[0]}}</span>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="email-input">Correo Electrónico</label>
                                     <div class="col-md-9">
                                         <input type="text" v-model="correoClientes" name="correo" class="form-control" placeholder="Correo electrónico de cliente">
+                                        <span v-if="errors.correoClientes" class="error">{{errors.correoClientes[0]}}</span>
                                     </div>
                                 </div>
-                                <div v-show="errorCliente" class="form-group row div-error">
+                                <!-- <div v-show="errorCliente" class="form-group row div-error">
                                     <div class="text-center text-error">
                                         <div v-for="error in errorMsjCliente" :key="error" v-text="error">
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -149,8 +154,7 @@
                 modal : 0,
                 tituloModal : '',
                 tipoAccion : 0,
-                errorCliente : 0,
-                errorMsjCliente : [],
+                errors: [],
                 pagination : {
                 'total' :0 ,
                 'current_page':0 ,
@@ -201,7 +205,7 @@
                     me.pagination=respuesta.pagination;
                 })
                 .catch(function (error){
-                    console.log(error.response);
+                    console.log(error);
                 })
             },
             cambiarPagina(page, buscar, criterio){
@@ -210,10 +214,10 @@
                 me.listarCliente(page, buscar, criterio);
             },
             registrarCliente(){
-                if(this.validarCliente()){
-                    return;
-                }
-
+                // if(this.validarCliente()){
+                //     return;
+                // }
+                this.errors= []
                 let me=this;
                 axios.post('clientes/registrar',{
                     'nombreClientes': this.nombreClientes,
@@ -224,14 +228,16 @@
                     }).then(function (response){
                         me.cerrarModal();
                         me.listarCliente(1,'', 'nombre');
-                }).catch(function (error){
-                    console.log(error.response);
+                }).catch(error=>{
+                    if(error.response.status == 422){
+                        this.errors = error.response.data.errors
+                    }
                 })
             },
             actualizarCliente(){
-                if(this.validarCliente()){
-                    return;
-                }
+                // if(this.validarCliente()){
+                //     return;
+                // }
                 let me=this;
                 axios.put('clientes/actualizar',{
                     'nombreClientes': this.nombreClientes,
@@ -243,19 +249,21 @@
                     }).then(function (response){
                         me.cerrarModal();
                         me.listarCliente(1,'', 'nombre');
-                }).catch(function (error){
-                    console.log(error.response);
+                }).catch(error=>{
+                    if(error.response.status == 422){
+                        this.errors = error.response.data.errors
+                    }
                 })
             },
-            validarCliente(){
-                this.errorCliente=0;
-                this.errorMsjCliente = [];
+            // validarCliente(){
+            //     this.errorCliente=0;
+            //     this.errorMsjCliente = [];
 
-                if(!this.nombreClientes) this.errorMsjCliente.push("El nombre del cliente no debe estar vacío");
+            //     if(!this.nombreClientes) this.errorMsjCliente.push("El nombre del cliente no debe estar vacío");
 
-                if(this.errorMsjCliente.length) this.errorCliente=1;
-                return this.errorCliente;
-            },
+            //     if(this.errorMsjCliente.length) this.errorCliente=1;
+            //     return this.errorCliente;
+            // },
             cerrarModal(){
                 this.modal=0;
                 this.tituloModal='';

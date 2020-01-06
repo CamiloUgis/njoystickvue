@@ -79,20 +79,23 @@
                                     <label class="col-md-3 form-control-label" for="text-input">Nombre</label>
                                     <div class="col-md-9">
                                         <input type="text" v-model="nombreGeneros" name="nombre" class="form-control" placeholder="Nombre de género">
+                                        <span v-if="errors.nombreGeneros" class="error">{{errors.nombreGeneros[0]}}</span>
+
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="email-input">Descripción</label>
                                     <div class="col-md-9">
                                         <input type="text" v-model="descripcionGeneros" name="descripcion" class="form-control" placeholder="Descripción de género">
+                                        <span v-if="errors.descripcionGeneros" class="error">{{errors.descripcionGeneros[0]}}</span>
                                     </div>
                                 </div>
-                                <div v-show="errorGenero" class="form-group row div-error">
+                                <!-- <div v-show="errorGenero" class="form-group row div-error">
                                     <div class="text-center text-error">
                                         <div v-for="error in errorMsjGenero" :key="error" v-text="error">
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -121,8 +124,9 @@
                 modal : 0,
                 tituloModal : '',
                 tipoAccion : 0,
-                errorGenero : 0,
-                errorMsjGenero : [],
+                errors: [],
+                // errorGenero : 0,
+                // errorMsjGenero : [],
                 pagination : {
                 'total' :0 ,
                 'current_page':0 ,
@@ -182,10 +186,10 @@
                 me.listarGenero(page, buscar, criterio);
             },
             registrarGenero(){
-                if(this.validarGenero()){
-                    return;
-                }
-
+                // if(this.validarGenero()){
+                //     return;
+                // }
+                this.errors= []
                 let me=this;
                 axios.post('generos/registrar',{
                     'nombreGeneros': this.nombreGeneros,
@@ -193,14 +197,17 @@
                     }).then(function (response){
                         me.cerrarModal();
                         me.listarGenero(1,'', 'nombre');
-                }).catch(function (error){
-                    console.log(error);
+                }).catch(error=>{
+                    if(error.response.status == 422){
+                        this.errors = error.response.data.errors
+                    }
                 })
             },
             actualizarGenero(){
-                if(this.validarGenero()){
-                    return;
-                }
+                // if(this.validarGenero()){
+                //     return;
+                // }
+                this.errors= []
                 let me=this;
                 axios.put('generos/actualizar',{
                     'nombreGeneros': this.nombreGeneros,
@@ -209,19 +216,21 @@
                     }).then(function (response){
                         me.cerrarModal();
                         me.listarGenero(1,'', 'nombre');
-                }).catch(function (error){
-                    console.log(error);
+                }).catch(error=>{
+                    if(error.response.status == 422){
+                        this.errors = error.response.data.errors
+                    }
                 })
             },
-            validarGenero(){
-                this.errorGenero=0;
-                this.errorMsjGenero = [];
+            // validarGenero(){
+            //     this.errorGenero=0;
+            //     this.errorMsjGenero = [];
 
-                if(!this.nombreGeneros) this.errorMsjGenero.push("El nombre del género no debe estar vacío");
+            //     if(!this.nombreGeneros) this.errorMsjGenero.push("El nombre del género no debe estar vacío");
 
-                if(this.errorMsjGenero.length) this.errorGenero=1;
-                return this.errorGenero;
-            },
+            //     if(this.errorMsjGenero.length) this.errorGenero=1;
+            //     return this.errorGenero;
+            // },
             cerrarModal(){
                 this.modal=0;
                 this.tituloModal='';

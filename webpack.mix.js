@@ -23,6 +23,8 @@ mix.styles([
    'resources/assets/plantilla/js/bootstrap.min.js',
    'resources/assets/plantilla/js/pace.min.js',
    'resources/assets/plantilla/js/Chart.min.js',
-   'resources/assets/plantilla/js/template.js'
+   'resources/assets/plantilla/js/template.js',
+   'resources/assets/plantilla/js/validators.js',
+   'resources/assets/plantilla/js/vuelidate.min.js'
 ], 'public/js/plantilla.js')
 .js(['resources/assets/js/app.js'], 'public/js/app.js'); 
