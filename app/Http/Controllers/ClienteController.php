@@ -37,14 +37,10 @@ class ClienteController extends Controller
     public function store(Request $request)
     {
         $validar= $request->validate([
-            'nombre'=>'required',
-            'rut' => ['required', 'string', new ValidChileanRut(new ChileRut)],
-            'rut' =>'required|unique:clientes,rutClientes',
-            'telefono'=>'required|unique:clientes,telefonoClientes',
-            'telefono'=>'integer|min:0',
-            'comuna'=>'required',
-            'correo'=>'required',
-    
+            'nombreClientes'=>'required',
+            'rutClientes'=> ['required', 'string', new ValidChileanRut(new ChileRut)],
+            'rutClientes'=>'required|unique:clientes,rutClientes',
+
             ]);
         if(!$request->ajax()) return redirect('/');
         $cliente = new Cliente();
@@ -60,13 +56,13 @@ class ClienteController extends Controller
     public function update(Request $request)
     {
         $validar= $request->validate([
-            'nombre'=>'required',
-            'rut' => ['required', 'string', new ValidChileanRut(new ChileRut)],
-            'rut' =>'required|unique:clientes,rutClientes',
-            'telefono'=>'required|unique:clientes,telefonoClientes',
-            'telefono'=>'integer|min:0',
-            'comuna'=>'required',
-            'correo'=>'required',
+            'nombreClientes'=>'required',
+            'rutClientes'=> ['required', 'string', new ValidChileanRut(new ChileRut)],
+            'rutClientes'=>'required|unique:clientes,rutClientes',
+            'telefonoClientes'=>'required|unique:clientes,telefonoClientes',
+            'telefonoClientes'=>'integer|min:0',
+            'comunaClientes'=>'required',
+            'correoClientes'=>'required',
             ]);
         if(!$request->ajax()) return redirect('/');
         $cliente = Cliente::findOrFail($request->idClientes);;
