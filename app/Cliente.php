@@ -12,15 +12,6 @@ class Cliente extends Model
     'correoClientes'];
    
    
-   /* public function transaccion(){
-        return $this->hasMany('App\transaccion');
-    }*/
-
-//    public function referido(){
-//        return $this->belongsTo('socios', 'asociar', 'idSocios', 'asociadoId');
-//    }
-    // public function sconereferir(){
-    //     return $this->hasMany('socios', 'asociar', 'idSocios', 'asociadoId');
-    // }
+   
     
 }

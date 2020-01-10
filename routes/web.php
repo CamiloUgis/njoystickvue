@@ -45,6 +45,9 @@ Route::get('/clientes','ClienteController@index');
 Route::post('/clientes/registrar','ClienteController@store');
 Route::put('/clientes/actualizar', 'ClienteController@update');
 
+Route::get('/socios','SocioController@index');
+Route::post('/socios/registrar','SocioController@store');
+Route::put('/socios/actualizar', 'SocioController@update');
 
 Route::get('/roles','RolController@index');
 Route::get('/roles/selectRoles','RolController@selectRoles');

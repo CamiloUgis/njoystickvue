@@ -3,148 +3,77 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use \App\Socio;
-use \App\Cliente;
+use App\Http\Controllers\Controller;
+use App\Cliente;
+use App\Socio;
+use Malahierba\ChileRut\ChileRut;
+use Malahierba\ChileRut\Rules\ValidChileanRut;
 
-class socioController extends Controller
+class SocioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $request)
     {
-        $socios=Socio::all();
-        return $socios;
-    }
+        if(!$request->ajax()) return redirect('/');
+        $buscar= $request->buscar;
+        $criterio = $request->criterio;
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+        if($buscar==''){
+            $socios = Socio::join('clientes','socios.idClientes','=','clientes.idClientes')
+            ->select('socios.idSocios', 'clientes.nombreClientes','socios.estadoSocios')
+            ->orderBy('idClientes', 'desc')->paginate(5);
+        }else{
+            $socios = Socio::join('clientes','socios.idClientes','=','clientes.idClientes')
+            ->select('socios.idSocios', 'clientes.nombreClientes','socios.estadoSocios')
+            ->where($criterio, 'like', '%'. $buscar . '%')
+            ->orderBy('idClientes', 'desc')->paginate(5);
+        }
+        return [
+            'pagination' =>[
+                'total' => $socios->total(),
+                'current_page'=> $socios->currentPage(),
+                'per_page'=> $socios->perPage(),
+                'last_page'=>$socios->lastPage(),
+                'from'=>$socios->firstItem(),
+                'to'=>$socios->lastItem(),
+            ],
+            'socios'=>$socios
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-   
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function agregar($idClientes)
-    {
-        $socios=Socio::all();
-        return view('socios.socingresar')->with('socios', $socios);
+        ] ;
     }
-    public function actualizar($idSocios)
-    {
-        $socios=Socio::all();
-        $soc=Socio::where('idSocios',$idSocios)->first();
-        return view('socios.socactualizar')->with('socios', $socios)->with('soc',$soc);
-    }
-    public function equipo($idSocios){
-        $socios=Socio::all();
-        $soc=Socio::where('idSocios',$idSocios)->first();
-        $socios2=Socio::where('idSocios', $soc->idSocios)->first();
-        $refs=Socio::where('anfitrionSocios',$soc->idSocios)->get();
-        $anfLinea1=Socio::where('idSocios', $socios2->anfitrionSocios)->first();
-        
-        return view('socios.socequipo')->with('socios', $socios)->with('soc', $soc)->with('anf', $anfLinea1)->with('refs',$refs);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-   
     public function store(Request $request)
     {
-        $socios=Socio::all();
-        $validar= $request->validate([
-            'nombre'=>'required',
-            'rut'=>'required|unique:socios,rutSocios',
-            'telefono'=>'required|unique:socios,telefonoSocios',
-            'comuna'=>'required',
-            'correo'=>'required|unique:socios,correoSocios',
+        // $validar= $request->validate([
+        //     'nombreClientes'=>'required',
+        //     'rutClientes'=> ['required', 'string', new ValidChileanRut(new ChileRut)],
+        //     'rutClientes'=>'required|unique:clientes,rutClientes',
 
-        ]);
-        $socio=new Socio;
-        $socio->nombreSocios = $request->input("nombre");
-        $socio->rutSocios = $request->input("rut");
-        $socio->telefonoSocios = $request->input("telefono");
-        $socio->comunaSocios = $request->input("comuna");
-        $socio->correoSocios = $request->input("correo");
+        //     ]);
+        if(!$request->ajax()) return redirect('/');
+        $socio = new Socio();
+        $socio->idClientes=$request->input('idClientes');
+        $socio->estadoSocios= 1;
         $socio->puntosSocios = 0;
-        $socio->estadoSocios = 1;
-        $socio->anfitrionSocios = $request->input("idAnfitrion", false);
         $socio->save();
-        
-
-        return view('socios.socingresar')->with('socios', $socios);
-
     }
+
+
     public function update(Request $request)
     {
-       $socios=Socio::all();
-        
         // $validar= $request->validate([
-        //     'nombre'=>'required',
-        //     'rut'=>'required|unique:socios,rutSocios',
-        //     'telefono'=>'required|unique:socios,telefonoSocios',
-        //     'comuna'=>'required',
-        //     'correo'=>'required|unique:socios,correoSocios',
-
-        // ]);
-        $socio=Socio::where('idSocios',$request->input("id"))->first();
-        $socio->nombreSocios = $request->input("nombre");
-        $socio->rutSocios = $request->input("rut");
-        $socio->telefonoSocios = $request->input("telefono");
-        $socio->comunaSocios = $request->input("comuna");
-        $socio->correoSocios = $request->input("correo");
-        $socio->puntosSocios = $request->input("puntos");
-        $socio->estadoSocios = $request->input("estado");
-        $socio->anfitrionSocios = $request->input("idAnfitrion", false);
+        //     'nombreClientes'=>'required',
+        //     'rutClientes'=> ['required', 'string', new ValidChileanRut(new ChileRut)],
+        //     'rutClientes'=>'required|unique:clientes,rutClientes',
+        //     'telefonoClientes'=>'required|unique:clientes,telefonoClientes',
+        //     'telefonoClientes'=>'integer|min:0',
+        //     'comunaClientes'=>'required',
+        //     'correoClientes'=>'required',
+        //     ]);
+        if(!$request->ajax()) return redirect('/');
+        $socio = Socio::findOrFail($request->idClientes);;
+        $socio->idClientes=$request->input('idClientes');
         $socio->save();
-        $socios=Socio::all();
-
-        return redirect('/');
 
     }
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function lista(){
-        $socios=Socio::simplePaginate(20)->all();
-        return view('socios.listaSocio')->with('socios', $socios);
-    }
-   
-    public function destroy($id)
-    {
-        //
-    }
+
+
 }
