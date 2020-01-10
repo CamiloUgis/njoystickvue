@@ -15,17 +15,17 @@ Route::get('/main', function () {
     return view('contenido/contenido');
 })->name('main');
 
-Route::get('/nuevoreferido', 'SocioController@agregar');
-Route::get('/puntos', 'TransaccionController@viewPuntos');
-Route::get('/listatransacciones', 'TransaccionController@lista');
-Route::get('/listasocios','SocioController@lista');
-Route::get('/equipo/{idSocios}', 'SocioController@equipo');
-Route::post('/equipo/{idSocios}', 'SocioController@team');
+// Route::get('/nuevoreferido', 'SocioController@agregar');
+// Route::get('/puntos', 'TransaccionController@viewPuntos');
+// Route::get('/listatransacciones', 'TransaccionController@lista');
+// Route::get('/listasocios','SocioController@lista');
+// Route::get('/equipo/{idSocios}', 'SocioController@equipo');
+// Route::post('/equipo/{idSocios}', 'SocioController@team');
 
-Route::post('/nuevoreferido','SocioController@store');
-Route::post('/puntos', 'TransaccionController@asignapuntos') ;
-Route::get('/actualizareferido/{idSocios}','SocioController@actualizar');
-Route::post('/actualizareferido/{idSocios}','SocioController@update');
+// Route::post('/nuevoreferido','SocioController@store');
+// Route::post('/puntos', 'TransaccionController@asignapuntos') ;
+// Route::get('/actualizareferido/{idSocios}','SocioController@actualizar');
+// Route::post('/actualizareferido/{idSocios}','SocioController@update');
 
 Route::get('/generos','GeneroController@index');
 Route::post('generos/registrar', 'GeneroController@store');
@@ -44,6 +44,8 @@ Route::put('/productos/actualizar','ProductoController@update');
 Route::get('/clientes','ClienteController@index');
 Route::post('/clientes/registrar','ClienteController@store');
 Route::put('/clientes/actualizar', 'ClienteController@update');
+Route::get('/clientes/selectClientes','ClienteController@selectClientes');
+
 
 Route::get('/socios','SocioController@index');
 Route::post('/socios/registrar','SocioController@store');
@@ -51,6 +53,12 @@ Route::put('/socios/actualizar', 'SocioController@update');
 
 Route::get('/roles','RolController@index');
 Route::get('/roles/selectRoles','RolController@selectRoles');
+
+
+Route::get('/transacciones','TransaccionController@index');
+Route::post('/transacciones/registrar','TransaccionController@store');
+Route::put('/transacciones/actualizar', 'TransaccionController@update');
+
 
 
 Route::get('/usuarios','UserController@index');

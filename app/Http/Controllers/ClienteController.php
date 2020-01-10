@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use App\Cliente;
 use Malahierba\ChileRut\ChileRut;
 use Malahierba\ChileRut\Rules\ValidChileanRut;
@@ -34,6 +35,14 @@ class ClienteController extends Controller
 
         ] ;
     }
+    public function selectClientes(Request $request){
+        if(!$request->ajax()) return redirect('/');
+        $clientes = DB::table('clientes')
+        ->select('idClientes', 'nombreClientes')->orderBy('nombreClientes', 'asc')->get();
+        return ['clientes' => $clientes];
+
+    }
+
     public function store(Request $request)
     {
         $validar= $request->validate([

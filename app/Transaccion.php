@@ -8,11 +8,13 @@ class Transaccion extends Model
 {
     protected $table= 'transacciones';
     protected $primaryKey= 'idTransacciones';
-    protected $foreignKey= 'socio_Id';
-    protected $fillable= ['tipoTransacciones', 'puntosTransacciones'];
-    public function socio()
-    {
-        return $this->belongsTo('App\Socio', 'socio_Id');
+    protected $foreignKey= 'idClientes';
+    protected $fillable= ['tipoTransacciones', 'observacionTransacciones', 'fechaTransacciones',
+    'puntosTransacciones', 'valorFinalTransacciones'. 'formaPagoTransacciones', 'plazoTransacciones',
+    'estadoTransacciones'];
+
+    public function clientes(){
+        return $this->belongsTo('App\Cliente', 'idClientes');
     }
     
     

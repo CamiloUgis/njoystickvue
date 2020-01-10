@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Transaccion;
 use App\Cliente;
-use App\Socio;
+use App\Producto;
+use App\ProductoTransaccion;
+use Carbon\Carbon;
 
 class TransaccionController extends Controller
 {
@@ -14,108 +17,100 @@ class TransaccionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $transacciones=Transacciones::all();
-        return $transacciones;
+        if(!$request->ajax()) return redirect('/');
+        $buscar= $request->buscar;
+        $criterio = $request->criterio;
+
+        if($buscar==''){
+            $transacciones = Transaccion::join('clientes','transacciones.idClientes','=','clientes.idClientes')
+            ->join('producto_transaccion', 'transacciones.idTransacciones', '=', 'producto_transaccion.idTransacciones')
+            ->join('productos', 'producto_transaccion.idProductos','=','productos.idProductos')
+            ->select('transacciones.tipoTransacciones', 'transacciones.observacionTransacciones', 'transacciones.fechaTransacciones', 
+            'transacciones.puntosTransacciones', 'transacciones.valorFinalTransacciones', 'transacciones.formaPagoTransacciones',
+            'transacciones.plazoTransacciones', 'transacciones.estadoTransacciones', 'clientes.nombreClientes', 'clientes.rutClientes', 
+            'producto_transaccion.idTransacciones', 'productos.nombreProductos', 'productos.stockNuevoProductos', 'productos.stockUsadoProductos',
+            'productos.precioNuevoProductos', 'productos.precioUsadoProductos')
+            ->orderBy('transacciones.idTransacciones', 'desc')->paginate(8);
+
+        }else{
+            $transacciones = Transaccion::join('clientes','transacciones.idClientes','=','clientes.idClientes')
+            ->join('producto_transaccion', 'transacciones.idTransacciones', '=', 'producto_transaccion.idTransacciones')
+            ->join('productos', 'producto_transaccion.idProductos','=','productos.idProductos')
+            ->select('transacciones.tipoTransacciones', 'transacciones.observacionTransacciones', 'transacciones.fechaTransacciones', 
+            'transacciones.puntosTransacciones', 'transacciones.valorFinalTransacciones', 'transacciones.formaPagoTransacciones',
+            'transacciones.plazoTransacciones', 'transacciones.estadoTransacciones', 'clientes.nombreClientes', 'clientes.rutClientes', 
+            'producto_transaccion.idTransacciones', 'productos.nombreProductos', 'productos.stockNuevoProductos', 'productos.stockUsadoProductos',
+            'productos.precioNuevoProductos', 'productos.precioUsadoProductos')
+            ->where('transacciones.'.$criterio, 'like', '%'. $buscar . '%')
+            ->orderBy('transacciones.idTransacciones', 'desc')->paginate(8);
+        }
+        return [
+            'pagination' =>[
+                'total' => $transacciones->total(),
+                'current_page'=> $transacciones->currentPage(),
+                'per_page'=> $transacciones->perPage(),
+                'last_page'=>$transacciones->lastPage(),
+                'from'=>$transacciones->firstItem(),
+                'to'=>$transacciones->lastItem(),
+            ],
+            'transacciones'=>$transacciones
+
+        ] ;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function store(Request $request)
     {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    /*public function store(Request $request)
-    {
-        //
-    }*/
-    public function viewPuntos(){
-        $socios=Socio::all();
-        return view('transacciones.transaccionesmain')->with('socios', $socios);
+        if(!$request->ajax()) return redirect('/');
+        try{
+            DB::beginTransaction();
+            $mytime= Carbon::now('America/Santiago');
+            $transaccion = new Transaccion();
+            $transaccion->idTransacciones = $request->input('idTransacciones');
+            $transaccion->tipoTransacciones = $request->input('tipoTransacciones');
+            $transaccion->fechaTransacciones = $mytime->toDateString();
+            $transaccion->observacionTransacciones = $request->input('observacionTransacciones');
+            $transaccion->puntosTransacciones = $request->input('puntosTransacciones');
+            $transaccion->valorFinalTransacciones = $request->input('valorFinalTransacciones');
+            $transaccion->formaPagoTransacciones = $request->input('formaPagoTransacciones');
+            $transaccion->plazoTransacciones = $request->input('plazoTransacciones');
+            $transaccion->estadoTransacciones = $request->input('estadoTransacciones');
+
+            $pivote = $request->data;
+
+            foreach($pivote as $ep=>$det){
+                $pivote= new ProductoTransaccion();
+                $pivote->idTransaccion = $transaccion->idTransaccion;
+                $pivote->idProducto = $det['idProducto'];
+
+                $pivote->save();
+            }
+
+        }catch(Exception $e){
+            DB:rollback();
+        }
         
-    }
-    public function lista(){
-        $transacciones=Transaccion::all()->sortByDesc("idTransacciones");
-        return view('transacciones.listatransacciones')->with('transacciones', $transacciones);
-    }
-    public function asignapuntos(Request $request){
-        $validar= $request->validate([
-            'puntos'=>'required',
-            'idSocio'=>'required'
 
-        ]);
-        $socios=Socio::all();
-        Socio::find($request->input("idSocio"))->increment('puntosSocios',$request->input("puntos"));
-       
-        $transacciones=new Transaccion;
-        $transacciones->tipoTransacciones=$request->input("optionsRadios");
-        $transacciones->puntosTransacciones=$request->input("puntos");
-        $transacciones->socio_id=$request->input("idSocio");
-        $transacciones->save();
-        
-         
-        $socios2=Socio::where('idSocios', $request->input("idSocio"))->first();
-        
-        $anfLinea1=Socio::where('idSocios', $socios2->anfitrionSocios)->first();
-         $anfLinea1->increment('puntosSocios',($request->input("puntos")/2));
-         $anfLinea2=Socio::where('idSocios', $anfLinea1->anfitrionSocios)->first();
-         $anfLinea2->increment('puntosSocios',($request->input("puntos")));
-         return view('transacciones.transaccionesmain')->with('socios', $socios);
+        $transaccion->save();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+
+    public function update(Request $request)
     {
-        //
+
+        if(!$request->ajax()) return redirect('/');
+        $transaccion = Transaccion::findOrFail($request->idTransacciones);;
+        $transaccion->idTransacciones = $request->input('idTransacciones');
+        $transaccion->tipoTransacciones = $request->input('tipoTransacciones');
+        $transaccion->observacionTransacciones = $request->input('observacionTransacciones');
+        $transaccion->puntosTransacciones = $request->input('puntosTransacciones');
+        $transaccion->valorFinalTransacciones = $request->input('valorFinalTransacciones');
+        $transaccion->formaPagoTransacciones = $request->input('formaPagoTransacciones');
+        $transaccion->plazoTransacciones = $request->input('plazoTransacciones');
+        $transaccion->estadoTransacciones = $request->input('estadoTransacciones');
+        $transaccion->save();
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

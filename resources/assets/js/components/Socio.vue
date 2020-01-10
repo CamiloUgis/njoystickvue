@@ -29,6 +29,7 @@
                                     <th class="text-center">Código Njoystick</th>
                                     <th class="text-center">Nombre</th>
                                     <th class="text-center">Estado</th>
+                                    <th class="text-center">Puntos</th>
                                     <th class="text-center">Modificar</th>
                                 </tr>
                             </thead>
@@ -37,7 +38,7 @@
                                     <td v-text="'NJ'+socio.idClientes"></td>
                                     <td v-text="socio.nombreClientes"></td>
                                     <td v-text="socio.estadoSocios"></td>
-                                   
+                                    <td v-text="socio.puntosSocios"></td>
                                     <td>
                                         <button type="button" @click="abrirModal('socio', 'actualizar', socio)" class="btn btn-warning btn-sm">
                                           <i class="icon-pencil"></i>
@@ -90,10 +91,10 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="number-input">Socio invitador</label>
                                     <div class="col-md-9">
-                                        <select class="form-control" v-model="idClientes">
+                                        <select class="form-control" v-model="Socio_idClientes">
                                             <option value="0" disabled>Seleccione</option>
                                             <option v-for="socio in arraySocios" :key="socio.idClientes"
-                                            :value="socio.idClientess" v-text="socio.nombreClientes"></option>
+                                            :value="socio.idClientes" v-text="socio.nombreClientes"></option>
                                         </select>
                                     </div>
                                 </div>
@@ -128,6 +129,7 @@
                 nombreClientes:'',
                 puntosSocios:'',
                 estadoSocios:'',
+                Socio_idClientes:'',
                 arraySocios:[],
                 arrayClientes:[],
                 modal : 0,
@@ -184,7 +186,19 @@
                     me.pagination=respuesta.pagination;
                 })
                 .catch(function (error){
-                    console.log(error);
+                    console.log(error.response);
+                })
+            },
+            selectClientes(){
+                let me=this;
+                var url= '/clientes/selectClientes';
+                axios.get(url).then(function (response){
+                    //console.log(response);
+                    var respuesta = response.data;
+                    me.arrayClientes = respuesta.clientes;
+                })
+                .catch(function (error){
+                    console.log(error.response);
                 })
             },
             cambiarPagina(page, buscar, criterio){
@@ -200,25 +214,25 @@
                 let me=this;
                 axios.post('socios/registrar',{
                     'idClientes': this.idClientes,
-                    'Socios_idClientes': this.Socios_idClientes,
+                    'Socio_idClientes': this.Socio_idClientes,
+                    
+
                     }).then(function (response){
                         me.cerrarModal();
                         me.listarCliente(1,'', 'nombre');
-                }).catch(error=>{
-                    if(error.response.status == 422){
-                        this.errors = error.response.data.errors
-                    }
+                }).catch(function (error){
+                    console.log(error.response);
                 })
             },
-            actualizarCliente(){
-                // if(this.validarCliente()){
+                actualizarCliente(){
+                    // if(this.validarCliente()){
                 //     return;
                 // }
                 this.errors= []
                 let me=this;
                 axios.put('clientes/actualizar',{
                    'idClientes': this.idClientes,
-                   'Socios_idClientes': this.Socios_idClientes,
+                   'Socio_idClientes': this.Socio_idClientes,
                     }).then(function (response){
                         me.cerrarModal();
                         me.listarCliente(1,'', 'nombre');
@@ -249,14 +263,14 @@
             },
             abrirModal(modelo, accion, data = []){
                 switch(modelo){
-                    case "cliente":
+                    case "socio":
                         {
                         switch(accion){
                             case 'registrar':{
                                 this.modal = 1;
                                 this.tituloModal = "Registrar Nuevo Socio";
                                 this.idClientes='';
-                                
+                                this.Socio_idClientes='';
                                 this.tipoAccion = 1;
                                 break;
 
@@ -266,6 +280,7 @@
                                 this.tipoAccion = 2;
                                 this.tituloModal = "Modificar Socio";
                                 this.idClientes=data['idClientes'];
+                                this.Socio_idClientes=data['Socio_idClientes'];
                                 this.estadoSocios=data['estadoSocios'];
                                 
                                 break;
@@ -274,6 +289,7 @@
                         }
                     }
                 }
+                this.selectClientes();
             }
         },
         

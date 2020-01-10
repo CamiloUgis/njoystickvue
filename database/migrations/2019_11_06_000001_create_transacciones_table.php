@@ -25,7 +25,7 @@ class CreateTransaccionesTable extends Migration
             $table->increments('idTransacciones');
             $table->string('tipoTransacciones', 8);
             $table->string('observacionTransacciones', 500);
-            $table->timestamp('fechaTransacciones');
+            $table->dateTime('fechaTransacciones');
             $table->integer('puntosTransacciones');
             $table->integer('valorFinalTransacciones');
             $table->string('formaPagoTransacciones', 8);

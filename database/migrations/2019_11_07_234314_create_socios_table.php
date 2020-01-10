@@ -16,10 +16,10 @@ class CreateSociosTable extends Migration
         Schema::create('socios', function (Blueprint $table) {
             $table->unsignedInteger('idClientes');
             $table->foreign('idClientes')->references('idClientes')->on('clientes');
-            $table->tinyInteger('estadoSocios');
+            $table->boolean('estadoSocios');
             $table->integer('puntosSocios');
             $table->timestamps();
-            $table->unsignedInteger('Socio_idClientes')->nullable();
+            $table->unsignedInteger('Socio_idClientes');
             $table->foreign('Socio_idClientes')->references('idClientes')->on('socios');
         });
     }

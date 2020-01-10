@@ -13,17 +13,17 @@ class SocioController extends Controller
 {
     public function index(Request $request)
     {
-        if(!$request->ajax()) return redirect('/');
+        //if(!$request->ajax()) return redirect('/');
         $buscar= $request->buscar;
         $criterio = $request->criterio;
 
         if($buscar==''){
             $socios = Socio::join('clientes','socios.idClientes','=','clientes.idClientes')
-            ->select('socios.idSocios', 'clientes.nombreClientes','socios.estadoSocios')
+            ->select('socios.idClientes', 'clientes.nombreClientes','socios.estadoSocios')
             ->orderBy('idClientes', 'desc')->paginate(5);
         }else{
             $socios = Socio::join('clientes','socios.idClientes','=','clientes.idClientes')
-            ->select('socios.idSocios', 'clientes.nombreClientes','socios.estadoSocios')
+            ->select('socios.idClientes', 'clientes.nombreClientes','socios.estadoSocios')
             ->where($criterio, 'like', '%'. $buscar . '%')
             ->orderBy('idClientes', 'desc')->paginate(5);
         }
