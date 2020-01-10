@@ -51,6 +51,7 @@ class SocioController extends Controller
         if(!$request->ajax()) return redirect('/');
         $socio = new Socio();
         $socio->idClientes=$request->input('idClientes');
+        $socio->Socio_idClientes=$request->input('Socio_idClientes');
         $socio->estadoSocios= 1;
         $socio->puntosSocios = 0;
         $socio->save();
@@ -71,6 +72,7 @@ class SocioController extends Controller
         if(!$request->ajax()) return redirect('/');
         $socio = Socio::findOrFail($request->idClientes);;
         $socio->idClientes=$request->input('idClientes');
+        $socio->Socio_idClientes=$request->input('Socio_idClientes');
         $socio->save();
 
     }

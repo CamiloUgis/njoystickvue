@@ -8,9 +8,10 @@ class Socio extends Model
 {
     protected $table= 'socios';
     protected $foreignKey= 'idClientes';
-    protected $foreignKey2='Socio_idClientes';
+   
     protected $fillable=['idClientes',
     'estadoSocios',
+    'Socio_idClientes',
     'puntosSocios',
     ];
     public function cliente(){

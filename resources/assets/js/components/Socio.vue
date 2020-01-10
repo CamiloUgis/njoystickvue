@@ -199,20 +199,14 @@
                 this.errors= []
                 let me=this;
                 axios.post('socios/registrar',{
-                    'nombreClientes': this.nombreClientes,
-                    'rutClientes': this.rutClientes,
-                    'telefonoClientes': this.telefonoClientes,
-                    'comunaClientes': this.comunaClientes,
-                    'correoClientes': this.correoClientes,
+                    'idClientes': this.idClientes,
+                    'Socios_idClientes': this.Socios_idClientes,
                     }).then(function (response){
                         me.cerrarModal();
                         me.listarCliente(1,'', 'nombre');
                 }).catch(error=>{
                     if(error.response.status == 422){
                         this.errors = error.response.data.errors
-                    }
-                    if(!this.validaRut(rutClientes)){
-                        this.errors = "RUT no valido"
                     }
                 })
             },
@@ -223,12 +217,8 @@
                 this.errors= []
                 let me=this;
                 axios.put('clientes/actualizar',{
-                    'nombreClientes': this.nombreClientes,
-                    'rutClientes': this.rutClientes,
-                    'telefonoClientes': this.telefonoClientes,
-                    'comunaClientes': this.comunaClientes,
-                    'correoClientes': this.correoClientes,
-                    'idClientes': this.idClientes
+                   'idClientes': this.idClientes,
+                   'Socios_idClientes': this.Socios_idClientes,
                     }).then(function (response){
                         me.cerrarModal();
                         me.listarCliente(1,'', 'nombre');
@@ -236,9 +226,7 @@
                     if(error.response.status == 422){
                         this.errors = error.response.data.errors
                     }
-                    if(this.validaRut(rutClientes)){
-                        this.errors = "RUT no valido"
-                    }
+                    
                     
                 })
             },
@@ -256,10 +244,7 @@
                 this.modal=0;
                 this.tituloModal='';
                 this.nombreClientes='';
-                this.rutClientes='';
-                this.telefonoClientes='';
-                this.comunaClientes='';
-                this.correoClientes='';
+               
                 this.errorMsjCliente='';
             },
             abrirModal(modelo, accion, data = []){

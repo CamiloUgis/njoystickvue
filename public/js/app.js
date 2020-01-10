@@ -51488,20 +51488,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.errors = [];
             var me = this;
             axios.post('socios/registrar', {
-                'nombreClientes': this.nombreClientes,
-                'rutClientes': this.rutClientes,
-                'telefonoClientes': this.telefonoClientes,
-                'comunaClientes': this.comunaClientes,
-                'correoClientes': this.correoClientes
+                'idClientes': this.idClientes,
+                'Socios_idClientes': this.Socios_idClientes
             }).then(function (response) {
                 me.cerrarModal();
                 me.listarCliente(1, '', 'nombre');
             }).catch(function (error) {
                 if (error.response.status == 422) {
                     _this.errors = error.response.data.errors;
-                }
-                if (!_this.validaRut(rutClientes)) {
-                    _this.errors = "RUT no valido";
                 }
             });
         },
@@ -51514,21 +51508,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.errors = [];
             var me = this;
             axios.put('clientes/actualizar', {
-                'nombreClientes': this.nombreClientes,
-                'rutClientes': this.rutClientes,
-                'telefonoClientes': this.telefonoClientes,
-                'comunaClientes': this.comunaClientes,
-                'correoClientes': this.correoClientes,
-                'idClientes': this.idClientes
+                'idClientes': this.idClientes,
+                'Socios_idClientes': this.Socios_idClientes
             }).then(function (response) {
                 me.cerrarModal();
                 me.listarCliente(1, '', 'nombre');
             }).catch(function (error) {
                 if (error.response.status == 422) {
                     _this2.errors = error.response.data.errors;
-                }
-                if (_this2.validaRut(rutClientes)) {
-                    _this2.errors = "RUT no valido";
                 }
             });
         },
@@ -51547,10 +51534,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.modal = 0;
             this.tituloModal = '';
             this.nombreClientes = '';
-            this.rutClientes = '';
-            this.telefonoClientes = '';
-            this.comunaClientes = '';
-            this.correoClientes = '';
+
             this.errorMsjCliente = '';
         },
         abrirModal: function abrirModal(modelo, accion) {
