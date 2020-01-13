@@ -108,6 +108,17 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="number-input">Género</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control" v-model="idGeneros">
+                                            <option value="0" disabled>Seleccione</option>
+                                            <option v-for="genero in arrayGeneros" :key="genero.idGeneros"
+                                            :value="genero.idGeneros" v-text="genero.nombreGeneros"></option>
+                                        </select>
+                                    </div>
+                                </div>
+
 
 
                                 <div class="form-group row">
@@ -163,6 +174,7 @@
             return{
                 idProductos:0,
                 idPlataformas:0,
+                idGeneros:0,
                 nombreProductos:'',
                 descripcionProductos:'',
                 stockNuevoProductos:'',
@@ -186,7 +198,8 @@
                 offset: 3,
                 criterio: 'nombre',
                 buscar : '',
-                arrayPlataformas:[]
+                arrayPlataformas:[],
+                arrayGeneros:[]
 
             }
         },
@@ -241,6 +254,18 @@
                     console.log(error.response);
                 })
             },
+            selectGeneros(){
+                let me=this;
+                var url= '/generos/selectGeneros';
+                axios.get(url).then(function (response){
+                    //console.log(response);
+                    var respuesta = response.data;
+                    me.arrayGeneros = respuesta.generos;
+                })
+                .catch(function (error){
+                    console.log(error.response);
+                })
+            },
             cambiarPagina(page, buscar, criterio){
                 let me=this;
                 me.pagination.current_page=page;
@@ -253,7 +278,8 @@
                 let me=this;
                 axios.post('productos/registrar',{
                     'nombreProductos': this.nombreProductos,
-                    'idPlataformas': this.idPlataformas,    
+                    'idPlataformas': this.idPlataformas,  
+                    'idGeneros': this.idGeneros,  
                     'descripcionProductos': this.descripcionProductos,
                     'stockNuevoProductos': this.stockNuevoProductos,
                     'stockUsadoProductos': this.stockUsadoProductos,
@@ -274,6 +300,7 @@
                 axios.put('productos/actualizar',{
                     'nombreProductos': this.nombreProductos,
                     'idPlataformas': this.idPlataformas,
+                    'idGeneros': this.idGeneros,  
                     'descripcionProductos': this.descripcionProductos,
                     'stockNuevoProductos': this.stockNuevoProductos,
                     'stockUsadoProductos': this.stockUsadoProductos,
@@ -303,6 +330,7 @@
                 this.tituloModal='';
                 this.nombreProductos='';
                 this.idPlataformas=0,
+                this.idGeneros=0,
                 this.descripcionProductos='';
                 this.stockNuevoProductos='';
                 this.stockUsadoProductos='';
@@ -318,6 +346,7 @@
                                 this.modal = 1;
                                 this.tituloModal = "Registrar Producto";
                                 this.idPlataformas=0;
+                                this.idGeneros=0;
                                 this.nombreProductos='';
                                 this.descripcionProductos='';
                                 this.stockNuevoProductos='';
@@ -333,6 +362,7 @@
                                 this.tipoAccion = 2;
                                 this.tituloModal = "Actualizar Producto";
                                 this.idProductos=data['idProductos'];
+                                this.idGeneros=data['idGeneros'];
                                 this.idPlataformas=data['idPlataformas'];
                                 this.nombreProductos=data['nombreProductos'];
                                 this.descripcionProductos=data['descripcionProductos'];
@@ -346,6 +376,7 @@
                         }
                     }
                 }
+                this.selectGeneros();
                 this.selectPlataformas();
             }
         },

@@ -81,16 +81,16 @@ class TransaccionController extends Controller
             $pivote = $request->data;
 
             foreach($pivote as $ep=>$det){
-                $pivote= new ProductoTransaccion();
-                $pivote->idTransaccion = $transaccion->idTransaccion;
-                $pivote->idProducto = $det['idProducto'];
+                $ep= new ProductoTransaccion();
+                $ep->idTransacciones = $transaccion->idTransacciones;
+                $ep->idProductos = $det['idProductos'];
 
-                $pivote->save();
+                $ep->save();
             }
 
-        }catch(Exception $e){
-            DB:rollback();
-        }
+            }catch(Exception $e){
+                DB:rollback();
+            }
         
 
         $transaccion->save();

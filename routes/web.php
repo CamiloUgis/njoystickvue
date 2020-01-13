@@ -30,6 +30,7 @@ Route::get('/main', function () {
 Route::get('/generos','GeneroController@index');
 Route::post('generos/registrar', 'GeneroController@store');
 Route::put('generos/actualizar','GeneroController@update');
+Route::get('/generos/selectGeneros','GeneroController@selectGeneros');
 
 Route::get('/plataformas','PlataformaController@index');
 Route::post('/plataformas/registrar', 'PlataformaController@store');
@@ -40,6 +41,7 @@ Route::get('/plataformas/selectPlataformas','PlataformaController@selectPlatafor
 Route::get('/productos','ProductoController@index');
 Route::post('/productos/registrar', 'ProductoController@store');
 Route::put('/productos/actualizar','ProductoController@update');
+
 
 Route::get('/clientes','ClienteController@index');
 Route::post('/clientes/registrar','ClienteController@store');

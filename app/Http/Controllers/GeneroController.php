@@ -37,6 +37,13 @@ class GeneroController extends Controller
 
         ] ;
     }
+    public function selectGeneros(Request $request){
+        if(!$request->ajax()) return redirect('/');
+        $generos = DB::table('generos')
+        ->select('idGeneros', 'nombreGeneros')->orderBy('nombreGeneros', 'asc')->get();
+        return ['generos' => $generos];
+
+    }
 
 
     public function store(Request $request)
