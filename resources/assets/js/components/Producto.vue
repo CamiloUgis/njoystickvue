@@ -111,31 +111,16 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="number-input">Género</label>
                                     <div class="col-md-9">
-                                        <select class="form-control" v-model="idGeneros">
-                                            <option value="0" disabled>Seleccione</option>
+                                        <select class="form-control" v-model="arrayGenerosSeleccionados" multiple>
+                                            
                                             <option v-for="genero in arrayGeneros" :key="genero.idGeneros"
                                             :value="genero.idGeneros" v-text="genero.nombreGeneros"></option>
                                         </select>
                                     </div>
                                 </div>
                                 
-                                <div id="el"></div>
-
-                                <!-- using string template here to work around HTML <option> placement restriction -->
-                                <script type="text/x-template" id="demo-template">
-                                <div>
-                                    <p>Selected: {{ selected }}</p>
-                                    <select2 :options="options" v-model="selected">
-                                    <option disabled value="0">Select one</option>
-                                    </select2>
-                                </div>
-                                </script>
-
-                                <script type="text/x-template" id="select2-template">
-                                <select>
-                                    <slot></slot>
-                                </select>
-                                </script>
+                                
+                               
 
 
                                 <div class="form-group row">
@@ -219,19 +204,12 @@
                 buscar : '',
                 arrayPlataformas:[],
                 arrayGeneros:[],
-                selected: null,
-                generitos: [],
-                selected: 2,
-                options: [
-                { id: 1, text: 'Hello' },
-                { id: 2, text: 'World' }
-                ]
+                arrayGenerosSeleccionados:[]
+                
 
             }
         },
-        ready() {
-            this.selectGeneritos()
-        },
+        
         computed:{
             isActived: function(){
                 return this.pagination.current_page;
@@ -375,6 +353,7 @@
                                 this.modal = 1;
                                 this.tituloModal = "Registrar Producto";
                                 this.idPlataformas=0;
+                                this.arrayGenerosSeleccionados=[''];
                                 this.idGeneros=0;
                                 this.nombreProductos='';
                                 this.descripcionProductos='';
@@ -390,8 +369,8 @@
                                 this.modal = 1;
                                 this.tipoAccion = 2;
                                 this.tituloModal = "Actualizar Producto";
-                                this.idProductos=data['idProductos'];
-                                this.idGeneros=data['idGeneros'];
+                                this.idProductos=data['idProductos'];                                
+                                this.arrayGenerosSeleccionados=data['arrayGenerosSeleccionados'];
                                 this.idPlataformas=data['idPlataformas'];
                                 this.nombreProductos=data['nombreProductos'];
                                 this.descripcionProductos=data['descripcionProductos'];
@@ -408,57 +387,15 @@
                 this.selectGeneros();
                 this.selectPlataformas();
             },
-            selectGeneritos: function () {
-            this.$http({
-                url: '/generos/selectGeneros',
-                method: 'GET'
-            }).then(function (response) {
-                this.$set('generitos', response.data)
-            }, function (response) {
-                // error callback
-            });
-            }
+           
         },
-        directives: {
-        select2: {
-            props: ['options', 'value'],
-            template: '#select2-template',
-            mounted: function () {
-                var vm = this
-                $(this.$el)
-                // init select2
-                .select2({ data: this.options })
-                .val(this.value)
-                .trigger('change')
-                // emit event on change.
-                .on('change', function () {
-                    vm.$emit('input', this.value)
-                })
-  },
-  watch: {
-    value: function (value) {
-      // update value
-      $(this.$el)
-      	.val(value)
-      	.trigger('change')
-    },
-    options: function (options) {
-      // update options
-      $(this.$el).empty().select2({ data: options })
+        
+        mounted() {
+            this.listarProducto(1, this.buscar, this.criterio);
+            
+        }
     }
-  },
-  destroyed: function () {
-    $(this.$el).off().select2('destroy')
-  }
-}
-},
-
- 
-  
-  
     
- 
-  
 
 </script>
 <style>

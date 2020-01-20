@@ -48275,9 +48275,401 @@ exports.push([module.i, "\n.modal-content{\n    width: 100% !important;\n    pos
 
 /***/ }),
 /* 87 */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed: SyntaxError: C:/xampp/htdocs/njoystickvue/resources/assets/js/components/Producto.vue: Unexpected token (463:0)\n\n\u001b[0m \u001b[90m 461 | \u001b[39m  \n \u001b[90m 462 | \u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 463 | \u001b[39m\n \u001b[90m     | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n");
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            idProductos: 0,
+            idPlataformas: 0,
+            idGeneros: 0,
+            nombreProductos: '',
+            descripcionProductos: '',
+            stockNuevoProductos: '',
+            stockUsadoProductos: '',
+            precioNuevoProductos: '',
+            precioUsadoProductos: '',
+            arrayProductos: [],
+            modal: 0,
+            tituloModal: '',
+            tipoAccion: 0,
+            errorProducto: 0,
+            errorMsjProducto: [],
+            pagination: {
+                'total': 0,
+                'current_page': 0,
+                'per_page': 0,
+                'last_page': 0,
+                'from': 0,
+                'to': 0
+            },
+            offset: 3,
+            criterio: 'nombre',
+            buscar: '',
+            arrayPlataformas: [],
+            arrayGeneros: [],
+            arrayGenerosSeleccionados: []
+
+        };
+    },
+
+
+    computed: {
+        isActived: function isActived() {
+            return this.pagination.current_page;
+        },
+        pagesNumber: function pagesNumber() {
+            if (!this.pagination.to) {
+                return [];
+            }
+
+            var from = this.pagination.current_page - this.offset;
+            if (from < 1) {
+                from = 1;
+            }
+
+            var to = from + this.offset * 2;
+            if (to >= this.pagination.last_page) {
+                to = this.pagination.last_page;
+            }
+            var pagesArray = [];
+            while (from <= to) {
+                pagesArray.push(from);
+                from++;
+            }
+            return pagesArray;
+        }
+    },
+    methods: {
+        listarProducto: function listarProducto(page, buscar, criterio) {
+            var me = this;
+            var url = '/productos?page=' + page + '&buscar=' + buscar + '&criterio=' + criterio;
+            axios.get(url).then(function (response) {
+                var respuesta = response.data;
+                me.arrayProductos = respuesta.productos.data;
+                me.pagination = respuesta.pagination;
+            }).catch(function (error) {
+                console.log(error.response);
+            });
+        },
+        selectPlataformas: function selectPlataformas() {
+            var me = this;
+            var url = '/plataformas/selectPlataformas';
+            axios.get(url).then(function (response) {
+                //console.log(response);
+                var respuesta = response.data;
+                me.arrayPlataformas = respuesta.plataformas;
+            }).catch(function (error) {
+                console.log(error.response);
+            });
+        },
+        selectGeneros: function selectGeneros() {
+            var me = this;
+            var url = '/generos/selectGeneros';
+            axios.get(url).then(function (response) {
+                //console.log(response);
+                var respuesta = response.data;
+                me.arrayGeneros = respuesta.generos;
+            }).catch(function (error) {
+                console.log(error.response);
+            });
+        },
+        cambiarPagina: function cambiarPagina(page, buscar, criterio) {
+            var me = this;
+            me.pagination.current_page = page;
+            me.listarProducto(page, buscar, criterio);
+        },
+        registrarProducto: function registrarProducto() {
+            if (this.validarProducto()) {
+                return;
+            }
+            var me = this;
+            axios.post('productos/registrar', {
+                'nombreProductos': this.nombreProductos,
+                'idPlataformas': this.idPlataformas,
+                'idGeneros': this.idGeneros,
+                'descripcionProductos': this.descripcionProductos,
+                'stockNuevoProductos': this.stockNuevoProductos,
+                'stockUsadoProductos': this.stockUsadoProductos,
+                'precioNuevoProductos': this.precioNuevoProductos,
+                'precioUsadoProductos': this.precioUsadoProductos
+            }).then(function (response) {
+                me.cerrarModal();
+                me.listarProducto(1, '', 'nombre');
+            }).catch(function (error) {
+                console.log(error.response);
+            });
+        },
+        actualizarProducto: function actualizarProducto() {
+            if (this.validarProducto()) {
+                return;
+            }
+            var me = this;
+            axios.put('productos/actualizar', {
+                'nombreProductos': this.nombreProductos,
+                'idPlataformas': this.idPlataformas,
+                'idGeneros': this.idGeneros,
+                'descripcionProductos': this.descripcionProductos,
+                'stockNuevoProductos': this.stockNuevoProductos,
+                'stockUsadoProductos': this.stockUsadoProductos,
+                'precioNuevoProductos': this.precioNuevoProductos,
+                'precioUsadoProductos': this.precioUsadoProductos,
+                'idProductos': this.idProductos
+            }).then(function (response) {
+                me.cerrarModal();
+                me.listarProducto(1, '', 'nombre');
+            }).catch(function (error) {
+                console.log(error.response);
+            });
+        },
+        validarProducto: function validarProducto() {
+            this.errorProducto = 0;
+            this.errorMsjProducto = [];
+
+            if (this.idPlataformas == 0) this.errorMsjProducto.push("Seleccione una plataforma");
+            if (!this.nombreProductos) this.errorMsjProducto.push("El nombre del Producto no debe estar vacío");
+            if (!this.stockNuevoProductos) this.errorMsjProducto.push("El stock debe ser un número");
+            if (this.errorMsjProducto.length) this.errorProducto = 1;
+
+            return this.errorProducto;
+        },
+        cerrarModal: function cerrarModal() {
+            this.modal = 0;
+            this.tituloModal = '';
+            this.nombreProductos = '';
+            this.idPlataformas = 0, this.idGeneros = 0, this.descripcionProductos = '';
+            this.stockNuevoProductos = '';
+            this.stockUsadoProductos = '';
+            this.precioNuevoProductos = '';
+            this.precioUsadoProductos = '';
+        },
+        abrirModal: function abrirModal(modelo, accion) {
+            var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+
+            switch (modelo) {
+                case "producto":
+                    {
+                        switch (accion) {
+                            case 'registrar':
+                                {
+                                    this.modal = 1;
+                                    this.tituloModal = "Registrar Producto";
+                                    this.idPlataformas = 0;
+                                    this.arrayGenerosSeleccionados = [''];
+                                    this.idGeneros = 0;
+                                    this.nombreProductos = '';
+                                    this.descripcionProductos = '';
+                                    this.stockNuevoProductos = '';
+                                    this.stockUsadoProductos = '';
+                                    this.precioNuevoProductos = '';
+                                    this.precioUsadoProductos = '';
+                                    this.tipoAccion = 1;
+                                    break;
+                                }
+                            case 'actualizar':
+                                {
+                                    this.modal = 1;
+                                    this.tipoAccion = 2;
+                                    this.tituloModal = "Actualizar Producto";
+                                    this.idProductos = data['idProductos'];
+                                    this.arrayGenerosSeleccionados = data['arrayGenerosSeleccionados'];
+                                    this.idPlataformas = data['idPlataformas'];
+                                    this.nombreProductos = data['nombreProductos'];
+                                    this.descripcionProductos = data['descripcionProductos'];
+                                    this.stockNuevoProductos = data['stockNuevoProductos'];
+                                    this.stockUsadoProductos = data['stockUsadoProductos'];
+                                    this.precioNuevoProductos = data['precioNuevoProductos'];
+                                    this.precioUsadoProductos = data['precioUsadoProductos'];
+                                    break;
+                                }
+                        }
+                    }
+            }
+            this.selectGeneros();
+            this.selectPlataformas();
+        }
+    },
+
+    mounted: function mounted() {
+        this.listarProducto(1, this.buscar, this.criterio);
+    }
+});
 
 /***/ }),
 /* 88 */
@@ -48785,11 +49177,12 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.idGeneros,
-                                expression: "idGeneros"
+                                value: _vm.arrayGenerosSeleccionados,
+                                expression: "arrayGenerosSeleccionados"
                               }
                             ],
                             staticClass: "form-control",
+                            attrs: { multiple: "" },
                             on: {
                               change: function($event) {
                                 var $$selectedVal = Array.prototype.filter
@@ -48800,64 +49193,26 @@ var render = function() {
                                     var val = "_value" in o ? o._value : o.value
                                     return val
                                   })
-                                _vm.idGeneros = $event.target.multiple
+                                _vm.arrayGenerosSeleccionados = $event.target
+                                  .multiple
                                   ? $$selectedVal
                                   : $$selectedVal[0]
                               }
                             }
                           },
-                          [
-                            _c(
-                              "option",
-                              { attrs: { value: "0", disabled: "" } },
-                              [_vm._v("Seleccione")]
-                            ),
-                            _vm._v(" "),
-                            _vm._l(_vm.arrayGeneros, function(genero) {
-                              return _c("option", {
-                                key: genero.idGeneros,
-                                domProps: {
-                                  value: genero.idGeneros,
-                                  textContent: _vm._s(genero.nombreGeneros)
-                                }
-                              })
+                          _vm._l(_vm.arrayGeneros, function(genero) {
+                            return _c("option", {
+                              key: genero.idGeneros,
+                              domProps: {
+                                value: genero.idGeneros,
+                                textContent: _vm._s(genero.nombreGeneros)
+                              }
                             })
-                          ],
-                          2
+                          }),
+                          0
                         )
                       ])
                     ]),
-                    _vm._v(" "),
-                    _c("div", { attrs: { id: "el" } }),
-                    _vm._v(" "),
-                    _c(
-                      "script",
-                      {
-                        attrs: { type: "text/x-template", id: "demo-template" }
-                      },
-                      [
-                        _vm._v(
-                          "\n                           <div>\n                               <p>Selected: " +
-                            _vm._s(_vm.selected) +
-                            '</p>\n                               <select2 :options="options" v-model="selected">\n                               <option disabled value="0">Select one</option>\n                               </select2>\n                           </div>\n                           '
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "script",
-                      {
-                        attrs: {
-                          type: "text/x-template",
-                          id: "select2-template"
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                           <select>\n                               <slot></slot>\n                           </select>\n                           "
-                        )
-                      ]
-                    ),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
                       _c(

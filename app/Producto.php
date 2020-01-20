@@ -22,6 +22,6 @@ class Producto extends Model
     }
     
     public function generos(){
-        return $this->belongsToMany('App\Genero');
+        return $this->belongsToMany('App\Genero', 'genero_producto');
     }
 }

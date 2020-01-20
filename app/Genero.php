@@ -11,7 +11,7 @@ class Genero extends Model
     protected $fillable= ['nombreGeneros', 'descripcionGeneros'];
 
     public function productos(){
-        return $this->belongsToMany('App\Producto');
+        return $this->belongsToMany('App\Producto', 'genero_producto');
     }
     
 }
