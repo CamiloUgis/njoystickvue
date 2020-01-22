@@ -112,17 +112,12 @@
                                     <label class="col-md-3 form-control-label" for="number-input">Género</label>
                                     <div class="col-md-9">
                                         <select class="form-control" v-model="arrayGenerosSeleccionados" multiple>
-                                            
                                             <option v-for="genero in arrayGeneros" :key="genero.idGeneros"
                                             :value="genero.idGeneros" v-text="genero.nombreGeneros"></option>
                                         </select>
                                     </div>
                                 </div>
                                 
-                                
-                               
-
-
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="number-input">Stock Nuevo</label>
                                     <div class="col-md-9">
@@ -287,6 +282,7 @@
                     'nombreProductos': this.nombreProductos,
                     'idPlataformas': this.idPlataformas,  
                     'idGeneros': this.idGeneros,  
+                    'arrayGenerosSeleccionados': this.arrayGenerosSeleccionados,
                     'descripcionProductos': this.descripcionProductos,
                     'stockNuevoProductos': this.stockNuevoProductos,
                     'stockUsadoProductos': this.stockUsadoProductos,
@@ -308,6 +304,7 @@
                     'nombreProductos': this.nombreProductos,
                     'idPlataformas': this.idPlataformas,
                     'idGeneros': this.idGeneros,  
+                    'arrayGenerosSeleccionados': this.arrayGenerosSeleccionados,
                     'descripcionProductos': this.descripcionProductos,
                     'stockNuevoProductos': this.stockNuevoProductos,
                     'stockUsadoProductos': this.stockUsadoProductos,
