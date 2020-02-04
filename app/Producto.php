@@ -21,7 +21,7 @@ class Producto extends Model
         return $this->hasOne('App\Plataforma');
     }
     
-    public function generos(){
-        return $this->belongsToMany('App\Genero', 'genero_producto');
+    public function generoProducto(){
+        return $this->hasMany('App\GeneroProducto');
     }
 }

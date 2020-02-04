@@ -10,8 +10,8 @@ class Genero extends Model
     protected $primaryKey= 'idGeneros';
     protected $fillable= ['nombreGeneros', 'descripcionGeneros'];
 
-    public function productos(){
-        return $this->belongsToMany('App\Producto', 'genero_producto');
+    public function generoProducto(){
+        return $this->hasMany('App\GeneroProducto');
     }
     
 }

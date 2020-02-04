@@ -10,4 +10,10 @@ class GeneroProducto extends Model
     protected $fillable = [
         'idGeneros', 'idProductos'
     ];
+    public function genero(){
+        return $this->belongsTo('App\Genero');
+    }
+    public function producto(){
+        return $this->belongsTo('App\Producto');
+    }
 }

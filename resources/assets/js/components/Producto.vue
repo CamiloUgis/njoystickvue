@@ -108,15 +108,8 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="number-input">Género</label>
-                                    <div class="col-md-9">
-                                        <select class="form-control" v-model="arrayGenerosSeleccionados" multiple>
-                                            <option v-for="genero in arrayGeneros" :key="genero.idGeneros"
-                                            :value="genero.idGeneros" v-text="genero.nombreGeneros"></option>
-                                        </select>
-                                    </div>
-                                </div>
+                     
+                                
                                 
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="number-input">Stock Nuevo</label>
@@ -140,6 +133,25 @@
                                     <label class="col-md-3 form-control-label" for="number-input">Precio Usado</label>
                                     <div class="col-md-9">
                                         <input type="number" v-model="precioUsadoProductos" name="preciousado" class="form-control" placeholder="Precio de juego usado">
+                                    </div>
+                                </div>
+                                 <!--       <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="number-input">Género</label>
+                                    <div class="col-md-9">
+                                        <select class="mdb-select md-form" multiple v-model="arrayGenerosSeleccionados">
+                                            <option v-for="genero in arrayGeneros" :key="genero.idGeneros"
+                                            :value="genero.idGeneros" v-text="genero.nombreGeneros"></option>
+                                        </select>
+                                    </div>
+                                </div> -->
+
+                                <div>
+                                    <label class="col-md-3 typo__label">Géneros</label>
+                                    <div class="col-md-9">
+                                      <multiselect v-model="arrayGenerosSeleccionados" 
+                                      placeholder="Search a tag" label="nombreGeneros" track-by="nombreGeneros" 
+                                      :options="arrayGeneros" :multiple="true" :taggable="true"></multiselect>
+
                                     </div>
                                 </div>
                            <!--     <div v-show="errorProducto" class="form-group row div-error">
@@ -166,11 +178,14 @@
 </template>
 
 <script>
+import Multiselect from 'vue-multiselect'
+ Vue.component('multiselect', Multiselect)
 
-    export default {
-        
+        export default {
+            // OR register locally
+            components: { Multiselect },   
         data(){
-            return{
+            return{ 
                 idProductos:0,
                 idPlataformas:0,
                 idGeneros:0,
@@ -350,7 +365,6 @@
                                 this.modal = 1;
                                 this.tituloModal = "Registrar Producto";
                                 this.idPlataformas=0;
-                                this.arrayGenerosSeleccionados=[''];
                                 this.idGeneros=0;
                                 this.nombreProductos='';
                                 this.descripcionProductos='';
@@ -367,7 +381,6 @@
                                 this.tipoAccion = 2;
                                 this.tituloModal = "Actualizar Producto";
                                 this.idProductos=data['idProductos'];                                
-                                this.arrayGenerosSeleccionados=data['arrayGenerosSeleccionados'];
                                 this.idPlataformas=data['idPlataformas'];
                                 this.nombreProductos=data['nombreProductos'];
                                 this.descripcionProductos=data['descripcionProductos'];
@@ -395,6 +408,7 @@
     
 
 </script>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style>
     .modal-content{
         width: 100% !important;
