@@ -20,8 +20,8 @@ class Producto extends Model
     public function plataforma(){
         return $this->hasOne('App\Plataforma');
     }
-    
     public function generoProducto(){
-        return $this->hasMany('App\GeneroProducto');
+        return $this->belongsTo('App\GeneroProducto');
     }
+    
 }

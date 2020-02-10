@@ -27,7 +27,6 @@ import Vuelidate from 'vuelidate'
 Vue.use(Vuelidate)
 
 
-
 const app = new Vue({
     el: '#app',
     data:{

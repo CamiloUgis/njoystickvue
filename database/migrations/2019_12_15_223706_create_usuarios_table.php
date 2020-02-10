@@ -15,13 +15,20 @@ class CreateUsuariosTable extends Migration
     {
         Schema::create('usuarios', function (Blueprint $table) {
             $table->increments('idUsuarios');
-            $table->string('nickUsuarios')->unique();
+            $table->string('nickUsuarios');
             $table->string('password');
 
             $table->integer('idRoles')->unsigned();
             $table->foreign('idRoles')->references('idRoles')->on('roles');
             $table->timestamps();
         });
+        DB::table('usuarios')->insert(
+            array(
+                'nickUsuarios' => 'njoystick',
+                'password' => 'njoystick12345',
+                'idRoles'=>1
+            )
+        );
     }
 
     /**

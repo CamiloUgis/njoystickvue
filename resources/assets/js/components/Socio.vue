@@ -83,7 +83,7 @@
                                     <div class="col-md-9">
                                         <select class="form-control" v-model="idClientes">
                                             <option value="0" disabled>Seleccione</option>
-                                            <option v-for="cliente in arrayClientes" :key="cliente.idClientes"
+                                            <option v-for="cliente in filterClientes" :key="cliente.idClientes"
                                             :value="cliente.idClientes" v-text="cliente.nombreClientes"></option>
                                         </select>
                                     </div>
@@ -151,6 +151,13 @@
             }
         },
         computed:{
+            filterClientes: function() {
+                var aSoc= this.arraySocios;
+                return this.arrayClientes.filter(function(cliente) {
+                return (!(cliente.idClientes in aSoc));
+
+                })
+            },
             isActived: function(){
                 return this.pagination.current_page;
             },
@@ -177,6 +184,7 @@
             }
         },
         methods:{
+           
             listarSocio(page, buscar, criterio){
                 let me=this;
                 var url= '/socios?page='+page + '&buscar='+ buscar + '&criterio=' + criterio;

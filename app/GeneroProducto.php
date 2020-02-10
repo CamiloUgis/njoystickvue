@@ -10,10 +10,12 @@ class GeneroProducto extends Model
     protected $fillable = [
         'idGeneros', 'idProductos'
     ];
-    public function genero(){
-        return $this->belongsTo('App\Genero');
+    public function productos(){
+        return $this->hasMany('App\Producto');
     }
-    public function producto(){
-        return $this->belongsTo('App\Producto');
+    public function generos(){
+        return $this->hasMany('App\Genero');
     }
+    public $timestamps = false;
 }
+

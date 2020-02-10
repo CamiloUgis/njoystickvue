@@ -296,7 +296,7 @@ import Multiselect from 'vue-multiselect'
                 axios.post('productos/registrar',{
                     'nombreProductos': this.nombreProductos,
                     'idPlataformas': this.idPlataformas,  
-                    'idGeneros': this.idGeneros,  
+                     
                     'arrayGenerosSeleccionados': this.arrayGenerosSeleccionados,
                     'descripcionProductos': this.descripcionProductos,
                     'stockNuevoProductos': this.stockNuevoProductos,
@@ -306,6 +306,7 @@ import Multiselect from 'vue-multiselect'
                     }).then(function (response){
                         me.cerrarModal();
                         me.listarProducto(1,'', 'nombre');
+                        console.log(error.response);
                 }).catch(function (error){
                     console.log(error.response);
                 })
@@ -318,7 +319,6 @@ import Multiselect from 'vue-multiselect'
                 axios.put('productos/actualizar',{
                     'nombreProductos': this.nombreProductos,
                     'idPlataformas': this.idPlataformas,
-                    'idGeneros': this.idGeneros,  
                     'arrayGenerosSeleccionados': this.arrayGenerosSeleccionados,
                     'descripcionProductos': this.descripcionProductos,
                     'stockNuevoProductos': this.stockNuevoProductos,
@@ -348,8 +348,8 @@ import Multiselect from 'vue-multiselect'
                 this.modal=0;
                 this.tituloModal='';
                 this.nombreProductos='';
-                this.idPlataformas=0,
-                this.idGeneros=0,
+                this.idPlataformas=0;
+                this.arrayGenerosSeleccionados=[];
                 this.descripcionProductos='';
                 this.stockNuevoProductos='';
                 this.stockUsadoProductos='';
@@ -365,7 +365,6 @@ import Multiselect from 'vue-multiselect'
                                 this.modal = 1;
                                 this.tituloModal = "Registrar Producto";
                                 this.idPlataformas=0;
-                                this.idGeneros=0;
                                 this.nombreProductos='';
                                 this.descripcionProductos='';
                                 this.stockNuevoProductos='';

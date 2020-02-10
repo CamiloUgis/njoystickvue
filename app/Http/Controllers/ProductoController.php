@@ -50,34 +50,35 @@ class ProductoController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
-        // if(!$request->ajax()) return redirect('/');
-        //  try{
-        //      DB::beginTransaction();
-        //     $producto = new Producto();
-        //     $producto->idPlataformas = $request->input('idPlataformas');
-        //     $producto->nombreProductos = $request->input('nombreProductos');
-        //     $producto->descripcionProductos = $request->input('descripcionProductos');
-        //     $producto->precioNuevoProductos = $request->input('precioNuevoProductos');
-        //     $producto->precioUsadoProductos = $request->input('precioUsadoProductos');
-        //     $producto->stockNuevoProductos = $request->input('stockNuevoProductos');
-        //     $producto->stockUsadoProductos = $request->input('stockUsadoProductos');
+         if(!$request->ajax()) return redirect('/');
+          try{
+              DB::beginTransaction();
+             
+             $producto = new Producto();
+             $producto->idPlataformas = $request->input('idPlataformas');
+             $producto->nombreProductos = $request->input('nombreProductos');
+             $producto->descripcionProductos = $request->input('descripcionProductos');
+             $producto->precioNuevoProductos = $request->input('precioNuevoProductos');
+             $producto->precioUsadoProductos = $request->input('precioUsadoProductos');
+             $producto->stockNuevoProductos = $request->input('stockNuevoProductos');
+             $producto->stockUsadoProductos = $request->input('stockUsadoProductos');
 
-            
-        //      $pivote = $request->data;
+             $producto->save();
+             $idProd=$producto->idProductos;
+              $pivote = $request->input('arrayGenerosSeleccionados');
            
-        //      foreach($pivote as $ep=>$det){
-        //          $ep= new GeneroProducto();
+              foreach($pivote as $ep){
+                  $gp= new GeneroProducto();
                 
-        //          $ep->idProductos = $producto->idProductos;
-        //          $ep->idGeneros = $det->$arrayGenerosSeleccionados['idGeneros'];
-        //          $ep->save();
-        //      }
+                  $gp->idProductos = $idProd;
+                  $gp->idGeneros = $ep['idGeneros'];
+                  $gp->save();
+              }
 
-        //      }catch(Exception $e){
-        //          DB:rollback();
-        //      }
-        //     $producto->save();
+              }catch(Exception $e){
+                  DB:rollback();
+              }
+            
 
     }
     
@@ -87,7 +88,7 @@ class ProductoController extends Controller
     {
 
         if(!$request->ajax()) return redirect('/');
-        $producto = Producto::findOrFail($request->idProductos);;
+        $producto = Producto::findOrFail($request->idProductos);
         $producto->nombreProductos = $request->input('nombreProductos');
         $producto->idPlataformas = $request->input('idPlataformas');
         $producto->descripcionProductos = $request->input('descripcionProductos');
