@@ -75,18 +75,21 @@
                         </div>
                         <div class="modal-body">
                             <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                
+                               
+
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Nombre</label>
                                     <div class="col-md-9">
-                                        <input type="text" v-model="nombreGeneros" name="nombre" class="form-control" placeholder="Nombre de género">
-                                        <span v-if="errors.nombreGeneros" class="error">{{errors.nombreGeneros[0]}}</span>
-
+                                        <input type="text" v-model="nombreGeneros" name="nombre" class="form-control" :class="{ 'is-invalid': submitted&& $v.nombreGeneros.$error}" placeholder="Nombre de género">
+                                        <div v-if="submitted && !$v.nombreGeneros.required" class="invalid-feedback">El nombre es requerido</div>
+                                        <!-- <span v-if="errors.nombreGeneros" class="error">{{errors.nombreGeneros[0]}}</span> -->
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="email-input">Descripción</label>
                                     <div class="col-md-9">
-                                        <input type="text" v-model="descripcionGeneros" name="descripcion" class="form-control" placeholder="Descripción de género">
+                                        <input type="text" v-model="descripcionGeneros" name="descripcion" class="form-control"  placeholder="Descripción de género">
                                         <span v-if="errors.descripcionGeneros" class="error">{{errors.descripcionGeneros[0]}}</span>
                                     </div>
                                 </div>
@@ -114,6 +117,8 @@
 </template>
 
 <script>
+import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
+
     export default {
         data(){
             return{
@@ -137,9 +142,12 @@
                 },
                 offset: 3,
                 criterio: 'nombre',
-                buscar : ''
-
+                buscar : '',
+                submitted : false
             }
+        },
+        validations: {
+            nombreGeneros: {required}
         },
         computed:{
             isActived: function(){
@@ -167,7 +175,19 @@
                 return pagesArray;
             }
         },
+       
         methods:{
+              handleSubmit(e) {
+                this.submitted = true;
+
+                // stop here if form is invalid
+                this.$v.$touch();
+                if (this.$v.$invalid) {
+                    return;
+                }
+
+                alert("SUCCESS!! :-)\n\n");
+            },
             listarGenero(page, buscar, criterio){
                 let me=this;
                 var url= '/generos?page='+page + '&buscar='+ buscar + '&criterio=' + criterio;
