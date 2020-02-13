@@ -50,7 +50,7 @@ class PlataformaController extends Controller
         if(!$request->ajax()) return redirect('/');
         $validar= $request->validate([
             'nombrePlataformas'=>'required|unique:plataformas,nombrePlataformas',
-             
+            
         ]);
         $plataforma = new Plataforma();
         $plataforma->nombrePlataformas = $request->input('nombrePlataformas');

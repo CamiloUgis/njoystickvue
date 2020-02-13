@@ -48,10 +48,10 @@ class GeneroController extends Controller
 
     public function store(Request $request)
     {
-        // $validar= $request->validate([
-        //     'nombreGeneros'=>'required',
-        //     'descripcionGeneros'=>'required',
-        // ]);
+        $validar= $request->validate([
+            'nombreGeneros'=>'required',
+            'descripcionGeneros'=>'required',
+        ]);
         if(!$request->ajax()) return redirect('/');
         $genero = new Genero();
         $genero->nombreGeneros = $request->input('nombreGeneros');

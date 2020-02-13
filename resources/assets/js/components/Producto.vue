@@ -145,11 +145,11 @@
                                     </div>
                                 </div> -->
 
-                                <div>
+                                <div class="form-group row">
                                     <label class="col-md-3 typo__label">Géneros</label>
                                     <div class="col-md-9">
                                       <multiselect v-model="arrayGenerosSeleccionados" 
-                                      placeholder="Search a tag" label="nombreGeneros" track-by="nombreGeneros" 
+                                      placeholder="Agregue uno o más géneros" label="nombreGeneros" track-by="nombreGeneros" :hide-selected="true" 
                                       :options="arrayGeneros" :multiple="true" :taggable="true"></multiselect>
 
                                     </div>

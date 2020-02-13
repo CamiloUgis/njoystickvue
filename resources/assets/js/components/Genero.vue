@@ -75,35 +75,22 @@
                         </div>
                         <div class="modal-body">
                             <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                                
-                               
-                            <div>
-                                <div class="form-group" :class="{ 'form-group--error': $v.nombreGeneros.$error }">
-                                    <label class="form__label">Nombre</label>
-                                    <input class="form__input" v-model.trim="nombreGeneros" @input="setName($event.target.value)"/>
-                                </div>
-                                <div class="error" v-if="!$v.nombreGeneros.required">Field is required</div>                                
-                            </div>
-                             <!--   <div class="form-group row">
+                                <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Nombre</label>
                                     <div class="col-md-9">
-                                        <input type="text" v-model="nombreGeneros" name="nombre" class="form-control" :class="{ 'is-invalid': submitted&& $v.nombreGeneros.$error}" placeholder="Nombre de género">
-                                        <div v-if="submitted && !$v.nombreGeneros.required" class="invalid-feedback">El nombre es requerido</div>
-                                        <span v-if="errors.nombreGeneros" class="error">{{errors.nombreGeneros[0]}}</span> 
+                                        <input type="text" v-model="nombreGeneros" name="nombre" class="form-control" placeholder="Nombre de género">
+                                        <span v-if="errors.nombreGeneros" class="error">{{errors.nombreGeneros[0]}}</span>
+
                                     </div>
-                                </div> -->
+                                </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="email-input">Descripción</label>
                                     <div class="col-md-9">
-                                        <input type="text" v-model="descripcionGeneros" name="descripcion" class="form-control"  placeholder="Descripción de género">
+                                        <input type="text" v-model="descripcionGeneros" name="descripcion" class="form-control" placeholder="Descripción de género">
+                                        <span v-if="errors.descripcionGeneros" class="error">{{errors.descripcionGeneros[0]}}</span>
                                     </div>
                                 </div>
-                                <!-- <div v-show="errorGenero" class="form-group row div-error">
-                                    <div class="text-center text-error">
-                                        <div v-for="error in errorMsjGenero" :key="error" v-text="error">
-                                        </div>
-                                    </div>
-                                </div> -->
+                                
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -120,11 +107,8 @@
             <!--Fin del modal-->
         </main>
 </template>
-<script src="vuelidate/dist/vuelidate.min.js"></script>
-<!-- The builtin validators is added by adding the following line. -->
-<script src="vuelidate/dist/validators.min.js"></script>
+
 <script>
-import { required, minLength } from 'vuelidate/lib/validators'
     export default {
         data(){
             return{
@@ -135,7 +119,7 @@ import { required, minLength } from 'vuelidate/lib/validators'
                 modal : 0,
                 tituloModal : '',
                 tipoAccion : 0,
-                submitStatus: null,
+                errors: [],
                 // errorGenero : 0,
                 // errorMsjGenero : [],
                 pagination : {
@@ -148,12 +132,8 @@ import { required, minLength } from 'vuelidate/lib/validators'
                 },
                 offset: 3,
                 criterio: 'nombre',
-                buscar : '',
-            }
-        },
-        validations: {
-            nombreGeneros: {
-            required,
+                buscar : ''
+
             }
         },
         computed:{
@@ -182,18 +162,7 @@ import { required, minLength } from 'vuelidate/lib/validators'
                 return pagesArray;
             }
         },
-       
         methods:{
-                setName(value) {
-                    this.nombreGeneros = value
-                    this.$v.nombreGeneros.$touch()
-                },
-                status(validation) {
-                    return {
-                    error: validation.$error,
-                    dirty: validation.$dirty
-                    }
-                },
             listarGenero(page, buscar, criterio){
                 let me=this;
                 var url= '/generos?page='+page + '&buscar='+ buscar + '&criterio=' + criterio;
@@ -298,32 +267,7 @@ import { required, minLength } from 'vuelidate/lib/validators'
         }
     }
 </script>
-
 <style>
-    input {
-  border: 1px solid silver;
-  border-radius: 4px;
-  background: white;
-  padding: 5px 10px;
-}
-
-.dirty {
-  border-color: #5A5;
-  background: #EFE;
-}
-
-.dirty:focus {
-  outline-color: #8E8;
-}
-
-.error {
-  border-color: red;
-  background: #FDD;
-}
-
-.error:focus {
-  outline-color: #F99;
-}
     .modal-content{
         width: 100% !important;
         position: absolute !important;
@@ -343,5 +287,4 @@ import { required, minLength } from 'vuelidate/lib/validators'
         color: red !important;
         font-weight: bold;
     }
-    
 </style>
