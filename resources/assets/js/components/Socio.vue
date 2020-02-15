@@ -37,7 +37,10 @@
                                 <tr v-for="socio in arraySocios" :key="socio.idClientes">
                                     <td v-text="'NJ'+socio.idClientes"></td>
                                     <td v-text="socio.nombreClientes"></td>
-                                    <td v-text="socio.estadoSocios"></td>
+                                    
+                                    <td v-if="socio.estadoSocios==1">Activo</td>
+                                    <td v-else>Inactivo</td>
+
                                     <td v-text="socio.puntosSocios"></td>
                                     <td>
                                         <button type="button" @click="abrirModal('socio', 'actualizar', socio)" class="btn btn-warning btn-sm">
@@ -83,7 +86,7 @@
                                     <div class="col-md-9">
                                         <select class="form-control" v-model="idClientes">
                                             <option value="0" disabled>Seleccione</option>
-                                            <option v-for="cliente in filterClientes" :key="cliente.idClientes"
+                                            <option v-for="cliente in arrayClientes" :key="cliente.idClientes"
                                             :value="cliente.idClientes" v-text="cliente.nombreClientes"></option>
                                         </select>
                                     </div>
@@ -151,13 +154,13 @@
             }
         },
         computed:{
-            filterClientes: function() {
-                var aSoc= this.arraySocios;
-                return this.arrayClientes.filter(function(cliente) {
-                return (!(cliente.idClientes in aSoc));
+            // filterClientes: function() {
+            //     var aSoc= this.arraySocios;
+            //     return this.arrayClientes.filter(function(cliente) {
+            //     return (!(cliente.idClientes in aSoc));
 
-                })
-            },
+            //     })
+            // },
             isActived: function(){
                 return this.pagination.current_page;
             },
