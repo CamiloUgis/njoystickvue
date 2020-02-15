@@ -37,12 +37,15 @@ class ClienteController extends Controller
     }
     public function selectClientes(Request $request){
         if(!$request->ajax()) return redirect('/');
-        $clientes = DB::table('clientes')
-        ->select('idClientes', 'nombreClientes')->orderBy('nombreClientes', 'asc')->get();
+        $clientes = DB::table('clientes')->select('*')
+        ->whereNotIn('idClientes', function($query){
+            $query->select('idClientes')->from('socios');
+        })->orderBy('nombreClientes', 'asc')->get();
         return ['clientes' => $clientes];
 
     }
 
+    
     public function store(Request $request)
     {
         $validar= $request->validate([

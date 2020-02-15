@@ -48724,6 +48724,7 @@ Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
                                     this.modal = 1;
                                     this.tituloModal = "Registrar Producto";
                                     this.idPlataformas = 0;
+                                    this.arrayGenerosSeleccionados = [];
                                     this.nombreProductos = '';
                                     this.descripcionProductos = '';
                                     this.stockNuevoProductos = '';
@@ -51724,6 +51725,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -51755,12 +51759,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     computed: {
-        filterClientes: function filterClientes() {
-            var aSoc = this.arraySocios;
-            return this.arrayClientes.filter(function (cliente) {
-                return !(cliente.idClientes in aSoc);
-            });
-        },
+        // filterClientes: function() {
+        //     var aSoc= this.arraySocios;
+        //     return this.arrayClientes.filter(function(cliente) {
+        //     return (!(cliente.idClientes in aSoc));
+
+        //     })
+        // },
         isActived: function isActived() {
             return this.pagination.current_page;
         },
@@ -52050,9 +52055,9 @@ var render = function() {
                       domProps: { textContent: _vm._s(socio.nombreClientes) }
                     }),
                     _vm._v(" "),
-                    _c("td", {
-                      domProps: { textContent: _vm._s(socio.estadoSocios) }
-                    }),
+                    socio.estadoSocios == 1
+                      ? _c("td", [_vm._v("Activo")])
+                      : _c("td", [_vm._v("Inactivo")]),
                     _vm._v(" "),
                     _c("td", {
                       domProps: { textContent: _vm._s(socio.puntosSocios) }
@@ -52275,7 +52280,7 @@ var render = function() {
                               [_vm._v("Seleccione")]
                             ),
                             _vm._v(" "),
-                            _vm._l(_vm.filterClientes, function(cliente) {
+                            _vm._l(_vm.arrayClientes, function(cliente) {
                               return _c("option", {
                                 key: cliente.idClientes,
                                 domProps: {

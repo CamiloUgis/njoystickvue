@@ -393,6 +393,7 @@ import Multiselect from 'vue-multiselect'
                                 this.modal = 1;
                                 this.tituloModal = "Registrar Producto";
                                 this.idPlataformas=0;
+                                this.arrayGenerosSeleccionados=[];
                                 this.nombreProductos='';
                                 this.descripcionProductos='';
                                 this.stockNuevoProductos='';
