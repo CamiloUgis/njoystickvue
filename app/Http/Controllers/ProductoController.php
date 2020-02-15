@@ -51,35 +51,15 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
          if(!$request->ajax()) return redirect('/');
-          try{
-              DB::beginTransaction();
-             
              $producto = new Producto();
-             $producto->idPlataformas = $request->input('idPlataformas');
              $producto->nombreProductos = $request->input('nombreProductos');
              $producto->descripcionProductos = $request->input('descripcionProductos');
              $producto->precioNuevoProductos = $request->input('precioNuevoProductos');
              $producto->precioUsadoProductos = $request->input('precioUsadoProductos');
              $producto->stockNuevoProductos = $request->input('stockNuevoProductos');
              $producto->stockUsadoProductos = $request->input('stockUsadoProductos');
-
-             $producto->save();
-             $idProd=$producto->idProductos;
-              $pivote = $request->input('arrayGenerosSeleccionados');
-           
-              foreach($pivote as $ep){
-                  $gp= new GeneroProducto();
-                
-                  $gp->idProductos = $idProd;
-                  $gp->idGeneros = $ep['idGeneros'];
-                  $gp->save();
-              }
-
-              }catch(Exception $e){
-                  DB:rollback();
-              }
-            
-
+             $producto->idPlataformas = $request->input('idPlataformas');
+             $producto->save();    
     }
     
 
@@ -97,6 +77,25 @@ class ProductoController extends Controller
         $producto->stockNuevoProductos = $request->input('stockNuevoProductos');
         $producto->stockUsadoProductos = $request->input('stockUsadoProductos');
         $producto->save();
+    }
+
+
+    public function asociar(Request $request)
+    {
+        if(!$request->ajax()) return redirect('/');
+        try{
+            DB::beginTransaction();
+            $pivote = $request->input('arrayGenerosSeleccionados');
+     
+            foreach($pivote as $ep){
+                $gp = new GeneroProducto();  
+                $gp->idProductos = $request->input('idProductos');
+                $gp->idGeneros = $ep['idGeneros'];
+                $gp->save();
+            }
+        }catch(Exception $e){
+            DB:rollback();
+        }
     }
 
     

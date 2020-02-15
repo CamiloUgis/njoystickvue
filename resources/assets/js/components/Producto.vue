@@ -34,6 +34,8 @@
                                     <th class="text-center">Precio Nuevo</th>
                                     <th class="text-center">Precio Usado</th>
                                     <th class="text-center">Modificar</th>
+                                    <th class="text-center">Asociar Género</th>
+
                                 </tr>
                             </thead>
                             <tbody class="text-center">
@@ -47,6 +49,11 @@
                                     <td v-text="producto.precioUsadoProductos"></td>
                                     <td>
                                         <button type="button" @click="abrirModal('producto', 'actualizar', producto)" class="btn btn-warning btn-sm">
+                                          <i class="icon-pencil"></i>
+                                        </button> &nbsp;
+                                    </td>
+                                    <td>
+                                        <button type="button" @click="abrirModal('producto', 'asociar', producto)" class="btn btn-warning btn-sm">
                                           <i class="icon-pencil"></i>
                                         </button> &nbsp;
                                     </td>
@@ -73,6 +80,7 @@
                 <!-- Fin ejemplo de tabla Listado -->
             </div>
             <!--Inicio del modal agregar/actualizar-->
+            <div v-if="tipoAccion==1 || tipoAccion==2">
             <div class="modal fade" :class="{'mostrar' :modal}" role="dialog"  tabindex="-1" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
@@ -135,16 +143,31 @@
                                         <input type="number" v-model="precioUsadoProductos" name="preciousado" class="form-control" placeholder="Precio de juego usado">
                                     </div>
                                 </div>
-                                 <!--       <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="number-input">Género</label>
-                                    <div class="col-md-9">
-                                        <select class="mdb-select md-form" multiple v-model="arrayGenerosSeleccionados">
-                                            <option v-for="genero in arrayGeneros" :key="genero.idGeneros"
-                                            :value="genero.idGeneros" v-text="genero.nombreGeneros"></option>
-                                        </select>
-                                    </div>
-                                </div> -->
-
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" @click="cerrarModal()" >Cerrar</button>
+                            <button type="button" v-if="tipoAccion==1" class="btn btn-primary" @click="registrarProducto()" >Guardar</button>
+                            <button type="button" v-if="tipoAccion==2" class="btn btn-primary" @click="actualizarProducto()">Actualizar</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            </div>
+            <div v-if="tipoAccion==3">
+                <div class="modal fade" :class="{'mostrar' :modal}" role="dialog"  tabindex="-1" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" v-text="tituloModal"></h4>
+                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
                                 <div class="form-group row">
                                     <label class="col-md-3 typo__label">Géneros</label>
                                     <div class="col-md-9">
@@ -154,24 +177,17 @@
 
                                     </div>
                                 </div>
-                           <!--     <div v-show="errorProducto" class="form-group row div-error">
-                                    <div class="text-center text-error">
-                                        <div v-for="error in errorMsjProducto" :key="error" v-text="error">
-                                        </div>
-                                    </div>
-                                </div> -->
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" @click="cerrarModal()" >Cerrar</button>
-                            <button type="button" v-if="tipoAccion==1" class="btn btn-primary" @click="registrarProducto()" >Guardar</button>
-                            <button type="button" v-if="tipoAccion==2" class="btn btn-primary" @click="actualizarProducto()">Actualizar</button>
-
+                            <button type="button" v-if="tipoAccion==3" class="btn btn-primary" @click="asociarGenero()">Asociar Género</button>
                         </div>
                     </div>
                     <!-- /.modal-content -->
                 </div>
                 <!-- /.modal-dialog -->
+            </div>
             </div>
             <!--Fin del modal-->
         </main>
@@ -296,8 +312,6 @@ import Multiselect from 'vue-multiselect'
                 axios.post('productos/registrar',{
                     'nombreProductos': this.nombreProductos,
                     'idPlataformas': this.idPlataformas,  
-                     
-                    'arrayGenerosSeleccionados': this.arrayGenerosSeleccionados,
                     'descripcionProductos': this.descripcionProductos,
                     'stockNuevoProductos': this.stockNuevoProductos,
                     'stockUsadoProductos': this.stockUsadoProductos,
@@ -319,7 +333,6 @@ import Multiselect from 'vue-multiselect'
                 axios.put('productos/actualizar',{
                     'nombreProductos': this.nombreProductos,
                     'idPlataformas': this.idPlataformas,
-                    'arrayGenerosSeleccionados': this.arrayGenerosSeleccionados,
                     'descripcionProductos': this.descripcionProductos,
                     'stockNuevoProductos': this.stockNuevoProductos,
                     'stockUsadoProductos': this.stockUsadoProductos,
@@ -333,11 +346,26 @@ import Multiselect from 'vue-multiselect'
                     console.log(error.response);
                 })
             },
+            asociarGenero(){
+                if(this.validarProducto()){
+                    return;
+                }
+                let me=this;
+                axios.post('productos/asociarGenero',{
+                    'idProductos': this.idProductos,
+                    'arrayGenerosSeleccionados': this.arrayGenerosSeleccionados,
+                    }).then(function (response){
+                        me.cerrarModal();
+                        me.listarProducto(1,'', 'nombre');
+                        console.log(error.response);
+                }).catch(function (error){
+                    console.log(error.response);
+                })
+            },
              validarProducto(){
                 this.errorProducto=0;
                 this.errorMsjProducto = [];
                 
-               if(this.idPlataformas==0) this.errorMsjProducto.push("Seleccione una plataforma");
                 if(!this.nombreProductos) this.errorMsjProducto.push("El nombre del Producto no debe estar vacío");
                 if(!this.stockNuevoProductos) this.errorMsjProducto.push("El stock debe ser un número")
                 if(this.errorMsjProducto.length) this.errorProducto=1;
@@ -389,6 +417,14 @@ import Multiselect from 'vue-multiselect'
                                 this.precioUsadoProductos=data['precioUsadoProductos'];
                                 break;
 
+                            }
+                            case 'asociar':{
+                                this.modal = 1;
+                                this.tipoAccion = 3;
+                                this.tituloModal = "Asociar Géneros";
+                                this.idProductos=data['idProductos'];
+                                this.arrayGenerosSeleccionados=data['arrayGenerosSeleccionados'];                                
+                                break;
                             }
                         }
                     }
