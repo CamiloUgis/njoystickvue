@@ -128,11 +128,11 @@
     export default {
         data(){
             return{
-                idClientes:'0',
+                idClientes:0,
                 nombreClientes:'',
                 puntosSocios:'',
                 estadoSocios:'',
-                Socio_idClientes:'',
+                Socio_idClientes: 0,
                 arraySocios:[],
                 arrayClientes:[],
                 modal : 0,
@@ -197,7 +197,7 @@
                     me.pagination=respuesta.pagination;
                 })
                 .catch(function (error){
-                    console.log(error.response);
+                    console.log(error);
                 })
             },
             selectClientes(){
@@ -255,21 +255,10 @@
                     
                 })
             },
-           
-            // validarCliente(){
-            //     this.errorCliente=0;
-            //     this.errorMsjCliente = [];
-
-            //     if(!this.nombreClientes) this.errorMsjCliente.push("El nombre del cliente no debe estar vacío");
-
-            //     if(this.errorMsjCliente.length) this.errorCliente=1;
-            //     return this.errorCliente;
-            // },
             cerrarModal(){
                 this.modal=0;
                 this.tituloModal='';
                 this.nombreClientes='';
-               
                 this.errorMsjCliente='';
             },
             abrirModal(modelo, accion, data = []){
@@ -280,8 +269,8 @@
                             case 'registrar':{
                                 this.modal = 1;
                                 this.tituloModal = "Registrar Nuevo Socio";
-                                this.idClientes='';
-                                this.Socio_idClientes='';
+                                this.idClientes=0;
+                                this.Socio_idClientes=0;
                                 this.tipoAccion = 1;
                                 break;
 
@@ -314,7 +303,6 @@
         width: 100% !important;
         position: absolute !important;
     }
-
     .mostrar{
         display: list-item !important;
         opacity: 1 !important;

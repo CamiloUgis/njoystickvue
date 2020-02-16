@@ -51732,11 +51732,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            idClientes: '0',
+            idClientes: 0,
             nombreClientes: '',
             puntosSocios: '',
             estadoSocios: '',
-            Socio_idClientes: '',
+            Socio_idClientes: 0,
             arraySocios: [],
             arrayClientes: [],
             modal: 0,
@@ -51800,7 +51800,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 me.arraySocios = respuesta.socios.data;
                 me.pagination = respuesta.pagination;
             }).catch(function (error) {
-                console.log(error.response);
+                console.log(error);
             });
         },
         selectClientes: function selectClientes() {
@@ -51856,22 +51856,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             });
         },
-
-
-        // validarCliente(){
-        //     this.errorCliente=0;
-        //     this.errorMsjCliente = [];
-
-        //     if(!this.nombreClientes) this.errorMsjCliente.push("El nombre del cliente no debe estar vacío");
-
-        //     if(this.errorMsjCliente.length) this.errorCliente=1;
-        //     return this.errorCliente;
-        // },
         cerrarModal: function cerrarModal() {
             this.modal = 0;
             this.tituloModal = '';
             this.nombreClientes = '';
-
             this.errorMsjCliente = '';
         },
         abrirModal: function abrirModal(modelo, accion) {
@@ -51885,8 +51873,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                                 {
                                     this.modal = 1;
                                     this.tituloModal = "Registrar Nuevo Socio";
-                                    this.idClientes = '';
-                                    this.Socio_idClientes = '';
+                                    this.idClientes = 0;
+                                    this.Socio_idClientes = 0;
                                     this.tipoAccion = 1;
                                     break;
                                 }

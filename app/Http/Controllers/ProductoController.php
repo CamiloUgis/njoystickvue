@@ -12,10 +12,10 @@ class ProductoController extends Controller
 {
     public function index(Request $request)
     {
-        //if(!$request->ajax()) return redirect('/');
+        if(!$request->ajax()) return redirect('/');
         $buscar= $request->buscar;
         $criterio = $request->criterio;
-
+/*
         if($buscar==''){
             $productos = Producto::join('plataformas','productos.idPlataformas','=','plataformas.idPlataformas')
             ->join('genero_producto','genero_producto.idProductos','=','productos.idProductos')
@@ -32,8 +32,21 @@ class ProductoController extends Controller
             'productos.stockNuevoProductos', 'productos.stockUsadoProductos','productos.precioNuevoProductos',
             'productos.precioUsadoProductos','plataformas.nombrePlataformas','generos.nombreGeneros')
             ->where('productos.'.$criterio, 'like', '%'. $buscar . '%')
-            ->orderBy('productos.idProductos', 'desc')->paginate(8);
-        }
+            ->orderBy('productos.idProductos', 'desc')->paginate(8);*/
+            if($buscar==''){
+                $productos = Producto::join('plataformas','productos.idPlataformas','=','plataformas.idPlataformas')
+                ->select('productos.idProductos', 'productos.idPlataformas','productos.nombreProductos', 'productos.descripcionProductos',
+                'productos.stockNuevoProductos', 'productos.stockUsadoProductos','productos.precioNuevoProductos',
+                'productos.precioUsadoProductos','plataformas.nombrePlataformas')
+                ->orderBy('productos.idProductos', 'desc')->paginate(8);
+            }else{
+                $productos = Producto::join('plataformas','productos.idPlataformas','=','plataformas.idPlataformas')
+                ->select('productos.idProductos', 'productos.idPlataformas','productos.nombreProductos', 'productos.descripcionProductos',
+                'productos.stockNuevoProductos', 'productos.stockUsadoProductos','productos.precioNuevoProductos',
+                'productos.precioUsadoProductos','plataformas.nombrePlataformas')
+                ->where('productos.'.$criterio, 'like', '%'. $buscar . '%')
+                ->orderBy('productos.idProductos', 'desc')->paginate(8);
+            }
         return [
             'pagination' =>[
                 'total' => $productos->total(),
@@ -47,23 +60,19 @@ class ProductoController extends Controller
 
         ] ;
     }
-
     public function store(Request $request)
     {
-         if(!$request->ajax()) return redirect('/');
-             $producto = new Producto();
-             $producto->nombreProductos = $request->input('nombreProductos');
-             $producto->descripcionProductos = $request->input('descripcionProductos');
-             $producto->precioNuevoProductos = $request->input('precioNuevoProductos');
-             $producto->precioUsadoProductos = $request->input('precioUsadoProductos');
-             $producto->stockNuevoProductos = $request->input('stockNuevoProductos');
-             $producto->stockUsadoProductos = $request->input('stockUsadoProductos');
-             $producto->idPlataformas = $request->input('idPlataformas');
-             $producto->save();    
+        if(!$request->ajax()) return redirect('/');
+        $producto = new Producto();
+        $producto->nombreProductos = $request->input('nombreProductos');
+        $producto->descripcionProductos = $request->input('descripcionProductos');
+        $producto->precioNuevoProductos = $request->input('precioNuevoProductos');
+        $producto->precioUsadoProductos = $request->input('precioUsadoProductos');
+        $producto->stockNuevoProductos = $request->input('stockNuevoProductos');
+        $producto->stockUsadoProductos = $request->input('stockUsadoProductos');
+        $producto->idPlataformas = $request->input('idPlataformas');
+        $producto->save();    
     }
-    
-
-
     public function update(Request $request)
     {
 
@@ -78,8 +87,6 @@ class ProductoController extends Controller
         $producto->stockUsadoProductos = $request->input('stockUsadoProductos');
         $producto->save();
     }
-
-
     public function asociar(Request $request)
     {
         if(!$request->ajax()) return redirect('/');
