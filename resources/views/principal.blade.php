@@ -79,7 +79,7 @@
     </div>   
     </div>
     <footer class="app-footer">
-    <strong>Copyright </strong>&copy; 2019 Njoystick
+    <strong>Copyright </strong>&copy; 2020 Njoystick
     </footer>
 
     <!-- Bootstrap and necessary plugins -->

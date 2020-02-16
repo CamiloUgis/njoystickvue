@@ -13,7 +13,7 @@ class SocioController extends Controller
 {
     public function index(Request $request)
     {
-        //if(!$request->ajax()) return redirect('/');
+        if(!$request->ajax()) return redirect('/');
         $buscar= $request->buscar;
         $criterio = $request->criterio;
 
@@ -75,6 +75,15 @@ class SocioController extends Controller
         $socio->Socio_idClientes=$request->input('Socio_idClientes');
         $socio->save();
 
+    }
+    public function equipo($idSocios){
+        $socios=Socio::all();
+        $soc=Socio::where('idSocios',$idSocios)->first();
+        $socios2=Socio::where('idSocios', $soc->idSocios)->first();
+        $refs=Socio::where('anfitrionSocios',$soc->idSocios)->get();
+        $anfLinea1=Socio::where('idSocios', $socios2->anfitrionSocios)->first();
+        
+        return view('socios.socequipo')->with('socios', $socios)->with('soc', $soc)->with('anf', $anfLinea1)->with('refs',$refs);
     }
 
 
