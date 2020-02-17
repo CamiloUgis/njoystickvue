@@ -172,7 +172,7 @@
                                     <label class="col-md-3 typo__label">Géneros</label>
                                     <div class="col-md-9">
                                       <multiselect v-model="arrayGenerosSeleccionados" 
-                                      placeholder="Agregue uno o más géneros" label="nombreGeneros" track-by="nombreGeneros" :hide-selected="true" 
+                                      placeholder="Agregue uno o más géneros" label="nombreGeneros" :hide-selected="true" 
                                       :options="arrayGeneros" :multiple="true" :taggable="true"></multiselect>
 
                                     </div>
