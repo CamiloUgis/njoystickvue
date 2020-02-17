@@ -6,10 +6,12 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fa fa-align-justify"></i> Transacciones
-                        <button type="button" @click="abrirModal('transaccion', 'registrar')" class="btn btn-secondary">
+                        <button type="button" @click="mostrarDetalle()" class="btn btn-secondary">
                             <i class="icon-plus"></i>&nbsp;Nuevo
                         </button>
                     </div>
+                    <!-- Listado -->
+                    <template v-if="listado">
                     <div class="card-body">
                         <div class="form-group row">
                             <div class="col-md-6">
@@ -73,6 +75,11 @@
                             </ul>
                         </nav>
                     </div>
+                    </template>
+                    <!-- Fin Listado -->
+
+                    <!-- Detalle-->
+                    <template v-else>
                     <div class="card-body">
                         <div class="form-group row border">
                             <div class="col-md-9">
@@ -91,7 +98,7 @@
                                 <div class="form-group">
                                     <label>Tipo de Venta</label>
                                     <select class="form-control" v-model="tipoTransacciones">
-                                        <option value="0">SELECCIONAR</option>
+                                        <option value="0">Seleccione</option>
                                         <option value="Venta">Venta</option>
                                         <option value="Arriendo">Arriendo</option>
                                         <option value="Cambio">Cambio</option>
@@ -108,7 +115,7 @@
                                 <div class="form-group">
                                     <label>Forma de Pago</label>
                                     <select class="form-control" v-model="formaPagoTransacciones">
-                                        <option value="0">SELECCIONAR</option>
+                                        <option value="0">Seleccione</option>
                                         <option value="Efectivo">Efectivo</option>
                                         <option value="Débito">Débito</option>
                                     </select>
@@ -116,12 +123,119 @@
                             </div>
                         </div>
                         <div class="form-group row border">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Producto</label>
+                                    <div class="form-inline">
+                                        <input type="text" class="form-control" v-model="idProductos" placeholder="Ingrese Producto">
+                                        <button class="btn btn-primary">...</button>
+                                    </div>
 
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Precio</label>
+                                    <div class="form-inline">
+                                        <input type="number" value="0" step="any" class="form-control" v-model="precioNuevoProductos">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Cantidad</label>
+                                    <div class="form-inline">
+                                        <input type="number" value="0" class="form-control" v-model="cantidadProductos">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <button class="btn btn-succes form-control btnagregar"><i class="icon-plus"></i></button>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group row border">
+                            <div class="table-responsive col-md-12" style="margin-top: 15px;">
+                                <table class="table table-bordered table-striped table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Producto</th>
+                                                <th>Precio</th>
+                                                <th>Cantidad</th>
+                                                <th>Subtotal</th>
+                                                <th>Opciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Producto X</td>
+                                                <td>
+                                                    <input type="number" value="3" class="form-control">
+                                                </td>
+                                                <td>
+                                                    <input type="number" value="2" class="form-control">
+                                                </td>
+                                                <td>
+                                                    $6.000
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-danger btn-sm">
+                                                        <i class="icon-close"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Producto N</td>
+                                                <td>
+                                                    <input type="number" value="3" class="form-control">
+                                                </td>
+                                                <td>
+                                                    <input type="number" value="2" class="form-control">
+                                                </td>
+                                                <td>
+                                                    $61.000
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-danger btn-sm">
+                                                        <i class="icon-close"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr style="background-color: #CEECF5">
+                                                <td colspan="4" align="right"> 
+                                                <strong>Total Parcial:</strong>
+                                                </td>
+                                                <td>$1.000</td>
+                                            </tr>
+                                            <tr style="background-color: #CEECF5">
+                                                <td colspan="4" align="right"> 
+                                                <strong>Total Descuento:</strong>
+                                                </td>
+                                                <td>$500</td>
+                                            </tr>
+                                            <tr style="background-color: #CEECF5">
+                                                <td colspan="4" align="right"> 
+                                                <strong>Total Final:</strong>
+                                                </td>
+                                                <td>$500</td>
+                                            </tr>
+                                        </tbody>
+
+                                </table>
+
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <button type="button" @click="ocultarDetalle()" class="btn btn-secondary">Cerrar</button>
+                                <button type="button" class="btn btn-primary" @click="registrarIngreso()">Registrar Transacción</button>
+                            </div>
 
                         </div>
                     </div>
+                    </template>
+                    <!-- Fin Detalle-->
                 </div>
                 <!-- Fin ejemplo de tabla Listado -->
             </div>
@@ -159,18 +273,20 @@
             return{
                 idTransacciones:0,
                 idProductos:0,
-                tipoTransacciones:'',
+                tipoTransacciones:0,
                 observacionTransacciones:'',
                 fechaTransacciones:'',
                 puntosTransacciones:'',
                 valorFinalTransacciones:'',
-                formaPagoTransacciones:'',
+                precioNuevoProductos:'',
+                formaPagoTransacciones:0,
                 plazoTransacciones:'',
                 estadoTransacciones:'',
                 descuento: 0.0,
                 arrayTransacciones:[],
                 arrayProductoTransaccion:[],
                 modal : 0,
+                listado:1,
                 tituloModal : '',
                 tipoAccion : 0,
                 errorProducto : 0,
@@ -297,7 +413,13 @@
                 if(this.errorMsjProducto.length) this.errorProducto=1;
 
                 return this.errorProducto;
-            }, 
+            },
+            mostrarDetalle(){
+                this.listado=0;
+            },
+            ocultarDetalle(){
+                this.listado=1;
+            },
             cerrarModal(){
                 this.modal=0;
                 this.tituloModal='';
@@ -374,5 +496,11 @@
     .text-error{
         color: red !important;
         font-weight: bold;
+    }
+    @media (min-width:600px){
+        .btnagregar{
+            margin-top: 2rem;
+            background-color: #40c36e;
+        }
     }
 </style>

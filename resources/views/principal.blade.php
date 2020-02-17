@@ -23,7 +23,7 @@
         <button class="navbar-toggler mobile-sidebar-toggler d-lg-none mr-auto" type="button">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="#"></a>
+        <a class="navbar-brand" href="#" style="background-size: 50px auto;"></a>
         <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -48,7 +48,7 @@
                 </div>
             </li> -->
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" style="padding-right: 20px">
                     <img src="img/logo.png" class="img-avatar" alt="admin@bootstrapmaster.com">
                     <span class="d-md-down-none"> Njoystick</span>
                 </a>
