@@ -238,6 +238,7 @@ import { required, minLength, between } from 'vuelidate/lib/validators'
                 this.tituloModal='';
                 this.nombrePlataformas='';
                 this.descripcionPlataformas='';
+                this.errors='';
             },
             abrirModal(modelo, accion, data = []){
                 switch(modelo){

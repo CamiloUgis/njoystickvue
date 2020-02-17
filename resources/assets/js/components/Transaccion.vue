@@ -51,7 +51,7 @@
                                     <td v-text="transaccion.plazoTransacciones"></td>
                                     <td v-text="transaccion.estadoTransacciones"></td>
                                     <td>
-                                        <button type="button" @click="abrirModal('transaccion', 'actualizar', transaccion)" class="btn btn-succes btn-sm">
+                                        <button type="button" @click="abrirModal('transaccion', 'actualizar', transaccion)" class="btn btn-succes btn-sm btnvisualizar">
                                           <i class="icon-eye"></i>
                                         </button> &nbsp;
                                     </td>
@@ -84,7 +84,7 @@
                         <div class="form-group row border">
                             <div class="col-md-9">
                                 <div class="form-group">
-                                    <label for="">Proveedor</label>
+                                    <label for="">Cliente</label>
                                     <select class="form-control">
 
                                     </select>
@@ -92,7 +92,7 @@
                             </div>
                             <div class="col-md-3">
                                 <label for="">Descuento</label>
-                                <input type="text" class="form-control">
+                                <input type="number" class="form-control">
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -501,6 +501,10 @@
         .btnagregar{
             margin-top: 2rem;
             background-color: #40c36e;
+        }
+        .btnvisualizar{
+            background-color: #20a8d8;
+            border-radius: 15px;
         }
     }
 </style>
