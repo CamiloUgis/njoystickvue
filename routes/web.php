@@ -48,6 +48,8 @@ Route::get('/clientes','ClienteController@index');
 Route::post('/clientes/registrar','ClienteController@store');
 Route::put('/clientes/actualizar', 'ClienteController@update');
 Route::get('/clientes/selectClientes','ClienteController@selectClientes');
+Route::get('/clientes/transaccionClientes','ClienteController@transaccionClientes');
+
 
 
 Route::get('/socios','SocioController@index');

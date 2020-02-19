@@ -83,11 +83,17 @@
                     <div class="card-body">
                         <div class="form-group row border">
                             <div class="col-md-9">
-                                <div class="form-group">
+                                <div class="form-group" id="cli">
                                     <label for="">Cliente</label>
-                                    <select class="form-control">
+                                    <v-select
+                                        :on-search="transaccionClientes"
+                                        label="nombreClientes"
+                                        :options="arrayClientes"
+                                        placeholder="Buscar Clientes..."
+                                        :onChange="getDatosClientes"
+                                    >
 
-                                    </select>
+                                    </v-select>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -266,8 +272,13 @@
             <!--Fin del modal-->
         </main>
 </template>
-
+<script src="https://unpkg.com/vue@latest"></script>
+<script src="https://unpkg.com/vue-select@latest"></script>
 <script>
+import Vue from 'vue'
+import vSelect from 'vue-select'
+
+Vue.component('v-select', vSelect)
     export default {
         data(){
             return{
@@ -282,9 +293,11 @@
                 formaPagoTransacciones:0,
                 plazoTransacciones:'',
                 estadoTransacciones:'',
+                cantidadProductos:'',
                 descuento: 0.0,
                 arrayTransacciones:[],
                 arrayProductoTransaccion:[],
+                arrayClientes:[],
                 modal : 0,
                 listado:1,
                 tituloModal : '',
@@ -305,6 +318,9 @@
                 arrayPlataformas:[]
 
             }
+        },
+        component:{
+            vSelect
         },
         computed:{
             isActived: function(){
@@ -345,17 +361,24 @@
                     console.log(error.response);
                 })
             },
-            selectPlataformas(){
+            transaccionClientes(search,loading){
                 let me=this;
-                var url= '/plataformas/selectPlataformas';
+                loading(true);
+                var url= '/clientes/transaccionClientes?filtro='+search;
                 axios.get(url).then(function (response){
-                    //console.log(response);
-                    var respuesta = response.data;
-                    me.arrayPlataformas = respuesta.plataformas;
+                    let respuesta = response.data;
+                    q: search
+                    me.arrayClientes=respuesta.clientes;
+                    loading(false)
                 })
                 .catch(function (error){
                     console.log(error.response);
                 })
+            },
+            getDatosClientes(val1){
+                let me=this;
+                me.loading = true;
+                me.idClientes = val1.idClientes;
             },
             cambiarPagina(page, buscar, criterio){
                 let me=this;
@@ -477,6 +500,7 @@
         }
     }
 </script>
+<style src="vue-select/dist/vue-select.css"></style>
 <style>
     .modal-content{
         width: 100% !important;
