@@ -383,6 +383,7 @@ import Multiselect from 'vue-multiselect'
                 this.stockUsadoProductos='';
                 this.precioNuevoProductos='';
                 this.precioUsadoProductos='';
+                this.errors='';
             },
             abrirModal(modelo, accion, data = []){
                 switch(modelo){

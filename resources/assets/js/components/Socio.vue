@@ -31,6 +31,7 @@
                                     <th class="text-center">Estado</th>
                                     <th class="text-center">Puntos</th>
                                     <th class="text-center">Modificar</th>
+                                    <th class="text-center">Visualizar</th>
                                 </tr>
                             </thead>
                             <tbody class="text-center">
@@ -42,9 +43,15 @@
                                     <td v-else>Inactivo</td>
 
                                     <td v-text="socio.puntosSocios"></td>
+                                    
                                     <td>
                                         <button type="button" @click="abrirModal('socio', 'actualizar', socio)" class="btn btn-warning btn-sm">
                                           <i class="icon-pencil"></i>
+                                        </button> &nbsp;
+                                    </td>
+                                     <td>
+                                        <button type="button" @click="abrirModal('socio', 'visualizar', socio)" class="btn btn-succes btn-sm btnvisualizar">
+                                          <i class="icon-eye"></i>
                                         </button> &nbsp;
                                     </td>
                                 </tr>
@@ -101,12 +108,10 @@
                                         </select>
                                     </div>
                                 </div>
-                                <!-- <div v-show="errorCliente" class="form-group row div-error">
-                                    <div class="text-center text-error">
-                                        <div v-for="error in errorMsjCliente" :key="error" v-text="error">
-                                        </div>
-                                    </div>
-                                </div> -->
+                                <!-- listado de socios -->
+                                
+                                <!-- fin listado de socios -->
+                                
                             </form>
                         </div>
                         <div class="modal-footer">

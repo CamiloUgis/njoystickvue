@@ -231,6 +231,7 @@
                 this.tituloModal='';
                 this.nombreGeneros='';
                 this.descripcionGeneros='';
+                this.errors='';
             },
             abrirModal(modelo, accion, data = []){
                 switch(modelo){
