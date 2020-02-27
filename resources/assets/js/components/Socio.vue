@@ -10,62 +10,81 @@
                             <i class="icon-plus"></i>&nbsp;Nuevo
                         </button>
                     </div>
-                    <div class="card-body">
-                        <div class="form-group row">
-                            <div class="col-md-6">
-                                <div class="input-group">
-                                    <select class="form-control col-md-3" v-model="criterio">
-                                      <option value="nombreClientes">Nombre</option>
-                                      <option value="idClientes">Código</option>
-                                    </select>
-                                    <input type="text" v-model="buscar" @keyup.enter="listarCliente(1,buscar,criterio)" class="form-control" placeholder="Texto a buscar">
-                                    <button type="submit" @click="listarCliente(1,buscar,criterio)" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                    <template v-if="listado">
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <select class="form-control col-md-3" v-model="criterio">
+                                        <option value="nombreClientes">Nombre</option>
+                                        <option value="idClientes">Código</option>
+                                        </select>
+                                        <input type="text" v-model="buscar" @keyup.enter="listarCliente(1,buscar,criterio)" class="form-control" placeholder="Texto a buscar">
+                                        <button type="submit" @click="listarCliente(1,buscar,criterio)" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <table class="table table-bordered table-striped table-sm">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">Código Njoystick</th>
-                                    <th class="text-center">Nombre</th>
-                                    <th class="text-center">Estado</th>
-                                    <th class="text-center">Puntos</th>
-                                    <th class="text-center">Modificar</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-center">
-                                <tr v-for="socio in arraySocios" :key="socio.idClientes">
-                                    <td v-text="'NJ'+socio.idClientes"></td>
-                                    <td v-text="socio.nombreClientes"></td>
-                                    
-                                    <td v-if="socio.estadoSocios==1">Activo</td>
-                                    <td v-else>Inactivo</td>
+                            <table class="table table-bordered table-striped table-sm">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Código Njoystick</th>
+                                        <th class="text-center">Nombre</th>
+                                        <th class="text-center">Estado</th>
+                                        <th class="text-center">Puntos</th>
+                                        <th class="text-center">Modificar</th>
+                                        <th class="text-center">Ver referidos</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-center">
+                                    <tr v-for="socio in arraySocios" :key="socio.idClientes">
+                                        <td v-text="'NJ'+socio.idClientes"></td>
+                                        <td v-text="socio.nombreClientes"></td>
+                                        
+                                        <td v-if="socio.estadoSocios==1">Activo</td>
+                                        <td v-else>Inactivo</td>
 
-                                    <td v-text="socio.puntosSocios"></td>
-                                    <td>
-                                        <button type="button" @click="abrirModal('socio', 'actualizar', socio)" class="btn btn-warning btn-sm">
-                                          <i class="icon-pencil"></i>
+                                        <td v-text="socio.puntosSocios"></td>
+                                        <td>
+                                            <button type="button" @click="abrirModal('socio', 'actualizar', socio)" class="btn btn-warning btn-sm">
+                                            <i class="icon-pencil"></i>
+                                            </button> &nbsp;
+                                        </td>
+                                        <td>
+                                            <button type="button" @click="mostrarDetalle()" class="btn btn-succes btn-sm btnvisualizar">
+                                                <i class="icon-eye"></i>
                                         </button> &nbsp;
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <nav>
-                            <ul class="pagination">
-                                <li class = "page-item" v-if="pagination.current_page>1">
-                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page -1, buscar, criterio)"> Ant</a>
-                                
-                                <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[page == isActived ? 'active' : '']">
-                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(page, buscar, criterio)" v-text="page"></a>
-                                </li>
-                                
-                                <li class = "page-item" v-if="pagination.current_page< pagination.last_page">
-                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page+1, buscar, criterio)"> Sig</a>
-                                
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <nav>
+                                <ul class="pagination">
+                                    <li class = "page-item" v-if="pagination.current_page>1">
+                                        <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page -1, buscar, criterio)"> Ant</a>
+                                    
+                                    <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[page == isActived ? 'active' : '']">
+                                        <a class="page-link" href="#" @click.prevent="cambiarPagina(page, buscar, criterio)" v-text="page"></a>
+                                    </li>
+                                    
+                                    <li class = "page-item" v-if="pagination.current_page< pagination.last_page">
+                                        <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page+1, buscar, criterio)"> Sig</a>
+                                    
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </template>
+                    <template v-else>
+                        <div class="card-body">
+                            <div class="form-group row">
+                            <div class="col-md-12">
+                                <button type="button" @click="ocultarDetalle()" class="btn btn-secondary">Cerrar</button>
+                            </div>
+
+                        </div>
+                       </div>
+                    </template>
+
                 </div>
                 <!-- Fin ejemplo de tabla Listado -->
             </div>
@@ -139,6 +158,7 @@
                 tituloModal : '',
                 tipoAccion : 0,
                 errors: [],
+                listado:1,
                 pagination : {
                 'total' :0 ,
                 'current_page':0 ,
@@ -261,6 +281,12 @@
                 this.nombreClientes='';
                 this.errorMsjCliente='';
             },
+             mostrarDetalle(){
+                this.listado=0;
+            },
+            ocultarDetalle(){
+                this.listado=1;
+            },
             abrirModal(modelo, accion, data = []){
                 switch(modelo){
                     case "socio":
@@ -316,5 +342,9 @@
     .text-error{
         color: red !important;
         font-weight: bold;
+    }
+    .btnvisualizar{
+            background-color: #20a8d8;
+            border-radius: 15px;
     }
 </style>

@@ -15,7 +15,7 @@ class ProductoController extends Controller
         if(!$request->ajax()) return redirect('/');
         $buscar= $request->buscar;
         $criterio = $request->criterio;
-/*
+    /*
         if($buscar==''){
             $productos = Producto::join('plataformas','productos.idPlataformas','=','plataformas.idPlataformas')
             ->join('genero_producto','genero_producto.idProductos','=','productos.idProductos')
@@ -59,6 +59,15 @@ class ProductoController extends Controller
             'productos'=>$productos
 
         ] ;
+    }
+
+    public function buscarProducto(Request $request){
+        if(!$request->ajax()) return redirect('/');
+        $filtro = $request->filtro;
+        $productos = Producto::where('idProductos','=', $filtro)
+        ->select('idProductos', 'nombreProductos')->orderBy('nombreProductos', 'asc')->take(1)->get();
+
+        return ['productos'=>$productos];
     }
     public function store(Request $request)
     {

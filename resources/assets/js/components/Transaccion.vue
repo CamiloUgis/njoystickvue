@@ -133,8 +133,9 @@
                                 <div class="form-group">
                                     <label>Producto</label>
                                     <div class="form-inline">
-                                        <input type="text" class="form-control" v-model="idProductos" placeholder="Ingrese Producto">
+                                        <input type="text" class="form-control" v-model="codigo" @keyup.enter="buscarProducto()" placeholder="Ingrese Producto">
                                         <button class="btn btn-primary">...</button>
+                                        <input type="text" readonly class="form-control" v-model="producto">
                                     </div>
 
                                 </div>
@@ -294,10 +295,14 @@ Vue.component('v-select', vSelect)
                 plazoTransacciones:'',
                 estadoTransacciones:'',
                 cantidadProductos:'',
+                precioProducto:'',
                 descuento: 0.0,
                 arrayTransacciones:[],
                 arrayProductoTransaccion:[],
                 arrayClientes:[],
+                arrayProductos:[],
+                codigo:'',
+                producto:'',
                 modal : 0,
                 listado:1,
                 tituloModal : '',
@@ -363,10 +368,10 @@ Vue.component('v-select', vSelect)
             },
             transaccionClientes(search,loading){
                 let me=this;
-                loading(true);
+                loading(true)
                 var url= '/clientes/transaccionClientes?filtro='+search;
                 axios.get(url).then(function (response){
-                    let respuesta = response.data;
+                    var respuesta = response.data;
                     q: search
                     me.arrayClientes=respuesta.clientes;
                     loading(false)
@@ -379,6 +384,27 @@ Vue.component('v-select', vSelect)
                 let me=this;
                 me.loading = true;
                 me.idClientes = val1.idClientes;
+            },
+            buscarProducto(){
+                let me=this;
+                var url= '/productos/buscarProducto?filtro=' + me.codigo;
+
+                axios.get(url).then(function (response){
+                    var respuesta=response.data;
+                    me.arrayProductos = respuesta.productos;
+
+                    if(me.arrayProductos.length>0){
+                        me.producto=me.arrayProductos[0]['nombreProductos'];
+                        me.idProductos=me.arrayProductos[0]['idProductos'];
+                    }else{
+                        me.producto='No existe producto';
+                        me.idProductos=0;
+                    }
+                })
+                .catch(function(error){
+                    console.log(error);
+                });
+
             },
             cambiarPagina(page, buscar, criterio){
                 let me=this;
