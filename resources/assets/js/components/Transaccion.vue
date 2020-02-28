@@ -158,7 +158,7 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <button class="btn btn-succes form-control btnagregar"><i class="icon-plus"></i></button>
+                                    <button @click="agregarDetalle" class="btn btn-succes form-control btnagregar"><i class="icon-plus"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -174,34 +174,19 @@
                                                 <th>Opciones</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Producto X</td>
+                                        <tbody v-if="arrayDetalles.length">
+                                            <tr v-for="detalle in arrayDetalles" :key="detalle.idDetalle">
+                                                <td v-text="detalle.nombreProductos">
+                                                </td>
+                                                
                                                 <td>
-                                                    <input type="number" value="3" class="form-control">
+                                                    <input v-model="detalle.precioProducto" type="number" value="3" class="form-control">
                                                 </td>
                                                 <td>
-                                                    <input type="number" value="2" class="form-control">
+                                                    <input v-model="detalle.cantidadProductos" type="number" value="2" class="form-control">
                                                 </td>
                                                 <td>
-                                                    $6.000
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="btn btn-danger btn-sm">
-                                                        <i class="icon-close"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Producto N</td>
-                                                <td>
-                                                    <input type="number" value="3" class="form-control">
-                                                </td>
-                                                <td>
-                                                    <input type="number" value="2" class="form-control">
-                                                </td>
-                                                <td>
-                                                    $61.000
+                                                    {{detalle.precioProducto*detalle.cantidadProductos}}
                                                 </td>
                                                 <td>
                                                     <button type="button" class="btn btn-danger btn-sm">
@@ -227,6 +212,14 @@
                                                 </td>
                                                 <td>$500</td>
                                             </tr>
+                                        </tbody>
+                                        <tbody v-else>
+                                            <tr>
+                                                <td colspan="5"> 
+                                                    NO hay productos agregados.
+                                                </td>
+                                            </tr>
+
                                         </tbody>
 
                                 </table>
@@ -301,6 +294,7 @@ Vue.component('v-select', vSelect)
                 arrayProductoTransaccion:[],
                 arrayClientes:[],
                 arrayProductos:[],
+                arrayDetalles:[],
                 codigo:'',
                 producto:'',
                 modal : 0,
@@ -410,6 +404,16 @@ Vue.component('v-select', vSelect)
                 let me=this;
                 me.pagination.current_page=page;
                 me.listarTransaccion(page, buscar, criterio);
+            },
+            agregarDetalle(){
+                let me=this;
+                me.arrayDetalles.push({
+                    idProductos: me.idProductos,
+                    nombreProductos: me.nombreProductos,
+                    cantidadProductos: me.cantidadProductos,
+                    precioProducto: me.precioProducto
+                });
+
             },
             registrarProducto(){
                 if(this.validarProducto()){
