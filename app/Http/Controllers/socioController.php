@@ -8,6 +8,8 @@ use App\Cliente;
 use App\Socio;
 use Malahierba\ChileRut\ChileRut;
 use Malahierba\ChileRut\Rules\ValidChileanRut;
+use Illuminate\Support\Facades\DB;
+
 
 class SocioController extends Controller
 {
@@ -77,8 +79,11 @@ class SocioController extends Controller
 
     }
     public function equipo(Request $request){
-        if(!$request->ajax()) return redirect('/');
-        $referidos= DB::table('socios')->select('*')->where($request->idClientes,'Socio_idClientes')->get();
+       // if(!$request->ajax()) return redirect('/');
+        $referidos= DB::table('socios')
+        ->join('clientes','socios.idClientes','=','clientes.idClientes')
+        ->select('socios.idClientes', 'clientes.nombreClientes','socios.estadoSocios', 'socios.puntosSocios')
+        ->where('Socio_idClientes',$request->idClientes)->get();
         
         
         return ['referidos'=> $referidos];

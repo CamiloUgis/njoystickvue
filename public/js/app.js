@@ -51846,10 +51846,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         esReferido: function esReferido() {
+            this.listado = 0;
             var me = this;
             var url = '/socios/equipo';
             axios.get(url).then(function (response) {
-                console.log(response.data);
+                console.log(response);
                 var respuesta = response.data;
                 me.arrayReferidos = respuesta.referidos;
             }).catch(function (error) {
@@ -51925,9 +51926,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.tituloModal = '';
             this.nombreClientes = '';
             this.errorMsjCliente = '';
-        },
-        mostrarDetalle: function mostrarDetalle() {
-            this.listado = 0;
         },
         ocultarDetalle: function ocultarDetalle() {
             this.listado = 1;
@@ -52190,7 +52188,7 @@ var render = function() {
                                     attrs: { type: "button" },
                                     on: {
                                       click: function($event) {
-                                        return _vm.mostrarDetalle()
+                                        return _vm.esReferido()
                                       }
                                     }
                                   },
