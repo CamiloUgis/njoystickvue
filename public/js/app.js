@@ -51748,6 +51748,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -51759,6 +51763,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             Socio_idClientes: 0,
             arraySocios: [],
             arrayClientes: [],
+            arrayReferidos: [],
             modal: 0,
             tituloModal: '',
             tipoAccion: 0,
@@ -51787,6 +51792,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         //     })
         // },
+
         isActived: function isActived() {
             return this.pagination.current_page;
         },
@@ -51813,6 +51819,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     methods: {
+        esReferido: function esReferido() {
+            var me = this;
+            var url = '/socios/equipo';
+            axios.get(url).then(function (response) {
+                console.log(response.data);
+                var respuesta = response.data;
+                me.arrayReferidos = respuesta.referidos;
+            }).catch(function (error) {
+                console.log(error.response);
+            });
+        },
         listarSocio: function listarSocio(page, buscar, criterio) {
             var me = this;
             var url = '/socios?page=' + page + '&buscar=' + buscar + '&criterio=' + criterio;
@@ -52244,21 +52261,36 @@ var render = function() {
             : [
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "form-group row" }, [
-                    _c("div", { staticClass: "col-md-12" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-secondary",
-                          attrs: { type: "button" },
-                          on: {
-                            click: function($event) {
-                              return _vm.ocultarDetalle()
+                    _c(
+                      "div",
+                      { staticClass: "col-md-12" },
+                      [
+                        _vm._l(_vm.arrayReferidos, function(referido) {
+                          return _c("li", {
+                            key: referido.idClientes,
+                            attrs: { value: referido.idClientes },
+                            domProps: {
+                              textContent: _vm._s(referido.nombreClientes)
                             }
-                          }
-                        },
-                        [_vm._v("Cerrar")]
-                      )
-                    ])
+                          })
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-secondary",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                return _vm.ocultarDetalle()
+                              }
+                            }
+                          },
+                          [_vm._v("Cerrar")]
+                        )
+                      ],
+                      2
+                    )
                   ])
                 ])
               ]

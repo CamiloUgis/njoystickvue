@@ -78,6 +78,10 @@
                         <div class="card-body">
                             <div class="form-group row">
                             <div class="col-md-12">
+                                <!-- implementar codigo visualización de socios -->
+                                
+                               <li v-for="referido in arrayReferidos" :key="referido.idClientes"
+                                            :value="referido.idClientes" v-text="referido.nombreClientes"></li>
                                 <button type="button" @click="ocultarDetalle()" class="btn btn-secondary">Cerrar</button>
                             </div>
 
@@ -154,6 +158,7 @@
                 Socio_idClientes: 0,
                 arraySocios:[],
                 arrayClientes:[],
+                arrayReferidos:[],
                 modal : 0,
                 tituloModal : '',
                 tipoAccion : 0,
@@ -181,6 +186,7 @@
 
             //     })
             // },
+            
             isActived: function(){
                 return this.pagination.current_page;
             },
@@ -207,7 +213,19 @@
             }
         },
         methods:{
-           
+            esReferido(){
+                let me=this;
+                var url= '/socios/equipo';
+                axios.get(url).then(function (response){
+                    console.log(response.data);
+                    var respuesta = response.data;
+                    me.arrayReferidos = respuesta.referidos;
+                })
+                .catch(function (error){
+                    console.log(error.response);
+                })
+
+            },
             listarSocio(page, buscar, criterio){
                 let me=this;
                 var url= '/socios?page='+page + '&buscar='+ buscar + '&criterio=' + criterio;

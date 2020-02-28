@@ -76,14 +76,12 @@ class SocioController extends Controller
         $socio->save();
 
     }
-    public function equipo($idSocios){
-        $socios=Socio::all();
-        $soc=Socio::where('idSocios',$idSocios)->first();
-        $socios2=Socio::where('idSocios', $soc->idSocios)->first();
-        $refs=Socio::where('anfitrionSocios',$soc->idSocios)->get();
-        $anfLinea1=Socio::where('idSocios', $socios2->anfitrionSocios)->first();
+    public function equipo(Request $request){
+        if(!$request->ajax()) return redirect('/');
+        $referidos= DB::table('socios')->select('*')->where($request->idClientes,'Socio_idClientes')->get();
         
-        return view('socios.socequipo')->with('socios', $socios)->with('soc', $soc)->with('anf', $anfLinea1)->with('refs',$refs);
+        
+        return ['referidos'=> $referidos];
     }
 
 
