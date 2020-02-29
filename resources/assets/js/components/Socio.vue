@@ -103,7 +103,7 @@
                                         <td colspan="2" align="right"> 
                                             <strong>Puntos Propios:</strong>
                                         </td>
-                                        <td>{{puntosSocios}}</td>
+                                        <td>{{puntosPropiosSocios}}</td>
                                 </tr>
                                 <tr style="background-color: #CEECF5">
                                     <td colspan="2" align="right"> 
@@ -195,7 +195,8 @@
             return{
                 idClientes:0,
                 nombreClientes:'',
-                puntosSocios:'',
+                puntosPropiosSocios:'',
+                puntosReferidosSocios:'',
                 estadoSocios:'',
                 Socio_idClientes: 0,
                 arraySocios:[],

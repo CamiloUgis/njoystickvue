@@ -51823,7 +51823,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             idClientes: 0,
             nombreClientes: '',
-            puntosSocios: '',
+            puntosPropiosSocios: '',
+            puntosReferidosSocios: '',
             estadoSocios: '',
             Socio_idClientes: 0,
             arraySocios: [],
@@ -52389,7 +52390,7 @@ var render = function() {
                                       _vm._m(2),
                                       _vm._v(" "),
                                       _c("td", [
-                                        _vm._v(_vm._s(_vm.puntosSocios))
+                                        _vm._v(_vm._s(_vm.puntosPropiosSocios))
                                       ])
                                     ]
                                   ),
