@@ -20,6 +20,7 @@
     },
     "dependencies": {
         "select2": "^4.0.12",
+        "v-selectpage": "^2.1.4",
         "vue-multiselect": "^2.1.6",
         "vue-select": "^3.4.0",
         "vuelidate": "^0.7.5"

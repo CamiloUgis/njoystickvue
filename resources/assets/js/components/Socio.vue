@@ -84,7 +84,7 @@
                                 <!-- implementar codigo visualización de socios -->
                                 
                                <li v-for="referido in arrayReferidos" :key="referido.idClientes"
-                                            :value="referido.idClientes" v-text="referido.nombreClientes"> test</li>
+                                            :value="referido.idClientes" v-text="referido.nombreClientes"></li>
                                 <button type="button" @click="ocultarDetalle()" class="btn btn-secondary">Cerrar</button>
                             </div>
 

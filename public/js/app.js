@@ -52297,17 +52297,13 @@ var render = function() {
                       { staticClass: "col-md-12" },
                       [
                         _vm._l(_vm.arrayReferidos, function(referido) {
-                          return _c(
-                            "li",
-                            {
-                              key: referido.idClientes,
-                              attrs: { value: referido.idClientes },
-                              domProps: {
-                                textContent: _vm._s(referido.nombreClientes)
-                              }
-                            },
-                            [_vm._v(" test")]
-                          )
+                          return _c("li", {
+                            key: referido.idClientes,
+                            attrs: { value: referido.idClientes },
+                            domProps: {
+                              textContent: _vm._s(referido.nombreClientes)
+                            }
+                          })
                         }),
                         _vm._v(" "),
                         _c(
@@ -53023,12 +53019,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPORTED_MODULE_1_vue_select___default.a);
+
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
@@ -53293,7 +53289,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
                         }
                     }
             }
-            this.selectPlataformas();
+            //this.selectPlataformas();
         }
     },
 
@@ -53670,11 +53666,13 @@ var render = function() {
                           _vm._v(" "),
                           _c("v-select", {
                             attrs: {
-                              "on-search": _vm.transaccionClientes,
                               label: "nombreClientes",
                               options: _vm.arrayClientes,
-                              placeholder: "Buscar Clientes...",
-                              onChange: _vm.getDatosClientes
+                              placeholder: "Buscar Clientes..."
+                            },
+                            on: {
+                              search: _vm.transaccionClientes,
+                              input: _vm.getDatosClientes
                             }
                           })
                         ],
@@ -53826,11 +53824,13 @@ var render = function() {
                           _vm._v(" "),
                           _c("v-select", {
                             attrs: {
-                              "on-search": _vm.transaccionProducto,
                               label: "nombreProductos",
                               options: _vm.arrayProductos,
-                              placeholder: "Buscar Productos...",
-                              onChange: _vm.getDatosProductos
+                              placeholder: "Buscar Productos..."
+                            },
+                            on: {
+                              search: _vm.transaccionProducto,
+                              input: _vm.getDatosProductos
                             }
                           })
                         ],
@@ -53944,7 +53944,7 @@ var render = function() {
                                           _c("td", {
                                             domProps: {
                                               textContent: _vm._s(
-                                                detalle.producto
+                                                detalle.nombreProductos
                                               )
                                             }
                                           }),

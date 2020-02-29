@@ -86,13 +86,12 @@
                                 <div class="form-group" id="cli">
                                     <label for="">Cliente</label>
                                     <v-select
-                                        :on-search="transaccionClientes"
+                                        @search="transaccionClientes"
                                         label="nombreClientes"
                                         :options="arrayClientes"
                                         placeholder="Buscar Clientes..."
-                                        :onChange="getDatosClientes"
+                                        @input="getDatosClientes"
                                     >
-
                                     </v-select>
                                 </div>
                             </div>
@@ -133,14 +132,14 @@
                                 <div class="form-group">
                                     <label>Producto</label>
                                     <v-select
-                                        :on-search="transaccionProducto"
+                                        @search="transaccionProducto"
                                         label="nombreProductos"
                                         :options="arrayProductos"
                                         placeholder="Buscar Productos..."
-                                        :onChange="getDatosProductos"
-                                    >
-
+                                        @input="getDatosProductos"
+                                    > 
                                     </v-select>
+                                    
                                   <!--  <div class="form-inline">
                                         <input type="text" class="form-control" v-model="codigo" @keyup.enter="buscarProducto()" placeholder="Ingrese Producto">
                                         <button class="btn btn-primary">...</button>
@@ -185,7 +184,7 @@
                                         </thead>
                                         <tbody v-if="arrayDetalles.length">
                                             <tr v-for="detalle in arrayDetalles" :key="detalle.idDetalle">
-                                                <td v-text="detalle.producto">
+                                                <td v-text="detalle.nombreProductos">
                                                 </td>
                                                 
                                                 <td>
@@ -281,7 +280,10 @@
 import Vue from 'vue'
 import vSelect from 'vue-select'
 
+
 Vue.component('v-select', vSelect)
+
+
     export default {
         data(){
             return{
@@ -550,7 +552,7 @@ Vue.component('v-select', vSelect)
                         }
                     }
                 }
-                this.selectPlataformas();
+                //this.selectPlataformas();
             }
         },
         
