@@ -10,7 +10,7 @@ class Transaccion extends Model
     protected $primaryKey= 'idTransacciones';
     protected $foreignKey= 'idClientes';
     protected $fillable= ['tipoTransacciones', 'observacionTransacciones', 'fechaTransacciones',
-    'puntosTransacciones', 'valorFinalTransacciones'. 'formaPagoTransacciones', 'plazoTransacciones',
+    'puntosTransacciones', 'valorFinalTransacciones', 'descuentoTransacciones', 'formaPagoTransacciones', 'plazoTransacciones',
     'estadoTransacciones'];
 
     public function clientes(){
