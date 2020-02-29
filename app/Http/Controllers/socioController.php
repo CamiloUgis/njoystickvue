@@ -21,11 +21,11 @@ class SocioController extends Controller
 
         if($buscar==''){
             $socios = Socio::join('clientes','socios.idClientes','=','clientes.idClientes')
-            ->select('socios.idClientes', 'clientes.nombreClientes','socios.estadoSocios')
+            ->select('socios.idClientes', 'clientes.nombreClientes','socios.estadoSocios', 'socios.puntosSocios')
             ->orderBy('idClientes', 'desc')->paginate(5);
         }else{
             $socios = Socio::join('clientes','socios.idClientes','=','clientes.idClientes')
-            ->select('socios.idClientes', 'clientes.nombreClientes','socios.estadoSocios')
+            ->select('socios.idClientes', 'clientes.nombreClientes','socios.estadoSocios','socios.puntosSocios')
             ->where($criterio, 'like', '%'. $buscar . '%')
             ->orderBy('idClientes', 'desc')->paginate(5);
         }

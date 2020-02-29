@@ -96,8 +96,8 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <label for="">Descuento</label>
-                                <input type="number" class="form-control">
+                                <label for="">Descuento (en %)</label>
+                                <input type="number" class="form-control" v-model="descuento" placeholder="5%">
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -108,6 +108,9 @@
                                         <option value="Arriendo">Arriendo</option>
                                         <option value="Cambio">Cambio</option>
                                     </select>
+                                </div>
+                                <div class="col-md-12">
+                                    <span>AQUI VAN LAS VALIDACIONES</span>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -130,7 +133,7 @@
                         <div class="form-group row border">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Producto</label>
+                                    <label>Producto <span style="color:red;" v-show="idProductos==0" >(Ingrese*)</span></label>
                                     <v-select
                                         @search="transaccionProducto"
                                         label="nombreProductos"
@@ -150,7 +153,7 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <label>Precio</label>
+                                    <label>Precio <span style="color:red;" v-show="precioProducto==0" >(Ingrese*)</span></label>
                                     <div class="form-inline">
                                         <input type="number" value="0" step="any" class="form-control" v-model="precioProducto">
                                     </div>
@@ -158,7 +161,7 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <label>Cantidad</label>
+                                    <label>Cantidad<span style="color:red;" v-show="cantidadProductos==0" >(Ingrese*) </span></label>
                                     <div class="form-inline">
                                         <input type="number" value="0" class="form-control" v-model="cantidadProductos">
                                     </div>
@@ -183,8 +186,8 @@
                                             </tr>
                                         </thead>
                                         <tbody v-if="arrayDetalles.length">
-                                            <tr v-for="detalle in arrayDetalles" :key="detalle.idDetalle">
-                                                <td v-text="detalle.nombreProductos">
+                                            <tr v-for="(detalle,index) in arrayDetalles" :key="detalle.idDetalle">
+                                                <td v-text="detalle.producto">
                                                 </td>
                                                 
                                                 <td>
@@ -197,7 +200,7 @@
                                                     {{detalle.precioProducto*detalle.cantidadProductos}}
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn btn-danger btn-sm">
+                                                    <button @click="eliminarDetalle(index)" type="button" class="btn btn-danger btn-sm">
                                                         <i class="icon-close"></i>
                                                     </button>
                                                 </td>
@@ -206,19 +209,19 @@
                                                 <td colspan="4" align="right"> 
                                                 <strong>Total Parcial:</strong>
                                                 </td>
-                                                <td>$1.000</td>
+                                                <td>${{totalParcial=(calcularTotal)}}</td>
                                             </tr>
                                             <tr style="background-color: #CEECF5">
                                                 <td colspan="4" align="right"> 
                                                 <strong>Total Descuento:</strong>
                                                 </td>
-                                                <td>$500</td>
+                                                <td>$ {{totalDescuento=(totalParcial*(descuento/100)).toFixed(0)}}</td>
                                             </tr>
                                             <tr style="background-color: #CEECF5">
                                                 <td colspan="4" align="right"> 
                                                 <strong>Total Final:</strong>
                                                 </td>
-                                                <td>$500</td>
+                                                <td>$ {{total=(calcularTotal-totalDescuento).toFixed(0)}}</td>
                                             </tr>
                                         </tbody>
                                         <tbody v-else>
@@ -276,10 +279,16 @@
 </template>
 <script src="https://unpkg.com/vue@latest"></script>
 <script src="https://unpkg.com/vue-select@latest"></script>
+<script src="sweetalert2.all.min.js"></script>
+<script src="sweetalert2.min.js"></script>
+
 <script>
 import Vue from 'vue'
 import vSelect from 'vue-select'
+// ES6 Modules or TypeScript
+import Swal from 'sweetalert2'
 
+// CommonJS
 
 Vue.component('v-select', vSelect)
 
@@ -302,6 +311,9 @@ Vue.component('v-select', vSelect)
                 cantidadProductos:'',
                 precioProducto:'',
                 descuento: 0.0,
+                total:0.0,
+                totalDescuento:0.0,
+                totalParcial:0,
                 arrayTransacciones:[],
                 arrayProductoTransaccion:[],
                 arrayClientes:[],
@@ -357,6 +369,13 @@ Vue.component('v-select', vSelect)
                     from++;
                 }
                 return pagesArray;
+            },
+            calcularTotal: function(){
+                var resultado=0;
+                for (var i=0; i<this.arrayDetalles.length;i++) {
+                    resultado=resultado+(this.arrayDetalles[i].precioProducto*this.arrayDetalles[i].cantidadProductos).toFixed(0);
+                }
+                return resultado;
             }
         },
         methods:{
@@ -417,14 +436,48 @@ Vue.component('v-select', vSelect)
                 me.pagination.current_page=page;
                 me.listarTransaccion(page, buscar, criterio);
             },
+            encuentra(id){
+                var sw=0;
+                for (var i=0; i<this.arrayDetalles.length;i++){
+                    if(this.arrayDetalles[i].idProductos==id){
+                        sw=true;
+                    }
+
+                }
+                return sw;
+            },
+            eliminarDetalle(index){
+                let me = this;
+                me.arrayDetalles.splice(index, 1);
+            },
             agregarDetalle(){
                 let me=this;
-                me.arrayDetalles.push({
-                    idProductos: me.idProductos,
-                    producto: me.producto,
-                    cantidadProductos: me.cantidadProductos,
-                    precioProducto: me.precioProducto
-                });
+                const Swal = require('sweetalert2')
+                if(me.idProductos==0 || me.cantidadProductos==0 || me.precioProducto==0){
+                }
+                else{
+                    if(me.encuentra(me.idProductos)){
+                        Swal.fire({
+                            icon: 'error',
+                            title: '¡Error!',
+                            text: 'Este producto ya está ingresado.'
+                        })
+                    }else{
+                        me.arrayDetalles.push({
+                            idProductos: me.idProductos,
+                            producto: me.producto,
+                            cantidadProductos: me.cantidadProductos,
+                            precioProducto: me.precioProducto   
+                        });
+                        me.idProductos=0;
+                        me.producto='';
+                        me.cantidadProductos=0;
+                        me.precioProducto=0;
+                    }
+                
+
+                }
+               
 
             },
             transaccionProducto(search,loading){
@@ -445,13 +498,14 @@ Vue.component('v-select', vSelect)
                 let me=this;
                 me.loading = true;
                 me.idProductos = val1.idProductos;
+                me.producto = val1.nombreProductos;
             },
-            registrarProducto(){
-                if(this.validarProducto()){
+            registrarTransaccion(){
+                if(this.validarTransaccion()){
                     return;
                 }
                 let me=this;
-                axios.post('productos/registrar',{
+                axios.post('transaccion/registrar',{
                     'nombreProductos': this.nombreProductos,
                     'idPlataformas': this.idPlataformas,    
                     'descripcionProductos': this.descripcionProductos,
@@ -487,14 +541,10 @@ Vue.component('v-select', vSelect)
                     console.log(error.response);
                 })
             },
-             validarProducto(){
-                this.errorProducto=0;
-                this.errorMsjProducto = [];
-                
-               if(this.idPlataformas==0) this.errorMsjProducto.push("Seleccione una plataforma");
-                if(!this.nombreProductos) this.errorMsjProducto.push("El nombre del Producto no debe estar vacío");
-                if(!this.stockNuevoProductos) this.errorMsjProducto.push("El stock debe ser un número")
-                if(this.errorMsjProducto.length) this.errorProducto=1;
+             validarTransaccion(){
+                this.errorTransaccion=0;
+                this.errorMsjTransaccion = [];
+ 
 
                 return this.errorProducto;
             },

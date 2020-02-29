@@ -24,9 +24,9 @@
                                 <a class="nav-link" href="#"><i class="icon-user"></i>Listado de Clientes</a>
                             </li>
 
-                            <li @click="menu=8" class="nav-item">
+                       <!--     <li @click="menu=8" class="nav-item">
                                 <a class="nav-link" href="#"><i class="icon-user"></i>Usuarios</a>
-                            </li>
+                            </li>-->
                         </ul>
                     </li>
                     <li class="nav-item nav-dropdown">
