@@ -86,13 +86,13 @@ class SocioController extends Controller
         ->join('clientes','socios.idClientes','=','clientes.idClientes')
         ->select('socios.idClientes', 'clientes.nombreClientes','socios.estadoSocios', 'socios.puntosSocios')
         ->where('Socio_idClientes',$request->idClientes)->get(); */
-        $socios = Socio::where('Socio_idClientes', 'like', '%'. $filtro. '%')
+        $referidos = Socio::where('Socio_idClientes', 'like', '%'. $filtro. '%')
         ->join('clientes','socios.idClientes','=','clientes.idClientes')
         ->select('socios.idClientes', 'clientes.nombreClientes', 'socios.puntosSocios')
         ->orderBy('clientes.nombreClientes', 'asc')->get();
         
         
-        return ['socios'=> $socios];
+        return ['referidos'=> $referidos];
     }
 
 

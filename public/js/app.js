@@ -52297,13 +52297,17 @@ var render = function() {
                       { staticClass: "col-md-12" },
                       [
                         _vm._l(_vm.arrayReferidos, function(referido) {
-                          return _c("li", {
-                            key: referido.idClientes,
-                            attrs: { value: referido.idClientes },
-                            domProps: {
-                              textContent: _vm._s(_vm.socio.nombreClientes)
-                            }
-                          })
+                          return _c(
+                            "li",
+                            {
+                              key: referido.idClientes,
+                              attrs: { value: referido.idClientes },
+                              domProps: {
+                                textContent: _vm._s(referido.nombreClientes)
+                              }
+                            },
+                            [_vm._v(" test")]
+                          )
                         }),
                         _vm._v(" "),
                         _c(
