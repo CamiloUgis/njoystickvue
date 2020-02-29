@@ -29,6 +29,7 @@
                         <table class="table table-bordered table-striped table-sm">
                             <thead>
                                 <tr>
+                                    <th class="text-center">Cliente</th>
                                     <th class="text-center">Tipo de Transacción</th>
                                     <th class="text-center">Observaciones</th>
                                     <th class="text-center">Fecha de Transacción</th>
@@ -42,6 +43,7 @@
                             </thead>
                             <tbody class="text-center">
                                 <tr v-for="transaccion in arrayTransacciones" :key="transaccion.idTransacciones">
+                                    <td v-text="transaccion.nombreClientes"></td>
                                     <td v-text="transaccion.tipoTransacciones"></td>
                                     <td v-text="transaccion.observacionTransacciones"></td>
                                     <td v-text="transaccion.fechaTransacciones"></td>
@@ -266,8 +268,6 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" @click="cerrarModal()" >Cerrar</button>
                             <button type="button" v-if="tipoAccion==1" class="btn btn-primary" @click="registrarTransaccion()" >Guardar</button>
-                            <button type="button" v-if="tipoAccion==2" class="btn btn-primary" @click="actualizarTransaccion()">Actualizar</button>
-
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -298,9 +298,11 @@ Vue.component('v-select', vSelect)
             return{
                 idTransacciones:0,
                 idProductos:0,
+                idClientes:0,
                 tipoTransacciones:0,
                 observacionTransacciones:'',
                 nombreProductos:'',
+                nombreClientes:'',
                 fechaTransacciones:'',
                 puntosTransacciones:'',
                 valorFinalTransacciones:'',
@@ -506,16 +508,18 @@ Vue.component('v-select', vSelect)
                 }
                 let me=this;
                 axios.post('transaccion/registrar',{
-                    'nombreProductos': this.nombreProductos,
-                    'idPlataformas': this.idPlataformas,    
-                    'descripcionProductos': this.descripcionProductos,
-                    'stockNuevoProductos': this.stockNuevoProductos,
-                    'stockUsadoProductos': this.stockUsadoProductos,
-                    'precioNuevoProductos': this.precioNuevoProductos,
-                    'precioUsadoProductos': this.precioUsadoProductos,
+                    'idClientes': this.idClientes,
+                    'tipoTransacciones': this.tipoTransacciones,
+                    'observacionTransacciones': this.observacionTransacciones,    
+                    'fechaTransacciones': this.fechaTransacciones,
+                    'puntosTransacciones': this.puntosTransacciones,
+                    'valorFinalTransacciones': this.valorFinalTransacciones,
+                    'formaPagoTransacciones': this.formaPagoTransacciones,
+                    'plazoTransacciones': this.plazoTransacciones,
+                    'estadoTransacciones': this.estadoTransacciones,
+                    'data': this.arrayDetalles
                     }).then(function (response){
-                        me.cerrarModal();
-                        me.listarProducto(1,'', 'nombre');
+                        me.listarTransaccion(1,'', 'idTransaccion');
                 }).catch(function (error){
                     console.log(error.response);
                 })
