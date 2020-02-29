@@ -92,12 +92,20 @@
                                         <th class="text-center">Puntos recibidos</th>
                                     </tr>
                                 </thead>
-                                <tbody class="text-center">   
+                                <tbody class="text-center" v-if="arrayReferidos.length">   
                                 <tr v-for="referido in arrayReferidos" :key="referido.idClientes">
                                     <td v-text="'NJ'+referido.idClientes"></td>
                                     <td v-text="referido.nombreClientes"> </td>
                                     <td v-text="referido.puntosSocios/2"> </td>
                                 </tr>
+                                </tbody>
+                                <tbody v-else>
+                                    <tr>
+                                        <td colspan="12"> 
+                                        <center>   NO hay referidos asociados. </center>
+                                        </td>
+                                    </tr>
+
                                 </tbody>
                                 </table>
                                </div>

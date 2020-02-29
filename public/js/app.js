@@ -51795,6 +51795,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -52319,38 +52327,61 @@ var render = function() {
                           [
                             _vm._m(1),
                             _vm._v(" "),
-                            _c(
-                              "tbody",
-                              { staticClass: "text-center" },
-                              _vm._l(_vm.arrayReferidos, function(referido) {
-                                return _c("tr", { key: referido.idClientes }, [
-                                  _c("td", {
-                                    domProps: {
-                                      textContent: _vm._s(
-                                        "NJ" + referido.idClientes
-                                      )
-                                    }
+                            _vm.arrayReferidos.length
+                              ? _c(
+                                  "tbody",
+                                  { staticClass: "text-center" },
+                                  _vm._l(_vm.arrayReferidos, function(
+                                    referido
+                                  ) {
+                                    return _c(
+                                      "tr",
+                                      { key: referido.idClientes },
+                                      [
+                                        _c("td", {
+                                          domProps: {
+                                            textContent: _vm._s(
+                                              "NJ" + referido.idClientes
+                                            )
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("td", {
+                                          domProps: {
+                                            textContent: _vm._s(
+                                              referido.nombreClientes
+                                            )
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("td", {
+                                          domProps: {
+                                            textContent: _vm._s(
+                                              referido.puntosSocios / 2
+                                            )
+                                          }
+                                        })
+                                      ]
+                                    )
                                   }),
-                                  _vm._v(" "),
-                                  _c("td", {
-                                    domProps: {
-                                      textContent: _vm._s(
-                                        referido.nombreClientes
-                                      )
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("td", {
-                                    domProps: {
-                                      textContent: _vm._s(
-                                        referido.puntosSocios / 2
-                                      )
-                                    }
-                                  })
+                                  0
+                                )
+                              : _c("tbody", [
+                                  _c("tr", [
+                                    _c(
+                                      "td",
+                                      { attrs: { colspan: "12" } },
+                                      [
+                                        _c("center", [
+                                          _vm._v(
+                                            "   NO hay referidos asociados. "
+                                          )
+                                        ])
+                                      ],
+                                      1
+                                    )
+                                  ])
                                 ])
-                              }),
-                              0
-                            )
                           ]
                         )
                       ]),
