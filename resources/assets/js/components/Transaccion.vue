@@ -132,11 +132,20 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Producto</label>
-                                    <div class="form-inline">
+                                    <v-select
+                                        :on-search="transaccionProducto"
+                                        label="nombreProductos"
+                                        :options="arrayProductos"
+                                        placeholder="Buscar Productos..."
+                                        :onChange="getDatosProductos"
+                                    >
+
+                                    </v-select>
+                                  <!--  <div class="form-inline">
                                         <input type="text" class="form-control" v-model="codigo" @keyup.enter="buscarProducto()" placeholder="Ingrese Producto">
                                         <button class="btn btn-primary">...</button>
                                         <input type="text" readonly class="form-control" v-model="producto">
-                                    </div>
+                                    </div> -->
 
                                 </div>
                             </div>
@@ -144,7 +153,7 @@
                                 <div class="form-group">
                                     <label>Precio</label>
                                     <div class="form-inline">
-                                        <input type="number" value="0" step="any" class="form-control" v-model="precioNuevoProductos">
+                                        <input type="number" value="0" step="any" class="form-control" v-model="precioProducto">
                                     </div>
                                 </div>
                             </div>
@@ -176,7 +185,7 @@
                                         </thead>
                                         <tbody v-if="arrayDetalles.length">
                                             <tr v-for="detalle in arrayDetalles" :key="detalle.idDetalle">
-                                                <td v-text="detalle.nombreProductos">
+                                                <td v-text="detalle.producto">
                                                 </td>
                                                 
                                                 <td>
@@ -280,6 +289,7 @@ Vue.component('v-select', vSelect)
                 idProductos:0,
                 tipoTransacciones:0,
                 observacionTransacciones:'',
+                nombreProductos:'',
                 fechaTransacciones:'',
                 puntosTransacciones:'',
                 valorFinalTransacciones:'',
@@ -409,11 +419,30 @@ Vue.component('v-select', vSelect)
                 let me=this;
                 me.arrayDetalles.push({
                     idProductos: me.idProductos,
-                    nombreProductos: me.nombreProductos,
+                    producto: me.producto,
                     cantidadProductos: me.cantidadProductos,
                     precioProducto: me.precioProducto
                 });
 
+            },
+            transaccionProducto(search,loading){
+                let me=this;
+                loading(true)
+                var url= '/productos/transaccionProducto?filtro='+search;
+                axios.get(url).then(function (response){
+                    var respuesta = response.data;
+                    q: search
+                    me.arrayProductos=respuesta.productos;
+                    loading(false)
+                })
+                .catch(function (error){
+                    console.log(error.response);
+                })
+            },
+            getDatosProductos(val1){
+                let me=this;
+                me.loading = true;
+                me.idProductos = val1.idProductos;
             },
             registrarProducto(){
                 if(this.validarProducto()){

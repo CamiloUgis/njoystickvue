@@ -43,6 +43,8 @@ Route::post('/productos/registrar', 'ProductoController@store');
 Route::put('/productos/actualizar','ProductoController@update');
 Route::put('/productos/asociarGenero','ProductoController@asociar');
 Route::get('/productos/buscarProducto','ProductoController@buscarProducto');
+Route::get('/productos/transaccionProducto','ProductoController@transaccionProducto');
+
 
 
 Route::get('/clientes','ClienteController@index');

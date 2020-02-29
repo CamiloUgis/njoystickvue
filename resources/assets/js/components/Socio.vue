@@ -51,7 +51,7 @@
                                             </button> &nbsp;
                                         </td>
                                         <td>
-                                            <button type="button" @click="esReferido('idClientes')" class="btn btn-succes btn-sm btnvisualizar">
+                                            <button type="button" @click="esReferido(socio.idClientes)" class="btn btn-succes btn-sm btnvisualizar">
                                                 <i class="icon-eye"></i>
                                         </button> &nbsp;
                                         </td>
@@ -84,7 +84,7 @@
                                 <!-- implementar codigo visualización de socios -->
                                 
                                <li v-for="referido in arrayReferidos" :key="referido.idClientes"
-                                            :value="referido.idClientes" v-text="referido.nombreClientes"></li>
+                                            :value="referido.idClientes" v-text="socio.nombreClientes"></li>
                                 <button type="button" @click="ocultarDetalle()" class="btn btn-secondary">Cerrar</button>
                             </div>
 
@@ -219,9 +219,9 @@
             esReferido(idClientes){
                 this.listado=0;
                 let me=this;
-                var url= '/socios/equipo?idClientes='+idClientes;
+                var url= '/socios/equipo?filtro='+idClientes;
                 axios.get(url).then(function (response){
-                    console.log(response);
+                    console.log(response.data);
                     var respuesta = response.data;
                     me.arrayReferidos = respuesta.referidos;
                 })

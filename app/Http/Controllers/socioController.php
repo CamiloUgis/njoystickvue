@@ -80,15 +80,19 @@ class SocioController extends Controller
     }
     public function equipo(Request $request){
        // if(!$request->ajax()) return redirect('/');
-        $socio= Socio::findOrFail($request->idClientes);
-        
+       $filtro = $request->filtro;
+       /* $socio= Socio::findOrFail($request->idClientes);
         $referidos= DB::table('socios')
         ->join('clientes','socios.idClientes','=','clientes.idClientes')
         ->select('socios.idClientes', 'clientes.nombreClientes','socios.estadoSocios', 'socios.puntosSocios')
-        ->where('Socio_idClientes',$request->idClientes)->get();
+        ->where('Socio_idClientes',$request->idClientes)->get(); */
+        $socios = Socio::where('Socio_idClientes', 'like', '%'. $filtro. '%')
+        ->join('clientes','socios.idClientes','=','clientes.idClientes')
+        ->select('socios.idClientes', 'clientes.nombreClientes', 'socios.puntosSocios')
+        ->orderBy('clientes.nombreClientes', 'asc')->get();
         
         
-        return ['referidos'=> $referidos];
+        return ['socios'=> $socios];
     }
 
 

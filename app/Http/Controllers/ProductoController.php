@@ -114,5 +114,17 @@ class ProductoController extends Controller
         }
     }
 
+    public function transaccionProducto(Request $request){
+        if(!$request->ajax()) return redirect('/');
+        $filtro = $request->filtro;
+        $productos = Producto::where('nombreProductos', 'like', '%'. $filtro. '%')
+        ->select('idProductos', 'nombreProductos')
+        ->orderBy('nombreProductos', 'asc')->get();
+
+        return ['productos'=>$productos];
+
+    }
+
+
     
 }

@@ -51848,9 +51848,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         esReferido: function esReferido(idClientes) {
             this.listado = 0;
             var me = this;
-            var url = '/socios/equipo?idClientes=' + idClientes;
+            var url = '/socios/equipo?filtro=' + idClientes;
             axios.get(url).then(function (response) {
-                console.log(response);
+                console.log(response.data);
                 var respuesta = response.data;
                 me.arrayReferidos = respuesta.referidos;
             }).catch(function (error) {
@@ -52188,7 +52188,7 @@ var render = function() {
                                     attrs: { type: "button" },
                                     on: {
                                       click: function($event) {
-                                        return _vm.esReferido("idClientes")
+                                        return _vm.esReferido(socio.idClientes)
                                       }
                                     }
                                   },
@@ -52301,7 +52301,7 @@ var render = function() {
                             key: referido.idClientes,
                             attrs: { value: referido.idClientes },
                             domProps: {
-                              textContent: _vm._s(referido.nombreClientes)
+                              textContent: _vm._s(_vm.socio.nombreClientes)
                             }
                           })
                         }),
@@ -53011,6 +53011,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -53023,6 +53032,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
             idProductos: 0,
             tipoTransacciones: 0,
             observacionTransacciones: '',
+            nombreProductos: '',
             fechaTransacciones: '',
             puntosTransacciones: '',
             valorFinalTransacciones: '',
@@ -53149,10 +53159,28 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
             var me = this;
             me.arrayDetalles.push({
                 idProductos: me.idProductos,
-                nombreProductos: me.nombreProductos,
+                producto: me.producto,
                 cantidadProductos: me.cantidadProductos,
                 precioProducto: me.precioProducto
             });
+        },
+        transaccionProducto: function transaccionProducto(search, loading) {
+            var me = this;
+            loading(true);
+            var url = '/productos/transaccionProducto?filtro=' + search;
+            axios.get(url).then(function (response) {
+                var respuesta = response.data;
+                q: search;
+                me.arrayProductos = respuesta.productos;
+                loading(false);
+            }).catch(function (error) {
+                console.log(error.response);
+            });
+        },
+        getDatosProductos: function getDatosProductos(val1) {
+            var me = this;
+            me.loading = true;
+            me.idProductos = val1.idProductos;
         },
         registrarProducto: function registrarProducto() {
             if (this.validarProducto()) {
@@ -53786,77 +53814,24 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group row border" }, [
                     _c("div", { staticClass: "col-md-6" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", [_vm._v("Producto")]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-inline" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.codigo,
-                                expression: "codigo"
-                              }
-                            ],
-                            staticClass: "form-control",
+                      _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        [
+                          _c("label", [_vm._v("Producto")]),
+                          _vm._v(" "),
+                          _c("v-select", {
                             attrs: {
-                              type: "text",
-                              placeholder: "Ingrese Producto"
-                            },
-                            domProps: { value: _vm.codigo },
-                            on: {
-                              keyup: function($event) {
-                                if (
-                                  !$event.type.indexOf("key") &&
-                                  _vm._k(
-                                    $event.keyCode,
-                                    "enter",
-                                    13,
-                                    $event.key,
-                                    "Enter"
-                                  )
-                                ) {
-                                  return null
-                                }
-                                return _vm.buscarProducto()
-                              },
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.codigo = $event.target.value
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("button", { staticClass: "btn btn-primary" }, [
-                            _vm._v("...")
-                          ]),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.producto,
-                                expression: "producto"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: { type: "text", readonly: "" },
-                            domProps: { value: _vm.producto },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.producto = $event.target.value
-                              }
+                              "on-search": _vm.transaccionProducto,
+                              label: "nombreProductos",
+                              options: _vm.arrayProductos,
+                              placeholder: "Buscar Productos...",
+                              onChange: _vm.getDatosProductos
                             }
                           })
-                        ])
-                      ])
+                        ],
+                        1
+                      )
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-2" }, [
@@ -53869,19 +53844,19 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.precioNuevoProductos,
-                                expression: "precioNuevoProductos"
+                                value: _vm.precioProducto,
+                                expression: "precioProducto"
                               }
                             ],
                             staticClass: "form-control",
                             attrs: { type: "number", value: "0", step: "any" },
-                            domProps: { value: _vm.precioNuevoProductos },
+                            domProps: { value: _vm.precioProducto },
                             on: {
                               input: function($event) {
                                 if ($event.target.composing) {
                                   return
                                 }
-                                _vm.precioNuevoProductos = $event.target.value
+                                _vm.precioProducto = $event.target.value
                               }
                             }
                           })
@@ -53965,7 +53940,7 @@ var render = function() {
                                           _c("td", {
                                             domProps: {
                                               textContent: _vm._s(
-                                                detalle.nombreProductos
+                                                detalle.producto
                                               )
                                             }
                                           }),

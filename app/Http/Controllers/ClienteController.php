@@ -45,7 +45,7 @@ class ClienteController extends Controller
 
     }
     public function transaccionClientes(Request $request){
-        if(!$request->ajax()) return redirect('/');
+        //if(!$request->ajax()) return redirect('/');
         $filtro = $request->filtro;
         $clientes = Cliente::where('nombreClientes', 'like', '%'. $filtro. '%')
         ->orWhere('rutClientes', 'like', '%'. $filtro. '%')
