@@ -21,11 +21,13 @@ class SocioController extends Controller
 
         if($buscar==''){
             $socios = Socio::join('clientes','socios.idClientes','=','clientes.idClientes')
-            ->select('socios.idClientes', 'clientes.nombreClientes','socios.estadoSocios', 'socios.puntosSocios')
+            ->select('socios.idClientes', 'clientes.nombreClientes','socios.estadoSocios', 
+            'socios.puntosPropiosSocios','socios.puntosReferidosSocios')
             ->orderBy('idClientes', 'desc')->paginate(5);
         }else{
             $socios = Socio::join('clientes','socios.idClientes','=','clientes.idClientes')
-            ->select('socios.idClientes', 'clientes.nombreClientes','socios.estadoSocios','socios.puntosSocios')
+            ->select('socios.idClientes', 'clientes.nombreClientes','socios.estadoSocios',
+            'socios.puntosPropiosSocios','socios.puntosReferidosSocios')
             ->where($criterio, 'like', '%'. $buscar . '%')
             ->orderBy('idClientes', 'desc')->paginate(5);
         }
@@ -55,7 +57,8 @@ class SocioController extends Controller
         $socio->idClientes=$request->input('idClientes');
         $socio->Socio_idClientes=$request->input('Socio_idClientes');
         $socio->estadoSocios= 1;
-        $socio->puntosSocios = 0;
+        $socio->puntosPropiosSocios = 0;
+        $socio->puntosReferidosSocios = 0;
         $socio->save();
     }
 
@@ -88,7 +91,7 @@ class SocioController extends Controller
         ->where('Socio_idClientes',$request->idClientes)->get(); */
         $referidos = Socio::where('Socio_idClientes', 'like', '%'. $filtro. '%')
         ->join('clientes','socios.idClientes','=','clientes.idClientes')
-        ->select('socios.idClientes', 'clientes.nombreClientes', 'socios.puntosSocios')
+        ->select('socios.idClientes', 'clientes.nombreClientes', 'socios.puntosPropiosSocios', 'socios.puntosReferidosSocios')
         ->orderBy('clientes.nombreClientes', 'asc')->get();
         
         

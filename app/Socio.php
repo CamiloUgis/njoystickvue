@@ -12,7 +12,8 @@ class Socio extends Model
     protected $fillable=['idClientes',
     'estadoSocios',
     'Socio_idClientes',
-    'puntosSocios',
+    'puntosReferidosSocios',
+    'puntosPropiosSocios'
     ];
     public function cliente(){
         return $this->belongsTo('App\Cliente');

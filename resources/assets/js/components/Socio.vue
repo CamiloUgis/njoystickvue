@@ -32,6 +32,7 @@
                                         <th class="text-center">Nombre</th>
                                         <th class="text-center">Estado</th>
                                         <th class="text-center">Puntos</th>
+                                       
                                         <th class="text-center">Modificar</th>
                                         <th class="text-center">Ver referidos</th>
                                     </tr>
@@ -44,7 +45,7 @@
                                         <td v-if="socio.estadoSocios==1">Activo</td>
                                         <td v-else>Inactivo</td>
 
-                                        <td v-text="socio.puntosSocios"></td>
+                                        <td v-text="socio.puntosPropiosSocios + socio.puntosReferidosSocios"></td>
                                         <td>
                                             <button type="button" @click="abrirModal('socio', 'actualizar', socio)" class="btn btn-warning btn-sm">
                                             <i class="icon-pencil"></i>
@@ -81,12 +82,12 @@
                         <div class="card-body">
                             <div class="form-group row">
                             <div class="col-md-12">
-                                <!-- <h3>{{socio.idClientes}} - {{socio.nombreClientes}}</h3> -->
+                                 <!-- <h3>{{socio.idClientes}} - {{socio.nombreClientes}}</h3>  -->
                                 <!-- implementar codigo visualización de socios -->
-                               <div class="table-responsive">
-                                <table class="table table-bordered table-striped "> 
+                               <div class="table-responsive col-md-12" >
+                                <table class="table table-borderless"> 
                                 <thead>
-                                    <tr>
+                                    <tr class="table-active">
                                         <th class="text-center">Código Njoystick</th>
                                         <th class="text-center">Nombre del referido</th>
                                         <th class="text-center">Puntos recibidos</th>
@@ -96,9 +97,22 @@
                                 <tr v-for="referido in arrayReferidos" :key="referido.idClientes">
                                     <td v-text="'NJ'+referido.idClientes"></td>
                                     <td v-text="referido.nombreClientes"> </td>
-                                    <td v-text="referido.puntosSocios/2"> </td>
+                                    <td v-text="referido.puntosReferidosSocios"> </td>
+                                </tr>
+                                <tr style="background-color: #CEECF5">
+                                        <td colspan="2" align="right"> 
+                                            <strong>Puntos Propios:</strong>
+                                        </td>
+                                        <td>{{puntosSocios}}</td>
+                                </tr>
+                                <tr style="background-color: #CEECF5">
+                                    <td colspan="2" align="right"> 
+                                        <strong>Total Acumulado:</strong>
+                                    </td>
+                                    <td> test</td>
                                 </tr>
                                 </tbody>
+                                
                                 <tbody v-else>
                                     <tr>
                                         <td colspan="12"> 

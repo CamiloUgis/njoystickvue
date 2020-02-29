@@ -51803,6 +51803,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -52177,7 +52191,10 @@ var render = function() {
                               _vm._v(" "),
                               _c("td", {
                                 domProps: {
-                                  textContent: _vm._s(socio.puntosSocios)
+                                  textContent: _vm._s(
+                                    socio.puntosPropiosSocios +
+                                      socio.puntosReferidosSocios
+                                  )
                                 }
                               }),
                               _vm._v(" "),
@@ -52318,19 +52335,15 @@ var render = function() {
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "form-group row" }, [
                     _c("div", { staticClass: "col-md-12" }, [
-                      _c("div", { staticClass: "table-responsive" }, [
-                        _c(
-                          "table",
-                          {
-                            staticClass: "table table-bordered table-striped "
-                          },
-                          [
-                            _vm._m(1),
-                            _vm._v(" "),
-                            _vm.arrayReferidos.length
-                              ? _c(
-                                  "tbody",
-                                  { staticClass: "text-center" },
+                      _c("div", { staticClass: "table-responsive col-md-12" }, [
+                        _c("table", { staticClass: "table table-borderless" }, [
+                          _vm._m(1),
+                          _vm._v(" "),
+                          _vm.arrayReferidos.length
+                            ? _c(
+                                "tbody",
+                                { staticClass: "text-center" },
+                                [
                                   _vm._l(_vm.arrayReferidos, function(
                                     referido
                                   ) {
@@ -52357,33 +52370,51 @@ var render = function() {
                                         _c("td", {
                                           domProps: {
                                             textContent: _vm._s(
-                                              referido.puntosSocios / 2
+                                              referido.puntosReferidosSocios
                                             )
                                           }
                                         })
                                       ]
                                     )
                                   }),
-                                  0
-                                )
-                              : _c("tbody", [
-                                  _c("tr", [
-                                    _c(
-                                      "td",
-                                      { attrs: { colspan: "12" } },
-                                      [
-                                        _c("center", [
-                                          _vm._v(
-                                            "   NO hay referidos asociados. "
-                                          )
-                                        ])
-                                      ],
-                                      1
-                                    )
-                                  ])
+                                  _vm._v(" "),
+                                  _c(
+                                    "tr",
+                                    {
+                                      staticStyle: {
+                                        "background-color": "#CEECF5"
+                                      }
+                                    },
+                                    [
+                                      _vm._m(2),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(_vm._s(_vm.puntosSocios))
+                                      ])
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _vm._m(3)
+                                ],
+                                2
+                              )
+                            : _c("tbody", [
+                                _c("tr", [
+                                  _c(
+                                    "td",
+                                    { attrs: { colspan: "12" } },
+                                    [
+                                      _c("center", [
+                                        _vm._v(
+                                          "   NO hay referidos asociados. "
+                                        )
+                                      ])
+                                    ],
+                                    1
+                                  )
                                 ])
-                          ]
-                        )
+                              ])
+                        ])
                       ]),
                       _vm._v(" "),
                       _c(
@@ -52672,7 +52703,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", [
-      _c("tr", [
+      _c("tr", { staticClass: "table-active" }, [
         _c("th", { staticClass: "text-center" }, [_vm._v("Código Njoystick")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [
@@ -52681,6 +52712,26 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [_vm._v("Puntos recibidos")])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { attrs: { colspan: "2", align: "right" } }, [
+      _c("strong", [_vm._v("Puntos Propios:")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", { staticStyle: { "background-color": "#CEECF5" } }, [
+      _c("td", { attrs: { colspan: "2", align: "right" } }, [
+        _c("strong", [_vm._v("Total Acumulado:")])
+      ]),
+      _vm._v(" "),
+      _c("td", [_vm._v(" test")])
     ])
   }
 ]
@@ -52835,7 +52886,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_select__ = __webpack_require__(113);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_select___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_select__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_sweetalert2__ = __webpack_require__(123);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_sweetalert2__ = __webpack_require__(122);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_sweetalert2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_sweetalert2__);
 //
 //
@@ -53286,7 +53337,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
         },
         agregarDetalle: function agregarDetalle() {
             var me = this;
-            var Swal = __webpack_require__(123);
+            var Swal = __webpack_require__(122);
             if (me.idProductos == 0 || me.cantidadProductos == 0 || me.precioProducto == 0) {} else {
                 if (me.encuentra(me.idProductos)) {
                     Swal.fire({
@@ -56329,8 +56380,7 @@ function h(tag, key, args) {
 }
 
 /***/ }),
-/* 122 */,
-/* 123 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
