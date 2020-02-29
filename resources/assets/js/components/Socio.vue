@@ -81,11 +81,28 @@
                         <div class="card-body">
                             <div class="form-group row">
                             <div class="col-md-12">
+                                <!-- <h3>{{socio.idClientes}} - {{socio.nombreClientes}}</h3> -->
                                 <!-- implementar codigo visualización de socios -->
-                                
-                               <li v-for="referido in arrayReferidos" :key="referido.idClientes"
-                                            :value="referido.idClientes" v-text="referido.nombreClientes"></li>
+                               <div class="table-responsive">
+                                <table class="table table-bordered table-striped "> 
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Código Njoystick</th>
+                                        <th class="text-center">Nombre del referido</th>
+                                        <th class="text-center">Puntos recibidos</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-center">   
+                                <tr v-for="referido in arrayReferidos" :key="referido.idClientes">
+                                    <td v-text="'NJ'+referido.idClientes"></td>
+                                    <td v-text="referido.nombreClientes"> </td>
+                                    <td v-text="referido.puntosSocios/2"> </td>
+                                </tr>
+                                </tbody>
+                                </table>
+                               </div>
                                 <button type="button" @click="ocultarDetalle()" class="btn btn-secondary">Cerrar</button>
+                                
                             </div>
 
                         </div>

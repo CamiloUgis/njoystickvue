@@ -51778,6 +51778,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -52292,36 +52309,66 @@ var render = function() {
             : [
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "form-group row" }, [
-                    _c(
-                      "div",
-                      { staticClass: "col-md-12" },
-                      [
-                        _vm._l(_vm.arrayReferidos, function(referido) {
-                          return _c("li", {
-                            key: referido.idClientes,
-                            attrs: { value: referido.idClientes },
-                            domProps: {
-                              textContent: _vm._s(referido.nombreClientes)
-                            }
-                          })
-                        }),
-                        _vm._v(" "),
+                    _c("div", { staticClass: "col-md-12" }, [
+                      _c("div", { staticClass: "table-responsive" }, [
                         _c(
-                          "button",
+                          "table",
                           {
-                            staticClass: "btn btn-secondary",
-                            attrs: { type: "button" },
-                            on: {
-                              click: function($event) {
-                                return _vm.ocultarDetalle()
-                              }
-                            }
+                            staticClass: "table table-bordered table-striped "
                           },
-                          [_vm._v("Cerrar")]
+                          [
+                            _vm._m(1),
+                            _vm._v(" "),
+                            _c(
+                              "tbody",
+                              { staticClass: "text-center" },
+                              _vm._l(_vm.arrayReferidos, function(referido) {
+                                return _c("tr", { key: referido.idClientes }, [
+                                  _c("td", {
+                                    domProps: {
+                                      textContent: _vm._s(
+                                        "NJ" + referido.idClientes
+                                      )
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("td", {
+                                    domProps: {
+                                      textContent: _vm._s(
+                                        referido.nombreClientes
+                                      )
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("td", {
+                                    domProps: {
+                                      textContent: _vm._s(
+                                        referido.puntosSocios / 2
+                                      )
+                                    }
+                                  })
+                                ])
+                              }),
+                              0
+                            )
+                          ]
                         )
-                      ],
-                      2
-                    )
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-secondary",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.ocultarDetalle()
+                            }
+                          }
+                        },
+                        [_vm._v("Cerrar")]
+                      )
+                    ])
                   ])
                 ])
               ]
@@ -52586,6 +52633,22 @@ var staticRenderFns = [
         _c("th", { staticClass: "text-center" }, [_vm._v("Modificar")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [_vm._v("Ver referidos")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { staticClass: "text-center" }, [_vm._v("Código Njoystick")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center" }, [
+          _vm._v("Nombre del referido")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center" }, [_vm._v("Puntos recibidos")])
       ])
     ])
   }
