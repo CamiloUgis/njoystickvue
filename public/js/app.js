@@ -51845,10 +51845,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     methods: {
-        esReferido: function esReferido() {
+        esReferido: function esReferido(idClientes) {
             this.listado = 0;
             var me = this;
-            var url = '/socios/equipo';
+            var url = '/socios/equipo?idClientes=' + idClientes;
             axios.get(url).then(function (response) {
                 console.log(response);
                 var respuesta = response.data;
@@ -52188,7 +52188,7 @@ var render = function() {
                                     attrs: { type: "button" },
                                     on: {
                                       click: function($event) {
-                                        return _vm.esReferido()
+                                        return _vm.esReferido("idClientes")
                                       }
                                     }
                                   },

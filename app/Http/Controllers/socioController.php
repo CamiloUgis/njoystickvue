@@ -72,7 +72,7 @@ class SocioController extends Controller
         //     'correoClientes'=>'required',
         //     ]);
         if(!$request->ajax()) return redirect('/');
-        $socio = Socio::findOrFail($request->idClientes);;
+        $socio = Socio::findOrFail($request->idClientes);
         $socio->idClientes=$request->input('idClientes');
         $socio->Socio_idClientes=$request->input('Socio_idClientes');
         $socio->save();
@@ -80,6 +80,8 @@ class SocioController extends Controller
     }
     public function equipo(Request $request){
        // if(!$request->ajax()) return redirect('/');
+        $socio= Socio::findOrFail($request->idClientes);
+        
         $referidos= DB::table('socios')
         ->join('clientes','socios.idClientes','=','clientes.idClientes')
         ->select('socios.idClientes', 'clientes.nombreClientes','socios.estadoSocios', 'socios.puntosSocios')

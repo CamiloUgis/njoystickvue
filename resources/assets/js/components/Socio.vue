@@ -51,7 +51,7 @@
                                             </button> &nbsp;
                                         </td>
                                         <td>
-                                            <button type="button" @click="esReferido()" class="btn btn-succes btn-sm btnvisualizar">
+                                            <button type="button" @click="esReferido('idClientes')" class="btn btn-succes btn-sm btnvisualizar">
                                                 <i class="icon-eye"></i>
                                         </button> &nbsp;
                                         </td>
@@ -216,10 +216,10 @@
             }
         },
         methods:{
-            esReferido(){
+            esReferido(idClientes){
                 this.listado=0;
                 let me=this;
-                var url= '/socios/equipo';
+                var url= '/socios/equipo?idClientes='+idClientes;
                 axios.get(url).then(function (response){
                     console.log(response);
                     var respuesta = response.data;
