@@ -50992,6 +50992,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(error);
             });
         },
+        selectClientes: function selectClientes() {
+            var me = this;
+            var url = '/clientes/selectClientes';
+            axios.get(url).then(function (response) {
+                //console.log(response);
+                var respuesta = response.data;
+                me.arrayClientes = respuesta.clientes;
+            }).catch(function (error) {
+                console.log(error.response);
+            });
+        },
         cambiarPagina: function cambiarPagina(page, buscar, criterio) {
             var me = this;
             me.pagination.current_page = page;
@@ -55992,6 +56003,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_select___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_select__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_sweetalert2__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_sweetalert2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_sweetalert2__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -56288,12 +56322,15 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
-        return {
+        var _ref;
+
+        return _ref = {
             idTransacciones: 0,
             idProductos: 0,
             idClientes: 0,
             tipoTransacciones: 0,
             observacionTransacciones: '',
+            picked: '',
             nombreProductos: '',
             nombreClientes: '',
             fechaTransacciones: '',
@@ -56301,41 +56338,15 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
             valorFinalTransacciones: '',
             precioNuevoProductos: '',
             formaPagoTransacciones: 0,
-            plazoTransacciones: '',
-            estadoTransacciones: '',
-            cantidadProductos: '',
-            precioProducto: '',
-            descuento: 0.0,
-            total: 0.0,
-            totalDescuento: 0.0,
-            totalParcial: 0,
-            arrayTransacciones: [],
-            arrayProductoTransaccion: [],
-            arrayClientes: [],
-            arrayProductos: [],
-            arrayDetalles: [],
-            codigo: '',
-            producto: '',
-            modal: 0,
-            listado: 1,
-            tituloModal: '',
-            tipoAccion: 0,
-            errorProducto: 0,
-            errorMsjProducto: [],
-            pagination: {
-                'total': 0,
-                'current_page': 0,
-                'per_page': 0,
-                'last_page': 0,
-                'from': 0,
-                'to': 0
-            },
-            offset: 3,
-            criterio: 'tipoTransaccion',
-            buscar: '',
-            arrayPlataformas: []
-
-        };
+            plazoTransacciones: ''
+        }, _defineProperty(_ref, 'precioNuevoProductos', ''), _defineProperty(_ref, 'precioUsadoProductos', ''), _defineProperty(_ref, 'estadoTransacciones', ''), _defineProperty(_ref, 'cantidadProductos', ''), _defineProperty(_ref, 'precioProducto', ''), _defineProperty(_ref, 'descuento', 0.0), _defineProperty(_ref, 'total', 0.0), _defineProperty(_ref, 'totalDescuento', 0.0), _defineProperty(_ref, 'totalParcial', 0), _defineProperty(_ref, 'arrayTransacciones', []), _defineProperty(_ref, 'arrayProductoTransaccion', []), _defineProperty(_ref, 'arrayClientes', []), _defineProperty(_ref, 'arrayProductos', []), _defineProperty(_ref, 'arrayDetalles', []), _defineProperty(_ref, 'codigo', ''), _defineProperty(_ref, 'producto', ''), _defineProperty(_ref, 'modal', 0), _defineProperty(_ref, 'listado', 1), _defineProperty(_ref, 'tituloModal', ''), _defineProperty(_ref, 'tipoAccion', 0), _defineProperty(_ref, 'errorProducto', 0), _defineProperty(_ref, 'errorMsjProducto', []), _defineProperty(_ref, 'pagination', {
+            'total': 0,
+            'current_page': 0,
+            'per_page': 0,
+            'last_page': 0,
+            'from': 0,
+            'to': 0
+        }), _defineProperty(_ref, 'offset', 3), _defineProperty(_ref, 'criterio', 'tipoTransaccion'), _defineProperty(_ref, 'buscar', ''), _defineProperty(_ref, 'arrayPlataformas', []), _ref;
     },
 
     component: {
@@ -56415,6 +56426,10 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
                 if (me.arrayProductos.length > 0) {
                     me.producto = me.arrayProductos[0]['nombreProductos'];
                     me.idProductos = me.arrayProductos[0]['idProductos'];
+                    me.precioNuevoProductos = me.arrayProductos[0]['precioNuevoProductos'];
+                    me.precioUsadoProductos = me.arrayProductos[0]['precioUsadoProductos'];
+                    me.stockNuevoProductos = me.arrayProductos[0]['stockNuevoProductos'];
+                    me.stockUsadoProductos = me.arrayProductos[0]['stockUsadoProductos'];
                 } else {
                     me.producto = 'No existe producto';
                     me.idProductos = 0;
@@ -56436,6 +56451,28 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
                 }
             }
             return sw;
+        },
+        mostrarPrecio: function mostrarPrecio() {
+            var me = this;
+            for (var i = 0; i < this.arrayProductos.length; i++) {
+                if (picked) {
+                    me.precioUsadoProductos = arrayProductos.precioUsadoProductos;
+                } else {
+                    me.precioNuevoProductos = arrayProductos.precioNuevoProductos;
+                }
+            }
+            return me;
+        },
+        mostrarStock: function mostrarStock() {
+            var me = this;
+            for (var i = 0; i < this.arrayProductos.length; i++) {
+                if (picked) {
+                    me.stockUsadoProductos = arrayProductos.stockUsadoProductos;
+                } else {
+                    me.stockNuevoProductos = arrayProductos.stockNuevoProductos;
+                }
+            }
+            return me;
         },
         eliminarDetalle: function eliminarDetalle(index) {
             var me = this;
@@ -56494,6 +56531,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
                 'tipoTransacciones': this.tipoTransacciones,
                 'observacionTransacciones': this.observacionTransacciones,
                 'fechaTransacciones': this.fechaTransacciones,
+                'descuentoTransacciones': this.descuento,
                 'puntosTransacciones': this.puntosTransacciones,
                 'valorFinalTransacciones': this.valorFinalTransacciones,
                 'formaPagoTransacciones': this.formaPagoTransacciones,
@@ -57017,7 +57055,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-4" }, [
                       _c("div", { staticClass: "form-group" }, [
-                        _c("label", [_vm._v("Tipo de Venta")]),
+                        _c("label", [_vm._v("Tipo de Transacción")]),
                         _vm._v(" "),
                         _c(
                           "select",
@@ -57065,6 +57103,89 @@ var render = function() {
                             ])
                           ]
                         )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-12" }, [
+                        _c("label", { attrs: { for: "" } }, [
+                          _vm._v("Observaciones")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.observacionTransacciones,
+                              expression: "observacionTransacciones"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          staticStyle: { width: "1575px" },
+                          attrs: {
+                            type: "text",
+                            placeholder: "Ingrese su observación"
+                          },
+                          domProps: { value: _vm.observacionTransacciones },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.observacionTransacciones = $event.target.value
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-12" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", [_vm._v("Tipo de Transacción")]),
+                          _vm._v(" "),
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.estadoTransacciones,
+                                  expression: "estadoTransacciones"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.estadoTransacciones = $event.target
+                                    .multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                }
+                              }
+                            },
+                            [
+                              _c("option", { attrs: { value: "0" } }, [
+                                _vm._v("Seleccione")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "Pagado" } }, [
+                                _vm._v("Pagado")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "Reservado" } }, [
+                                _vm._v("Reservado")
+                              ])
+                            ]
+                          )
+                        ])
                       ]),
                       _vm._v(" "),
                       _vm._m(1)
@@ -57184,7 +57305,55 @@ var render = function() {
                               search: _vm.transaccionProducto,
                               input: _vm.getDatosProductos
                             }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.picked,
+                                expression: "picked"
+                              }
+                            ],
+                            attrs: { type: "radio", id: "1", value: "1" },
+                            domProps: { checked: _vm._q(_vm.picked, "1") },
+                            on: {
+                              change: function($event) {
+                                _vm.picked = "1"
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("label", { attrs: { for: "1" } }, [
+                            _vm._v("Usado")
+                          ]),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.picked,
+                                expression: "picked"
+                              }
+                            ],
+                            attrs: { type: "radio", id: "0", value: "0" },
+                            domProps: { checked: _vm._q(_vm.picked, "0") },
+                            on: {
+                              change: function($event) {
+                                _vm.picked = "0"
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("label", { attrs: { for: "0" } }, [
+                            _vm._v("Nuevo")
+                          ]),
+                          _vm._v(" "),
+                          _c("br")
                         ],
                         1
                       )
@@ -57217,19 +57386,41 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.precioProducto,
-                                expression: "precioProducto"
+                                value: _vm.arrayProductos.precioUsadoProductos,
+                                expression:
+                                  "arrayProductos.precioUsadoProductos"
                               }
                             ],
                             staticClass: "form-control",
                             attrs: { type: "number", value: "0", step: "any" },
-                            domProps: { value: _vm.precioProducto },
+                            domProps: {
+                              value: _vm.arrayProductos.precioUsadoProductos
+                            },
                             on: {
+                              keyup: function($event) {
+                                if (
+                                  !$event.type.indexOf("key") &&
+                                  _vm._k(
+                                    $event.keyCode,
+                                    "enter",
+                                    13,
+                                    $event.key,
+                                    "Enter"
+                                  )
+                                ) {
+                                  return null
+                                }
+                                return _vm.mostrarPrecio()
+                              },
                               input: function($event) {
                                 if ($event.target.composing) {
                                   return
                                 }
-                                _vm.precioProducto = $event.target.value
+                                _vm.$set(
+                                  _vm.arrayProductos,
+                                  "precioUsadoProductos",
+                                  $event.target.value
+                                )
                               }
                             }
                           })
@@ -57264,19 +57455,40 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.cantidadProductos,
-                                expression: "cantidadProductos"
+                                value: _vm.arrayProductos.stockUsadoProductos,
+                                expression: "arrayProductos.stockUsadoProductos"
                               }
                             ],
                             staticClass: "form-control",
-                            attrs: { type: "number", value: "0" },
-                            domProps: { value: _vm.cantidadProductos },
+                            attrs: { type: "number", value: "0", step: "any" },
+                            domProps: {
+                              value: _vm.arrayProductos.stockUsadoProductos
+                            },
                             on: {
+                              keyup: function($event) {
+                                if (
+                                  !$event.type.indexOf("key") &&
+                                  _vm._k(
+                                    $event.keyCode,
+                                    "enter",
+                                    13,
+                                    $event.key,
+                                    "Enter"
+                                  )
+                                ) {
+                                  return null
+                                }
+                                return _vm.mostrarStock()
+                              },
                               input: function($event) {
                                 if ($event.target.composing) {
                                   return
                                 }
-                                _vm.cantidadProductos = $event.target.value
+                                _vm.$set(
+                                  _vm.arrayProductos,
+                                  "stockUsadoProductos",
+                                  $event.target.value
+                                )
                               }
                             }
                           })

@@ -62,10 +62,10 @@ class ProductoController extends Controller
     }
 
     public function buscarProducto(Request $request){
-        if(!$request->ajax()) return redirect('/');
+        //if(!$request->ajax()) return redirect('/');
         $filtro = $request->filtro;
         $productos = Producto::where('idProductos','=', $filtro)
-        ->select('idProductos', 'nombreProductos')->orderBy('nombreProductos', 'asc')->take(1)->get();
+        ->select('idProductos', 'nombreProductos', 'precioNuevoProductos', 'precioUsadoProductos', 'stockNuevoProductos', 'stockUsadoProductos')->orderBy('nombreProductos', 'asc')->take(1)->get();
 
         return ['productos'=>$productos];
     }
@@ -118,7 +118,7 @@ class ProductoController extends Controller
         if(!$request->ajax()) return redirect('/');
         $filtro = $request->filtro;
         $productos = Producto::where('nombreProductos', 'like', '%'. $filtro. '%')
-        ->select('idProductos', 'nombreProductos')
+        ->select('idProductos', 'nombreProductos', 'precioNuevoProductos', 'precioUsadoProductos', 'stockNuevoProductos', 'stockUsadoProductos')
         ->orderBy('nombreProductos', 'asc')->get();
 
         return ['productos'=>$productos];

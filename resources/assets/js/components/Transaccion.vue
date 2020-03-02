@@ -103,13 +103,27 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Tipo de Venta</label>
+                                    <label>Tipo de Transacción</label>
                                     <select class="form-control" v-model="tipoTransacciones">
                                         <option value="0">Seleccione</option>
                                         <option value="Venta">Venta</option>
                                         <option value="Arriendo">Arriendo</option>
                                         <option value="Cambio">Cambio</option>
                                     </select>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="">Observaciones</label>
+                                     <input type="text" class="form-control" style="width: 1575px;" v-model="observacionTransacciones" placeholder="Ingrese su observación">
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                    <label>Tipo de Transacción</label>
+                                        <select class="form-control" v-model="estadoTransacciones">
+                                            <option value="0">Seleccione</option>
+                                            <option value="Pagado">Pagado</option>
+                                            <option value="Reservado">Reservado</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="col-md-12">
                                     <span>AQUI VAN LAS VALIDACIONES</span>
@@ -144,6 +158,12 @@
                                         @input="getDatosProductos"
                                     > 
                                     </v-select>
+                                    <input type="radio" id="1" value="1" v-model="picked">
+                                    <label for="1">Usado</label>
+                                    <br>
+                                    <input type="radio" id="0" value="0" v-model="picked">
+                                    <label for="0">Nuevo</label>
+                                    <br>
                                     
                                   <!--  <div class="form-inline">
                                         <input type="text" class="form-control" v-model="codigo" @keyup.enter="buscarProducto()" placeholder="Ingrese Producto">
@@ -157,7 +177,7 @@
                                 <div class="form-group">
                                     <label>Precio <span style="color:red;" v-show="precioProducto==0" >(Ingrese*)</span></label>
                                     <div class="form-inline">
-                                        <input type="number" value="0" step="any" class="form-control" v-model="precioProducto">
+                                            <input type="number" value="0" step="any" class="form-control" @keyup.enter="mostrarPrecio()" v-model="arrayProductos.precioUsadoProductos">
                                     </div>
                                 </div>
                             </div>
@@ -165,7 +185,8 @@
                                 <div class="form-group">
                                     <label>Cantidad<span style="color:red;" v-show="cantidadProductos==0" >(Ingrese*) </span></label>
                                     <div class="form-inline">
-                                        <input type="number" value="0" class="form-control" v-model="cantidadProductos">
+                                            <input type="number" value="0" step="any" class="form-control" @keyup.enter="mostrarStock()" v-model="arrayProductos.stockUsadoProductos">
+
                                     </div>
                                 </div>
                             </div>
@@ -301,6 +322,7 @@ Vue.component('v-select', vSelect)
                 idClientes:0,
                 tipoTransacciones:0,
                 observacionTransacciones:'',
+                picked:'',
                 nombreProductos:'',
                 nombreClientes:'',
                 fechaTransacciones:'',
@@ -309,6 +331,8 @@ Vue.component('v-select', vSelect)
                 precioNuevoProductos:'',
                 formaPagoTransacciones:0,
                 plazoTransacciones:'',
+                precioNuevoProductos:'',
+                precioUsadoProductos:'',
                 estadoTransacciones:'',
                 cantidadProductos:'',
                 precioProducto:'',
@@ -423,6 +447,10 @@ Vue.component('v-select', vSelect)
                     if(me.arrayProductos.length>0){
                         me.producto=me.arrayProductos[0]['nombreProductos'];
                         me.idProductos=me.arrayProductos[0]['idProductos'];
+                        me.precioNuevoProductos=me.arrayProductos[0]['precioNuevoProductos'];
+                        me.precioUsadoProductos=me.arrayProductos[0]['precioUsadoProductos'];
+                        me.stockNuevoProductos=me.arrayProductos[0]['stockNuevoProductos'];
+                        me.stockUsadoProductos=me.arrayProductos[0]['stockUsadoProductos'];
                     }else{
                         me.producto='No existe producto';
                         me.idProductos=0;
@@ -447,6 +475,30 @@ Vue.component('v-select', vSelect)
 
                 }
                 return sw;
+            },
+            mostrarPrecio(){
+                let me=this;
+                for (var i=0; i<this.arrayProductos.length;i++){
+                    if(picked){
+                        me.precioUsadoProductos=arrayProductos.precioUsadoProductos;
+                    }else{
+                        me.precioNuevoProductos=arrayProductos.precioNuevoProductos;
+                    }
+
+                }
+                return me;
+            },
+             mostrarStock(){
+                let me=this;
+                for (var i=0; i<this.arrayProductos.length;i++){
+                    if(picked){
+                        me.stockUsadoProductos=arrayProductos.stockUsadoProductos;
+                    }else{
+                        me.stockNuevoProductos=arrayProductos.stockNuevoProductos;
+                    }
+
+                }
+                return me;
             },
             eliminarDetalle(index){
                 let me = this;
@@ -512,6 +564,7 @@ Vue.component('v-select', vSelect)
                     'tipoTransacciones': this.tipoTransacciones,
                     'observacionTransacciones': this.observacionTransacciones,    
                     'fechaTransacciones': this.fechaTransacciones,
+                    'descuentoTransacciones': this.descuento,
                     'puntosTransacciones': this.puntosTransacciones,
                     'valorFinalTransacciones': this.valorFinalTransacciones,
                     'formaPagoTransacciones': this.formaPagoTransacciones,

@@ -19,7 +19,7 @@ class TransaccionController extends Controller
      */
     public function index(Request $request)
     {
-        if(!$request->ajax()) return redirect('/');
+       // if(!$request->ajax()) return redirect('/');
         $buscar= $request->buscar;
         $criterio = $request->criterio;
 
@@ -39,7 +39,7 @@ class TransaccionController extends Controller
             ->join('producto_transaccion', 'transacciones.idTransacciones', '=', 'producto_transaccion.idTransacciones')
             ->join('productos', 'producto_transaccion.idProductos','=','productos.idProductos')
             ->select('transacciones.tipoTransacciones', 'transacciones.observacionTransacciones', 'transacciones.fechaTransacciones', 
-            'transacciones.puntosTransacciones',  'transacciones.descuentoTransacciones', 'transacciones.valorFinalTransacciones', 'transacciones.formaPagoTransacciones',
+            'transacciones.puntosTransacciones', 'transacciones.descuentoTransacciones', 'transacciones.valorFinalTransacciones', 'transacciones.formaPagoTransacciones',
             'transacciones.plazoTransacciones', 'transacciones.estadoTransacciones', 'clientes.nombreClientes', 'clientes.rutClientes', 
             'producto_transaccion.idTransacciones', 'productos.nombreProductos', 'productos.stockNuevoProductos', 'productos.stockUsadoProductos',
             'productos.precioNuevoProductos', 'productos.precioUsadoProductos')
