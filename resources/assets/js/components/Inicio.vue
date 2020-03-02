@@ -162,6 +162,18 @@
                     console.log(error);
                 })
             },
+            selectClientes(){
+                let me=this;
+                var url= '/clientes/selectClientes';
+                axios.get(url).then(function (response){
+                    //console.log(response);
+                    var respuesta = response.data;
+                    me.arrayClientes = respuesta.clientes;
+                })
+                .catch(function (error){
+                    console.log(error.response);
+                })
+            },
             cambiarPagina(page, buscar, criterio){
                 let me=this;
                 me.pagination.current_page=page;
