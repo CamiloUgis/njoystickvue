@@ -158,10 +158,13 @@
                                         @input="getDatosProductos"
                                     > 
                                     </v-select>
-                                    <input type="radio" id="1" value="1" v-model="picked">
+                                    <input type="button" v-on:click="test" v-model="picked">
+                                    <!--<input @click="test()" type="radio" id="1" value="1" v-model="picked">-->
                                     <label for="1">Usado</label>
                                     <br>
-                                    <input type="radio" id="0" value="0" v-model="picked">
+                                    <input type="button" v-on:click="test" v-model="picked">
+
+                                   <!-- <input @click="test()" type="radio" id="0" value="0" v-model="picked">-->
                                     <label for="0">Nuevo</label>
                                     <br>
                                     
@@ -177,7 +180,7 @@
                                 <div class="form-group">
                                     <label>Precio <span style="color:red;" v-show="precioProducto==0" >(Ingrese*)</span></label>
                                     <div class="form-inline">
-                                            <input type="number" value="0" step="any" class="form-control" @keyup.enter="mostrarPrecio()" v-model="arrayProductos.precioUsadoProductos">
+                                            <input type="number" value="0" step="any" class="form-control" v-model="precioProducto">
                                     </div>
                                 </div>
                             </div>
@@ -185,7 +188,7 @@
                                 <div class="form-group">
                                     <label>Cantidad<span style="color:red;" v-show="cantidadProductos==0" >(Ingrese*) </span></label>
                                     <div class="form-inline">
-                                            <input type="number" value="0" step="any" class="form-control" @keyup.enter="mostrarStock()" v-model="arrayProductos.stockUsadoProductos">
+                                            <input type="number" value="0" step="any" class="form-control" v-model="cantidadProductos">
 
                                     </div>
                                 </div>
@@ -345,6 +348,7 @@ Vue.component('v-select', vSelect)
                 arrayClientes:[],
                 arrayProductos:[],
                 arrayDetalles:[],
+                arrayPrecioStock:[],
                 codigo:'',
                 producto:'',
                 modal : 0,
@@ -397,9 +401,11 @@ Vue.component('v-select', vSelect)
                 return pagesArray;
             },
             calcularTotal: function(){
-                var resultado=0;
+                var resultado='';
+                var parcial='';
                 for (var i=0; i<this.arrayDetalles.length;i++) {
-                    resultado=resultado+(this.arrayDetalles[i].precioProducto*this.arrayDetalles[i].cantidadProductos).toFixed(0);
+                    parcial=(this.arrayDetalles[i].precioProducto*this.arrayDetalles[i].cantidadProductos).toFixed(0);
+                    resultado=Number(resultado)+Number(parcial);
                 }
                 return resultado;
             }
@@ -476,33 +482,41 @@ Vue.component('v-select', vSelect)
                 }
                 return sw;
             },
-            mostrarPrecio(){
+            mostrarPrecioStock(id){
                 let me=this;
-                for (var i=0; i<this.arrayProductos.length;i++){
-                    if(picked){
-                        me.precioUsadoProductos=arrayProductos.precioUsadoProductos;
-                    }else{
-                        me.precioNuevoProductos=arrayProductos.precioNuevoProductos;
+                var sw=0;
+                for (var i=0; i<this.arrayPrecioStock.length;i++){
+                    if(!this.arrayPrecioStock[i].idProductos==id){
+                        sw=true;
+                        if(picked){
+                            me.precioProducto=arrayProductos[i].precioUsadoProductos;
+                            me.cantidadProductos=arrayProductos[i].stockUsadoProductos;
+                        }else{
+                            me.precioProducto=arrayProductos[i].precioNuevoProductos;
+                            me.cantidadProductos=arrayProductos[i].stockNuevoProductos;
+
+                        }
                     }
 
                 }
-                return me;
-            },
-             mostrarStock(){
-                let me=this;
-                for (var i=0; i<this.arrayProductos.length;i++){
-                    if(picked){
-                        me.stockUsadoProductos=arrayProductos.stockUsadoProductos;
-                    }else{
-                        me.stockNuevoProductos=arrayProductos.stockNuevoProductos;
-                    }
-
-                }
-                return me;
+                return sw;
             },
             eliminarDetalle(index){
                 let me = this;
                 me.arrayDetalles.splice(index, 1);
+            },
+            test(){
+                let me=this;
+                if(mostrarPrecioStock(me.idProductos)){
+                    me.arrayPrecioStock.push({
+                        idProductos: me.idProductos,
+                        precioNuevoProductos: me.precioNuevoProductos,
+                        precioUsadoProductos: me.precioUsadoProductos,
+                        stockNuevoProductos: me.stockNuevoProductos,
+                        stockUsadoProductos: me.stockUsadoProductos,
+                    })
+                }
+
             },
             agregarDetalle(){
                 let me=this;

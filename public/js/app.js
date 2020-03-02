@@ -56155,6 +56155,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 
@@ -56184,7 +56187,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
             precioNuevoProductos: '',
             formaPagoTransacciones: 0,
             plazoTransacciones: ''
-        }, _defineProperty(_ref, 'precioNuevoProductos', ''), _defineProperty(_ref, 'precioUsadoProductos', ''), _defineProperty(_ref, 'estadoTransacciones', ''), _defineProperty(_ref, 'cantidadProductos', ''), _defineProperty(_ref, 'precioProducto', ''), _defineProperty(_ref, 'descuento', 0.0), _defineProperty(_ref, 'total', 0.0), _defineProperty(_ref, 'totalDescuento', 0.0), _defineProperty(_ref, 'totalParcial', 0), _defineProperty(_ref, 'arrayTransacciones', []), _defineProperty(_ref, 'arrayProductoTransaccion', []), _defineProperty(_ref, 'arrayClientes', []), _defineProperty(_ref, 'arrayProductos', []), _defineProperty(_ref, 'arrayDetalles', []), _defineProperty(_ref, 'codigo', ''), _defineProperty(_ref, 'producto', ''), _defineProperty(_ref, 'modal', 0), _defineProperty(_ref, 'listado', 1), _defineProperty(_ref, 'tituloModal', ''), _defineProperty(_ref, 'tipoAccion', 0), _defineProperty(_ref, 'errorProducto', 0), _defineProperty(_ref, 'errorMsjProducto', []), _defineProperty(_ref, 'pagination', {
+        }, _defineProperty(_ref, 'precioNuevoProductos', ''), _defineProperty(_ref, 'precioUsadoProductos', ''), _defineProperty(_ref, 'estadoTransacciones', ''), _defineProperty(_ref, 'cantidadProductos', ''), _defineProperty(_ref, 'precioProducto', ''), _defineProperty(_ref, 'descuento', 0.0), _defineProperty(_ref, 'total', 0.0), _defineProperty(_ref, 'totalDescuento', 0.0), _defineProperty(_ref, 'totalParcial', 0), _defineProperty(_ref, 'arrayTransacciones', []), _defineProperty(_ref, 'arrayProductoTransaccion', []), _defineProperty(_ref, 'arrayClientes', []), _defineProperty(_ref, 'arrayProductos', []), _defineProperty(_ref, 'arrayDetalles', []), _defineProperty(_ref, 'arrayPrecioStock', []), _defineProperty(_ref, 'codigo', ''), _defineProperty(_ref, 'producto', ''), _defineProperty(_ref, 'modal', 0), _defineProperty(_ref, 'listado', 1), _defineProperty(_ref, 'tituloModal', ''), _defineProperty(_ref, 'tipoAccion', 0), _defineProperty(_ref, 'errorProducto', 0), _defineProperty(_ref, 'errorMsjProducto', []), _defineProperty(_ref, 'pagination', {
             'total': 0,
             'current_page': 0,
             'per_page': 0,
@@ -56223,9 +56226,11 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
             return pagesArray;
         },
         calcularTotal: function calcularTotal() {
-            var resultado = 0;
+            var resultado = '';
+            var parcial = '';
             for (var i = 0; i < this.arrayDetalles.length; i++) {
-                resultado = resultado + (this.arrayDetalles[i].precioProducto * this.arrayDetalles[i].cantidadProductos).toFixed(0);
+                parcial = (this.arrayDetalles[i].precioProducto * this.arrayDetalles[i].cantidadProductos).toFixed(0);
+                resultado = Number(resultado) + Number(parcial);
             }
             return resultado;
         }
@@ -56297,31 +56302,38 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
             }
             return sw;
         },
-        mostrarPrecio: function mostrarPrecio() {
+        mostrarPrecioStock: function mostrarPrecioStock(id) {
             var me = this;
-            for (var i = 0; i < this.arrayProductos.length; i++) {
-                if (picked) {
-                    me.precioUsadoProductos = arrayProductos.precioUsadoProductos;
-                } else {
-                    me.precioNuevoProductos = arrayProductos.precioNuevoProductos;
+            var sw = 0;
+            for (var i = 0; i < this.arrayPrecioStock.length; i++) {
+                if (!this.arrayPrecioStock[i].idProductos == id) {
+                    sw = true;
+                    if (picked) {
+                        me.precioProducto = arrayProductos[i].precioUsadoProductos;
+                        me.cantidadProductos = arrayProductos[i].stockUsadoProductos;
+                    } else {
+                        me.precioProducto = arrayProductos[i].precioNuevoProductos;
+                        me.cantidadProductos = arrayProductos[i].stockNuevoProductos;
+                    }
                 }
             }
-            return me;
-        },
-        mostrarStock: function mostrarStock() {
-            var me = this;
-            for (var i = 0; i < this.arrayProductos.length; i++) {
-                if (picked) {
-                    me.stockUsadoProductos = arrayProductos.stockUsadoProductos;
-                } else {
-                    me.stockNuevoProductos = arrayProductos.stockNuevoProductos;
-                }
-            }
-            return me;
+            return sw;
         },
         eliminarDetalle: function eliminarDetalle(index) {
             var me = this;
             me.arrayDetalles.splice(index, 1);
+        },
+        test: function test() {
+            var me = this;
+            if (mostrarPrecioStock(me.idProductos)) {
+                me.arrayPrecioStock.push({
+                    idProductos: me.idProductos,
+                    precioNuevoProductos: me.precioNuevoProductos,
+                    precioUsadoProductos: me.precioUsadoProductos,
+                    stockNuevoProductos: me.stockNuevoProductos,
+                    stockUsadoProductos: me.stockUsadoProductos
+                });
+            }
         },
         agregarDetalle: function agregarDetalle() {
             var me = this;
@@ -57161,11 +57173,15 @@ var render = function() {
                                 expression: "picked"
                               }
                             ],
-                            attrs: { type: "radio", id: "1", value: "1" },
-                            domProps: { checked: _vm._q(_vm.picked, "1") },
+                            attrs: { type: "button" },
+                            domProps: { value: _vm.picked },
                             on: {
-                              change: function($event) {
-                                _vm.picked = "1"
+                              click: _vm.test,
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.picked = $event.target.value
                               }
                             }
                           }),
@@ -57185,11 +57201,15 @@ var render = function() {
                                 expression: "picked"
                               }
                             ],
-                            attrs: { type: "radio", id: "0", value: "0" },
-                            domProps: { checked: _vm._q(_vm.picked, "0") },
+                            attrs: { type: "button" },
+                            domProps: { value: _vm.picked },
                             on: {
-                              change: function($event) {
-                                _vm.picked = "0"
+                              click: _vm.test,
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.picked = $event.target.value
                               }
                             }
                           }),
@@ -57231,41 +57251,19 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.arrayProductos.precioUsadoProductos,
-                                expression:
-                                  "arrayProductos.precioUsadoProductos"
+                                value: _vm.precioProducto,
+                                expression: "precioProducto"
                               }
                             ],
                             staticClass: "form-control",
                             attrs: { type: "number", value: "0", step: "any" },
-                            domProps: {
-                              value: _vm.arrayProductos.precioUsadoProductos
-                            },
+                            domProps: { value: _vm.precioProducto },
                             on: {
-                              keyup: function($event) {
-                                if (
-                                  !$event.type.indexOf("key") &&
-                                  _vm._k(
-                                    $event.keyCode,
-                                    "enter",
-                                    13,
-                                    $event.key,
-                                    "Enter"
-                                  )
-                                ) {
-                                  return null
-                                }
-                                return _vm.mostrarPrecio()
-                              },
                               input: function($event) {
                                 if ($event.target.composing) {
                                   return
                                 }
-                                _vm.$set(
-                                  _vm.arrayProductos,
-                                  "precioUsadoProductos",
-                                  $event.target.value
-                                )
+                                _vm.precioProducto = $event.target.value
                               }
                             }
                           })
@@ -57300,40 +57298,19 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.arrayProductos.stockUsadoProductos,
-                                expression: "arrayProductos.stockUsadoProductos"
+                                value: _vm.cantidadProductos,
+                                expression: "cantidadProductos"
                               }
                             ],
                             staticClass: "form-control",
                             attrs: { type: "number", value: "0", step: "any" },
-                            domProps: {
-                              value: _vm.arrayProductos.stockUsadoProductos
-                            },
+                            domProps: { value: _vm.cantidadProductos },
                             on: {
-                              keyup: function($event) {
-                                if (
-                                  !$event.type.indexOf("key") &&
-                                  _vm._k(
-                                    $event.keyCode,
-                                    "enter",
-                                    13,
-                                    $event.key,
-                                    "Enter"
-                                  )
-                                ) {
-                                  return null
-                                }
-                                return _vm.mostrarStock()
-                              },
                               input: function($event) {
                                 if ($event.target.composing) {
                                   return
                                 }
-                                _vm.$set(
-                                  _vm.arrayProductos,
-                                  "stockUsadoProductos",
-                                  $event.target.value
-                                )
+                                _vm.cantidadProductos = $event.target.value
                               }
                             }
                           })
