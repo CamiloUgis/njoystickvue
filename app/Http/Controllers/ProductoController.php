@@ -110,7 +110,7 @@ class ProductoController extends Controller
                 $gp->save();
             }
         }catch(Exception $e){
-            DB:rollback();
+            DB::rollback();
         }
     }
 

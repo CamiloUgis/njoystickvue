@@ -51673,10 +51673,12 @@ Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
                 'idProductos': this.idProductos,
                 'arrayGenerosSeleccionados': this.arrayGenerosSeleccionados
             }).then(function (response) {
+                console.log(data.response);
                 me.cerrarModal();
                 me.listarProducto(1, '', 'nombre');
                 console.log(error.response);
             }).catch(function (error) {
+                console.log(data.response);
                 console.log(error.response);
             });
         },
