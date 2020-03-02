@@ -8,7 +8,7 @@
         <div class="h1 text-muted text-right mb-2">
           <i class= "icon-game-controller" ></i>
         </div>
-        <div class="h4 mb-0">87.500</div>
+        <div class="h4 mb-0">{{arrayProductos.length}}</div>
         <small class="text-muted text-uppercase font-weight-bold">Videojuegos en Inventario</small>
          
       </div>
@@ -38,7 +38,7 @@
         <div class="h1 text-muted text-right mb-2">
           <i class="icon-user-follow"></i>
         </div>
-        <div class="h4 mb-0">1238</div>
+        <div class="h4 mb-0">{{arrayClientes.length}}</div>
         <small class="text-muted text-uppercase font-weight-bold">Clientes Registrados</small>
         
       </div>
@@ -76,7 +76,9 @@
                 idGeneros:'0',
                 nombreGeneros:'',
                 descripcionGeneros:'',
+                arrayClientes:[],
                 arrayGeneros:[],
+                arrayProductos:[],
                 modal : 0,
                 tituloModal : '',
                 tipoAccion : 0,
@@ -130,6 +132,30 @@
                 axios.get(url).then(function (response){
                     var respuesta = response.data;
                     me.arrayGeneros = respuesta.generos.data;
+                    me.pagination=respuesta.pagination;
+                })
+                .catch(function (error){
+                    console.log(error);
+                })
+            },
+             listarProducto(page, buscar, criterio){
+                let me=this;
+                var url= '/productos?page='+page + '&buscar='+ buscar + '&criterio=' + criterio;
+                axios.get(url).then(function (response){
+                    var respuesta = response.data;
+                    me.arrayProductos = respuesta.productos.data;
+                    me.pagination=respuesta.pagination;
+                })
+                .catch(function (error){
+                    console.log(error.response);
+                })
+            },
+            listarCliente(page, buscar, criterio){
+                let me=this;
+                var url= '/clientes?page='+page + '&buscar='+ buscar + '&criterio=' + criterio;
+                axios.get(url).then(function (response){
+                    var respuesta = response.data;
+                    me.arrayClientes = respuesta.clientes.data;
                     me.pagination=respuesta.pagination;
                 })
                 .catch(function (error){
@@ -220,6 +246,8 @@
         
         mounted() {
             this.listarGenero(1, this.buscar, this.criterio);
+            this.listarProducto(1, this.buscar, this.criterio);
+            this.listarCliente(1, this.buscar, this.criterio);
         }
     }
 </script>

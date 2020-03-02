@@ -32,7 +32,7 @@ class CreateClientesTable extends Migration
 
             
         });
-        DB::update("ALTER TABLE clientes AUTO_INCREMENT = 99;");
+        DB::update("ALTER TABLE clientes AUTO_INCREMENT = 99");
     }
 
     /**
