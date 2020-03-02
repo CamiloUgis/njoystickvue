@@ -114,5 +114,12 @@ class TransaccionController extends Controller
         $transaccion->estadoTransacciones = $request->input('estadoTransacciones');
         $transaccion->save();
     }
+    public function selectTransaccion(Request $request){
+        if(!$request->ajax()) return redirect('/');
+        $transacciones = DB::table('transacciones')
+        ->select('idTransacciones')->orderBy('idTransacciones', 'asc')->get();
+        return ['transacciones' => $transacciones];
+
+    }
 
 }

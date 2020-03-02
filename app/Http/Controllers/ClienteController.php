@@ -98,6 +98,13 @@ class ClienteController extends Controller
         $cliente->save();
 
     }
+    public function selectCliente2(Request $request){
+        if(!$request->ajax()) return redirect('/');
+        $clientes = DB::table('clientes')
+        ->select('idClientes', 'nombreClientes')->orderBy('nombreClientes', 'asc')->get();
+        return ['clientes' => $clientes];
+
+    }
 
 
 }

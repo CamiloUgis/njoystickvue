@@ -50739,10 +50739,6 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(81)
-}
 var normalizeComponent = __webpack_require__(4)
 /* script */
 var __vue_script__ = __webpack_require__(83)
@@ -50751,7 +50747,7 @@ var __vue_template__ = __webpack_require__(84)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = injectStyle
+var __vue_styles__ = null
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -50786,46 +50782,8 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 81 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(82);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(3)("2b8a1e10", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-589008dc\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Inicio.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-589008dc\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Inicio.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 82 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.modal-content{\n    width: 100% !important;\n    position: absolute !important;\n}\n.mostrar{\n    display: list-item !important;\n    opacity: 1 !important;\n    position: absolute !important;\n    background-color: #3c29297a !important;\n}\n.div-error{\n    display: flex;\n    justify-content: center;\n}\n.text-error{\n    color: red !important;\n    font-weight: bold;\n}\n\n", ""]);
-
-// exports
-
-
-/***/ }),
+/* 81 */,
+/* 82 */,
 /* 83 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -50906,191 +50864,70 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            idGeneros: '0',
-            nombreGeneros: '',
-            descripcionGeneros: '',
-            arrayClientes: [],
-            arrayGeneros: [],
-            arrayProductos: [],
-            modal: 0,
-            tituloModal: '',
-            tipoAccion: 0,
-            errorGenero: 0,
-            errorMsjGenero: [],
-            pagination: {
-                'total': 0,
-                'current_page': 0,
-                'per_page': 0,
-                'last_page': 0,
-                'from': 0,
-                'to': 0
-            },
-            offset: 3,
-            criterio: 'nombre',
-            buscar: ''
 
+            arrayClientes: [],
+            arrayProductos: [],
+            arrayTransacciones: [],
+            arraySocios: []
         };
     },
 
     computed: {
-        isActived: function isActived() {
-            return this.pagination.current_page;
-        },
-        pagesNumber: function pagesNumber() {
-            if (!this.pagination.to) {
-                return [];
-            }
-
-            var from = this.pagination.current_page - this.offset;
-            if (from < 1) {
-                from = 1;
-            }
-
-            var to = from + this.offset * 2;
-            if (to >= this.pagination.last_page) {
-                to = this.pagination.last_page;
-            }
-            var pagesArray = [];
-            while (from <= to) {
-                pagesArray.push(from);
-                from++;
-            }
-            return pagesArray;
+        calcularPorcentaje: function calcularPorcentaje() {
+            var resultado = 0;
+            resultado = (this.arraySocios.length / this.arrayClientes.length * 100).toFixed(2);
+            return resultado;
         }
+
     },
     methods: {
-        listarGenero: function listarGenero(page, buscar, criterio) {
+        listarProducto: function listarProducto() {
             var me = this;
-            var url = '/generos?page=' + page + '&buscar=' + buscar + '&criterio=' + criterio;
+            var url = '/productos/selectProducto';
             axios.get(url).then(function (response) {
                 var respuesta = response.data;
-                me.arrayGeneros = respuesta.generos.data;
-                me.pagination = respuesta.pagination;
-            }).catch(function (error) {
-                console.log(error);
-            });
-        },
-        listarProducto: function listarProducto(page, buscar, criterio) {
-            var me = this;
-            var url = '/productos?page=' + page + '&buscar=' + buscar + '&criterio=' + criterio;
-            axios.get(url).then(function (response) {
-                var respuesta = response.data;
-                me.arrayProductos = respuesta.productos.data;
-                me.pagination = respuesta.pagination;
+                me.arrayProductos = respuesta.productos;
             }).catch(function (error) {
                 console.log(error.response);
             });
         },
-        listarCliente: function listarCliente(page, buscar, criterio) {
+        listarCliente: function listarCliente() {
             var me = this;
-            var url = '/clientes?page=' + page + '&buscar=' + buscar + '&criterio=' + criterio;
+            var url = '/clientes/selectCliente2';
             axios.get(url).then(function (response) {
-                var respuesta = response.data;
-                me.arrayClientes = respuesta.clientes.data;
-                me.pagination = respuesta.pagination;
-            }).catch(function (error) {
-                console.log(error);
-            });
-        },
-        selectClientes: function selectClientes() {
-            var me = this;
-            var url = '/clientes/selectClientes';
-            axios.get(url).then(function (response) {
-                //console.log(response);
                 var respuesta = response.data;
                 me.arrayClientes = respuesta.clientes;
             }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        listarTransaccion: function listarTransaccion() {
+            var me = this;
+            var url = '/transacciones/selectTransaccion';
+            axios.get(url).then(function (response) {
+                var respuesta = response.data;
+                me.arrayTransacciones = respuesta.transacciones;
+            }).catch(function (error) {
                 console.log(error.response);
             });
         },
-        cambiarPagina: function cambiarPagina(page, buscar, criterio) {
+        listarSocio: function listarSocio() {
             var me = this;
-            me.pagination.current_page = page;
-            me.listarGenero(page, buscar, criterio);
-        },
-        registrarGenero: function registrarGenero() {
-            if (this.validarGenero()) {
-                return;
-            }
-
-            var me = this;
-            axios.post('generos/registrar', {
-                'nombreGeneros': this.nombreGeneros,
-                'descripcionGeneros': this.descripcionGeneros
-            }).then(function (response) {
-                me.cerrarModal();
-                me.listarGenero(1, '', 'nombre');
+            var url = '/socios/selectSocio';
+            axios.get(url).then(function (response) {
+                var respuesta = response.data;
+                me.arraySocios = respuesta.socios;
             }).catch(function (error) {
                 console.log(error);
             });
-        },
-        actualizarGenero: function actualizarGenero() {
-            if (this.validarGenero()) {
-                return;
-            }
-            var me = this;
-            axios.put('generos/actualizar', {
-                'nombreGeneros': this.nombreGeneros,
-                'descripcionGeneros': this.descripcionGeneros,
-                'idGeneros': this.idGeneros
-            }).then(function (response) {
-                me.cerrarModal();
-                me.listarGenero(1, '', 'nombre');
-            }).catch(function (error) {
-                console.log(error);
-            });
-        },
-        validarGenero: function validarGenero() {
-            this.errorGenero = 0;
-            this.errorMsjGenero = [];
-
-            if (!this.nombreGeneros) this.errorMsjGenero.push("El nombre del género no debe estar vacío");
-
-            if (this.errorMsjGenero.length) this.errorGenero = 1;
-            return this.errorGenero;
-        },
-        cerrarModal: function cerrarModal() {
-            this.modal = 0;
-            this.tituloModal = '';
-            this.nombreGeneros = '';
-            this.descripcionGeneros = '';
-        },
-        abrirModal: function abrirModal(modelo, accion) {
-            var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-
-            switch (modelo) {
-                case "genero":
-                    {
-                        switch (accion) {
-                            case 'registrar':
-                                {
-                                    this.modal = 1;
-                                    this.tituloModal = "Registrar Género";
-                                    this.nombreGeneros = '';
-                                    this.descripcionGeneros = '';
-                                    this.tipoAccion = 1;
-                                    break;
-                                }
-                            case 'actualizar':
-                                {
-                                    this.modal = 1;
-                                    this.tipoAccion = 2;
-                                    this.tituloModal = "Actualizar Género";
-                                    this.idGeneros = data['idGeneros'];
-                                    this.nombreGeneros = data['nombreGeneros'];
-                                    this.descripcionGeneros = data['descripcionGeneros'];
-                                    break;
-                                }
-                        }
-                    }
-            }
         }
     },
 
     mounted: function mounted() {
-        this.listarGenero(1, this.buscar, this.criterio);
-        this.listarProducto(1, this.buscar, this.criterio);
-        this.listarCliente(1, this.buscar, this.criterio);
+        this.listarProducto();
+        this.listarCliente();
+        this.listarTransaccion();
+        this.listarSocio();
     }
 });
 
@@ -51143,7 +50980,7 @@ var render = function() {
               _vm._m(2),
               _vm._v(" "),
               _c("div", { staticClass: "h4 mb-0" }, [
-                _vm._v(_vm._s(_vm.arrayGeneros.length))
+                _vm._v(_vm._s(_vm.arrayTransacciones.length))
               ]),
               _vm._v(" "),
               _c(
@@ -51185,7 +51022,32 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm._m(6)
+      _c("div", { staticClass: "col-sm-6" }, [
+        _c("div", { staticClass: "card" }, [
+          _c(
+            "div",
+            {
+              staticClass: "card-block",
+              staticStyle: { "background-color": "#e5e5e4" }
+            },
+            [
+              _vm._m(6),
+              _vm._v(" "),
+              _c("div", { staticClass: "h4 mb-0" }, [
+                _vm._v(_vm._s(_vm.calcularPorcentaje) + "%")
+              ]),
+              _vm._v(" "),
+              _c(
+                "small",
+                { staticClass: "text-muted text-uppercase font-weight-bold" },
+                [_vm._v("Socios registrados en redes Njoystick")]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _vm._m(7)
+        ])
+      ])
     ])
   ])
 }
@@ -51266,42 +51128,25 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-sm-6" }, [
-      _c("div", { staticClass: "card" }, [
-        _c(
-          "div",
-          {
-            staticClass: "card-block",
-            staticStyle: { "background-color": "#e5e5e4" }
-          },
-          [
-            _c("div", { staticClass: "h1 text-muted text-right mb-2" }, [
-              _c("i", { staticClass: "icon-people" })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "h4 mb-0" }, [_vm._v("28%")]),
-            _vm._v(" "),
-            _c(
-              "small",
-              { staticClass: "text-muted text-uppercase font-weight-bold" },
-              [_vm._v("Socios registrados en redes Njoystick")]
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "card-footer text-center",
-            staticStyle: { "background-color": "#66CCFF" }
-          },
-          [
-            _vm._v("\n            Ver "),
-            _c("i", { staticClass: "fa fa-arrow-circle-right" })
-          ]
-        )
-      ])
+    return _c("div", { staticClass: "h1 text-muted text-right mb-2" }, [
+      _c("i", { staticClass: "icon-people" })
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "card-footer text-center",
+        staticStyle: { "background-color": "#66CCFF" }
+      },
+      [
+        _vm._v("\n            Ver "),
+        _c("i", { staticClass: "fa fa-arrow-circle-right" })
+      ]
+    )
   }
 ]
 render._withStripped = true

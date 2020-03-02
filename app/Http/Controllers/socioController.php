@@ -97,6 +97,13 @@ class SocioController extends Controller
         
         return ['referidos'=> $referidos];
     }
+    public function selectSocio(Request $request){
+        if(!$request->ajax()) return redirect('/');
+        $socios = DB::table('socios')
+        ->select('idClientes')->orderBy('idClientes', 'asc')->get();
+        return ['socios' => $socios];
+
+    }
 
 
 }

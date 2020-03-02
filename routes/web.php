@@ -44,6 +44,8 @@ Route::put('/productos/actualizar','ProductoController@update');
 Route::put('/productos/asociarGenero','ProductoController@asociar');
 Route::get('/productos/buscarProducto','ProductoController@buscarProducto');
 Route::get('/productos/transaccionProducto','ProductoController@transaccionProducto');
+Route::get('/productos/selectProducto','ProductoController@selectProducto');
+
 
 
 
@@ -52,6 +54,8 @@ Route::post('/clientes/registrar','ClienteController@store');
 Route::put('/clientes/actualizar', 'ClienteController@update');
 Route::get('/clientes/selectClientes','ClienteController@selectClientes');
 Route::get('/clientes/transaccionClientes','ClienteController@transaccionClientes');
+Route::get('/clientes/selectCliente2','ClienteController@selectCliente2');
+
 
 
 
@@ -59,6 +63,7 @@ Route::get('/socios','SocioController@index');
 Route::post('/socios/registrar','SocioController@store');
 Route::put('/socios/actualizar', 'SocioController@update');
 Route::get('/socios/equipo','SocioController@equipo');
+Route::get('/socios/selectSocio','SocioController@selectSocio');
 
 
 Route::get('/roles','RolController@index');
@@ -68,6 +73,8 @@ Route::get('/roles/selectRoles','RolController@selectRoles');
 Route::get('/transacciones','TransaccionController@index');
 Route::post('/transacciones/registrar','TransaccionController@store');
 Route::put('/transacciones/actualizar', 'TransaccionController@update');
+Route::get('/transacciones/selectTransaccion','TransaccionController@selectTransaccion');
+
 
 
 

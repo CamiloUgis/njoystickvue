@@ -124,6 +124,13 @@ class ProductoController extends Controller
         return ['productos'=>$productos];
 
     }
+    public function selectProducto(Request $request){
+        if(!$request->ajax()) return redirect('/');
+        $productos = DB::table('productos')
+        ->select('idProductos', 'nombreProductos')->orderBy('nombreProductos', 'asc')->get();
+        return ['productos' => $productos];
+
+    }
 
 
     
