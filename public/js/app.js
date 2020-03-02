@@ -48627,10 +48627,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            idPlataformas: '0',
+            idPlataformas: 0,
             nombrePlataformas: '',
             descripcionPlataformas: '',
             arrayPlataformas: [],
+            arrayCount: [],
             modal: 0,
             tituloModal: '',
             tipoAccion: 0,
@@ -48678,7 +48679,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
             return pagesArray;
         }
+
     },
+
     methods: {
         listarPlataforma: function listarPlataforma(page, buscar, criterio) {
             var me = this;
@@ -48687,9 +48690,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 var respuesta = response.data;
                 me.arrayPlataformas = respuesta.plataformas.data;
                 me.pagination = respuesta.pagination;
+            });
+            var url = '/plataformas/countJuegos';
+
+            axios.get(url).then(function (response) {
+                //  console.log(response.data);
+                var respuesta = response.data;
+                me.arrayCount = respuesta.plataformas;
             }).catch(function (error) {
                 console.log(error);
             });
+        },
+        contarJuegos: function contarJuegos(id) {
+            var juegos = 0;
+            for (var j = 0; j < this.arrayCount.length; j++) {
+                if (id == this.arrayCount[j].idPlataformas) {
+                    juegos = juegos + 1;
+                }
+            }
+            return Number(juegos);
         },
         cambiarPagina: function cambiarPagina(page, buscar, criterio) {
             var me = this;
@@ -49522,11 +49541,11 @@ var render = function() {
                         }
                       }),
                       _vm._v(" "),
-                      _c("td", {
-                        domProps: {
-                          textContent: _vm._s(plataforma.cantidadPlataformas)
-                        }
-                      }),
+                      _c("td", [
+                        _vm._v(
+                          _vm._s(_vm.contarJuegos(plataforma.idPlataformas))
+                        )
+                      ]),
                       _vm._v(" "),
                       _c("td", [
                         _c(
@@ -49750,7 +49769,7 @@ var render = function() {
                         "label",
                         {
                           staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "email-input" }
+                          attrs: { for: "text-input" }
                         },
                         [_vm._v("Descripción")]
                       ),

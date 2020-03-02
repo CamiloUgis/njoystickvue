@@ -62,7 +62,7 @@ class ProductoController extends Controller
     }
 
     public function buscarProducto(Request $request){
-        //if(!$request->ajax()) return redirect('/');
+        if(!$request->ajax()) return redirect('/');
         $filtro = $request->filtro;
         $productos = Producto::where('idProductos','=', $filtro)
         ->select('idProductos', 'nombreProductos', 'precioNuevoProductos', 'precioUsadoProductos', 'stockNuevoProductos', 'stockUsadoProductos')->orderBy('nombreProductos', 'asc')->take(1)->get();

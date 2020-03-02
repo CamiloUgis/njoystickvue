@@ -25,7 +25,7 @@ class CreateUsuariosTable extends Migration
         DB::table('usuarios')->insert(
             array(
                 'nickUsuarios' => 'njoystick',
-                'password' => 'njoystick12345',
+                'password' => '$2y$10$X5SB.WrMcKhf5OKJUtFuO.GZUy47DqO0HNzbCEgpwnXfZi1I13D9W',
                 'idRoles'=>1
             )
         );

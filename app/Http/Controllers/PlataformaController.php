@@ -43,6 +43,12 @@ class PlataformaController extends Controller
         return ['plataformas' => $plataformas];
 
     }
+    public function countJuegos(Request $request){
+        //if(!$request->ajax()) return redirect('/');
+        $plataformas = Plataforma::join('productos','productos.idPlataformas','=','plataformas.idPlataformas')
+        ->select('plataformas.idPlataformas', 'productos.idProductos')->orderBy('productos.idPlataformas', 'asc')->get();
+        return ['plataformas'=>$plataformas];
+    }
 
     
     public function store(Request $request)

@@ -37,7 +37,7 @@
                                 <tr v-for="plataforma in arrayPlataformas" :key="plataforma.idPlataformas">
                                     <td v-text="plataforma.nombrePlataformas"></td>
                                     <td v-text="plataforma.descripcionPlataformas"></td>
-                                    <td v-text="plataforma.cantidadPlataformas"></td>
+                                    <td>{{contarJuegos(plataforma.idPlataformas)}}</td>
 
 
                                     <td>
@@ -88,7 +88,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="email-input">Descripción</label>
+                                    <label class="col-md-3 form-control-label" for="text-input">Descripción</label>
                                     <div class="col-md-9">
                                         <input type="text" v-model="descripcionPlataformas" name="descripcion" class="form-control" placeholder="Descripción de plataforma">
                                     </div>
@@ -120,10 +120,11 @@ import { required, minLength, between } from 'vuelidate/lib/validators'
     export default {
         data(){
             return{
-                idPlataformas:'0',
+                idPlataformas:0,
                 nombrePlataformas:'',
                 descripcionPlataformas:'',
                 arrayPlataformas:[],
+                arrayCount:[],
                 modal : 0,
                 tituloModal : '',
                 tipoAccion : 0,
@@ -169,8 +170,11 @@ import { required, minLength, between } from 'vuelidate/lib/validators'
                     from++;
                 }
                 return pagesArray;
-            }
+            },
+            
         },
+        
+            
         methods:{
             listarPlataforma(page, buscar, criterio){
                 let me=this;
@@ -180,10 +184,27 @@ import { required, minLength, between } from 'vuelidate/lib/validators'
                     me.arrayPlataformas = respuesta.plataformas.data;
                     me.pagination=respuesta.pagination;
                 })
+                var url= '/plataformas/countJuegos';
+
+                axios.get(url).then(function (response){
+                  //  console.log(response.data);
+                    var respuesta=response.data;
+                    me.arrayCount = respuesta.plataformas;
+                })
                 .catch(function (error){
                     console.log(error);
                 })
             },
+            contarJuegos(id){
+                var juegos=0;
+                    for (var j=0; j<this.arrayCount.length;j++){
+                        if(id==this.arrayCount[j].idPlataformas){
+                            juegos=juegos+1;
+                        }
+                    }
+                    return Number(juegos);                      
+                
+            },           
             cambiarPagina(page, buscar, criterio){
                 let me=this;
                 me.pagination.current_page=page;
@@ -276,6 +297,7 @@ import { required, minLength, between } from 'vuelidate/lib/validators'
             this.listarPlataforma(1, this.buscar, this.criterio);
         }
     }
+     
 </script>
 <style>
     .modal-content{
