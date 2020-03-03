@@ -38,14 +38,14 @@ class ProductoController extends Controller
                 ->select('productos.idProductos', 'productos.idPlataformas','productos.nombreProductos', 'productos.descripcionProductos',
                 'productos.stockNuevoProductos', 'productos.stockUsadoProductos','productos.precioNuevoProductos',
                 'productos.precioUsadoProductos','plataformas.nombrePlataformas')
-                ->orderBy('productos.idProductos', 'desc')->paginate(8);
+                ->orderBy('productos.idProductos', 'desc')->paginate(10);
             }else{
                 $productos = Producto::join('plataformas','productos.idPlataformas','=','plataformas.idPlataformas')
                 ->select('productos.idProductos', 'productos.idPlataformas','productos.nombreProductos', 'productos.descripcionProductos',
                 'productos.stockNuevoProductos', 'productos.stockUsadoProductos','productos.precioNuevoProductos',
                 'productos.precioUsadoProductos','plataformas.nombrePlataformas')
                 ->where('productos.'.$criterio, 'like', '%'. $buscar . '%')
-                ->orderBy('productos.idProductos', 'desc')->paginate(8);
+                ->orderBy('productos.idProductos', 'desc')->paginate(10);
             }
         return [
             'pagination' =>[

@@ -101,6 +101,16 @@
                                 <label for="">Descuento (en %)</label>
                                 <input type="number" class="form-control" v-model="descuento" placeholder="5%">
                             </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                    <label>Estado de Transacción</label>
+                                        <select class="form-control" v-model="estadoTransacciones">
+                                            <option value="0">Seleccione</option>
+                                            <option value="Pagado">Pagado</option>
+                                            <option value="Abonado">Abonado</option>
+                                        </select>
+                                    </div>
+                                </div>                            
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Tipo de Transacción</label>
@@ -109,31 +119,10 @@
                                         <option value="Venta">Venta</option>
                                         <option value="Arriendo">Arriendo</option>
                                         <option value="Cambio">Cambio</option>
+                                        <option value="Reserva">Reserva</option>
                                     </select>
                                 </div>
-                                <div class="col-md-12">
-                                    <label for="">Observaciones</label>
-                                     <input type="text" class="form-control" style="width: 1575px;" v-model="observacionTransacciones" placeholder="Ingrese su observación">
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                    <label>Tipo de Transacción</label>
-                                        <select class="form-control" v-model="estadoTransacciones">
-                                            <option value="0">Seleccione</option>
-                                            <option value="Pagado">Pagado</option>
-                                            <option value="Reservado">Reservado</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <span>AQUI VAN LAS VALIDACIONES</span>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Puntos por Transacción</label>
-                                    <input type="text" class="form-control" v-model="puntosTransacciones" placeholder="150">
-                                </div>
+                                
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -145,6 +134,13 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-md-12">
+                                    <label for="">Observaciones</label>
+                                     <input type="text" class="form-control" v-model="observacionTransacciones" placeholder="Ingrese su observación">
+                                </div>
+                            <div class="col-md-12">
+                                    <span>AQUI VAN LAS VALIDACIONES</span>
+                                </div>
                         </div>
                         <div class="form-group row border">
                             <div class="col-md-6">
@@ -158,29 +154,13 @@
                                         @input="getDatosProductos"
                                     > 
                                     </v-select>
-                                    <input type="button" v-on:click="test" v-model="picked">
-                                    <!--<input @click="test()" type="radio" id="1" value="1" v-model="picked">-->
-                                    <label for="1">Usado</label>
-                                    <br>
-                                    <input type="button" v-on:click="test" v-model="picked">
-
-                                   <!-- <input @click="test()" type="radio" id="0" value="0" v-model="picked">-->
-                                    <label for="0">Nuevo</label>
-                                    <br>
-                                    
-                                  <!--  <div class="form-inline">
-                                        <input type="text" class="form-control" v-model="codigo" @keyup.enter="buscarProducto()" placeholder="Ingrese Producto">
-                                        <button class="btn btn-primary">...</button>
-                                        <input type="text" readonly class="form-control" v-model="producto">
-                                    </div> -->
-
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label>Precio <span style="color:red;" v-show="precioProducto==0" >(Ingrese*)</span></label>
                                     <div class="form-inline">
-                                            <input type="number" value="0" step="any" class="form-control" v-model="precioProducto">
+                                            <td type="number" value="0" step="any" class="form-control" v-text="precioProducto"></td>
                                     </div>
                                 </div>
                             </div>
@@ -188,14 +168,31 @@
                                 <div class="form-group">
                                     <label>Cantidad<span style="color:red;" v-show="cantidadProductos==0" >(Ingrese*) </span></label>
                                     <div class="form-inline">
-                                            <input type="number" value="0" step="any" class="form-control" v-model="cantidadProductos">
+                                            <td type="number" value="0" step="any" class="form-control" v-text="cantidadProductos"></td>
 
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <button @click="agregarDetalle" class="btn btn-succes form-control btnagregar"><i class="icon-plus"></i></button>
+                                    <label>Puntos por Producto</label>
+                                    <input type="number" class="form-control" v-model="puntosProducto" placeholder="150">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group" style="margin-left: 20px; margin-top: -15px;"> 
+                                    <input @click="test" type="radio" id="1" value="1" v-model="picked">
+                                    <label for="1">Usado</label>
+                                    <br>
+                                    <input @click="test" type="radio" id="0" value="0" v-model="picked">
+                                    <label for="0">Nuevo</label>
+                                    <br>              
+                                </div>
+                            </div>
+
+                            <div class="col-md-8" style="margin-top:-40px;">
+                                <div class="form-group">
+                                    <button @click="agregarDetalle" class="btn btn-succes form-control btnagregar float-right"><i class="icon-plus"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -207,6 +204,7 @@
                                                 <th>Producto</th>
                                                 <th>Precio</th>
                                                 <th>Cantidad</th>
+                                                <th>Puntos</th>
                                                 <th>Subtotal</th>
                                                 <th>Opciones</th>
                                             </tr>
@@ -221,6 +219,10 @@
                                                 </td>
                                                 <td>
                                                     <input v-model="detalle.cantidadProductos" type="number" value="2" class="form-control">
+                                                </td>
+                                                <td>
+                                                    <input v-model="detalle.puntosProductos" type="number" value="2" class="form-control">
+
                                                 </td>
                                                 <td>
                                                     {{detalle.precioProducto*detalle.cantidadProductos}}
@@ -248,6 +250,12 @@
                                                 <strong>Total Final:</strong>
                                                 </td>
                                                 <td>$ {{total=(calcularTotal-totalDescuento).toFixed(0)}}</td>
+                                            </tr>
+                                            <tr style="background-color: #CEECF5">
+                                                <td colspan="4" align="right"> 
+                                                <strong>Puntos totales:</strong>
+                                                </td>
+                                                <td>{{calcularPuntos}}</td>
                                             </tr>
                                         </tbody>
                                         <tbody v-else>
@@ -336,7 +344,7 @@ Vue.component('v-select', vSelect)
                 plazoTransacciones:'',
                 precioNuevoProductos:'',
                 precioUsadoProductos:'',
-                estadoTransacciones:'',
+                estadoTransacciones:0,
                 cantidadProductos:'',
                 precioProducto:'',
                 descuento: 0.0,
@@ -351,6 +359,7 @@ Vue.component('v-select', vSelect)
                 arrayPrecioStock:[],
                 codigo:'',
                 producto:'',
+                puntosProducto:'',
                 modal : 0,
                 listado:1,
                 tituloModal : '',
@@ -408,7 +417,16 @@ Vue.component('v-select', vSelect)
                     resultado=Number(resultado)+Number(parcial);
                 }
                 return resultado;
-            }
+            },
+            calcularPuntos: function(){
+                var resultado='';
+                var parcial='';
+                for (var i=0; i<this.arrayDetalles.length;i++) {
+                    parcial=(this.arrayDetalles[i].puntosProducto).toFixed(0);
+                    resultado=Number(resultado)+Number(parcial);
+                }
+                return resultado;
+            },
         },
         methods:{
             listarTransaccion(page, buscar, criterio){
@@ -482,11 +500,11 @@ Vue.component('v-select', vSelect)
                 }
                 return sw;
             },
-            mostrarPrecioStock(id){
+            mostrarPrecioStock(idProductos){
                 let me=this;
                 var sw=0;
                 for (var i=0; i<this.arrayPrecioStock.length;i++){
-                    if(!this.arrayPrecioStock[i].idProductos==id){
+                    if(!this.arrayPrecioStock[i].idProductos==me.idProductos){
                         sw=true;
                         if(picked){
                             me.precioProducto=arrayProductos[i].precioUsadoProductos;
@@ -497,6 +515,7 @@ Vue.component('v-select', vSelect)
 
                         }
                     }
+                    sw=false;
 
                 }
                 return sw;
@@ -507,7 +526,7 @@ Vue.component('v-select', vSelect)
             },
             test(){
                 let me=this;
-                if(mostrarPrecioStock(me.idProductos)){
+                if(me.mostrarPrecioStock(me.idProductos)){
                     me.arrayPrecioStock.push({
                         idProductos: me.idProductos,
                         precioNuevoProductos: me.precioNuevoProductos,
@@ -535,7 +554,8 @@ Vue.component('v-select', vSelect)
                             idProductos: me.idProductos,
                             producto: me.producto,
                             cantidadProductos: me.cantidadProductos,
-                            precioProducto: me.precioProducto   
+                            precioProducto: me.precioProducto,
+                            puntosProducto: me.puntosProducto   
                         });
                         me.idProductos=0;
                         me.producto='';
@@ -567,6 +587,10 @@ Vue.component('v-select', vSelect)
                 me.loading = true;
                 me.idProductos = val1.idProductos;
                 me.producto = val1.nombreProductos;
+                me.precioNuevoProductos= val1.precioNuevoProductos;
+                me.precioUsadoProductos=val1.precioUsadoProductos;
+                me.stockNuevoProductos=val1.stockNuevoProductos;
+                me.stockUsadoProductos=val1.stockUsadoProductos;
             },
             registrarTransaccion(){
                 if(this.validarTransaccion()){
@@ -707,6 +731,7 @@ Vue.component('v-select', vSelect)
         .btnagregar{
             margin-top: 2rem;
             background-color: #40c36e;
+            width: 100px;
         }
         .btnvisualizar{
             background-color: #20a8d8;

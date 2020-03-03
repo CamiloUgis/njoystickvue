@@ -18,9 +18,9 @@ class ClienteController extends Controller
         $criterio = $request->criterio;
 
         if($buscar==''){
-            $clientes = Cliente::orderBy('idClientes', 'desc')->paginate(5);
+            $clientes = Cliente::orderBy('idClientes', 'desc')->paginate(10);
         }else{
-            $clientes = Cliente::where($criterio, 'like', '%'. $buscar . '%')->orderBy('idClientes', 'desc')->paginate(5);
+            $clientes = Cliente::where($criterio, 'like', '%'. $buscar . '%')->orderBy('idClientes', 'desc')->paginate(10);
         }
         return [
             'pagination' =>[

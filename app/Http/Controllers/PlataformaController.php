@@ -18,9 +18,9 @@ class PlataformaController extends Controller
         $criterio = $request->criterio;
 
         if($buscar==''){
-            $plataformas = Plataforma::orderBy('idPlataformas', 'desc')->paginate(5);
+            $plataformas = Plataforma::orderBy('idPlataformas', 'desc')->paginate(10);
         }else{
-            $plataformas = Plataforma::where($criterio, 'like', '%'. $buscar . '%')->orderBy('idPlataformas', 'desc')->paginate(5);
+            $plataformas = Plataforma::where($criterio, 'like', '%'. $buscar . '%')->orderBy('idPlataformas', 'desc')->paginate(10);
         }
         return [
             'pagination' =>[

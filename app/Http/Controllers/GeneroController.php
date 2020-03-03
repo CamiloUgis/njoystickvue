@@ -20,9 +20,9 @@ class GeneroController extends Controller
         $criterio = $request->criterio;
 
         if($buscar==''){
-            $generos = Genero::orderBy('idGeneros', 'desc')->paginate(5);
+            $generos = Genero::orderBy('idGeneros', 'desc')->paginate(10);
         }else{
-            $generos = Genero::where($criterio, 'like', '%'. $buscar . '%')->orderBy('idGeneros', 'desc')->paginate(5);
+            $generos = Genero::where($criterio, 'like', '%'. $buscar . '%')->orderBy('idGeneros', 'desc')->paginate(10);
         }
         return [
             'pagination' =>[

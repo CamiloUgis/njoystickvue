@@ -23,13 +23,13 @@ class SocioController extends Controller
             $socios = Socio::join('clientes','socios.idClientes','=','clientes.idClientes')
             ->select('socios.idClientes', 'clientes.nombreClientes','socios.estadoSocios', 
             'socios.puntosPropiosSocios','socios.puntosReferidosSocios')
-            ->orderBy('idClientes', 'desc')->paginate(5);
+            ->orderBy('idClientes', 'desc')->paginate(10);
         }else{
             $socios = Socio::join('clientes','socios.idClientes','=','clientes.idClientes')
             ->select('socios.idClientes', 'clientes.nombreClientes','socios.estadoSocios',
             'socios.puntosPropiosSocios','socios.puntosReferidosSocios')
             ->where($criterio, 'like', '%'. $buscar . '%')
-            ->orderBy('idClientes', 'desc')->paginate(5);
+            ->orderBy('idClientes', 'desc')->paginate(10);
         }
         return [
             'pagination' =>[
