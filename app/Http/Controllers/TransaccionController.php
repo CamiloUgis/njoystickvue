@@ -30,7 +30,7 @@ class TransaccionController extends Controller
             ->select('transacciones.tipoTransacciones', 'transacciones.observacionTransacciones', 'transacciones.fechaTransacciones', 
             'transacciones.puntosTransacciones', 'transacciones.descuentoTransacciones', 'transacciones.valorFinalTransacciones', 'transacciones.formaPagoTransacciones',
             'transacciones.plazoTransacciones', 'transacciones.estadoTransacciones', 'clientes.nombreClientes', 'clientes.rutClientes', 
-            'producto_transaccion.idTransacciones', 'productos.nombreProductos', 'productos.stockNuevoProductos', 'productos.stockUsadoProductos',
+            'producto_transaccion.idTransacciones', 'productos.nombreProductos', 'productos.stockProductos',
             'productos.precioNuevoProductos', 'productos.precioUsadoProductos')
             ->orderBy('transacciones.idTransacciones', 'desc')->paginate(8);
 
@@ -41,7 +41,7 @@ class TransaccionController extends Controller
             ->select('transacciones.tipoTransacciones', 'transacciones.observacionTransacciones', 'transacciones.fechaTransacciones', 
             'transacciones.puntosTransacciones', 'transacciones.descuentoTransacciones', 'transacciones.valorFinalTransacciones', 'transacciones.formaPagoTransacciones',
             'transacciones.plazoTransacciones', 'transacciones.estadoTransacciones', 'clientes.nombreClientes', 'clientes.rutClientes', 
-            'producto_transaccion.idTransacciones', 'productos.nombreProductos', 'productos.stockNuevoProductos', 'productos.stockUsadoProductos',
+            'producto_transaccion.idTransacciones', 'productos.nombreProductos', 'productos.stockProductos',
             'productos.precioNuevoProductos', 'productos.precioUsadoProductos')
             ->where('transacciones.'.$criterio, 'like', '%'. $buscar . '%')
             ->orderBy('transacciones.idTransacciones', 'desc')->paginate(8);

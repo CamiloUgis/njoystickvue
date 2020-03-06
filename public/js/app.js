@@ -51505,13 +51505,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 
 Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___default.a);
@@ -51526,8 +51519,7 @@ Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
             idGeneros: 0,
             nombreProductos: '',
             descripcionProductos: '',
-            stockNuevoProductos: '',
-            stockUsadoProductos: '',
+            stockProductos: '',
             precioNuevoProductos: '',
             precioUsadoProductos: '',
             arrayProductos: [],
@@ -51629,8 +51621,7 @@ Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
                 'nombreProductos': this.nombreProductos,
                 'idPlataformas': this.idPlataformas,
                 'descripcionProductos': this.descripcionProductos,
-                'stockNuevoProductos': this.stockNuevoProductos,
-                'stockUsadoProductos': this.stockUsadoProductos,
+                'stockProductos': this.stockProductos,
                 'precioNuevoProductos': this.precioNuevoProductos,
                 'precioUsadoProductos': this.precioUsadoProductos
             }).then(function (response) {
@@ -51650,8 +51641,7 @@ Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
                 'nombreProductos': this.nombreProductos,
                 'idPlataformas': this.idPlataformas,
                 'descripcionProductos': this.descripcionProductos,
-                'stockNuevoProductos': this.stockNuevoProductos,
-                'stockUsadoProductos': this.stockUsadoProductos,
+                'stockProductos': this.stockProductos,
                 'precioNuevoProductos': this.precioNuevoProductos,
                 'precioUsadoProductos': this.precioUsadoProductos,
                 'idProductos': this.idProductos
@@ -51683,7 +51673,7 @@ Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
             this.errorMsjProducto = [];
 
             if (!this.nombreProductos) this.errorMsjProducto.push("El nombre del Producto no debe estar vacío");
-            if (!this.stockNuevoProductos) this.errorMsjProducto.push("El stock debe ser un número");
+            if (!this.stockProductos) this.errorMsjProducto.push("El stock debe ser un número");
             if (this.errorMsjProducto.length) this.errorProducto = 1;
 
             return this.errorProducto;
@@ -51695,8 +51685,7 @@ Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
             this.idPlataformas = 0;
             this.arrayGenerosSeleccionados = [];
             this.descripcionProductos = '';
-            this.stockNuevoProductos = '';
-            this.stockUsadoProductos = '';
+            this.stockProductos = '';
             this.precioNuevoProductos = '';
             this.precioUsadoProductos = '';
         },
@@ -51715,8 +51704,7 @@ Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
                                     this.arrayGenerosSeleccionados = [];
                                     this.nombreProductos = '';
                                     this.descripcionProductos = '';
-                                    this.stockNuevoProductos = '';
-                                    this.stockUsadoProductos = '';
+                                    this.stockProductos = '';
                                     this.precioNuevoProductos = '';
                                     this.precioUsadoProductos = '';
                                     this.tipoAccion = 1;
@@ -51731,8 +51719,7 @@ Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
                                     this.idPlataformas = data['idPlataformas'];
                                     this.nombreProductos = data['nombreProductos'];
                                     this.descripcionProductos = data['descripcionProductos'];
-                                    this.stockNuevoProductos = data['stockNuevoProductos'];
-                                    this.stockUsadoProductos = data['stockUsadoProductos'];
+                                    this.stockProductos = data['stockProductos'];
                                     this.precioNuevoProductos = data['precioNuevoProductos'];
                                     this.precioUsadoProductos = data['precioUsadoProductos'];
                                     break;
@@ -51920,13 +51907,7 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", {
                         domProps: {
-                          textContent: _vm._s(producto.stockNuevoProductos)
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("td", {
-                        domProps: {
-                          textContent: _vm._s(producto.stockUsadoProductos)
+                          textContent: _vm._s(producto.stockProductos)
                         }
                       }),
                       _vm._v(" "),
@@ -52291,7 +52272,7 @@ var render = function() {
                                 staticClass: "col-md-3 form-control-label",
                                 attrs: { for: "number-input" }
                               },
-                              [_vm._v("Stock Nuevo")]
+                              [_vm._v("Stock")]
                             ),
                             _vm._v(" "),
                             _c("div", { staticClass: "col-md-9" }, [
@@ -52300,64 +52281,23 @@ var render = function() {
                                   {
                                     name: "model",
                                     rawName: "v-model",
-                                    value: _vm.stockNuevoProductos,
-                                    expression: "stockNuevoProductos"
+                                    value: _vm.stockProductos,
+                                    expression: "stockProductos"
                                   }
                                 ],
                                 staticClass: "form-control",
                                 attrs: {
                                   type: "number",
-                                  name: "stocknuevo",
-                                  placeholder: "Cantidad de stock nuevo"
+                                  name: "stock",
+                                  placeholder: "Cantidad de stock"
                                 },
-                                domProps: { value: _vm.stockNuevoProductos },
+                                domProps: { value: _vm.stockProductos },
                                 on: {
                                   input: function($event) {
                                     if ($event.target.composing) {
                                       return
                                     }
-                                    _vm.stockNuevoProductos =
-                                      $event.target.value
-                                  }
-                                }
-                              })
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "form-group row" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "col-md-3 form-control-label",
-                                attrs: { for: "number-input" }
-                              },
-                              [_vm._v("Stock Usado")]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-md-9" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.stockUsadoProductos,
-                                    expression: "stockUsadoProductos"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: {
-                                  type: "number",
-                                  name: "stockusado",
-                                  placeholder: "Cantidad de stock usado"
-                                },
-                                domProps: { value: _vm.stockUsadoProductos },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.stockUsadoProductos =
-                                      $event.target.value
+                                    _vm.stockProductos = $event.target.value
                                   }
                                 }
                               })
@@ -52652,9 +52592,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [_vm._v("Plataforma")]),
         _vm._v(" "),
-        _c("th", { staticClass: "text-center" }, [_vm._v("Stock Nuevo")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-center" }, [_vm._v("Stock Usado")]),
+        _c("th", { staticClass: "text-center" }, [_vm._v("Stock")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [_vm._v("Precio Nuevo")]),
         _vm._v(" "),
@@ -56161,28 +56099,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -56212,7 +56128,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
             precioNuevoProductos: '',
             formaPagoTransacciones: 0,
             plazoTransacciones: ''
-        }, _defineProperty(_ref, 'precioNuevoProductos', ''), _defineProperty(_ref, 'precioUsadoProductos', ''), _defineProperty(_ref, 'estadoTransacciones', 0), _defineProperty(_ref, 'cantidadProductos', ''), _defineProperty(_ref, 'precioProducto', ''), _defineProperty(_ref, 'descuento', 0.0), _defineProperty(_ref, 'total', 0.0), _defineProperty(_ref, 'totalDescuento', 0.0), _defineProperty(_ref, 'totalParcial', 0), _defineProperty(_ref, 'arrayTransacciones', []), _defineProperty(_ref, 'arrayProductoTransaccion', []), _defineProperty(_ref, 'arrayClientes', []), _defineProperty(_ref, 'arrayProductos', []), _defineProperty(_ref, 'arrayDetalles', []), _defineProperty(_ref, 'arrayPrecioStock', []), _defineProperty(_ref, 'codigo', ''), _defineProperty(_ref, 'producto', ''), _defineProperty(_ref, 'puntosProducto', ''), _defineProperty(_ref, 'modal', 0), _defineProperty(_ref, 'listado', 1), _defineProperty(_ref, 'tituloModal', ''), _defineProperty(_ref, 'tipoAccion', 0), _defineProperty(_ref, 'errorProducto', 0), _defineProperty(_ref, 'errorMsjProducto', []), _defineProperty(_ref, 'pagination', {
+        }, _defineProperty(_ref, 'precioNuevoProductos', ''), _defineProperty(_ref, 'precioUsadoProductos', ''), _defineProperty(_ref, 'estadoTransacciones', 0), _defineProperty(_ref, 'cantidadProductos', ''), _defineProperty(_ref, 'precioProducto', ''), _defineProperty(_ref, 'stockProductos', ''), _defineProperty(_ref, 'descuento', 0.0), _defineProperty(_ref, 'total', 0.0), _defineProperty(_ref, 'totalDescuento', 0.0), _defineProperty(_ref, 'totalParcial', 0), _defineProperty(_ref, 'arrayTransacciones', []), _defineProperty(_ref, 'arrayProductoTransaccion', []), _defineProperty(_ref, 'arrayClientes', []), _defineProperty(_ref, 'arrayProductos', []), _defineProperty(_ref, 'arrayDetalles', []), _defineProperty(_ref, 'arrayPrecioStock', []), _defineProperty(_ref, 'codigo', ''), _defineProperty(_ref, 'producto', ''), _defineProperty(_ref, 'puntosProducto', ''), _defineProperty(_ref, 'modal', 0), _defineProperty(_ref, 'listado', 1), _defineProperty(_ref, 'tituloModal', ''), _defineProperty(_ref, 'tipoAccion', 0), _defineProperty(_ref, 'errorProducto', 0), _defineProperty(_ref, 'errorMsjProducto', []), _defineProperty(_ref, 'pagination', {
             'total': 0,
             'current_page': 0,
             'per_page': 0,
@@ -56259,15 +56175,20 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
             }
             return resultado;
         },
-        calcularPuntos: function calcularPuntos() {
+        puntosTotales: function puntosTotales() {
             var resultado = '';
             var parcial = '';
             for (var i = 0; i < this.arrayDetalles.length; i++) {
-                parcial = this.arrayDetalles[i].puntosProducto.toFixed(0);
+                parcial = this.arrayDetalles[i].puntosProducto;
                 resultado = Number(resultado) + Number(parcial);
             }
             return resultado;
+        },
+        calcularPuntos: function calcularPuntos() {
+            this.puntosProducto = Number((this.precioProducto * this.cantidadProductos * 0.01).toFixed(0));
+            //return this.puntosProducto;
         }
+
     },
     methods: {
         listarTransaccion: function listarTransaccion(page, buscar, criterio) {
@@ -56312,8 +56233,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
                     me.idProductos = me.arrayProductos[0]['idProductos'];
                     me.precioNuevoProductos = me.arrayProductos[0]['precioNuevoProductos'];
                     me.precioUsadoProductos = me.arrayProductos[0]['precioUsadoProductos'];
-                    me.stockNuevoProductos = me.arrayProductos[0]['stockNuevoProductos'];
-                    me.stockUsadoProductos = me.arrayProductos[0]['stockUsadoProductos'];
+                    me.stockProductos = me.arrayProductos[0]['stockProductos'];
                 } else {
                     me.producto = 'No existe producto';
                     me.idProductos = 0;
@@ -56336,40 +56256,22 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
             }
             return sw;
         },
-        mostrarPrecioStock: function mostrarPrecioStock(idProductos) {
-            var me = this;
-            var sw = 0;
-            for (var i = 0; i < this.arrayPrecioStock.length; i++) {
-                if (!this.arrayPrecioStock[i].idProductos == me.idProductos) {
-                    sw = true;
-                    if (picked) {
-                        me.precioProducto = arrayProductos[i].precioUsadoProductos;
-                        me.cantidadProductos = arrayProductos[i].stockUsadoProductos;
-                    } else {
-                        me.precioProducto = arrayProductos[i].precioNuevoProductos;
-                        me.cantidadProductos = arrayProductos[i].stockNuevoProductos;
-                    }
-                }
-                sw = false;
-            }
-            return sw;
-        },
         eliminarDetalle: function eliminarDetalle(index) {
             var me = this;
             me.arrayDetalles.splice(index, 1);
         },
-        test: function test() {
-            var me = this;
-            if (me.mostrarPrecioStock(me.idProductos)) {
-                me.arrayPrecioStock.push({
-                    idProductos: me.idProductos,
-                    precioNuevoProductos: me.precioNuevoProductos,
-                    precioUsadoProductos: me.precioUsadoProductos,
-                    stockNuevoProductos: me.stockNuevoProductos,
-                    stockUsadoProductos: me.stockUsadoProductos
-                });
-            }
-        },
+
+        // puntosProducto(){
+        //     let me=this;
+        //     for(var i=0; i<me.arrayProductos.length; i++){
+        //         if(me.picked){
+        //             me.puntosProducto=(me.arrayProductos.precioUsadoProductos*0.01).toFixed(0);
+        //         }else{
+        //             me.puntosProducto=(me.arrayProductos.precioNuevoProductos*0.1).toFixed(0);
+        //         }
+        //     }
+        // },
+
         agregarDetalle: function agregarDetalle() {
             var me = this;
             var Swal = __webpack_require__(16);
@@ -56392,6 +56294,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
                     me.producto = '';
                     me.cantidadProductos = 0;
                     me.precioProducto = 0;
+                    me.puntosProducto = 0;
                 }
             }
         },
@@ -56415,8 +56318,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
             me.producto = val1.nombreProductos;
             me.precioNuevoProductos = val1.precioNuevoProductos;
             me.precioUsadoProductos = val1.precioUsadoProductos;
-            me.stockNuevoProductos = val1.stockNuevoProductos;
-            me.stockUsadoProductos = val1.stockUsadoProductos;
+            me.stockProductos = val1.stockProductos;
         },
         registrarTransaccion: function registrarTransaccion() {
             if (this.validarTransaccion()) {
@@ -56450,8 +56352,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
                 'nombreProductos': this.nombreProductos,
                 'idPlataformas': this.idPlataformas,
                 'descripcionProductos': this.descripcionProductos,
-                'stockNuevoProductos': this.stockNuevoProductos,
-                'stockUsadoProductos': this.stockUsadoProductos,
+                'stockProductos': this.stockProductos,
                 'precioNuevoProductos': this.precioNuevoProductos,
                 'precioUsadoProductos': this.precioUsadoProductos,
                 'idProductos': this.idProductos
@@ -56479,8 +56380,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
             this.tituloModal = '';
             this.nombreProductos = '';
             this.idPlataformas = 0, this.descripcionProductos = '';
-            this.stockNuevoProductos = '';
-            this.stockUsadoProductos = '';
+            this.stockProductos = '';
             this.precioNuevoProductos = '';
             this.precioUsadoProductos = '';
         },
@@ -56498,8 +56398,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
                                     this.idPlataformas = 0;
                                     this.nombreProductos = '';
                                     this.descripcionProductos = '';
-                                    this.stockNuevoProductos = '';
-                                    this.stockUsadoProductos = '';
+                                    this.stockProductos = '';
                                     this.precioNuevoProductos = '';
                                     this.precioUsadoProductos = '';
                                     this.tipoAccion = 1;
@@ -56514,8 +56413,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
                                     this.idPlataformas = data['idPlataformas'];
                                     this.nombreProductos = data['nombreProductos'];
                                     this.descripcionProductos = data['descripcionProductos'];
-                                    this.stockNuevoProductos = data['stockNuevoProductos'];
-                                    this.stockUsadoProductos = data['stockUsadoProductos'];
+                                    this.stockProductos = data['stockProductos'];
                                     this.precioNuevoProductos = data['precioNuevoProductos'];
                                     this.precioUsadoProductos = data['precioUsadoProductos'];
                                     break;
@@ -56983,10 +56881,6 @@ var render = function() {
                             }
                           },
                           [
-                            _c("option", { attrs: { value: "0" } }, [
-                              _vm._v("Seleccione")
-                            ]),
-                            _vm._v(" "),
                             _c("option", { attrs: { value: "Pagado" } }, [
                               _vm._v("Pagado")
                             ]),
@@ -57182,167 +57076,122 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-2" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", [
-                          _vm._v("Precio "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.precioProducto == 0,
-                                  expression: "precioProducto==0"
-                                }
-                              ],
-                              staticStyle: { color: "red" }
-                            },
-                            [_vm._v("(Ingrese*)")]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-inline" }, [
-                          _c("td", {
-                            staticClass: "form-control",
-                            attrs: { type: "number", value: "0", step: "any" },
-                            domProps: {
-                              textContent: _vm._s(_vm.precioProducto)
-                            }
-                          })
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-2" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", [
-                          _vm._v("Cantidad"),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.cantidadProductos == 0,
-                                  expression: "cantidadProductos==0"
-                                }
-                              ],
-                              staticStyle: { color: "red" }
-                            },
-                            [_vm._v("(Ingrese*) ")]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-inline" }, [
-                          _c("td", {
-                            staticClass: "form-control",
-                            attrs: { type: "number", value: "0", step: "any" },
-                            domProps: {
-                              textContent: _vm._s(_vm.cantidadProductos)
-                            }
-                          })
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-2" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", [_vm._v("Puntos por Producto")]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.puntosProducto,
-                              expression: "puntosProducto"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "number", placeholder: "150" },
-                          domProps: { value: _vm.puntosProducto },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
+                      _c("label", [
+                        _vm._v("Precio "),
+                        _c(
+                          "span",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.precioProducto == 0,
+                                expression: "precioProducto==0"
                               }
-                              _vm.puntosProducto = $event.target.value
-                            }
+                            ],
+                            staticStyle: { color: "red" }
+                          },
+                          [_vm._v("(Ingrese*)")]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.precioProducto,
+                            expression: "precioProducto"
                           }
-                        })
-                      ])
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "number", value: "0" },
+                        domProps: { value: _vm.precioProducto },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.precioProducto = $event.target.value
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-2" }, [
+                      _c("label", [
+                        _vm._v("Cantidad"),
+                        _c(
+                          "span",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.cantidadProductos == 0,
+                                expression: "cantidadProductos==0"
+                              }
+                            ],
+                            staticStyle: { color: "red" }
+                          },
+                          [_vm._v("(Ingrese*) ")]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.cantidadProductos,
+                            expression: "cantidadProductos"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "number", value: "0" },
+                        domProps: { value: _vm.cantidadProductos },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.cantidadProductos = $event.target.value
+                          }
+                        }
+                      })
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-3" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass: "form-group",
-                          staticStyle: {
-                            "margin-left": "20px",
-                            "margin-top": "-15px"
+                      _c("label", [_vm._v("Puntos por Producto")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.puntosProducto,
+                            expression: "puntosProducto"
                           }
-                        },
-                        [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.picked,
-                                expression: "picked"
-                              }
-                            ],
-                            attrs: { type: "radio", id: "1", value: "1" },
-                            domProps: { checked: _vm._q(_vm.picked, "1") },
-                            on: {
-                              click: _vm.test,
-                              change: function($event) {
-                                _vm.picked = "1"
-                              }
+                        ],
+                        attrs: { disabled: "" },
+                        domProps: { value: _vm.puntosProducto },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
                             }
-                          }),
-                          _vm._v(" "),
-                          _c("label", { attrs: { for: "1" } }, [
-                            _vm._v("Usado")
-                          ]),
-                          _vm._v(" "),
-                          _c("br"),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.picked,
-                                expression: "picked"
-                              }
-                            ],
-                            attrs: { type: "radio", id: "0", value: "0" },
-                            domProps: { checked: _vm._q(_vm.picked, "0") },
-                            on: {
-                              click: _vm.test,
-                              change: function($event) {
-                                _vm.picked = "0"
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("label", { attrs: { for: "0" } }, [
-                            _vm._v("Nuevo")
-                          ]),
-                          _vm._v(" "),
-                          _c("br")
-                        ]
-                      )
+                            _vm.puntosProducto = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(_vm.calcularPuntos))])
                     ]),
                     _vm._v(" "),
                     _c(
                       "div",
                       {
-                        staticClass: "col-md-8",
+                        staticClass: "col-md-9",
                         staticStyle: { "margin-top": "-40px" }
                       },
                       [
@@ -57412,7 +57261,8 @@ var render = function() {
                                               staticClass: "form-control",
                                               attrs: {
                                                 type: "number",
-                                                value: "3"
+                                                value: "3",
+                                                disabled: ""
                                               },
                                               domProps: {
                                                 value: detalle.precioProducto
@@ -57447,7 +57297,8 @@ var render = function() {
                                               staticClass: "form-control",
                                               attrs: {
                                                 type: "number",
-                                                value: "2"
+                                                value: "2",
+                                                disabled: ""
                                               },
                                               domProps: {
                                                 value: detalle.cantidadProductos
@@ -57473,19 +57324,19 @@ var render = function() {
                                                 {
                                                   name: "model",
                                                   rawName: "v-model",
-                                                  value:
-                                                    detalle.puntosProductos,
+                                                  value: detalle.puntosProducto,
                                                   expression:
-                                                    "detalle.puntosProductos"
+                                                    "detalle.puntosProducto"
                                                 }
                                               ],
                                               staticClass: "form-control",
                                               attrs: {
                                                 type: "number",
-                                                value: "2"
+                                                value: "2",
+                                                disabled: ""
                                               },
                                               domProps: {
-                                                value: detalle.puntosProductos
+                                                value: detalle.puntosProducto
                                               },
                                               on: {
                                                 input: function($event) {
@@ -57494,7 +57345,7 @@ var render = function() {
                                                   }
                                                   _vm.$set(
                                                     detalle,
-                                                    "puntosProductos",
+                                                    "puntosProducto",
                                                     $event.target.value
                                                   )
                                                 }
@@ -57620,7 +57471,7 @@ var render = function() {
                                         _vm._m(6),
                                         _vm._v(" "),
                                         _c("td", [
-                                          _vm._v(_vm._s(_vm.calcularPuntos))
+                                          _vm._v(_vm._s(_vm.puntosTotales))
                                         ])
                                       ]
                                     )

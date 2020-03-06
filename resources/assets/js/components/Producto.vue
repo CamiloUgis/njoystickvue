@@ -30,8 +30,7 @@
                                     <th class="text-center">Nombre</th>
                                     <th class="text-center">Descripción</th>
                                     <th class="text-center">Plataforma</th>
-                                    <th class="text-center">Stock Nuevo</th>
-                                    <th class="text-center">Stock Usado</th>
+                                    <th class="text-center">Stock</th>
                                     <th class="text-center">Precio Nuevo</th>
                                     <th class="text-center">Precio Usado</th>
                                     <th class="text-center">Modificar</th>
@@ -44,8 +43,7 @@
                                     <td v-text="producto.nombreProductos"></td>
                                     <td v-text="producto.descripcionProductos"></td>
                                     <td v-text="producto.nombrePlataformas"></td>
-                                    <td v-text="producto.stockNuevoProductos"></td>
-                                    <td v-text="producto.stockUsadoProductos"></td>
+                                    <td v-text="producto.stockProductos"></td>
                                     <td v-text="producto.precioNuevoProductos"></td>
                                     <td v-text="producto.precioUsadoProductos"></td>
                                     <td>
@@ -121,16 +119,11 @@
                      
                                 
                                 
+
                                 <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="number-input">Stock Nuevo</label>
+                                    <label class="col-md-3 form-control-label" for="number-input">Stock</label>
                                     <div class="col-md-9">
-                                        <input type="number" v-model="stockNuevoProductos" name="stocknuevo" class="form-control" placeholder="Cantidad de stock nuevo">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="number-input">Stock Usado</label>
-                                    <div class="col-md-9">
-                                        <input type="number" v-model="stockUsadoProductos" name="stockusado" class="form-control" placeholder="Cantidad de stock usado">
+                                        <input type="number" v-model="stockProductos" name="stock" class="form-control" placeholder="Cantidad de stock">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -209,8 +202,7 @@ import Multiselect from 'vue-multiselect'
                 idGeneros:0,
                 nombreProductos:'',
                 descripcionProductos:'',
-                stockNuevoProductos:'',
-                stockUsadoProductos:'',
+                stockProductos:'',
                 precioNuevoProductos:'',
                 precioUsadoProductos:'',
                 arrayProductos:[],
@@ -315,8 +307,7 @@ import Multiselect from 'vue-multiselect'
                     'nombreProductos': this.nombreProductos,
                     'idPlataformas': this.idPlataformas,  
                     'descripcionProductos': this.descripcionProductos,
-                    'stockNuevoProductos': this.stockNuevoProductos,
-                    'stockUsadoProductos': this.stockUsadoProductos,
+                    'stockProductos': this.stockProductos,
                     'precioNuevoProductos': this.precioNuevoProductos,
                     'precioUsadoProductos': this.precioUsadoProductos,
                     }).then(function (response){
@@ -336,8 +327,7 @@ import Multiselect from 'vue-multiselect'
                     'nombreProductos': this.nombreProductos,
                     'idPlataformas': this.idPlataformas,
                     'descripcionProductos': this.descripcionProductos,
-                    'stockNuevoProductos': this.stockNuevoProductos,
-                    'stockUsadoProductos': this.stockUsadoProductos,
+                    'stockProductos': this.stockProductos,
                     'precioNuevoProductos': this.precioNuevoProductos,
                     'precioUsadoProductos': this.precioUsadoProductos,
                     'idProductos': this.idProductos,
@@ -369,7 +359,7 @@ import Multiselect from 'vue-multiselect'
                 this.errorMsjProducto = [];
                 
                 if(!this.nombreProductos) this.errorMsjProducto.push("El nombre del Producto no debe estar vacío");
-                if(!this.stockNuevoProductos) this.errorMsjProducto.push("El stock debe ser un número")
+                if(!this.stockProductos) this.errorMsjProducto.push("El stock debe ser un número")
                 if(this.errorMsjProducto.length) this.errorProducto=1;
 
                 return this.errorProducto;
@@ -381,8 +371,7 @@ import Multiselect from 'vue-multiselect'
                 this.idPlataformas=0;
                 this.arrayGenerosSeleccionados=[];
                 this.descripcionProductos='';
-                this.stockNuevoProductos='';
-                this.stockUsadoProductos='';
+                this.stockProductos='';
                 this.precioNuevoProductos='';
                 this.precioUsadoProductos='';
             },
@@ -398,8 +387,7 @@ import Multiselect from 'vue-multiselect'
                                 this.arrayGenerosSeleccionados=[];
                                 this.nombreProductos='';
                                 this.descripcionProductos='';
-                                this.stockNuevoProductos='';
-                                this.stockUsadoProductos='';
+                                this.stockProductos='';
                                 this.precioNuevoProductos='';
                                 this.precioUsadoProductos='';
                                 this.tipoAccion = 1;
@@ -414,8 +402,7 @@ import Multiselect from 'vue-multiselect'
                                 this.idPlataformas=data['idPlataformas'];
                                 this.nombreProductos=data['nombreProductos'];
                                 this.descripcionProductos=data['descripcionProductos'];
-                                this.stockNuevoProductos=data['stockNuevoProductos'];
-                                this.stockUsadoProductos=data['stockUsadoProductos'];
+                                this.stockProductos=data['stockProductos'];
                                 this.precioNuevoProductos=data['precioNuevoProductos'];
                                 this.precioUsadoProductos=data['precioUsadoProductos'];
                                 break;

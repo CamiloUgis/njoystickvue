@@ -13,8 +13,7 @@ class Producto extends Model
         'descripcionProductos',
         'precioNuevoProductos',
         'precioUsadoProductos',
-        'stockNuevoProductos',
-        'stockUsadoProductos',
+        'stockProductos',
     ];
    
     public function plataforma(){

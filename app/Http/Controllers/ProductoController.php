@@ -21,7 +21,7 @@ class ProductoController extends Controller
             ->join('genero_producto','genero_producto.idProductos','=','productos.idProductos')
             ->join('generos', 'genero_producto.idGeneros', '=', 'generos.idGeneros')
             ->select('productos.idProductos', 'productos.idPlataformas','productos.nombreProductos', 'productos.descripcionProductos',
-            'productos.stockNuevoProductos', 'productos.stockUsadoProductos','productos.precioNuevoProductos',
+            'productos.stockProductos', 'productos.precioNuevoProductos',
             'productos.precioUsadoProductos','plataformas.nombrePlataformas','generos.nombreGeneros')
             ->orderBy('productos.idProductos', 'desc')->paginate(8);
         }else{
@@ -29,20 +29,20 @@ class ProductoController extends Controller
             ->join('genero_producto','genero_producto.idProductos','=','productos.idProductos')
             ->join('generos', 'genero_producto.idGeneros', '=', 'generos.idGeneros')
             ->select('productos.idProductos', 'productos.idPlataformas','productos.nombreProductos', 'productos.descripcionProductos',
-            'productos.stockNuevoProductos', 'productos.stockUsadoProductos','productos.precioNuevoProductos',
+            'productos.stockProductos', 'productos.precioNuevoProductos',
             'productos.precioUsadoProductos','plataformas.nombrePlataformas','generos.nombreGeneros')
             ->where('productos.'.$criterio, 'like', '%'. $buscar . '%')
             ->orderBy('productos.idProductos', 'desc')->paginate(8);*/
             if($buscar==''){
                 $productos = Producto::join('plataformas','productos.idPlataformas','=','plataformas.idPlataformas')
                 ->select('productos.idProductos', 'productos.idPlataformas','productos.nombreProductos', 'productos.descripcionProductos',
-                'productos.stockNuevoProductos', 'productos.stockUsadoProductos','productos.precioNuevoProductos',
+                'productos.stockProductos', 'productos.precioNuevoProductos',
                 'productos.precioUsadoProductos','plataformas.nombrePlataformas')
                 ->orderBy('productos.idProductos', 'desc')->paginate(10);
             }else{
                 $productos = Producto::join('plataformas','productos.idPlataformas','=','plataformas.idPlataformas')
                 ->select('productos.idProductos', 'productos.idPlataformas','productos.nombreProductos', 'productos.descripcionProductos',
-                'productos.stockNuevoProductos', 'productos.stockUsadoProductos','productos.precioNuevoProductos',
+                'productos.stockProductos', 'productos.precioNuevoProductos',
                 'productos.precioUsadoProductos','plataformas.nombrePlataformas')
                 ->where('productos.'.$criterio, 'like', '%'. $buscar . '%')
                 ->orderBy('productos.idProductos', 'desc')->paginate(10);
@@ -65,7 +65,7 @@ class ProductoController extends Controller
         if(!$request->ajax()) return redirect('/');
         $filtro = $request->filtro;
         $productos = Producto::where('idProductos','=', $filtro)
-        ->select('idProductos', 'nombreProductos', 'precioNuevoProductos', 'precioUsadoProductos', 'stockNuevoProductos', 'stockUsadoProductos')->orderBy('nombreProductos', 'asc')->take(1)->get();
+        ->select('idProductos', 'nombreProductos', 'precioNuevoProductos', 'precioUsadoProductos', 'stockProductos')->orderBy('nombreProductos', 'asc')->take(1)->get();
 
         return ['productos'=>$productos];
     }
@@ -77,8 +77,7 @@ class ProductoController extends Controller
         $producto->descripcionProductos = $request->input('descripcionProductos');
         $producto->precioNuevoProductos = $request->input('precioNuevoProductos');
         $producto->precioUsadoProductos = $request->input('precioUsadoProductos');
-        $producto->stockNuevoProductos = $request->input('stockNuevoProductos');
-        $producto->stockUsadoProductos = $request->input('stockUsadoProductos');
+        $producto->stockProductos = $request->input('stockProductos');
         $producto->idPlataformas = $request->input('idPlataformas');
         $producto->save();    
     }
@@ -92,8 +91,7 @@ class ProductoController extends Controller
         $producto->descripcionProductos = $request->input('descripcionProductos');
         $producto->precioNuevoProductos = $request->input('precioNuevoProductos');
         $producto->precioUsadoProductos = $request->input('precioUsadoProductos');
-        $producto->stockNuevoProductos = $request->input('stockNuevoProductos');
-        $producto->stockUsadoProductos = $request->input('stockUsadoProductos');
+        $producto->stockUsadoProductos = $request->input('stockProductos');
         $producto->save();
     }
     public function asociar(Request $request)
@@ -118,7 +116,7 @@ class ProductoController extends Controller
         if(!$request->ajax()) return redirect('/');
         $filtro = $request->filtro;
         $productos = Producto::where('nombreProductos', 'like', '%'. $filtro. '%')
-        ->select('idProductos', 'nombreProductos', 'precioNuevoProductos', 'precioUsadoProductos', 'stockNuevoProductos', 'stockUsadoProductos')
+        ->select('idProductos', 'nombreProductos', 'precioNuevoProductos', 'precioUsadoProductos','stockProductos')
         ->orderBy('nombreProductos', 'asc')->get();
 
         return ['productos'=>$productos];
