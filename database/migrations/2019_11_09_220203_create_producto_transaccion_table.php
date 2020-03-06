@@ -16,7 +16,10 @@ class CreateProductoTransaccionTable extends Migration
         Schema::create('producto_transaccion', function (Blueprint $table) {
             $table->Integer('idProductos')->unsigned();
             $table->Integer('idTransacciones')->unsigned();
-            
+            $table->integer('precioProductos')->nullable();
+            $table->integer('puntosProductos')->nullable();
+            $table->integer('cantidadProductos')->nullable();
+
 
             $table->foreign('idProductos')->references('idProductos')->on('productos');
             $table->foreign('idTransacciones')->references('idTransacciones')->on('transacciones');

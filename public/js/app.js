@@ -51613,9 +51613,11 @@ Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
             me.listarProducto(page, buscar, criterio);
         },
         registrarProducto: function registrarProducto() {
-            if (this.validarProducto()) {
-                return;
-            }
+            var _this = this;
+
+            // if(this.validarProducto()){
+            //     return;
+            // }
             var me = this;
             axios.post('productos/registrar', {
                 'nombreProductos': this.nombreProductos,
@@ -51627,9 +51629,10 @@ Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
             }).then(function (response) {
                 me.cerrarModal();
                 me.listarProducto(1, '', 'nombre');
-                console.log(error.response);
             }).catch(function (error) {
-                console.log(error.response);
+                if (error.response.status == 422) {
+                    _this.errors = error.response.data.errors;
+                }
             });
         },
         actualizarProducto: function actualizarProducto() {
@@ -51653,31 +51656,32 @@ Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
             });
         },
         asociarGenero: function asociarGenero() {
-            if (this.validarProducto()) {
-                return;
-            }
+            var _this2 = this;
+
             var me = this;
             axios.post('productos/asociarGenero', {
-                'idProductos': this.idProductos,
-                'arrayGenerosSeleccionados': this.arrayGenerosSeleccionados
+                'idProductos': me.idProductos,
+                'data': me.arrayGenerosSeleccionados
             }).then(function (response) {
                 me.cerrarModal();
                 me.listarProducto(1, '', 'nombre');
-                console.log(error.response);
             }).catch(function (error) {
-                console.log(error.response);
+                if (error.response.status == 422) {
+                    _this2.errors = error.response.data.errors;
+                }
             });
         },
-        validarProducto: function validarProducto() {
-            this.errorProducto = 0;
-            this.errorMsjProducto = [];
 
-            if (!this.nombreProductos) this.errorMsjProducto.push("El nombre del Producto no debe estar vacío");
-            if (!this.stockProductos) this.errorMsjProducto.push("El stock debe ser un número");
-            if (this.errorMsjProducto.length) this.errorProducto = 1;
+        //  validarProducto(){
+        //     this.errorProducto=0;
+        //     this.errorMsjProducto = [];
 
-            return this.errorProducto;
-        },
+        //     if(!this.nombreProductos) this.errorMsjProducto.push("El nombre del Producto no debe estar vacío");
+        //     if(!this.stockProductos) this.errorMsjProducto.push("El stock debe ser un número")
+        //     if(this.errorMsjProducto.length) this.errorProducto=1;
+
+        //     return this.errorProducto;
+        // }, 
         cerrarModal: function cerrarModal() {
             this.modal = 0;
             this.tituloModal = '';
@@ -56099,6 +56103,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -56119,7 +56125,6 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
             idClientes: 0,
             tipoTransacciones: 0,
             observacionTransacciones: '',
-            picked: '',
             nombreProductos: '',
             nombreClientes: '',
             fechaTransacciones: '',
@@ -56128,7 +56133,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
             precioNuevoProductos: '',
             formaPagoTransacciones: 0,
             plazoTransacciones: ''
-        }, _defineProperty(_ref, 'precioNuevoProductos', ''), _defineProperty(_ref, 'precioUsadoProductos', ''), _defineProperty(_ref, 'estadoTransacciones', 0), _defineProperty(_ref, 'cantidadProductos', ''), _defineProperty(_ref, 'precioProducto', ''), _defineProperty(_ref, 'stockProductos', ''), _defineProperty(_ref, 'descuento', 0.0), _defineProperty(_ref, 'total', 0.0), _defineProperty(_ref, 'totalDescuento', 0.0), _defineProperty(_ref, 'totalParcial', 0), _defineProperty(_ref, 'arrayTransacciones', []), _defineProperty(_ref, 'arrayProductoTransaccion', []), _defineProperty(_ref, 'arrayClientes', []), _defineProperty(_ref, 'arrayProductos', []), _defineProperty(_ref, 'arrayDetalles', []), _defineProperty(_ref, 'arrayPrecioStock', []), _defineProperty(_ref, 'codigo', ''), _defineProperty(_ref, 'producto', ''), _defineProperty(_ref, 'puntosProducto', ''), _defineProperty(_ref, 'modal', 0), _defineProperty(_ref, 'listado', 1), _defineProperty(_ref, 'tituloModal', ''), _defineProperty(_ref, 'tipoAccion', 0), _defineProperty(_ref, 'errorProducto', 0), _defineProperty(_ref, 'errorMsjProducto', []), _defineProperty(_ref, 'pagination', {
+        }, _defineProperty(_ref, 'precioNuevoProductos', ''), _defineProperty(_ref, 'precioUsadoProductos', ''), _defineProperty(_ref, 'estadoTransacciones', 0), _defineProperty(_ref, 'cantidadProductos', 1), _defineProperty(_ref, 'precioProductos', 1), _defineProperty(_ref, 'stockProductos', ''), _defineProperty(_ref, 'descuento', ''), _defineProperty(_ref, 'total', 0.0), _defineProperty(_ref, 'totalDescuento', 0.0), _defineProperty(_ref, 'totalParcial', 0), _defineProperty(_ref, 'arrayTransacciones', []), _defineProperty(_ref, 'arrayProductoTransaccion', []), _defineProperty(_ref, 'arrayClientes', []), _defineProperty(_ref, 'arrayProductos', []), _defineProperty(_ref, 'arrayDetalles', []), _defineProperty(_ref, 'arrayPrecioStock', []), _defineProperty(_ref, 'producto', ''), _defineProperty(_ref, 'puntosProductos', ''), _defineProperty(_ref, 'modal', 0), _defineProperty(_ref, 'listado', 1), _defineProperty(_ref, 'tituloModal', ''), _defineProperty(_ref, 'tipoAccion', 0), _defineProperty(_ref, 'errorProducto', 0), _defineProperty(_ref, 'errorMsjProducto', []), _defineProperty(_ref, 'cantidadPasajeraProductos', ''), _defineProperty(_ref, 'precioPasajeroProductos', ''), _defineProperty(_ref, 'puntosPasajeroProductos', ''), _defineProperty(_ref, 'pagination', {
             'total': 0,
             'current_page': 0,
             'per_page': 0,
@@ -56167,26 +56172,23 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
             return pagesArray;
         },
         calcularTotal: function calcularTotal() {
-            var resultado = '';
             var parcial = '';
             for (var i = 0; i < this.arrayDetalles.length; i++) {
-                parcial = (this.arrayDetalles[i].precioProducto * this.arrayDetalles[i].cantidadProductos).toFixed(0);
-                resultado = Number(resultado) + Number(parcial);
+                parcial = (this.arrayDetalles[i].precioProductos * this.arrayDetalles[i].cantidadProductos).toFixed(0);
+                this.valorFinalTransacciones = Number(this.valorFinalTransacciones) + Number(parcial);
             }
-            return resultado;
+            return this.valorFinalTransacciones;
         },
         puntosTotales: function puntosTotales() {
-            var resultado = '';
             var parcial = '';
             for (var i = 0; i < this.arrayDetalles.length; i++) {
-                parcial = this.arrayDetalles[i].puntosProducto;
-                resultado = Number(resultado) + Number(parcial);
+                parcial = this.arrayDetalles[i].puntosProductos;
+                this.puntosTransacciones = Number(this.puntosTransacciones) + Number(parcial);
             }
-            return resultado;
+            return this.puntosTransacciones;
         },
         calcularPuntos: function calcularPuntos() {
-            this.puntosProducto = Number((this.precioProducto * this.cantidadProductos * 0.01).toFixed(0));
-            //return this.puntosProducto;
+            this.puntosPasajeroProductos = Number((this.precioPasajeroProductos * this.cantidadPasajeraProductos * 0.01).toFixed(0));
         }
 
     },
@@ -56220,28 +56222,6 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
             me.loading = true;
             me.idClientes = val1.idClientes;
         },
-        buscarProducto: function buscarProducto() {
-            var me = this;
-            var url = '/productos/buscarProducto?filtro=' + me.codigo;
-
-            axios.get(url).then(function (response) {
-                var respuesta = response.data;
-                me.arrayProductos = respuesta.productos;
-
-                if (me.arrayProductos.length > 0) {
-                    me.producto = me.arrayProductos[0]['nombreProductos'];
-                    me.idProductos = me.arrayProductos[0]['idProductos'];
-                    me.precioNuevoProductos = me.arrayProductos[0]['precioNuevoProductos'];
-                    me.precioUsadoProductos = me.arrayProductos[0]['precioUsadoProductos'];
-                    me.stockProductos = me.arrayProductos[0]['stockProductos'];
-                } else {
-                    me.producto = 'No existe producto';
-                    me.idProductos = 0;
-                }
-            }).catch(function (error) {
-                console.log(error);
-            });
-        },
         cambiarPagina: function cambiarPagina(page, buscar, criterio) {
             var me = this;
             me.pagination.current_page = page;
@@ -56260,22 +56240,10 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
             var me = this;
             me.arrayDetalles.splice(index, 1);
         },
-
-        // puntosProducto(){
-        //     let me=this;
-        //     for(var i=0; i<me.arrayProductos.length; i++){
-        //         if(me.picked){
-        //             me.puntosProducto=(me.arrayProductos.precioUsadoProductos*0.01).toFixed(0);
-        //         }else{
-        //             me.puntosProducto=(me.arrayProductos.precioNuevoProductos*0.1).toFixed(0);
-        //         }
-        //     }
-        // },
-
         agregarDetalle: function agregarDetalle() {
             var me = this;
             var Swal = __webpack_require__(16);
-            if (me.idProductos == 0 || me.cantidadProductos == 0 || me.precioProducto == 0) {} else {
+            if (me.idProductos == 0 || me.cantidadPasajeraProductos == 0 || me.precioPasajeroProductos == 0) {} else {
                 if (me.encuentra(me.idProductos)) {
                     Swal.fire({
                         icon: 'error',
@@ -56283,18 +56251,26 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
                         text: 'Este producto ya está ingresado.'
                     });
                 } else {
-                    me.arrayDetalles.push({
-                        idProductos: me.idProductos,
-                        producto: me.producto,
-                        cantidadProductos: me.cantidadProductos,
-                        precioProducto: me.precioProducto,
-                        puntosProducto: me.puntosProducto
-                    });
-                    me.idProductos = 0;
-                    me.producto = '';
-                    me.cantidadProductos = 0;
-                    me.precioProducto = 0;
-                    me.puntosProducto = 0;
+                    if (me.cantidadPasajeraProductos > me.stockProductos) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: '¡Error!',
+                            text: 'No puede ingresar más que el stock existente. Stock: ' + me.stockProductos
+                        });
+                    } else {
+                        me.arrayDetalles.push({
+                            idProductos: me.idProductos,
+                            producto: me.producto,
+                            cantidadProductos: me.cantidadPasajeraProductos,
+                            precioProductos: me.precioPasajeroProductos,
+                            puntosProductos: me.puntosPasajeroProductos
+                        });
+                        me.idProductos = 0;
+                        me.producto = '';
+                        me.cantidadPasajeraProductos = 1;
+                        me.precioPasajeroProductos = 1;
+                        me.puntosPasajeroProductos = 1;
+                    }
                 }
             }
         },
@@ -56321,15 +56297,12 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
             me.stockProductos = val1.stockProductos;
         },
         registrarTransaccion: function registrarTransaccion() {
-            if (this.validarTransaccion()) {
-                return;
-            }
+
             var me = this;
-            axios.post('transaccion/registrar', {
+            axios.post('transacciones/registrar', {
                 'idClientes': this.idClientes,
                 'tipoTransacciones': this.tipoTransacciones,
                 'observacionTransacciones': this.observacionTransacciones,
-                'fechaTransacciones': this.fechaTransacciones,
                 'descuentoTransacciones': this.descuento,
                 'puntosTransacciones': this.puntosTransacciones,
                 'valorFinalTransacciones': this.valorFinalTransacciones,
@@ -56338,9 +56311,25 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
                 'estadoTransacciones': this.estadoTransacciones,
                 'data': this.arrayDetalles
             }).then(function (response) {
+                me.listado = 1;
                 me.listarTransaccion(1, '', 'idTransaccion');
+                me.idClientes = 0;
+                me.tipoTransacciones = '';
+                me.observacionTransacciones = '';
+                me.descuentoTransacciones = '';
+                me.puntosTransacciones = 0;
+                me.valorFinalTransacciones = 0;
+                me.formaPagoTransacciones = '';
+                me.plazoTransacciones = '';
+                me.estadoTransacciones = '';
+                me.arrayDetalles = [];
+                me.idProductos = 0;
+                me.producto = '';
+                me.cantidadProductos = 0;
+                me.precioProductos = 0;
+                me.puntosProductos = 0;
             }).catch(function (error) {
-                console.log(error.response);
+                console.log(error.response.data.errors);
             });
         },
         actualizarProducto: function actualizarProducto() {
@@ -56363,14 +56352,25 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
                 console.log(error.response);
             });
         },
-        validarTransaccion: function validarTransaccion() {
-            this.errorTransaccion = 0;
-            this.errorMsjTransaccion = [];
-
-            return this.errorProducto;
-        },
         mostrarDetalle: function mostrarDetalle() {
-            this.listado = 0;
+            var me = this;
+
+            me.listado = 0;
+            me.idClientes = 0;
+            me.tipoTransacciones = '';
+            me.observacionTransacciones = '';
+            me.descuentoTransacciones = '';
+            me.puntosTransacciones = 0;
+            me.valorFinalTransacciones = 0;
+            me.formaPagoTransacciones = '';
+            me.plazoTransacciones = '';
+            me.estadoTransacciones = '';
+            me.arrayDetalles = [];
+            me.idProductos = 0;
+            me.producto = '';
+            me.cantidadProductos = 0;
+            me.precioProductos = 0;
+            me.puntosProductos = 0;
         },
         ocultarDetalle: function ocultarDetalle() {
             this.listado = 1;
@@ -56881,6 +56881,12 @@ var render = function() {
                             }
                           },
                           [
+                            _c(
+                              "option",
+                              { attrs: { value: "0", disabled: "" } },
+                              [_vm._v("Seleccione")]
+                            ),
+                            _vm._v(" "),
                             _c("option", { attrs: { value: "Pagado" } }, [
                               _vm._v("Pagado")
                             ]),
@@ -56926,9 +56932,11 @@ var render = function() {
                             }
                           },
                           [
-                            _c("option", { attrs: { value: "0" } }, [
-                              _vm._v("Seleccione")
-                            ]),
+                            _c(
+                              "option",
+                              { attrs: { value: "0", disabled: "" } },
+                              [_vm._v("Seleccione")]
+                            ),
                             _vm._v(" "),
                             _c("option", { attrs: { value: "Venta" } }, [
                               _vm._v("Venta")
@@ -56984,9 +56992,11 @@ var render = function() {
                             }
                           },
                           [
-                            _c("option", { attrs: { value: "0" } }, [
-                              _vm._v("Seleccione")
-                            ]),
+                            _c(
+                              "option",
+                              { attrs: { value: "0", disabled: "" } },
+                              [_vm._v("Seleccione")]
+                            ),
                             _vm._v(" "),
                             _c("option", { attrs: { value: "Efectivo" } }, [
                               _vm._v("Efectivo")
@@ -57085,8 +57095,8 @@ var render = function() {
                               {
                                 name: "show",
                                 rawName: "v-show",
-                                value: _vm.precioProducto == 0,
-                                expression: "precioProducto==0"
+                                value: _vm.precioPasajeroProductos == 0,
+                                expression: "precioPasajeroProductos==0"
                               }
                             ],
                             staticStyle: { color: "red" }
@@ -57100,19 +57110,19 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.precioProducto,
-                            expression: "precioProducto"
+                            value: _vm.precioPasajeroProductos,
+                            expression: "precioPasajeroProductos"
                           }
                         ],
                         staticClass: "form-control",
                         attrs: { type: "number", value: "0" },
-                        domProps: { value: _vm.precioProducto },
+                        domProps: { value: _vm.precioPasajeroProductos },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.precioProducto = $event.target.value
+                            _vm.precioPasajeroProductos = $event.target.value
                           }
                         }
                       })
@@ -57128,8 +57138,8 @@ var render = function() {
                               {
                                 name: "show",
                                 rawName: "v-show",
-                                value: _vm.cantidadProductos == 0,
-                                expression: "cantidadProductos==0"
+                                value: _vm.cantidadPasajeraProductos == 0,
+                                expression: "cantidadPasajeraProductos==0"
                               }
                             ],
                             staticStyle: { color: "red" }
@@ -57143,19 +57153,19 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.cantidadProductos,
-                            expression: "cantidadProductos"
+                            value: _vm.cantidadPasajeraProductos,
+                            expression: "cantidadPasajeraProductos"
                           }
                         ],
                         staticClass: "form-control",
                         attrs: { type: "number", value: "0" },
-                        domProps: { value: _vm.cantidadProductos },
+                        domProps: { value: _vm.cantidadPasajeraProductos },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.cantidadProductos = $event.target.value
+                            _vm.cantidadPasajeraProductos = $event.target.value
                           }
                         }
                       })
@@ -57169,18 +57179,18 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.puntosProducto,
-                            expression: "puntosProducto"
+                            value: _vm.puntosPasajeroProductos,
+                            expression: "puntosPasajeroProductos"
                           }
                         ],
                         attrs: { disabled: "" },
-                        domProps: { value: _vm.puntosProducto },
+                        domProps: { value: _vm.puntosPasajeroProductos },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.puntosProducto = $event.target.value
+                            _vm.puntosPasajeroProductos = $event.target.value
                           }
                         }
                       }),
@@ -57253,9 +57263,10 @@ var render = function() {
                                                 {
                                                   name: "model",
                                                   rawName: "v-model",
-                                                  value: detalle.precioProducto,
+                                                  value:
+                                                    detalle.precioProductos,
                                                   expression:
-                                                    "detalle.precioProducto"
+                                                    "detalle.precioProductos"
                                                 }
                                               ],
                                               staticClass: "form-control",
@@ -57265,7 +57276,7 @@ var render = function() {
                                                 disabled: ""
                                               },
                                               domProps: {
-                                                value: detalle.precioProducto
+                                                value: detalle.precioProductos
                                               },
                                               on: {
                                                 input: function($event) {
@@ -57274,7 +57285,7 @@ var render = function() {
                                                   }
                                                   _vm.$set(
                                                     detalle,
-                                                    "precioProducto",
+                                                    "precioProductos",
                                                     $event.target.value
                                                   )
                                                 }
@@ -57324,9 +57335,10 @@ var render = function() {
                                                 {
                                                   name: "model",
                                                   rawName: "v-model",
-                                                  value: detalle.puntosProducto,
+                                                  value:
+                                                    detalle.puntosProductos,
                                                   expression:
-                                                    "detalle.puntosProducto"
+                                                    "detalle.puntosProductos"
                                                 }
                                               ],
                                               staticClass: "form-control",
@@ -57336,7 +57348,7 @@ var render = function() {
                                                 disabled: ""
                                               },
                                               domProps: {
-                                                value: detalle.puntosProducto
+                                                value: detalle.puntosProductos
                                               },
                                               on: {
                                                 input: function($event) {
@@ -57345,7 +57357,7 @@ var render = function() {
                                                   }
                                                   _vm.$set(
                                                     detalle,
-                                                    "puntosProducto",
+                                                    "puntosProductos",
                                                     $event.target.value
                                                   )
                                                 }
@@ -57357,7 +57369,7 @@ var render = function() {
                                             _vm._v(
                                               "\n                                               " +
                                                 _vm._s(
-                                                  detalle.precioProducto *
+                                                  detalle.precioProductos *
                                                     detalle.cantidadProductos
                                                 ) +
                                                 "\n                                           "
@@ -57478,7 +57490,24 @@ var render = function() {
                                   ],
                                   2
                                 )
-                              : _c("tbody", [_vm._m(7)])
+                              : _c("tbody", [
+                                  _c("tr", [
+                                    _c(
+                                      "td",
+                                      { attrs: { colspan: "5" } },
+                                      [
+                                        _c("center", [
+                                          _c("span", [
+                                            _vm._v(
+                                              " NO hay productos agregados."
+                                            )
+                                          ])
+                                        ])
+                                      ],
+                                      1
+                                    )
+                                  ])
+                                ])
                           ]
                         )
                       ]
@@ -57508,7 +57537,7 @@ var render = function() {
                           attrs: { type: "button" },
                           on: {
                             click: function($event) {
-                              return _vm.registrarIngreso()
+                              return _vm.registrarTransaccion()
                             }
                           }
                         },
@@ -57707,18 +57736,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("td", { attrs: { colspan: "4", align: "right" } }, [
       _c("strong", [_vm._v("Puntos totales:")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("td", { attrs: { colspan: "5" } }, [
-        _vm._v(
-          " \n                                               NO hay productos agregados.\n                                           "
-        )
-      ])
     ])
   }
 ]

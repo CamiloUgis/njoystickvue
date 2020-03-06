@@ -64,6 +64,14 @@ class TransaccionController extends Controller
     {
 
         if(!$request->ajax()) return redirect('/');
+      /*  $validar= $request->validate([
+            'descuentoTransacciones'=>'nullable|numeric|between:0,100',
+            'tipoTransacciones'=>'required|not_in:0',
+            'formaPagoTransacciones'=>'required|not_in:0',
+            'estadoTransacciones'=>'required|not_in:0',
+            'precioProductos'=>'required|min:0|not_in:0',
+            'observacionTransacciones'=>'nullable|string',
+        ]);*/
         try{
             DB::beginTransaction();
             $mytime= Carbon::now('America/Santiago');
@@ -78,19 +86,23 @@ class TransaccionController extends Controller
             $transaccion->formaPagoTransacciones = $request->input('formaPagoTransacciones');
             $transaccion->plazoTransacciones = $request->input('plazoTransacciones');
             $transaccion->estadoTransacciones = $request->input('estadoTransacciones');
-
+            $transaccion->idClientes = $request->input('idClientes');
+            $transaccion->save();
+            DB::commit();
             $pivote = $request->data;
 
             foreach($pivote as $ep=>$det){
                 $ep= new ProductoTransaccion();
                 $ep->idTransacciones = $transaccion->idTransacciones;
                 $ep->idProductos = $det['idProductos'];
-
+                $ep->precioProductos = $det['precioProductos'];
+                $ep->cantidadProductos = $det['cantidadProductos'];
+                $ep->puntosProductos = $det['puntosProductos'];
                 $ep->save();
             }
-
+            DB::commit();
             }catch(Exception $e){
-                DB:rollback();
+                DB::rollback();
             }
         
 
@@ -100,8 +112,16 @@ class TransaccionController extends Controller
 
     public function update(Request $request)
     {
-
+        
         if(!$request->ajax()) return redirect('/');
+        $validar= $request->validate([
+            'descuentoTransacciones'=>'nullable|numeric|between:0,100',
+            'tipoTransacciones'=>'required|not_in:0',
+            'formaPagoTransacciones'=>'required|not_in:0',
+            'estadoTransacciones'=>'required|not_in:0',
+            'precioProductos'=>'required|min:0|not_in:0',
+            'observacionTransacciones'=>'nullable|string',
+        ]);
         $transaccion = Transaccion::findOrFail($request->idTransacciones);;
         $transaccion->idTransacciones = $request->input('idTransacciones');
         $transaccion->tipoTransacciones = $request->input('tipoTransacciones');

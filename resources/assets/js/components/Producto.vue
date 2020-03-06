@@ -299,9 +299,9 @@ import Multiselect from 'vue-multiselect'
                 me.listarProducto(page, buscar, criterio);
             },
             registrarProducto(){
-                if(this.validarProducto()){
-                    return;
-                }
+                // if(this.validarProducto()){
+                //     return;
+                // }
                 let me=this;
                 axios.post('productos/registrar',{
                     'nombreProductos': this.nombreProductos,
@@ -313,9 +313,10 @@ import Multiselect from 'vue-multiselect'
                     }).then(function (response){
                         me.cerrarModal();
                         me.listarProducto(1,'', 'nombre');
-                        console.log(error.response);
-                }).catch(function (error){
-                    console.log(error.response);
+                }).catch(error=>{
+                    if(error.response.status == 422){
+                        this.errors = error.response.data.errors
+                    }
                 })
             },
             actualizarProducto(){
@@ -339,31 +340,29 @@ import Multiselect from 'vue-multiselect'
                 })
             },
             asociarGenero(){
-                if(this.validarProducto()){
-                    return;
-                }
                 let me=this;
                 axios.post('productos/asociarGenero',{
-                    'idProductos': this.idProductos,
-                    'arrayGenerosSeleccionados': this.arrayGenerosSeleccionados,
+                    'idProductos': me.idProductos,
+                    'data': me.arrayGenerosSeleccionados                    
                     }).then(function (response){
                         me.cerrarModal();
                         me.listarProducto(1,'', 'nombre');
-                        console.log(error.response);
-                }).catch(function (error){
-                    console.log(error.response);
+                }).catch(error=>{
+                    if(error.response.status == 422){
+                        this.errors = error.response.data.errors
+                    }
                 })
             },
-             validarProducto(){
-                this.errorProducto=0;
-                this.errorMsjProducto = [];
+            //  validarProducto(){
+            //     this.errorProducto=0;
+            //     this.errorMsjProducto = [];
                 
-                if(!this.nombreProductos) this.errorMsjProducto.push("El nombre del Producto no debe estar vacío");
-                if(!this.stockProductos) this.errorMsjProducto.push("El stock debe ser un número")
-                if(this.errorMsjProducto.length) this.errorProducto=1;
+            //     if(!this.nombreProductos) this.errorMsjProducto.push("El nombre del Producto no debe estar vacío");
+            //     if(!this.stockProductos) this.errorMsjProducto.push("El stock debe ser un número")
+            //     if(this.errorMsjProducto.length) this.errorProducto=1;
 
-                return this.errorProducto;
-            }, 
+            //     return this.errorProducto;
+            // }, 
             cerrarModal(){
                 this.modal=0;
                 this.tituloModal='';

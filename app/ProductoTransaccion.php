@@ -8,6 +8,8 @@ class ProductoTransaccion extends Model
 {
     protected $table = 'producto_transaccion';
     protected $fillable = [
-        'idProductos', 'idTransacciones'
+        'idProductos', 'idTransacciones','cantidadProductos', 'puntosProducto', 'precioProducto'
     ];
+    public $timestamps = false;
+
 }

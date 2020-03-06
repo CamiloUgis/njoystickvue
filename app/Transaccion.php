@@ -12,6 +12,7 @@ class Transaccion extends Model
     protected $fillable= ['tipoTransacciones', 'observacionTransacciones', 'fechaTransacciones',
     'puntosTransacciones', 'valorFinalTransacciones', 'descuentoTransacciones', 'formaPagoTransacciones', 'plazoTransacciones',
     'estadoTransacciones'];
+    public $timestamps = false;
 
     public function clientes(){
         return $this->belongsTo('App\Cliente', 'idClientes');

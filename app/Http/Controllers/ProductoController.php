@@ -72,6 +72,14 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
         if(!$request->ajax()) return redirect('/');
+        $validar= $request->validate([
+            'nombreProductos'=>'required|unique:productos,nombreProductos',
+            'descripcionProductos'=>'required',
+            'precioNuevoProductos'=>'required|min:0',
+            'precioUsadoProductos'=>'required|min:0',
+            'stockProductos'=>'required|min:0',
+            
+        ]);
         $producto = new Producto();
         $producto->nombreProductos = $request->input('nombreProductos');
         $producto->descripcionProductos = $request->input('descripcionProductos');
@@ -85,6 +93,14 @@ class ProductoController extends Controller
     {
 
         if(!$request->ajax()) return redirect('/');
+        $validar= $request->validate([
+            'nombreProductos'=>'required|unique:productos,nombreProductos',
+            'descripcionProductos'=>'required',
+            'precioNuevoProductos'=>'required|min:0',
+            'precioUsadoProductos'=>'required|min:0',
+            'stockProductos'=>'required|min:0',
+            
+        ]);
         $producto = Producto::findOrFail($request->idProductos);
         $producto->nombreProductos = $request->input('nombreProductos');
         $producto->idPlataformas = $request->input('idPlataformas');
@@ -99,14 +115,15 @@ class ProductoController extends Controller
         if(!$request->ajax()) return redirect('/');
         try{
             DB::beginTransaction();
-            $pivote = $request->input('arrayGenerosSeleccionados');
+            $pivote = $request->data;
      
-            foreach($pivote as $ep){
+            foreach($pivote as $ep=>$det){
                 $gp = new GeneroProducto();  
                 $gp->idProductos = $request->input('idProductos');
-                $gp->idGeneros = $ep['idGeneros'];
+                $gp->idGeneros = $det['idGeneros'];
                 $gp->save();
             }
+            DB::commit();
         }catch(Exception $e){
             DB::rollback();
         }
