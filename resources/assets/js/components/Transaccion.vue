@@ -11,7 +11,7 @@
                         </button>
                     </div>
                     <!-- Listado -->
-                    <template v-if="listado">
+                    <template v-if="listado==1">
                     <div class="card-body">
                         <div class="form-group row">
                             <div class="col-md-6">
@@ -31,12 +31,9 @@
                                 <tr>
                                     <th class="text-center">Cliente</th>
                                     <th class="text-center">Tipo de Transacción</th>
-                                    <th class="text-center">Observaciones</th>
                                     <th class="text-center">Fecha de Transacción</th>
-                                    <th class="text-center">Puntos de la Transacción</th>
                                     <th class="text-center">Valor Total de la Transacción</th>
                                     <th class="text-center">Forma de Pago</th>
-                                    <th class="text-center">Plazo de arriendo</th>
                                     <th class="text-center">Estado de Transacción</th>
                                     <th class="text-center">Visualizar</th>
                                 </tr>
@@ -45,15 +42,12 @@
                                 <tr v-for="transaccion in arrayTransacciones" :key="transaccion.idTransacciones">
                                     <td v-text="transaccion.nombreClientes"></td>
                                     <td v-text="transaccion.tipoTransacciones"></td>
-                                    <td v-text="transaccion.observacionTransacciones"></td>
                                     <td v-text="transaccion.fechaTransacciones"></td>
-                                    <td v-text="transaccion.puntosTransacciones"></td>
                                     <td v-text="transaccion.valorFinalTransacciones"></td>
                                     <td v-text="transaccion.formaPagoTransacciones"></td>
-                                    <td v-text="transaccion.plazoTransacciones"></td>
                                     <td v-text="transaccion.estadoTransacciones"></td>
                                     <td>
-                                        <button type="button" @click="abrirModal('transaccion', 'actualizar', transaccion)" class="btn btn-succes btn-sm btnvisualizar">
+                                        <button type="button" @click="verTransaccion(transaccion.idTransacciones)" class="btn btn-succes btn-sm btnvisualizar">
                                           <i class="icon-eye"></i>
                                         </button> &nbsp;
                                     </td>
@@ -81,7 +75,7 @@
                     <!-- Fin Listado -->
 
                     <!-- Detalle-->
-                    <template v-else>
+                    <template v-else-if="listado==0">
                     <div class="card-body">
                         <div class="form-group row border">
                             <div class="col-md-9">
@@ -137,9 +131,6 @@
                             <div class="col-md-12">
                                     <label for="">Observaciones</label>
                                      <input type="text" class="form-control" v-model="observacionTransacciones" placeholder="Ingrese su observación">
-                                </div>
-                            <div class="col-md-12">
-                                    <span>AQUI VAN LAS VALIDACIONES</span>
                                 </div>
                         </div>
                         <div class="form-group row border">
@@ -261,32 +252,120 @@
                     </div>
                     </template>
                     <!-- Fin Detalle-->
+                    <!-- Ver ingreso -->
+                    <template v-else-if="listado==2">
+                    <div class="card-body">
+                        <div class="form-group row border">
+                            <div class="col-md-9">
+                                <div class="form-group">
+                                    <label for="">Cliente</label>
+                                    <p v-text="nombreClientes"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="">Descuento</label>
+                                <p v-text="descuentoTransacciones">%</p>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Estado de Transaccion</label>
+                                    <p v-text="estadoTransacciones"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Tipo de Transacción</label>
+                                    <p v-text="tipoTransacciones"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Forma de Pago</label>
+                                    <p v-text="formaPagoTransacciones"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="">Observaciones</label>
+                                    <p v-text="observacionTransacciones"></p>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group row border">
+                            <div class="table-responsive col-md-12">
+                                <table class="table table-bordered table-striped table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Producto</th>
+                                            <th>Precio</th>
+                                            <th>Cantidad</th>
+                                            <th>Puntos</th>
+                                            <th>Subtotal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody v-if="arrayDetalles.length">
+                                        <tr v-for="detalle in arrayDetalles" :key="detalle.id">
+                                            <td v-text="detalle.nombreProductos">
+                                            </td>
+                                            <td v-text="detalle.precioProductos">
+                                            </td>
+                                            <td v-text="detalle.cantidadProductos">
+                                            </td>
+                                            <td v-text="detalle.puntosProductos">
+                                            </td>
+                                            <td>
+                                                {{detalle.precioProductos*detalle.cantidadProductos}}
+                                            </td>
+                                        </tr>
+                                        <tr style="background-color: #CEECF5">
+                                                <td colspan="4" align="right"> 
+                                                <strong>Total Parcial:</strong>
+                                                </td>
+                                                <td>${{totalParcial=(calcularTotal)}}</td>
+                                            </tr>
+                                            <tr style="background-color: #CEECF5">
+                                                <td colspan="4" align="right"> 
+                                                <strong>Total Descuento:</strong>
+                                                </td>
+                                                <td>$ {{totalDescuento=(totalParcial*(descuento/100)).toFixed(0)}}</td>
+                                            </tr>
+                                            <tr style="background-color: #CEECF5">
+                                                <td colspan="4" align="right"> 
+                                                <strong>Total Final:</strong>
+                                                </td>
+                                                <td>$ {{total=(calcularTotal-totalDescuento).toFixed(0)}}</td>
+                                            </tr>
+                                            <tr style="background-color: #CEECF5">
+                                                <td colspan="4" align="right"> 
+                                                <strong>Puntos totales:</strong>
+                                                </td>
+                                                <td>{{puntosTotales}}</td>
+                                            </tr>
+                                    </tbody>
+                                    <tbody v-else>
+                                        <tr>
+                                            <td colspan="5">
+                                              <center>  NO hay artículos agregados </center>
+                                            </td>
+                                        </tr>
+                                    </tbody>                                    
+                                </table>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <button type="button" @click="ocultarDetalle()" class="btn btn-secondary">Cerrar</button>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    </template>
+                    <!-- fin ver ingreso -->
                 </div>
                 <!-- Fin ejemplo de tabla Listado -->
             </div>
-            <!--Inicio del modal agregar/actualizar-->
-            <div class="modal fade" :class="{'mostrar' :modal}" role="dialog"  tabindex="-1" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-                <div class="modal-dialog modal-primary modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" v-text="tituloModal"></h4>
-                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
-                              <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                           
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" @click="cerrarModal()" >Cerrar</button>
-                            <button type="button" v-if="tipoAccion==1" class="btn btn-primary" @click="registrarTransaccion()" >Guardar</button>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </div>
-            <!--Fin del modal-->
+            
         </main>
 </template>
 <script src="https://unpkg.com/vue@latest"></script>
@@ -317,6 +396,7 @@ Vue.component('v-select', vSelect)
                 nombreClientes:'',
                 fechaTransacciones:'',
                 puntosTransacciones:'',
+                descuentoTransacciones:'',
                 valorFinalTransacciones:'',
                 precioNuevoProductos:'',
                 formaPagoTransacciones:0,
@@ -339,12 +419,8 @@ Vue.component('v-select', vSelect)
                 arrayPrecioStock:[],
                 producto:'',
                 puntosProductos:'',
-                modal : 0,
                 listado:1,
-                tituloModal : '',
-                tipoAccion : 0,
-                errorProducto : 0,
-                errorMsjProducto : [],
+                arrayTransaccionT:[],
                 cantidadPasajeraProductos:'',
                 precioPasajeroProductos:'',
                 puntosPasajeroProductos:'',
@@ -409,9 +485,7 @@ Vue.component('v-select', vSelect)
             },
             calcularPuntos: function(){
                 this.puntosPasajeroProductos=Number((this.precioPasajeroProductos*this.cantidadPasajeraProductos*0.01).toFixed(0));
-            },
-            
-            
+            }, 
         },
         methods:{
             listarTransaccion(page, buscar, criterio){
@@ -545,7 +619,7 @@ Vue.component('v-select', vSelect)
                     'data': this.arrayDetalles
                     }).then(function (response){
                         me.listado=1;
-                        me.listarTransaccion(1,'', 'idTransaccion');
+                        me.listarTransaccion(1,'', 'idTransacciones');
                         me.idClientes=0;
                         me.tipoTransacciones='';
                         me.observacionTransacciones='';
@@ -565,27 +639,6 @@ Vue.component('v-select', vSelect)
                     console.log(error.response.data.errors);
                 });
             },
-            actualizarProducto(){
-                if(this.validarProducto()){
-                    return;
-                }
-                let me=this;
-                axios.put('productos/actualizar',{
-                    'nombreProductos': this.nombreProductos,
-                    'idPlataformas': this.idPlataformas,
-                    'descripcionProductos': this.descripcionProductos,
-                    'stockProductos': this.stockProductos,
-                    'precioNuevoProductos': this.precioNuevoProductos,
-                    'precioUsadoProductos': this.precioUsadoProductos,
-                    'idProductos': this.idProductos,
-                    }).then(function (response){
-                        me.cerrarModal();
-                        me.listarProducto(1,'', 'nombre');
-                }).catch(function (error){
-                    console.log(error.response);
-                })
-            },
-
             mostrarDetalle(){
                 let me=this;
 
@@ -608,54 +661,49 @@ Vue.component('v-select', vSelect)
             },
             ocultarDetalle(){
                 this.listado=1;
+                this.totalParcial=0;
+                this.total=0;
+                this.totalDescuento=0;
             },
-            cerrarModal(){
-                this.modal=0;
-                this.tituloModal='';
-                this.nombreProductos='';
-                this.idPlataformas=0,
-                this.descripcionProductos='';
-                this.stockProductos='';
-                this.precioNuevoProductos='';
-                this.precioUsadoProductos='';
+            verTransaccion(idTransacciones){
+                let me=this;
+                me.listado=2;
+                
+                //Obtener los datos del ingreso
+                var arrayTransaccionT=[];
+                var url= '/transacciones/obtenerCabecera?idTransacciones=' + idTransacciones;
+                
+                axios.get(url).then(function (response) {
+                    var respuesta= response.data;
+                    arrayTransaccionT = respuesta.transacciones;
+
+                    me.nombreClientes = arrayTransaccionT[0]['nombreClientes'];
+                    me.descuentoTransacciones=arrayTransaccionT[0]['descuentoTransacciones'];
+                    me.estadoTransacciones=arrayTransaccionT[0]['estadoTransacciones'];
+                    me.tipoTransacciones=arrayTransaccionT[0]['tipoTransacciones'];
+                    me.formaPagoTransacciones=arrayTransaccionT[0]['formaPagoTransacciones'];
+                    me.observacionTransacciones=arrayTransaccionT[0]['observacionTransacciones'];
+                    me.puntosTransacciones=arrayTransaccionT[0]['puntosTransacciones'];
+                    me.valorFinalTransacciones=arrayTransaccionT[0]['valorFinalTransacciones'];
+
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+
+                //Obtener los datos de los detalles 
+                var urld= '/transacciones/obtenerDetalles?idTransacciones=' + idTransacciones;
+                
+                axios.get(urld).then(function (response) {
+                    console.log(response);
+                    var respuesta= response.data;
+                    me.arrayDetalles = respuesta.detalles;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });               
             },
-            abrirModal(modelo, accion, data = []){
-                switch(modelo){
-                    case "producto":
-                        {
-                        switch(accion){
-                            case 'registrar':{
-                                this.modal = 1;
-                                this.tituloModal = "Registrar Producto";
-                                this.idPlataformas=0;
-                                this.nombreProductos='';
-                                this.descripcionProductos='';
-                                this.stockProductos='';
-                                this.precioNuevoProductos='';
-                                this.precioUsadoProductos='';
-                                this.tipoAccion = 1;
-                                break;
-
-                            }
-                            case 'actualizar':{
-                                this.modal = 1;
-                                this.tipoAccion = 2;
-                                this.tituloModal = "Actualizar Producto";
-                                this.idProductos=data['idProductos'];
-                                this.idPlataformas=data['idPlataformas'];
-                                this.nombreProductos=data['nombreProductos'];
-                                this.descripcionProductos=data['descripcionProductos'];
-                                this.stockProductos=data['stockProductos'];
-                                this.precioNuevoProductos=data['precioNuevoProductos'];
-                                this.precioUsadoProductos=data['precioUsadoProductos'];
-                                break;
-
-                            }
-                        }
-                    }
-                }
-                //this.selectPlataformas();
-            }
+    
         },
         
         mounted() {

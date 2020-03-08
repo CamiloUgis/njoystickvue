@@ -141,5 +141,30 @@ class TransaccionController extends Controller
         return ['transacciones' => $transacciones];
 
     }
+    public function obtenerCabecera(Request $request){
+        if (!$request->ajax()) return redirect('/');
+
+        $idTransacciones = $request->idTransacciones;
+        $transacciones = Transaccion::join('clientes','transacciones.idClientes','=','clientes.idClientes')
+        ->select('transacciones.idTransacciones','transacciones.descuentoTransacciones','transacciones.estadoTransacciones','transacciones.tipoTransacciones',
+        'transacciones.formaPagoTransacciones','transacciones.fechaTransacciones','transacciones.valorFinalTransacciones',
+        'transacciones.observacionTransacciones','clientes.idClientes','clientes.nombreClientes')
+        ->where('transacciones.idTransacciones','=',$idTransacciones)
+        ->orderBy('transacciones.idTransacciones', 'desc')->take(1)->get();
+        
+        return ['transacciones' => $transacciones];
+    }
+    public function obtenerDetalles(Request $request){
+        if (!$request->ajax()) return redirect('/');
+
+        $idTransacciones = $request->idTransacciones;
+        $detalles = ProductoTransaccion::join('productos','producto_transaccion.idProductos','=','productos.idProductos')
+        ->select('producto_transaccion.precioProductos','producto_transaccion.cantidadProductos','producto_transaccion.puntosProductos',
+        'productos.nombreProductos', 'productos.idProductos')
+        ->where('producto_transaccion.idTransacciones','=',$idTransacciones)
+        ->orderBy('producto_transaccion.idTransacciones', 'desc')->get();
+        
+        return ['detalles' => $detalles];
+    }
 
 }

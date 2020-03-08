@@ -74,6 +74,8 @@ Route::get('/transacciones','TransaccionController@index');
 Route::post('/transacciones/registrar','TransaccionController@store');
 Route::put('/transacciones/actualizar', 'TransaccionController@update');
 Route::get('/transacciones/selectTransaccion','TransaccionController@selectTransaccion');
+Route::get('/transacciones/obtenerCabecera','TransaccionController@obtenerCabecera');
+Route::get('/transacciones/obtenerDetalles','TransaccionController@obtenerDetalles');
 
 
 

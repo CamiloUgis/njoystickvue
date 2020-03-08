@@ -80,6 +80,8 @@ class ProductoController extends Controller
             'stockProductos'=>'required|min:0',
             
         ]);
+        try{
+        DB::beginTransaction();
         $producto = new Producto();
         $producto->nombreProductos = $request->input('nombreProductos');
         $producto->descripcionProductos = $request->input('descripcionProductos');
@@ -87,6 +89,21 @@ class ProductoController extends Controller
         $producto->precioUsadoProductos = $request->input('precioUsadoProductos');
         $producto->stockProductos = $request->input('stockProductos');
         $producto->idPlataformas = $request->input('idPlataformas');
+        $producto->save();
+        DB::commit();
+
+        $pivote = $request->data;
+     
+            foreach($pivote as $ep=>$det){
+                $ep = new GeneroProducto();  
+                $ep->idProductos = $producto->idProductos;
+                $ep->idGeneros = $det['idGeneros'];
+                $ep->save();
+            }
+            DB::commit();
+        }catch(Exception $e){
+            DB::rollback();
+        }
         $producto->save();    
     }
     public function update(Request $request)
@@ -110,25 +127,6 @@ class ProductoController extends Controller
         $producto->stockUsadoProductos = $request->input('stockProductos');
         $producto->save();
     }
-    public function asociar(Request $request)
-    {
-        if(!$request->ajax()) return redirect('/');
-        try{
-            DB::beginTransaction();
-            $pivote = $request->data;
-     
-            foreach($pivote as $ep=>$det){
-                $gp = new GeneroProducto();  
-                $gp->idProductos = $request->input('idProductos');
-                $gp->idGeneros = $det['idGeneros'];
-                $gp->save();
-            }
-            DB::commit();
-        }catch(Exception $e){
-            DB::rollback();
-        }
-    }
-
     public function transaccionProducto(Request $request){
         if(!$request->ajax()) return redirect('/');
         $filtro = $request->filtro;

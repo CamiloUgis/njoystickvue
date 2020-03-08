@@ -34,7 +34,6 @@
                                     <th class="text-center">Precio Nuevo</th>
                                     <th class="text-center">Precio Usado</th>
                                     <th class="text-center">Modificar</th>
-                                    <th class="text-center">Asociar Género</th>
 
                                 </tr>
                             </thead>
@@ -48,11 +47,6 @@
                                     <td v-text="producto.precioUsadoProductos"></td>
                                     <td>
                                         <button type="button" @click="abrirModal('producto', 'actualizar', producto)" class="btn btn-warning btn-sm">
-                                          <i class="icon-pencil"></i>
-                                        </button> &nbsp;
-                                    </td>
-                                    <td>
-                                        <button type="button" @click="abrirModal('producto', 'asociar', producto)" class="btn btn-warning btn-sm">
                                           <i class="icon-pencil"></i>
                                         </button> &nbsp;
                                     </td>
@@ -115,11 +109,6 @@
                                         </select>
                                     </div>
                                 </div>
-
-                     
-                                
-                                
-
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="number-input">Stock</label>
                                     <div class="col-md-9">
@@ -138,31 +127,6 @@
                                         <input type="number" v-model="precioUsadoProductos" name="preciousado" class="form-control" placeholder="Precio de juego usado">
                                     </div>
                                 </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" @click="cerrarModal()" >Cerrar</button>
-                            <button type="button" v-if="tipoAccion==1" class="btn btn-primary" @click="registrarProducto()" >Guardar</button>
-                            <button type="button" v-if="tipoAccion==2" class="btn btn-primary" @click="actualizarProducto()">Actualizar</button>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </div>
-            </div>
-            <div v-if="tipoAccion==3">
-                <div class="modal fade" :class="{'mostrar' :modal}" role="dialog"  tabindex="-1" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-                <div class="modal-dialog modal-primary modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" v-text="tituloModal"></h4>
-                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
-                              <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
                                 <div class="form-group row">
                                     <label class="col-md-3 typo__label">Géneros</label>
                                     <div class="col-md-9">
@@ -176,7 +140,8 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" @click="cerrarModal()" >Cerrar</button>
-                            <button type="button" v-if="tipoAccion==3" class="btn btn-primary" @click="asociarGenero()">Asociar Género</button>
+                            <button type="button" v-if="tipoAccion==1" class="btn btn-primary" @click="registrarProducto()" >Guardar</button>
+                            <button type="button" v-if="tipoAccion==2" class="btn btn-primary" @click="actualizarProducto()">Actualizar</button>
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -310,6 +275,7 @@ import Multiselect from 'vue-multiselect'
                     'stockProductos': this.stockProductos,
                     'precioNuevoProductos': this.precioNuevoProductos,
                     'precioUsadoProductos': this.precioUsadoProductos,
+                    'data': me.arrayGenerosSeleccionados 
                     }).then(function (response){
                         me.cerrarModal();
                         me.listarProducto(1,'', 'nombre');
@@ -337,20 +303,6 @@ import Multiselect from 'vue-multiselect'
                         me.listarProducto(1,'', 'nombre');
                 }).catch(function (error){
                     console.log(error.response);
-                })
-            },
-            asociarGenero(){
-                let me=this;
-                axios.post('productos/asociarGenero',{
-                    'idProductos': me.idProductos,
-                    'data': me.arrayGenerosSeleccionados                    
-                    }).then(function (response){
-                        me.cerrarModal();
-                        me.listarProducto(1,'', 'nombre');
-                }).catch(error=>{
-                    if(error.response.status == 422){
-                        this.errors = error.response.data.errors
-                    }
                 })
             },
             //  validarProducto(){
@@ -407,14 +359,7 @@ import Multiselect from 'vue-multiselect'
                                 break;
 
                             }
-                            case 'asociar':{
-                                this.modal = 1;
-                                this.tipoAccion = 3;
-                                this.tituloModal = "Asociar Géneros";
-                                this.idProductos=data['idProductos'];
-                                this.arrayGenerosSeleccionados=data['arrayGenerosSeleccionados'];                                
-                                break;
-                            }
+
                         }
                     }
                 }
