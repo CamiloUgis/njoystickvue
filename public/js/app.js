@@ -55606,7 +55606,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.modal-content{\n    width: 100% !important;\n    position: absolute !important;\n}\n.mostrar{\n    display: list-item !important;\n    opacity: 1 !important;\n    position: absolute !important;\n    background-color: #3c29297a !important;\n}\n.div-error{\n    display: flex;\n    justify-content: center;\n}\n.text-error{\n    color: red !important;\n    font-weight: bold;\n}\n@media (min-width:600px){\n.btnagregar{\n        margin-top: 2rem;\n        background-color: #40c36e;\n        width: 100px;\n}\n.btnvisualizar{\n        background-color: #20a8d8;\n        border-radius: 15px;\n}\n}\n", ""]);
+exports.push([module.i, "\n.modal-content{\n    width: 100% !important;\n    position: absolute !important;\n}\n.mostrar{\n    display: list-item !important;\n    opacity: 1 !important;\n    position: absolute !important;\n    background-color: #3c29297a !important;\n}\n.div-error{\n    display: flex;\n    justify-content: center;\n}\n.text-error{\n    color: red !important;\n    font-weight: bold;\n}\n@media (min-width:600px){\n.btnagregar{\n        background-color: #40c36e;\n        width: 100px;\n}\n.btnvisualizar{\n        background-color: #20a8d8;\n        border-radius: 15px;\n}\n}\n", ""]);
 
 // exports
 
@@ -55625,6 +55625,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_sweetalert2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_sweetalert2__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
 //
 //
 //
@@ -56190,6 +56192,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
             me.precioNuevoProductos = val1.precioNuevoProductos;
             me.precioUsadoProductos = val1.precioUsadoProductos;
             me.stockProductos = val1.stockProductos;
+            me.precioPasajeroProductos = val1.precioNuevoProductos;
         },
         registrarTransaccion: function registrarTransaccion() {
 
@@ -56921,8 +56924,10 @@ var render = function() {
                         ],
                         1
                       )
-                    ]),
-                    _vm._v(" "),
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group row border" }, [
                     _c("div", { staticClass: "col-md-2" }, [
                       _c("label", [
                         _vm._v("Precio "),
@@ -57009,38 +57014,45 @@ var render = function() {
                       })
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-md-3" }, [
-                      _c("label", [_vm._v("Puntos por Producto")]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.puntosPasajeroProductos,
-                            expression: "puntosPasajeroProductos"
-                          }
-                        ],
-                        attrs: { disabled: "" },
-                        domProps: { value: _vm.puntosPasajeroProductos },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
+                    _c(
+                      "div",
+                      {
+                        staticClass: "col-md-4",
+                        staticStyle: { "margin-top": "30px" }
+                      },
+                      [
+                        _c("label", [_vm._v("Puntos por Producto")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.puntosPasajeroProductos,
+                              expression: "puntosPasajeroProductos"
                             }
-                            _vm.puntosPasajeroProductos = $event.target.value
+                          ],
+                          attrs: { disabled: "" },
+                          domProps: { value: _vm.puntosPasajeroProductos },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.puntosPasajeroProductos = $event.target.value
+                            }
                           }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(_vm.calcularPuntos))])
-                    ]),
+                        }),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(_vm.calcularPuntos))])
+                      ]
+                    ),
                     _vm._v(" "),
                     _c(
                       "div",
                       {
-                        staticClass: "col-md-9",
-                        staticStyle: { "margin-top": "-40px" }
+                        staticClass: "col-md-3",
+                        staticStyle: { "margin-top": "25px" }
                       },
                       [
                         _c("div", { staticClass: "form-group" }, [

@@ -131,7 +131,7 @@
                             <div class="col-md-12">
                                     <label for="">Observaciones</label>
                                      <input type="text" class="form-control" v-model="observacionTransacciones" placeholder="Ingrese su observación">
-                                </div>
+                            </div>
                         </div>
                         <div class="form-group row border">
                             <div class="col-md-6">
@@ -147,6 +147,8 @@
                                     </v-select>
                                 </div>
                             </div>
+                        </div>
+                        <div class="form-group row border">
                             <div class="col-md-2">
                                     <label>Precio <span style="color:red;" v-show="precioPasajeroProductos==0" >(Ingrese*)</span></label>
                                     <input type="number" value="0" class="form-control" v-model="precioPasajeroProductos">
@@ -155,12 +157,12 @@
                                     <label>Cantidad<span style="color:red;" v-show="cantidadPasajeraProductos==0" >(Ingrese*) </span></label>
                                     <input type="number" value="0" class="form-control" v-model="cantidadPasajeraProductos">
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4" style="margin-top: 30px;">
                                     <label>Puntos por Producto</label>
                                     <input v-model="puntosPasajeroProductos" disabled>
                                     <td>{{calcularPuntos}}</td>
                             </div>
-                            <div class="col-md-9" style="margin-top:-40px;">
+                            <div class="col-md-3" style="margin-top:25px">
                                 <div class="form-group">
                                     <button @click="agregarDetalle" class="btn btn-succes form-control btnagregar float-right"><i class="icon-plus"></i></button>
                                 </div>
@@ -601,6 +603,7 @@ Vue.component('v-select', vSelect)
                 me.precioNuevoProductos= val1.precioNuevoProductos;
                 me.precioUsadoProductos=val1.precioUsadoProductos;
                 me.stockProductos=val1.stockProductos;
+                me.precioPasajeroProductos=val1.precioNuevoProductos;
             },
             
             registrarTransaccion(){
@@ -734,7 +737,6 @@ Vue.component('v-select', vSelect)
     }
     @media (min-width:600px){
         .btnagregar{
-            margin-top: 2rem;
             background-color: #40c36e;
             width: 100px;
         }
