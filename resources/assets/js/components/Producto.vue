@@ -30,6 +30,7 @@
                                     <th class="text-center">Nombre</th>
                                     <th class="text-center">Descripción</th>
                                     <th class="text-center">Plataforma</th>
+                                    <th class="text-center">Género(s)</th>
                                     <th class="text-center">Stock</th>
                                     <th class="text-center">Precio Nuevo</th>
                                     <th class="text-center">Precio Usado</th>
@@ -40,7 +41,9 @@
                             <tbody class="text-center">
                                 <tr v-for="producto in arrayProductos" :key="producto.idProductos">
                                     <td v-text="producto.nombreProductos"></td>
-                                    <td v-text="producto.descripcionProductos"></td>
+                                    <tr v-for="genero in listaGeneros" :key="genero.idGeneros">
+                                    <td v-text="listaGeneros.nombreGeneros"></td>
+                                    <!-- <td v-text="producto.descripcionProductos"></td> -->
                                     <td v-text="producto.nombrePlataformas"></td>
                                     <td v-text="producto.stockProductos"></td>
                                     <td v-text="producto.precioNuevoProductos"></td>
@@ -98,6 +101,7 @@
                                         <input type="text" v-model="descripcionProductos" name="descripcion" class="form-control" placeholder="Descripción de producto">
                                     </div>
                                 </div>
+                               
 
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="number-input">Plataforma</label>
@@ -171,6 +175,7 @@ import Multiselect from 'vue-multiselect'
                 precioNuevoProductos:'',
                 precioUsadoProductos:'',
                 arrayProductos:[],
+                listaGeneros:[],
                 modal : 0,
                 tituloModal : '',
                 tipoAccion : 0,
@@ -222,6 +227,19 @@ import Multiselect from 'vue-multiselect'
             }
         },
         methods:{
+            muestraGeneros(idProductos){
+                let me=this;
+                var url= '/productos/muestraGeneros?filtro='+idProductos;
+                axios.get(url).then(function (response){
+                    console.log(response.data);
+                    var respuesta = response.data;
+                    me.listaGeneros = respuesta.generos;
+                })
+                .catch(function (error){
+                    console.log(error.response);
+                })
+
+            },
             listarProducto(page, buscar, criterio){
                 let me=this;
                 var url= '/productos?page='+page + '&buscar='+ buscar + '&criterio=' + criterio;

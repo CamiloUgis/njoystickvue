@@ -51470,6 +51470,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___default.a);
@@ -51488,6 +51492,7 @@ Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
             precioNuevoProductos: '',
             precioUsadoProductos: '',
             arrayProductos: [],
+            listaGeneros: [],
             modal: 0,
             tituloModal: '',
             tipoAccion: 0,
@@ -51539,6 +51544,17 @@ Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
         }
     },
     methods: {
+        muestraGeneros: function muestraGeneros(idProductos) {
+            var me = this;
+            var url = '/productos/muestraGeneros?filtro=' + idProductos;
+            axios.get(url).then(function (response) {
+                console.log(response.data);
+                var respuesta = response.data;
+                me.listaGeneros = respuesta.generos;
+            }).catch(function (error) {
+                console.log(error.response);
+            });
+        },
         listarProducto: function listarProducto(page, buscar, criterio) {
             var me = this;
             var url = '/productos?page=' + page + '&buscar=' + buscar + '&criterio=' + criterio;
@@ -51831,67 +51847,76 @@ var render = function() {
                 _c(
                   "tbody",
                   { staticClass: "text-center" },
-                  _vm._l(_vm.arrayProductos, function(producto) {
-                    return _c("tr", { key: producto.idProductos }, [
-                      _c("td", {
-                        domProps: {
-                          textContent: _vm._s(producto.nombreProductos)
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("td", {
-                        domProps: {
-                          textContent: _vm._s(producto.descripcionProductos)
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("td", {
-                        domProps: {
-                          textContent: _vm._s(producto.nombrePlataformas)
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("td", {
-                        domProps: {
-                          textContent: _vm._s(producto.stockProductos)
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("td", {
-                        domProps: {
-                          textContent: _vm._s(producto.precioNuevoProductos)
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("td", {
-                        domProps: {
-                          textContent: _vm._s(producto.precioUsadoProductos)
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-warning btn-sm",
-                            attrs: { type: "button" },
-                            on: {
-                              click: function($event) {
-                                return _vm.abrirModal(
-                                  "producto",
-                                  "actualizar",
-                                  producto
-                                )
-                              }
-                            }
-                          },
-                          [_c("i", { staticClass: "icon-pencil" })]
-                        ),
-                        _vm._v("  \n                               ")
+                  [
+                    _vm._l(_vm.arrayProductos, function(producto) {
+                      return _c("tr", { key: producto.idProductos }, [
+                        _c("td", {
+                          domProps: {
+                            textContent: _vm._s(producto.nombreProductos)
+                          }
+                        })
                       ])
-                    ])
-                  }),
-                  0
+                    }),
+                    _vm._l(_vm.listaGeneros, function(genero) {
+                      return _c("tr", { key: genero.idGeneros }, [
+                        _c("td", {
+                          domProps: {
+                            textContent: _vm._s(_vm.listaGeneros.nombreGeneros)
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("td", {
+                          domProps: {
+                            textContent: _vm._s(_vm.producto.nombrePlataformas)
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("td", {
+                          domProps: {
+                            textContent: _vm._s(_vm.producto.stockProductos)
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("td", {
+                          domProps: {
+                            textContent: _vm._s(
+                              _vm.producto.precioNuevoProductos
+                            )
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("td", {
+                          domProps: {
+                            textContent: _vm._s(
+                              _vm.producto.precioUsadoProductos
+                            )
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-warning btn-sm",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.abrirModal(
+                                    "producto",
+                                    "actualizar",
+                                    _vm.producto
+                                  )
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "icon-pencil" })]
+                          ),
+                          _vm._v("  \n                               ")
+                        ])
+                      ])
+                    })
+                  ],
+                  2
                 )
               ]
             )
@@ -52413,6 +52438,8 @@ var staticRenderFns = [
         _c("th", { staticClass: "text-center" }, [_vm._v("Descripción")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [_vm._v("Plataforma")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center" }, [_vm._v("Género(s)")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [_vm._v("Stock")]),
         _vm._v(" "),
