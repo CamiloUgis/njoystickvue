@@ -146,12 +146,10 @@ class ProductoController extends Controller
     }
     public function muestraGeneros(Request $request){
          //if(!$request->ajax()) return redirect('/');
-        $filtro = $request->filtro;
-         $generos = Producto::where('idProductos', 'like', '%'. $filtro. '%')
-         ->join('genero_producto', 'productos.idProductos', '=', 'genero_producto.idProductos')
+         $generos = Producto::join('genero_producto', 'productos.idProductos', '=', 'genero_producto.idProductos')
          ->join('generos', 'genero_producto.idGeneros', '=', 'generos.idGeneros')
-         ->select('nombreGeneros')
-         ->orderBy('generos.nombreGeneros', 'asc')->get();
+         ->select('genero_producto.idProductos','generos.nombreGeneros')
+         ->orderBy('genero_producto.idProductos', 'asc')->get();
          
          
          return ['generos'=> $generos];

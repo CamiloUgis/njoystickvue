@@ -45,6 +45,7 @@ Route::post('/productos/asociarGenero','ProductoController@asociar');
 Route::get('/productos/buscarProducto','ProductoController@buscarProducto');
 Route::get('/productos/transaccionProducto','ProductoController@transaccionProducto');
 Route::get('/productos/selectProducto','ProductoController@selectProducto');
+Route::get('/productos/muestraGeneros','ProductoController@muestraGeneros');
 
 
 

@@ -28,7 +28,7 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">Nombre</th>
-                                    <th class="text-center">Descripción</th>
+                                  <!--  <th class="text-center">Descripción</th>-->
                                     <th class="text-center">Plataforma</th>
                                     <th class="text-center">Género(s)</th>
                                     <th class="text-center">Stock</th>
@@ -36,15 +36,18 @@
                                     <th class="text-center">Precio Usado</th>
                                     <th class="text-center">Modificar</th>
 
+
                                 </tr>
                             </thead>
                             <tbody class="text-center">
                                 <tr v-for="producto in arrayProductos" :key="producto.idProductos">
                                     <td v-text="producto.nombreProductos"></td>
-                                    <tr v-for="genero in listaGeneros" :key="genero.idGeneros">
-                                    <td v-text="listaGeneros.nombreGeneros"></td>
                                     <!-- <td v-text="producto.descripcionProductos"></td> -->
                                     <td v-text="producto.nombrePlataformas"></td>
+                                    <td v-if="producto.idProductos==listaGeneros.idProductos">
+                                        {{listaGeneros.nombreGeneros}}
+                                    </td>
+                                    <td v-else>No posee géneros asociados</td>
                                     <td v-text="producto.stockProductos"></td>
                                     <td v-text="producto.precioNuevoProductos"></td>
                                     <td v-text="producto.precioUsadoProductos"></td>
@@ -194,9 +197,7 @@ import Multiselect from 'vue-multiselect'
                 buscar : '',
                 arrayPlataformas:[],
                 arrayGeneros:[],
-                arrayGenerosSeleccionados:[]
-                
-
+                arrayGenerosSeleccionados:[],          
             }
         },
         
@@ -227,18 +228,16 @@ import Multiselect from 'vue-multiselect'
             }
         },
         methods:{
-            muestraGeneros(idProductos){
+            muestraGeneros(){
                 let me=this;
-                var url= '/productos/muestraGeneros?filtro='+idProductos;
+                var url= '/productos/muestraGeneros';
                 axios.get(url).then(function (response){
-                    console.log(response.data);
                     var respuesta = response.data;
                     me.listaGeneros = respuesta.generos;
                 })
                 .catch(function (error){
                     console.log(error.response);
                 })
-
             },
             listarProducto(page, buscar, criterio){
                 let me=this;
@@ -247,6 +246,9 @@ import Multiselect from 'vue-multiselect'
                     var respuesta = response.data;
                     me.arrayProductos = respuesta.productos.data;
                     me.pagination=respuesta.pagination;
+                    me.muestraGeneros();
+                    me.idProductos=arrayProductos.idProductos;
+
                 })
                 .catch(function (error){
                     console.log(error.response);
