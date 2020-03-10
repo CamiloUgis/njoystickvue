@@ -234,6 +234,9 @@ import Multiselect from 'vue-multiselect'
                 axios.get(url).then(function (response){
                     var respuesta = response.data;
                     me.listaGeneros = respuesta.generos;
+                    for(var i=0;i<listaGeneros.length;i++){
+                        
+                    }
                 })
                 .catch(function (error){
                     console.log(error.response);
@@ -247,8 +250,6 @@ import Multiselect from 'vue-multiselect'
                     me.arrayProductos = respuesta.productos.data;
                     me.pagination=respuesta.pagination;
                     me.muestraGeneros();
-                    me.idProductos=arrayProductos.idProductos;
-
                 })
                 .catch(function (error){
                     console.log(error.response);
