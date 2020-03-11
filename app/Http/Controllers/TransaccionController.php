@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Transaccion;
+use App\Socio;
 use App\Cliente;
 use App\Producto;
 use App\ProductoTransaccion;
@@ -89,6 +90,11 @@ class TransaccionController extends Controller
             $transaccion->idClientes = $request->input('idClientes');
             $transaccion->save();
             DB::commit();
+            //agregar puntos
+            $socio=Socio::where('idClientes', '=', $request->input('idClientes'));
+            $invitador=Socio::where('idClientes', '=', $socio->Socios_idClientes)->first();
+            $socio->increment('puntosPropiosSocios',$request->input('puntosTransacciones'));
+            $invitador->increment('puntosReferidosSocios',($request->input('puntosTransacciones')/2));
             $pivote = $request->data;
 
             foreach($pivote as $ep=>$det){
