@@ -118,6 +118,8 @@ class ProductoController extends Controller
             'stockProductos'=>'required|min:0',
             
         ]);
+        try{
+        DB::beginTransaction();
         $producto = Producto::findOrFail($request->idProductos);
         $producto->nombreProductos = $request->input('nombreProductos');
         $producto->idPlataformas = $request->input('idPlataformas');
@@ -125,7 +127,21 @@ class ProductoController extends Controller
         $producto->precioNuevoProductos = $request->input('precioNuevoProductos');
         $producto->precioUsadoProductos = $request->input('precioUsadoProductos');
         $producto->stockProductos = $request->input('stockProductos');
-        $producto->save();
+        DB::commit();
+
+        $pivote = $request->data;
+     
+            foreach($pivote as $ep=>$det){
+                $ep = new GeneroProducto();  
+                $ep->idProductos = $producto->idProductos;
+                $ep->idGeneros = $det['idGeneros'];
+                $ep->save();
+            }
+            DB::commit();
+        }catch(Exception $e){
+            DB::rollback();
+        }
+        $producto->save();    
     }
     public function transaccionProducto(Request $request){
         if(!$request->ajax()) return redirect('/');

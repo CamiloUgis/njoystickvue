@@ -93,8 +93,8 @@ class TransaccionController extends Controller
             //agregar puntos
             $socio=Socio::where('idClientes', '=', $request->input('idClientes'));
             $socio->increment('puntosPropiosSocios',$request->input('puntosTransacciones'));
-           
-            $invitador=Socio::where('idClientes', $socio->invitador)->first();
+            $idInvitador=$socio->invitador;
+            $invitador=Socio::where('idClientes', $idInvitador)->first();
             $invitador->increment('puntosReferidosSocios',($request->input('puntosTransacciones')/2));
 
             $pivote = $request->data;
