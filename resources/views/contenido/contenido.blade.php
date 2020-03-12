@@ -36,5 +36,14 @@
       <!-- <template v-if="menu==8">
        <usuarios></usuarios>
        </template> -->
+       <template v-if="menu==9">
+       <ventas></ventas>
+       </template>
+       <template v-if="menu==10">
+       <arriendos></arriendos>
+       </template>
+       <template v-if="menu==11">
+       <cambios></cambios>
+       </template>
 
     @endsection

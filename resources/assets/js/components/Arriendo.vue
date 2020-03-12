@@ -5,10 +5,10 @@
                 <!-- Ejemplo de tabla Listado -->
                 <div class="card">
                     <div class="card-header">
-                        <i class="fa fa-align-justify"></i> Transacciones
-                       <!-- <button type="button" @click="mostrarDetalle()" class="btn btn-secondary">
+                        <i class="fa fa-align-justify"></i> Arriendos
+                        <button type="button" @click="mostrarDetalle()" class="btn btn-secondary">
                             <i class="icon-plus"></i>&nbsp;Nuevo
-                        </button> -->
+                        </button>
                     </div>
                     <!-- Listado -->
                     <template v-if="listado==1">
@@ -247,7 +247,7 @@
                         <div class="form-group row">
                             <div class="col-md-12">
                                 <button type="button" @click="ocultarDetalle()" class="btn btn-secondary">Cerrar</button>
-                                <button type="button" class="btn btn-primary" @click="registrarTransaccion()">Registrar Transacción</button>
+                                <button type="button" class="btn btn-primary" @click="registrarTransaccion()">Registrar Arriendo</button>
                             </div>
 
                         </div>

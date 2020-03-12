@@ -2,14 +2,29 @@
             <nav class="sidebar-nav">
                 <ul class="nav">
                 <li class="nav-title">
-                        NAVEGACIÓN
+                     NAVEGACIÓN
                     </li>
                     <li @click="menu=0" class="nav-item">
                         <a class="nav-link active" href="main.html"><i class="icon-home"></i>Inicio</a>
                     </li>
-                    <li @click="menu=3" class="nav-item">
-                                <a class="nav-link" href="i#"><i class="icon-basket-loaded"></i>Transacciones</a>
+                    <li class="nav-item nav-dropdown">
+                        <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-basket-loaded"></i>Control de Transacciones</a>
+                            <ul class="nav-dropdown-items">
+                                <li @click="menu=3" class="nav-item">
+                                    <a class="nav-link" href="i#"><i class="icon-basket-loaded"></i>Transacciones</a>
+                                </li>
+                                <li @click="menu=9" class="nav-item">
+                                    <a class="nav-link" href="i#"><i class="icon-basket-loaded"></i>Ventas</a>
+                                </li>
+                                <li @click="menu=10" class="nav-item">
+                                    <a class="nav-link" href="i#"><i class="icon-basket-loaded"></i>Arriendo</a>
+                                </li>
+                                <li @click="menu=11" class="nav-item">
+                                    <a class="nav-link" href="i#"><i class="icon-basket-loaded"></i>Cambio</a>
+                                </li>
+                            </ul>
                     </li>
+                    
                     <li @click="menu=2" class="nav-item">
                                 <a class="nav-link" href="#"><i class="icon-user-following"></i>Listado de Socios</a>
                     </li>

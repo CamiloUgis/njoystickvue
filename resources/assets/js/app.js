@@ -23,6 +23,10 @@ Vue.component('usuarios', require('./components/Usuario.vue'));
 Vue.component('socios', require('./components/Socio.vue'));
 Vue.component('transacciones', require('./components/Transaccion.vue'));
 Vue.component('reservas', require('./components/Reserva.vue'));
+Vue.component('ventas', require('./components/Venta.vue'));
+Vue.component('arriendos', require('./components/Arriendo.vue'));
+Vue.component('cambios', require('./components/Cambio.vue'));
+
 
 import Vuelidate from 'vuelidate'
 Vue.use(Vuelidate)
