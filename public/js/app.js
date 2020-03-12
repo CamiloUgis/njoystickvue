@@ -51626,9 +51626,7 @@ Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
             });
         },
         actualizarProducto: function actualizarProducto() {
-            if (this.validarProducto()) {
-                return;
-            }
+
             var me = this;
             axios.put('productos/actualizar', {
                 'nombreProductos': this.nombreProductos,

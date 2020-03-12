@@ -307,9 +307,7 @@ import Multiselect from 'vue-multiselect'
                 })
             },
             actualizarProducto(){
-                if(this.validarProducto()){
-                    return;
-                }
+              
                 let me=this;
                 axios.put('productos/actualizar',{
                     'nombreProductos': this.nombreProductos,

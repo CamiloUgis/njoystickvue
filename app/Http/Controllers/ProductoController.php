@@ -111,7 +111,7 @@ class ProductoController extends Controller
 
         if(!$request->ajax()) return redirect('/');
         $validar= $request->validate([
-            'nombreProductos'=>'required|unique:productos,nombreProductos',
+            'nombreProductos'=>'required',
             'descripcionProductos'=>'required',
             'precioNuevoProductos'=>'required|min:0',
             'precioUsadoProductos'=>'required|min:0',
@@ -124,7 +124,7 @@ class ProductoController extends Controller
         $producto->descripcionProductos = $request->input('descripcionProductos');
         $producto->precioNuevoProductos = $request->input('precioNuevoProductos');
         $producto->precioUsadoProductos = $request->input('precioUsadoProductos');
-        $producto->stockUsadoProductos = $request->input('stockProductos');
+        $producto->stockProductos = $request->input('stockProductos');
         $producto->save();
     }
     public function transaccionProducto(Request $request){
