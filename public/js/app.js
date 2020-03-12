@@ -50898,6 +50898,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     },
     methods: {
+        verProductos: function verProductos() {
+            var me = this;
+            var url = '/productos';
+        },
         listarProducto: function listarProducto() {
             var me = this;
             var url = '/productos/selectProducto';
@@ -50981,7 +50985,24 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _vm._m(1)
+          _c(
+            "div",
+            {
+              staticClass: "card-footer text-center",
+              staticStyle: { "background-color": "#66CCFF" }
+            },
+            [
+              _vm._v("\n            Ver "),
+              _c("i", {
+                staticClass: "fa fa-arrow-circle-right",
+                on: {
+                  click: function($event) {
+                    return _vm.verProductos()
+                  }
+                }
+              })
+            ]
+          )
         ])
       ]),
       _vm._v(" "),
@@ -50994,7 +51015,7 @@ var render = function() {
               staticStyle: { "background-color": "#e5e5e4" }
             },
             [
-              _vm._m(2),
+              _vm._m(1),
               _vm._v(" "),
               _c("div", { staticClass: "h4 mb-0" }, [
                 _vm._v(_vm._s(_vm.arrayTransacciones.length))
@@ -51008,7 +51029,7 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _vm._m(3)
+          _vm._m(2)
         ])
       ]),
       _vm._v(" "),
@@ -51021,7 +51042,7 @@ var render = function() {
               staticStyle: { "background-color": "#e5e5e4" }
             },
             [
-              _vm._m(4),
+              _vm._m(3),
               _vm._v(" "),
               _c("div", { staticClass: "h4 mb-0" }, [
                 _vm._v(_vm._s(_vm.arrayClientes.length))
@@ -51035,7 +51056,7 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _vm._m(5)
+          _vm._m(4)
         ])
       ]),
       _vm._v(" "),
@@ -51048,7 +51069,7 @@ var render = function() {
               staticStyle: { "background-color": "#e5e5e4" }
             },
             [
-              _vm._m(6),
+              _vm._m(5),
               _vm._v(" "),
               _c("div", { staticClass: "h4 mb-0" }, [
                 _vm._v(_vm._s(_vm.calcularPorcentaje) + "%")
@@ -51062,7 +51083,7 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _vm._m(7)
+          _vm._m(6)
         ])
       ])
     ])
@@ -51076,22 +51097,6 @@ var staticRenderFns = [
     return _c("div", { staticClass: "h1 text-muted text-right mb-2" }, [
       _c("i", { staticClass: "icon-game-controller" })
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "card-footer text-center",
-        staticStyle: { "background-color": "#66CCFF" }
-      },
-      [
-        _vm._v("\n            Ver "),
-        _c("i", { staticClass: "fa fa-arrow-circle-right" })
-      ]
-    )
   },
   function() {
     var _vm = this
@@ -54574,6 +54579,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -54583,7 +54589,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             puntosPropiosSocios: '',
             puntosReferidosSocios: '',
             estadoSocios: '',
-            Socio_idClientes: 0,
+            invitador: 0,
             arraySocios: [],
             arrayClientes: [],
             arrayReferidos: [],
@@ -54689,7 +54695,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var me = this;
             axios.post('socios/registrar', {
                 'idClientes': this.idClientes,
-                'Socio_idClientes': this.Socio_idClientes
+                'invitador': this.invitador
 
             }).then(function (response) {
                 me.cerrarModal();
@@ -54708,7 +54714,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var me = this;
             axios.put('clientes/actualizar', {
                 'idClientes': this.idClientes,
-                'Socio_idClientes': this.Socio_idClientes
+                'invitador': this.invitador
             }).then(function (response) {
                 me.cerrarModal();
                 me.listarCliente(1, '', 'nombre');
@@ -54739,7 +54745,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                                     this.modal = 1;
                                     this.tituloModal = "Registrar Nuevo Socio";
                                     this.idClientes = 0;
-                                    this.Socio_idClientes = 0;
+                                    this.invitador = 0;
                                     this.tipoAccion = 1;
                                     break;
                                 }
@@ -54749,7 +54755,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                                     this.tipoAccion = 2;
                                     this.tituloModal = "Modificar Socio";
                                     this.idClientes = data['idClientes'];
-                                    this.Socio_idClientes = data['Socio_idClientes'];
+                                    this.invitador = data['invitador'];
                                     this.estadoSocios = data['estadoSocios'];
 
                                     break;
@@ -54997,7 +55003,13 @@ var render = function() {
                                 _vm._v(
                                   "  \n                                   "
                                 )
-                              ])
+                              ]),
+                              _vm._v(" "),
+                              _c("td", {
+                                domProps: {
+                                  textContent: _vm._s(socio.invitador)
+                                }
+                              })
                             ])
                           }),
                           0
@@ -55335,8 +55347,8 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.Socio_idClientes,
-                                expression: "Socio_idClientes"
+                                value: _vm.invitador,
+                                expression: "invitador"
                               }
                             ],
                             staticClass: "form-control",
@@ -55350,7 +55362,7 @@ var render = function() {
                                     var val = "_value" in o ? o._value : o.value
                                     return val
                                   })
-                                _vm.Socio_idClientes = $event.target.multiple
+                                _vm.invitador = $event.target.multiple
                                   ? $$selectedVal
                                   : $$selectedVal[0]
                               }

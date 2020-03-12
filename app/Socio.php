@@ -11,7 +11,7 @@ class Socio extends Model
    
     protected $fillable=['idClientes',
     'estadoSocios',
-    'Socio_idClientes',
+    'invitador',
     'puntosReferidosSocios',
     'puntosPropiosSocios'
     ];

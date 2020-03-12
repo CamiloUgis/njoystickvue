@@ -55,7 +55,7 @@ class SocioController extends Controller
         if(!$request->ajax()) return redirect('/');
         $socio = new Socio();
         $socio->idClientes=$request->input('idClientes');
-        $socio->Socio_idClientes=$request->input('Socio_idClientes');
+        $socio->invitador=$request->input('invitador');
         $socio->estadoSocios= 1;
         $socio->puntosPropiosSocios = 0;
         $socio->puntosReferidosSocios = 0;
@@ -77,7 +77,7 @@ class SocioController extends Controller
         if(!$request->ajax()) return redirect('/');
         $socio = Socio::findOrFail($request->idClientes);
         $socio->idClientes=$request->input('idClientes');
-        $socio->Socio_idClientes=$request->input('Socio_idClientes');
+        $socio->invitador=$request->input('invitador');
         $socio->save();
 
     }
@@ -88,8 +88,8 @@ class SocioController extends Controller
         $referidos= DB::table('socios')
         ->join('clientes','socios.idClientes','=','clientes.idClientes')
         ->select('socios.idClientes', 'clientes.nombreClientes','socios.estadoSocios', 'socios.puntosSocios')
-        ->where('Socio_idClientes',$request->idClientes)->get(); */
-        $referidos = Socio::where('Socio_idClientes', 'like', '%'. $filtro. '%')
+        ->where('invitador',$request->idClientes)->get(); */
+        $referidos = Socio::where('invitador', 'like', '%'. $filtro. '%')
         ->join('clientes','socios.idClientes','=','clientes.idClientes')
         ->select('socios.idClientes', 'clientes.nombreClientes', 'socios.puntosPropiosSocios', 'socios.puntosReferidosSocios')
         ->orderBy('clientes.nombreClientes', 'asc')->get();

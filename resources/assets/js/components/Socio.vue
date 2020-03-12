@@ -44,7 +44,7 @@
                                         
                                         <td v-if="socio.estadoSocios==1">Activo</td>
                                         <td v-else>Inactivo</td>
-
+                                        
                                         <td v-text="socio.puntosPropiosSocios + socio.puntosReferidosSocios"></td>
                                         <td>
                                             <button type="button" @click="abrirModal('socio', 'actualizar', socio)" class="btn btn-warning btn-sm">
@@ -56,6 +56,7 @@
                                                 <i class="icon-eye"></i>
                                         </button> &nbsp;
                                         </td>
+                                        <td v-text="socio.invitador"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -159,7 +160,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="number-input">Socio invitador</label>
                                     <div class="col-md-9">
-                                        <select class="form-control" v-model="Socio_idClientes">
+                                        <select class="form-control" v-model="invitador">
                                             <option value="0" disabled>Seleccione</option>
                                             <option v-for="socio in arraySocios" :key="socio.idClientes"
                                             :value="socio.idClientes" v-text="socio.nombreClientes"></option>
@@ -198,7 +199,7 @@
                 puntosPropiosSocios:'',
                 puntosReferidosSocios:'',
                 estadoSocios:'',
-                Socio_idClientes: 0,
+                invitador: 0,
                 arraySocios:[],
                 arrayClientes:[],
                 arrayReferidos:[],
@@ -307,7 +308,7 @@
                 let me=this;
                 axios.post('socios/registrar',{
                     'idClientes': this.idClientes,
-                    'Socio_idClientes': this.Socio_idClientes,
+                    'invitador': this.invitador,
                     
 
                     }).then(function (response){
@@ -325,7 +326,7 @@
                 let me=this;
                 axios.put('clientes/actualizar',{
                    'idClientes': this.idClientes,
-                   'Socio_idClientes': this.Socio_idClientes,
+                   'invitador': this.invitador,
                     }).then(function (response){
                         me.cerrarModal();
                         me.listarCliente(1,'', 'nombre');
@@ -355,7 +356,7 @@
                                 this.modal = 1;
                                 this.tituloModal = "Registrar Nuevo Socio";
                                 this.idClientes=0;
-                                this.Socio_idClientes=0;
+                                this.invitador=0;
                                 this.tipoAccion = 1;
                                 break;
 
@@ -365,7 +366,7 @@
                                 this.tipoAccion = 2;
                                 this.tituloModal = "Modificar Socio";
                                 this.idClientes=data['idClientes'];
-                                this.Socio_idClientes=data['Socio_idClientes'];
+                                this.invitador=data['invitador'];
                                 this.estadoSocios=data['estadoSocios'];
                                 
                                 break;

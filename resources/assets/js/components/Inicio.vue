@@ -13,7 +13,7 @@
          
       </div>
       <div class="card-footer text-center" style="background-color:  #66CCFF">
-            Ver <i class="fa fa-arrow-circle-right"></i>
+            Ver <i class="fa fa-arrow-circle-right" @click="verProductos()"></i>
         </div>
     </div>
   </div><!--/.col-->
@@ -89,7 +89,11 @@
 
         },
         methods:{
-
+            verProductos(){
+              let me=this;
+              var url='/productos';
+            
+            },
              listarProducto(){
                 let me=this;
                 var url= '/productos/selectProducto';
