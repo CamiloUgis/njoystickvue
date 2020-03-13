@@ -43,7 +43,10 @@
        <arriendos></arriendos>
        </template>
        <template v-if="menu==11">
-       <cambios></cambios>
+       <canjes></canjes>
+       </template>
+       <template v-if="menu==12">
+       <reservas></reservas>
        </template>
 
     @endsection

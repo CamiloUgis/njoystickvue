@@ -5,7 +5,7 @@
                 <!-- Ejemplo de tabla Listado -->
                 <div class="card">
                     <div class="card-header">
-                        <i class="fa fa-align-justify"></i> Arriendos
+                        <i class="fa fa-align-justify"></i> Ventas
                         <button type="button" @click="mostrarDetalle()" class="btn btn-secondary">
                             <i class="icon-plus"></i>&nbsp;Nuevo
                         </button>
@@ -34,7 +34,6 @@
                                     <th class="text-center">Fecha de Transacción</th>
                                     <th class="text-center">Valor Total de la Transacción</th>
                                     <th class="text-center">Forma de Pago</th>
-                                    <th class="text-center">Estado de Transacción</th>
                                     <th class="text-center">Visualizar</th>
                                 </tr>
                             </thead>
@@ -45,7 +44,6 @@
                                     <td v-text="transaccion.fechaTransacciones"></td>
                                     <td v-text="transaccion.valorFinalTransacciones"></td>
                                     <td v-text="transaccion.formaPagoTransacciones"></td>
-                                    <td v-text="transaccion.estadoTransacciones"></td>
                                     <td>
                                         <button type="button" @click="verTransaccion(transaccion.idTransacciones)" class="btn btn-succes btn-sm btnvisualizar">
                                           <i class="icon-eye"></i>
@@ -98,23 +96,14 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                     <label>Estado de Transacción</label>
-                                        <select class="form-control" v-model="estadoTransacciones">
-                                            <option value="0" disabled>Seleccione</option>
-                                            <option value="Pagado">Pagado</option>
-                                            <option value="Abonado">Abonado</option>
-                                        </select>
+                                    <input v-model="estadoTransacciones" disabled>
+
                                     </div>
                                 </div>                            
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Tipo de Transacción</label>
-                                    <select class="form-control" v-model="tipoTransacciones">
-                                        <option value="0" disabled>Seleccione</option>
-                                        <option value="Venta">Venta</option>
-                                        <option value="Arriendo">Arriendo</option>
-                                        <option value="Cambio">Cambio</option>
-                                        <option value="Reserva">Reserva</option>
-                                    </select>
+                                    <input v-model="tipoTransacciones" disabled>
                                 </div>
                                 
                             </div>
@@ -125,6 +114,7 @@
                                         <option value="0" disabled>Seleccione</option>
                                         <option value="Efectivo">Efectivo</option>
                                         <option value="Débito">Débito</option>
+                                        <option value="Crédito">Crédito</option>
                                     </select>
                                 </div>
                             </div>
@@ -145,6 +135,16 @@
                                         @input="getDatosProductos"
                                     > 
                                     </v-select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                               <div class="form-group" style="margin-top: 20px;"> 
+                                    <input type="radio" checked id="0" value="0" v-model="picked">
+                                    <label for="0">Nuevo</label>
+                                    <br>
+                                    <input type="radio" id="1" value="1" v-model="picked">
+                                    <label for="1">Usado</label>
+                                    <br>              
                                 </div>
                             </div>
                         </div>
@@ -247,7 +247,7 @@
                         <div class="form-group row">
                             <div class="col-md-12">
                                 <button type="button" @click="ocultarDetalle()" class="btn btn-secondary">Cerrar</button>
-                                <button type="button" class="btn btn-primary" @click="registrarTransaccion()">Registrar Arriendo</button>
+                                <button type="button" class="btn btn-primary" @click="registrarTransaccion()">Registrar Transacción</button>
                             </div>
 
                         </div>
@@ -392,7 +392,7 @@ Vue.component('v-select', vSelect)
                 idTransacciones:0,
                 idProductos:0,
                 idClientes:0,
-                tipoTransacciones:0,
+                tipoTransacciones:'Venta',
                 observacionTransacciones:'',
                 nombreProductos:'',
                 nombreClientes:'',
@@ -405,11 +405,11 @@ Vue.component('v-select', vSelect)
                 plazoTransacciones:'',
                 precioNuevoProductos:'',
                 precioUsadoProductos:'',
-                estadoTransacciones:0,
-                cantidadProductos:1,
-                precioProductos:1,
+                estadoTransacciones:'Pagado',
+                cantidadProductos:0,
+                precioProductos:0,
                 stockProductos:'',
-                descuento: '',
+                descuento:0,
                 total:0.0,
                 totalDescuento:0.0,
                 totalParcial:0,
@@ -437,7 +437,8 @@ Vue.component('v-select', vSelect)
                 offset: 3,
                 criterio: 'tipoTransaccion',
                 buscar : '',
-                arrayPlataformas:[]
+                arrayPlataformas:[],
+                picked:''
 
             }
         },
@@ -471,6 +472,7 @@ Vue.component('v-select', vSelect)
             },
             calcularTotal: function(){
                 var parcial='';
+                this.valorFinalTransacciones=0;
                 for (var i=0; i<this.arrayDetalles.length;i++) {
                     parcial=(this.arrayDetalles[i].precioProductos*this.arrayDetalles[i].cantidadProductos).toFixed(0);
                     this.valorFinalTransacciones=Number(this.valorFinalTransacciones)+Number(parcial);
@@ -479,6 +481,7 @@ Vue.component('v-select', vSelect)
             },
             puntosTotales: function(){
                 var parcial='';
+                this.puntosTransacciones=0;
                 for (var i=0; i<this.arrayDetalles.length;i++) {
                     parcial=(this.arrayDetalles[i].puntosProductos);
                     this.puntosTransacciones=Number(this.puntosTransacciones)+Number(parcial);
@@ -570,9 +573,9 @@ Vue.component('v-select', vSelect)
                         });
                         me.idProductos=0;
                         me.producto='';
-                        me.cantidadPasajeraProductos=1;
-                        me.precioPasajeroProductos=1;
-                        me.puntosPasajeroProductos=1;
+                        me.cantidadPasajeraProductos=0;
+                        me.precioPasajeroProductos=0;
+                        me.puntosPasajeroProductos=0;
                     }
                 
 
@@ -603,7 +606,13 @@ Vue.component('v-select', vSelect)
                 me.precioNuevoProductos= val1.precioNuevoProductos;
                 me.precioUsadoProductos=val1.precioUsadoProductos;
                 me.stockProductos=val1.stockProductos;
-                me.precioPasajeroProductos=val1.precioNuevoProductos;
+                if(me.picked==0){
+                    me.precioPasajeroProductos=val1.precioNuevoProductos;
+                }else{
+                    me.precioPasajeroProductos=val1.precioUsadoProductos;
+
+                }
+                
             },
             
             registrarTransaccion(){
@@ -624,14 +633,14 @@ Vue.component('v-select', vSelect)
                         me.listado=1;
                         me.listarTransaccion(1,'', 'idTransacciones');
                         me.idClientes=0;
-                        me.tipoTransacciones='';
+                        me.tipoTransacciones='Venta';
                         me.observacionTransacciones='';
                         me.descuentoTransacciones='';
                         me.puntosTransacciones=0;
                         me.valorFinalTransacciones=0;
                         me.formaPagoTransacciones='';
                         me.plazoTransacciones='';
-                        me.estadoTransacciones='';
+                        me.estadoTransacciones='Pagado';
                         me.arrayDetalles=[];
                         me.idProductos=0;
                         me.producto='';
@@ -647,14 +656,14 @@ Vue.component('v-select', vSelect)
 
                 me.listado=0;
                 me.idClientes=0;
-                me.tipoTransacciones='';
+                me.tipoTransacciones='Venta';
                 me.observacionTransacciones='';
                 me.descuentoTransacciones='';
                 me.puntosTransacciones=0;
                 me.valorFinalTransacciones=0;
                 me.formaPagoTransacciones='';
                 me.plazoTransacciones='';
-                me.estadoTransacciones='';
+                me.estadoTransacciones='Pagado';
                 me.arrayDetalles=[];
                 me.idProductos=0;
                 me.producto='';
@@ -667,6 +676,8 @@ Vue.component('v-select', vSelect)
                 this.totalParcial=0;
                 this.total=0;
                 this.totalDescuento=0;
+                this.valorFinalTransacciones=0;
+                this.descuento=0;
             },
             verTransaccion(idTransacciones){
                 let me=this;

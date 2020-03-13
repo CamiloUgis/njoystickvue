@@ -34,7 +34,6 @@
                                     <th class="text-center">Fecha de Transacción</th>
                                     <th class="text-center">Valor Total de la Transacción</th>
                                     <th class="text-center">Forma de Pago</th>
-                                    <th class="text-center">Estado de Transacción</th>
                                     <th class="text-center">Visualizar</th>
                                 </tr>
                             </thead>
@@ -45,7 +44,6 @@
                                     <td v-text="transaccion.fechaTransacciones"></td>
                                     <td v-text="transaccion.valorFinalTransacciones"></td>
                                     <td v-text="transaccion.formaPagoTransacciones"></td>
-                                    <td v-text="transaccion.estadoTransacciones"></td>
                                     <td>
                                         <button type="button" @click="verTransaccion(transaccion.idTransacciones)" class="btn btn-succes btn-sm btnvisualizar">
                                           <i class="icon-eye"></i>

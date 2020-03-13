@@ -25,7 +25,8 @@ Vue.component('transacciones', require('./components/Transaccion.vue'));
 Vue.component('reservas', require('./components/Reserva.vue'));
 Vue.component('ventas', require('./components/Venta.vue'));
 Vue.component('arriendos', require('./components/Arriendo.vue'));
-Vue.component('cambios', require('./components/Cambio.vue'));
+Vue.component('canjes', require('./components/Canje.vue'));
+Vue.component('reservas', require('./components/Reserva.vue'));
 
 
 import Vuelidate from 'vuelidate'

@@ -129,15 +129,15 @@ class ProductoController extends Controller
         $producto->stockProductos = $request->input('stockProductos');
         DB::commit();
 
-        $pivote = $request->data;
+        // $pivote = $request->data;
      
-            foreach($pivote as $ep=>$det){
-                $ep = new GeneroProducto();  
-                $ep->idProductos = $producto->idProductos;
-                $ep->idGeneros = $det['idGeneros'];
-                $ep->save();
-            }
-            DB::commit();
+        //     foreach($pivote as $ep=>$det){
+        //         $ep = new GeneroProducto();  
+        //         $ep->idProductos = $producto->idProductos;
+        //         $ep->idGeneros = $det['idGeneros'];
+        //         $ep->save();
+        //     }
+        //     DB::commit();
         }catch(Exception $e){
             DB::rollback();
         }

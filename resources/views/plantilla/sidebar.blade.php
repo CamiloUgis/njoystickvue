@@ -22,6 +22,9 @@
                                 <li @click="menu=11" class="nav-item">
                                     <a class="nav-link" href="i#"><i class="icon-basket-loaded"></i>Cambio</a>
                                 </li>
+                                <li @click="menu=12" class="nav-item">
+                                    <a class="nav-link" href="i#"><i class="icon-basket-loaded"></i>Reserva</a>
+                                </li>
                             </ul>
                     </li>
                     
