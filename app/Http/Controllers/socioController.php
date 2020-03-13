@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Cliente;
 use App\Socio;
+use App\Transaccion;
 use Malahierba\ChileRut\ChileRut;
 use Malahierba\ChileRut\Rules\ValidChileanRut;
 use Illuminate\Support\Facades\DB;
@@ -22,12 +23,12 @@ class SocioController extends Controller
         if($buscar==''){
             $socios = Socio::join('clientes','socios.idClientes','=','clientes.idClientes')
             ->select('socios.idClientes', 'clientes.nombreClientes','socios.estadoSocios', 
-            'socios.puntosPropiosSocios','socios.puntosReferidosSocios')
+            'socios.puntosPropiosSocios','socios.puntosReferidosSocios','socios.invitador')
             ->orderBy('idClientes', 'desc')->paginate(10);
         }else{
             $socios = Socio::join('clientes','socios.idClientes','=','clientes.idClientes')
             ->select('socios.idClientes', 'clientes.nombreClientes','socios.estadoSocios',
-            'socios.puntosPropiosSocios','socios.puntosReferidosSocios')
+            'socios.puntosPropiosSocios','socios.puntosReferidosSocios','socios.invitador')
             ->where($criterio, 'like', '%'. $buscar . '%')
             ->orderBy('idClientes', 'desc')->paginate(10);
         }
@@ -103,6 +104,13 @@ class SocioController extends Controller
         ->select('idClientes')->orderBy('idClientes', 'asc')->get();
         return ['socios' => $socios];
 
+    }
+    public function asignaPuntos(){
+        $socios=Socio::get();
+        foreach ($socios as $socio){
+        $invitador=$socio->where('idClientes',$socio->invitador);
+    }
+        return['invitador'=>$invitador];
     }
 
 

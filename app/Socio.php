@@ -21,4 +21,7 @@ class Socio extends Model
     public function referidos(){
         return $this->hasMany('App\Socio');
     }
+    public function anfitrion(){
+        return $this->belongsTo('App\Socio', 'invitador', 'idClientes');
+    }
 }
