@@ -77,6 +77,11 @@ Route::put('/transacciones/actualizar', 'TransaccionController@update');
 Route::get('/transacciones/selectTransaccion','TransaccionController@selectTransaccion');
 Route::get('/transacciones/obtenerCabecera','TransaccionController@obtenerCabecera');
 Route::get('/transacciones/obtenerDetalles','TransaccionController@obtenerDetalles');
+Route::get('/transaccionesVentas','TransaccionController@indexVentas');
+Route::get('/transaccionesArriendos','TransaccionController@indexArriendos');
+Route::get('/transaccionesCanjes','TransaccionController@indexCanjes');
+Route::get('/transaccionesReservas','TransaccionController@indexReservas');
+
 
 
 

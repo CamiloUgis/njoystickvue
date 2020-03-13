@@ -17,7 +17,6 @@
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <select class="form-control col-md-3" v-model="criterio">
-                                      <option value="tipoTransacciones">Tipo de Transacciones</option>
                                       <option value="formaPagoTransacciones">Forma de Pago</option>
                                     </select>
                                     <input type="text" v-model="buscar" @keyup.enter="listarTransaccion(1,buscar,criterio)" class="form-control" placeholder="Texto a buscar">
@@ -495,7 +494,7 @@ Vue.component('v-select', vSelect)
         methods:{
             listarTransaccion(page, buscar, criterio){
                 let me=this;
-                var url= '/transacciones?page='+page + '&buscar='+ buscar + '&criterio=' + criterio;
+                var url= '/transaccionesReservas?page='+page + '&buscar='+ buscar + '&criterio=' + criterio;
                 axios.get(url).then(function (response){
                     var respuesta = response.data;
                     me.arrayTransacciones = respuesta.transacciones.data;

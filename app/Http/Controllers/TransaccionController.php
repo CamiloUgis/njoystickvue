@@ -79,7 +79,7 @@ class TransaccionController extends Controller
             $transaccion = new Transaccion();
             $transaccion->idTransacciones = $request->input('idTransacciones');
             $transaccion->tipoTransacciones = $request->input('tipoTransacciones');
-            $transaccion->fechaTransacciones = $mytime->toDateString();
+            $transaccion->fechaTransacciones = $mytime;
             $transaccion->observacionTransacciones = $request->input('observacionTransacciones');
             $transaccion->puntosTransacciones = $request->input('puntosTransacciones');
             $transaccion->descuentoTransacciones = $request->input('descuentoTransacciones');
@@ -93,9 +93,9 @@ class TransaccionController extends Controller
             //agregar puntos
             $socio=Socio::where('idClientes', '=', $request->input('idClientes'));
             $socio->increment('puntosPropiosSocios',$request->input('puntosTransacciones'));
-            $idInvitador=$socio->invitador;
-            $invitador=Socio::where('idClientes', $idInvitador)->first();
-            $invitador->increment('puntosReferidosSocios',($request->input('puntosTransacciones')/2));
+            // $idInvitador=$socio->invitador;
+            // $invitador=Socio::where('idClientes', $idInvitador)->first();
+            // $invitador->increment('puntosReferidosSocios',($request->input('puntosTransacciones')/2));
 
             $pivote = $request->data;
 
@@ -173,6 +173,183 @@ class TransaccionController extends Controller
         ->orderBy('producto_transaccion.idTransacciones', 'desc')->get();
         
         return ['detalles' => $detalles];
+    }
+
+    public function indexVentas(Request $request)
+    {
+       // if(!$request->ajax()) return redirect('/');
+        $buscar= $request->buscar;
+        $criterio = $request->criterio;
+        if($buscar==''){
+            $transacciones = Transaccion::join('clientes','transacciones.idClientes','=','clientes.idClientes')
+            ->join('producto_transaccion', 'transacciones.idTransacciones', '=', 'producto_transaccion.idTransacciones')
+            ->join('productos', 'producto_transaccion.idProductos','=','productos.idProductos')
+            ->select('transacciones.tipoTransacciones', 'transacciones.observacionTransacciones', 'transacciones.fechaTransacciones', 
+            'transacciones.puntosTransacciones', 'transacciones.descuentoTransacciones', 'transacciones.valorFinalTransacciones', 'transacciones.formaPagoTransacciones',
+            'transacciones.plazoTransacciones', 'transacciones.estadoTransacciones', 'clientes.nombreClientes', 'clientes.rutClientes', 
+            'producto_transaccion.idTransacciones', 'productos.nombreProductos', 'productos.stockProductos',
+            'productos.precioNuevoProductos', 'productos.precioUsadoProductos')
+            ->where('transacciones.tipoTransacciones','=','Venta')
+            ->orderBy('transacciones.idTransacciones', 'desc')->paginate(8);
+
+
+        }else{
+            $transacciones = Transaccion::join('clientes','transacciones.idClientes','=','clientes.idClientes')
+            ->join('producto_transaccion', 'transacciones.idTransacciones', '=', 'producto_transaccion.idTransacciones')
+            ->join('productos', 'producto_transaccion.idProductos','=','productos.idProductos')
+            ->select('transacciones.tipoTransacciones', 'transacciones.observacionTransacciones', 'transacciones.fechaTransacciones', 
+            'transacciones.puntosTransacciones', 'transacciones.descuentoTransacciones', 'transacciones.valorFinalTransacciones', 'transacciones.formaPagoTransacciones',
+            'transacciones.plazoTransacciones', 'transacciones.estadoTransacciones', 'clientes.nombreClientes', 'clientes.rutClientes', 
+            'producto_transaccion.idTransacciones', 'productos.nombreProductos', 'productos.stockProductos',
+            'productos.precioNuevoProductos', 'productos.precioUsadoProductos')
+            ->where('transacciones.'.$criterio, 'like', '%'. $buscar . '%')
+            ->where('transacciones.tipoTransacciones','=','Venta')
+            ->orderBy('transacciones.idTransacciones', 'desc')->paginate(8);
+        }
+        return [
+            'pagination' =>[
+                'total' => $transacciones->total(),
+                'current_page'=> $transacciones->currentPage(),
+                'per_page'=> $transacciones->perPage(),
+                'last_page'=>$transacciones->lastPage(),
+                'from'=>$transacciones->firstItem(),
+                'to'=>$transacciones->lastItem(),
+            ],
+            'transacciones'=>$transacciones
+
+        ] ;
+    }
+    public function indexArriendos(Request $request)
+    {
+       // if(!$request->ajax()) return redirect('/');
+        $buscar= $request->buscar;
+        $criterio = $request->criterio;
+        if($buscar==''){
+            $transacciones = Transaccion::join('clientes','transacciones.idClientes','=','clientes.idClientes')
+            ->join('producto_transaccion', 'transacciones.idTransacciones', '=', 'producto_transaccion.idTransacciones')
+            ->join('productos', 'producto_transaccion.idProductos','=','productos.idProductos')
+            ->select('transacciones.tipoTransacciones', 'transacciones.observacionTransacciones', 'transacciones.fechaTransacciones', 
+            'transacciones.puntosTransacciones', 'transacciones.descuentoTransacciones', 'transacciones.valorFinalTransacciones', 'transacciones.formaPagoTransacciones',
+            'transacciones.plazoTransacciones', 'transacciones.estadoTransacciones', 'clientes.nombreClientes', 'clientes.rutClientes', 
+            'producto_transaccion.idTransacciones', 'productos.nombreProductos', 'productos.stockProductos',
+            'productos.precioNuevoProductos', 'productos.precioUsadoProductos')
+            ->where('transacciones.tipoTransacciones','=','Arriendo')
+            ->orderBy('transacciones.idTransacciones', 'desc')->paginate(8);
+
+
+        }else{
+            $transacciones = Transaccion::join('clientes','transacciones.idClientes','=','clientes.idClientes')
+            ->join('producto_transaccion', 'transacciones.idTransacciones', '=', 'producto_transaccion.idTransacciones')
+            ->join('productos', 'producto_transaccion.idProductos','=','productos.idProductos')
+            ->select('transacciones.tipoTransacciones', 'transacciones.observacionTransacciones', 'transacciones.fechaTransacciones', 
+            'transacciones.puntosTransacciones', 'transacciones.descuentoTransacciones', 'transacciones.valorFinalTransacciones', 'transacciones.formaPagoTransacciones',
+            'transacciones.plazoTransacciones', 'transacciones.estadoTransacciones', 'clientes.nombreClientes', 'clientes.rutClientes', 
+            'producto_transaccion.idTransacciones', 'productos.nombreProductos', 'productos.stockProductos',
+            'productos.precioNuevoProductos', 'productos.precioUsadoProductos')
+            ->where('transacciones.'.$criterio, 'like', '%'. $buscar . '%')
+            ->where('transacciones.tipoTransacciones','=','Arriendo')
+            ->orderBy('transacciones.idTransacciones', 'desc')->paginate(8);
+        }
+        return [
+            'pagination' =>[
+                'total' => $transacciones->total(),
+                'current_page'=> $transacciones->currentPage(),
+                'per_page'=> $transacciones->perPage(),
+                'last_page'=>$transacciones->lastPage(),
+                'from'=>$transacciones->firstItem(),
+                'to'=>$transacciones->lastItem(),
+            ],
+            'transacciones'=>$transacciones
+
+        ] ;
+    }
+    public function indexCanjes(Request $request)
+    {
+       // if(!$request->ajax()) return redirect('/');
+        $buscar= $request->buscar;
+        $criterio = $request->criterio;
+        if($buscar==''){
+            $transacciones = Transaccion::join('clientes','transacciones.idClientes','=','clientes.idClientes')
+            ->join('producto_transaccion', 'transacciones.idTransacciones', '=', 'producto_transaccion.idTransacciones')
+            ->join('productos', 'producto_transaccion.idProductos','=','productos.idProductos')
+            ->select('transacciones.tipoTransacciones', 'transacciones.observacionTransacciones', 'transacciones.fechaTransacciones', 
+            'transacciones.puntosTransacciones', 'transacciones.descuentoTransacciones', 'transacciones.valorFinalTransacciones', 'transacciones.formaPagoTransacciones',
+            'transacciones.plazoTransacciones', 'transacciones.estadoTransacciones', 'clientes.nombreClientes', 'clientes.rutClientes', 
+            'producto_transaccion.idTransacciones', 'productos.nombreProductos', 'productos.stockProductos',
+            'productos.precioNuevoProductos', 'productos.precioUsadoProductos')
+            ->where('transacciones.tipoTransacciones','=','Canje')
+            ->orderBy('transacciones.idTransacciones', 'desc')->paginate(8);
+
+
+        }else{
+            $transacciones = Transaccion::join('clientes','transacciones.idClientes','=','clientes.idClientes')
+            ->join('producto_transaccion', 'transacciones.idTransacciones', '=', 'producto_transaccion.idTransacciones')
+            ->join('productos', 'producto_transaccion.idProductos','=','productos.idProductos')
+            ->select('transacciones.tipoTransacciones', 'transacciones.observacionTransacciones', 'transacciones.fechaTransacciones', 
+            'transacciones.puntosTransacciones', 'transacciones.descuentoTransacciones', 'transacciones.valorFinalTransacciones', 'transacciones.formaPagoTransacciones',
+            'transacciones.plazoTransacciones', 'transacciones.estadoTransacciones', 'clientes.nombreClientes', 'clientes.rutClientes', 
+            'producto_transaccion.idTransacciones', 'productos.nombreProductos', 'productos.stockProductos',
+            'productos.precioNuevoProductos', 'productos.precioUsadoProductos')
+            ->where('transacciones.'.$criterio, 'like', '%'. $buscar . '%')
+            ->where('transacciones.tipoTransacciones','=','Canje')
+            ->orderBy('transacciones.idTransacciones', 'desc')->paginate(8);
+        }
+        return [
+            'pagination' =>[
+                'total' => $transacciones->total(),
+                'current_page'=> $transacciones->currentPage(),
+                'per_page'=> $transacciones->perPage(),
+                'last_page'=>$transacciones->lastPage(),
+                'from'=>$transacciones->firstItem(),
+                'to'=>$transacciones->lastItem(),
+            ],
+            'transacciones'=>$transacciones
+
+        ] ;
+    }
+    public function indexReservas(Request $request)
+    {
+       // if(!$request->ajax()) return redirect('/');
+        $buscar= $request->buscar;
+        $criterio = $request->criterio;
+        if($buscar==''){
+            $transacciones = Transaccion::join('clientes','transacciones.idClientes','=','clientes.idClientes')
+            ->join('producto_transaccion', 'transacciones.idTransacciones', '=', 'producto_transaccion.idTransacciones')
+            ->join('productos', 'producto_transaccion.idProductos','=','productos.idProductos')
+            ->select('transacciones.tipoTransacciones', 'transacciones.observacionTransacciones', 'transacciones.fechaTransacciones', 
+            'transacciones.puntosTransacciones', 'transacciones.descuentoTransacciones', 'transacciones.valorFinalTransacciones', 'transacciones.formaPagoTransacciones',
+            'transacciones.plazoTransacciones', 'transacciones.estadoTransacciones', 'clientes.nombreClientes', 'clientes.rutClientes', 
+            'producto_transaccion.idTransacciones', 'productos.nombreProductos', 'productos.stockProductos',
+            'productos.precioNuevoProductos', 'productos.precioUsadoProductos')
+            ->where('transacciones.tipoTransacciones','=','Reserva')
+            ->orderBy('transacciones.idTransacciones', 'desc')->paginate(8);
+
+
+        }else{
+            $transacciones = Transaccion::join('clientes','transacciones.idClientes','=','clientes.idClientes')
+            ->join('producto_transaccion', 'transacciones.idTransacciones', '=', 'producto_transaccion.idTransacciones')
+            ->join('productos', 'producto_transaccion.idProductos','=','productos.idProductos')
+            ->select('transacciones.tipoTransacciones', 'transacciones.observacionTransacciones', 'transacciones.fechaTransacciones', 
+            'transacciones.puntosTransacciones', 'transacciones.descuentoTransacciones', 'transacciones.valorFinalTransacciones', 'transacciones.formaPagoTransacciones',
+            'transacciones.plazoTransacciones', 'transacciones.estadoTransacciones', 'clientes.nombreClientes', 'clientes.rutClientes', 
+            'producto_transaccion.idTransacciones', 'productos.nombreProductos', 'productos.stockProductos',
+            'productos.precioNuevoProductos', 'productos.precioUsadoProductos')
+            ->where('transacciones.'.$criterio, 'like', '%'. $buscar . '%')
+            ->where('transacciones.tipoTransacciones','=','Reserva')
+            ->orderBy('transacciones.idTransacciones', 'desc')->paginate(8);
+        }
+        return [
+            'pagination' =>[
+                'total' => $transacciones->total(),
+                'current_page'=> $transacciones->currentPage(),
+                'per_page'=> $transacciones->perPage(),
+                'last_page'=>$transacciones->lastPage(),
+                'from'=>$transacciones->firstItem(),
+                'to'=>$transacciones->lastItem(),
+            ],
+            'transacciones'=>$transacciones
+
+        ] ;
     }
 
 }

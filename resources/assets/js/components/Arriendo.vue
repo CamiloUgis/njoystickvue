@@ -5,7 +5,7 @@
                 <!-- Ejemplo de tabla Listado -->
                 <div class="card">
                     <div class="card-header">
-                        <i class="fa fa-align-justify"></i> Ventas
+                        <i class="fa fa-align-justify"></i> Arriendos
                         <button type="button" @click="mostrarDetalle()" class="btn btn-secondary">
                             <i class="icon-plus"></i>&nbsp;Nuevo
                         </button>
@@ -17,7 +17,6 @@
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <select class="form-control col-md-3" v-model="criterio">
-                                      <option value="tipoTransacciones">Tipo de Transacciones</option>
                                       <option value="formaPagoTransacciones">Forma de Pago</option>
                                     </select>
                                     <input type="text" v-model="buscar" @keyup.enter="listarTransaccion(1,buscar,criterio)" class="form-control" placeholder="Texto a buscar">
@@ -34,6 +33,7 @@
                                     <th class="text-center">Fecha de Transacción</th>
                                     <th class="text-center">Valor Total de la Transacción</th>
                                     <th class="text-center">Forma de Pago</th>
+                                    <th class="text-center">Plazo de arriendo</th>
                                     <th class="text-center">Visualizar</th>
                                 </tr>
                             </thead>
@@ -44,6 +44,7 @@
                                     <td v-text="transaccion.fechaTransacciones"></td>
                                     <td v-text="transaccion.valorFinalTransacciones"></td>
                                     <td v-text="transaccion.formaPagoTransacciones"></td>
+                                    <td v-text="transaccion.plazoTransacciones"></td>
                                     <td>
                                         <button type="button" @click="verTransaccion(transaccion.idTransacciones)" class="btn btn-succes btn-sm btnvisualizar">
                                           <i class="icon-eye"></i>
@@ -93,14 +94,13 @@
                                 <label for="">Descuento (en %)</label>
                                 <input type="number" class="form-control" v-model="descuento" placeholder="5%">
                             </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3" style="margin-top:20px;">
                                     <div class="form-group">
-                                    <label>Estado de Transacción</label>
+                                    <label>Estado de Transacción</label> 
                                     <input v-model="estadoTransacciones" disabled>
-
                                     </div>
                                 </div>                            
-                            <div class="col-md-4">
+                            <div class="col-md-3" style="margin-top:20px;">
                                 <div class="form-group">
                                     <label>Tipo de Transacción</label>
                                     <input v-model="tipoTransacciones" disabled>
@@ -118,7 +118,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-12" style="margin-bottom: 15px;">
                                     <label for="">Observaciones</label>
                                      <input type="text" class="form-control" v-model="observacionTransacciones" placeholder="Ingrese su observación">
                             </div>
@@ -149,7 +149,7 @@
                             </div>
                         </div>
                         <div class="form-group row border">
-                            <div class="col-md-2">
+                            <div class="col-md-2" style="margin-bottom: 15px;">
                                     <label>Precio <span style="color:red;" v-show="precioPasajeroProductos==0" >(Ingrese*)</span></label>
                                     <input type="number" value="0" class="form-control" v-model="precioPasajeroProductos">
                             </div>
@@ -178,7 +178,7 @@
                                                 <th>Cantidad</th>
                                                 <th>Puntos</th>
                                                 <th>Subtotal</th>
-                                                <th>Opciones</th>
+                                                <th>Eliminar</th>
                                             </tr>
                                         </thead>
                                         <tbody v-if="arrayDetalles.length">
@@ -495,7 +495,7 @@ Vue.component('v-select', vSelect)
         methods:{
             listarTransaccion(page, buscar, criterio){
                 let me=this;
-                var url= '/transacciones?page='+page + '&buscar='+ buscar + '&criterio=' + criterio;
+                var url= '/transaccionesArriendos?page='+page + '&buscar='+ buscar + '&criterio=' + criterio;
                 axios.get(url).then(function (response){
                     var respuesta = response.data;
                     me.arrayTransacciones = respuesta.transacciones.data;
