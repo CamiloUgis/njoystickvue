@@ -29,7 +29,6 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">Cliente</th>
-                                    <th class="text-center">Tipo de Transacción</th>
                                     <th class="text-center">Fecha de Transacción</th>
                                     <th class="text-center">Valor Total de la Transacción</th>
                                     <th class="text-center">Forma de Pago</th>
@@ -39,7 +38,6 @@
                             <tbody class="text-center">
                                 <tr v-for="transaccion in arrayTransacciones" :key="transaccion.idTransacciones">
                                     <td v-text="transaccion.nombreClientes"></td>
-                                    <td v-text="transaccion.tipoTransacciones"></td>
                                     <td v-text="transaccion.fechaTransacciones"></td>
                                     <td v-text="transaccion.valorFinalTransacciones"></td>
                                     <td v-text="transaccion.formaPagoTransacciones"></td>

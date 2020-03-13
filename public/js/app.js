@@ -58351,8 +58351,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 
 
 
@@ -58825,14 +58823,6 @@ var render = function() {
                                   domProps: {
                                     textContent: _vm._s(
                                       transaccion.nombreClientes
-                                    )
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("td", {
-                                  domProps: {
-                                    textContent: _vm._s(
-                                      transaccion.tipoTransacciones
                                     )
                                   }
                                 }),
@@ -60035,10 +60025,6 @@ var staticRenderFns = [
         _c("th", { staticClass: "text-center" }, [_vm._v("Cliente")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [
-          _vm._v("Tipo de Transacción")
-        ]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-center" }, [
           _vm._v("Fecha de Transacción")
         ]),
         _vm._v(" "),
@@ -60310,8 +60296,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_sweetalert2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_sweetalert2__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
 //
 //
 //
@@ -61157,14 +61141,6 @@ var render = function() {
                                   domProps: {
                                     textContent: _vm._s(
                                       transaccion.nombreClientes
-                                    )
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("td", {
-                                  domProps: {
-                                    textContent: _vm._s(
-                                      transaccion.tipoTransacciones
                                     )
                                   }
                                 }),
@@ -62395,10 +62371,6 @@ var staticRenderFns = [
         _c("th", { staticClass: "text-center" }, [_vm._v("Cliente")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [
-          _vm._v("Tipo de Transacción")
-        ]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-center" }, [
           _vm._v("Fecha de Transacción")
         ]),
         _vm._v(" "),
@@ -62670,8 +62642,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_sweetalert2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_sweetalert2__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
 //
 //
 //
@@ -63517,14 +63487,6 @@ var render = function() {
                                   domProps: {
                                     textContent: _vm._s(
                                       transaccion.nombreClientes
-                                    )
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("td", {
-                                  domProps: {
-                                    textContent: _vm._s(
-                                      transaccion.tipoTransacciones
                                     )
                                   }
                                 }),
@@ -64735,10 +64697,6 @@ var staticRenderFns = [
         _c("th", { staticClass: "text-center" }, [_vm._v("Cliente")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [
-          _vm._v("Tipo de Transacción")
-        ]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-center" }, [
           _vm._v("Fecha de Transacción")
         ]),
         _vm._v(" "),
@@ -65012,8 +64970,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_sweetalert2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_sweetalert2__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
 //
 //
 //
@@ -65708,7 +65664,7 @@ var render = function() {
         [
           _c("div", { staticClass: "card-header" }, [
             _c("i", { staticClass: "fa fa-align-justify" }),
-            _vm._v(" Ventas\n                   "),
+            _vm._v(" Canjes\n                   "),
             _c(
               "button",
               {
@@ -65860,14 +65816,6 @@ var render = function() {
                                   domProps: {
                                     textContent: _vm._s(
                                       transaccion.nombreClientes
-                                    )
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("td", {
-                                  domProps: {
-                                    textContent: _vm._s(
-                                      transaccion.tipoTransacciones
                                     )
                                   }
                                 }),
@@ -67068,10 +67016,6 @@ var staticRenderFns = [
     return _c("thead", [
       _c("tr", [
         _c("th", { staticClass: "text-center" }, [_vm._v("Cliente")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-center" }, [
-          _vm._v("Tipo de Transacción")
-        ]),
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [
           _vm._v("Fecha de Transacción")
