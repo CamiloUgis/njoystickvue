@@ -139,11 +139,8 @@
                             </div>
                             <div class="col-md-6">
                                <div class="form-group" style="margin-top: 20px;"> 
-                                    <input type="radio" checked id="0" value="0" v-model="picked">
-                                    <label for="0">Nuevo</label>
-                                    <br>
-                                    <input type="radio" id="1" value="1" v-model="picked">
-                                    <label for="1">Usado</label>
+                                    <input type="date" v-model="plazoTransacciones">
+                                    <label>Plazo de Arriendo</label>
                                     <br>              
                                 </div>
                             </div>
@@ -392,7 +389,7 @@ Vue.component('v-select', vSelect)
                 idTransacciones:0,
                 idProductos:0,
                 idClientes:0,
-                tipoTransacciones:'Venta',
+                tipoTransacciones:'Arriendo',
                 observacionTransacciones:'',
                 nombreProductos:'',
                 nombreClientes:'',
@@ -606,12 +603,12 @@ Vue.component('v-select', vSelect)
                 me.precioNuevoProductos= val1.precioNuevoProductos;
                 me.precioUsadoProductos=val1.precioUsadoProductos;
                 me.stockProductos=val1.stockProductos;
-                if(me.picked==0){
-                    me.precioPasajeroProductos=val1.precioNuevoProductos;
-                }else{
-                    me.precioPasajeroProductos=val1.precioUsadoProductos;
+                // if(me.picked==0){
+                //     me.precioPasajeroProductos=val1.precioNuevoProductos;
+                // }else{
+                //     me.precioPasajeroProductos=val1.precioUsadoProductos;
 
-                }
+                // }
                 
             },
             
@@ -633,7 +630,7 @@ Vue.component('v-select', vSelect)
                         me.listado=1;
                         me.listarTransaccion(1,'', 'idTransacciones');
                         me.idClientes=0;
-                        me.tipoTransacciones='Venta';
+                        me.tipoTransacciones='Arriendo';
                         me.observacionTransacciones='';
                         me.descuentoTransacciones='';
                         me.puntosTransacciones=0;
@@ -656,7 +653,7 @@ Vue.component('v-select', vSelect)
 
                 me.listado=0;
                 me.idClientes=0;
-                me.tipoTransacciones='Venta';
+                me.tipoTransacciones='Arriendo';
                 me.observacionTransacciones='';
                 me.descuentoTransacciones='';
                 me.puntosTransacciones=0;

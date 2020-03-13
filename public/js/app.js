@@ -63044,9 +63044,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
 
 
 
@@ -63065,7 +63062,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
             idTransacciones: 0,
             idProductos: 0,
             idClientes: 0,
-            tipoTransacciones: 'Venta',
+            tipoTransacciones: 'Arriendo',
             observacionTransacciones: '',
             nombreProductos: '',
             nombreClientes: '',
@@ -63239,11 +63236,12 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
             me.precioNuevoProductos = val1.precioNuevoProductos;
             me.precioUsadoProductos = val1.precioUsadoProductos;
             me.stockProductos = val1.stockProductos;
-            if (me.picked == 0) {
-                me.precioPasajeroProductos = val1.precioNuevoProductos;
-            } else {
-                me.precioPasajeroProductos = val1.precioUsadoProductos;
-            }
+            // if(me.picked==0){
+            //     me.precioPasajeroProductos=val1.precioNuevoProductos;
+            // }else{
+            //     me.precioPasajeroProductos=val1.precioUsadoProductos;
+
+            // }
         },
         registrarTransaccion: function registrarTransaccion() {
 
@@ -63263,7 +63261,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
                 me.listado = 1;
                 me.listarTransaccion(1, '', 'idTransacciones');
                 me.idClientes = 0;
-                me.tipoTransacciones = 'Venta';
+                me.tipoTransacciones = 'Arriendo';
                 me.observacionTransacciones = '';
                 me.descuentoTransacciones = '';
                 me.puntosTransacciones = 0;
@@ -63286,7 +63284,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
 
             me.listado = 0;
             me.idClientes = 0;
-            me.tipoTransacciones = 'Venta';
+            me.tipoTransacciones = 'Arriendo';
             me.observacionTransacciones = '';
             me.descuentoTransacciones = '';
             me.puntosTransacciones = 0;
@@ -63948,51 +63946,23 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.picked,
-                                expression: "picked"
+                                value: _vm.plazoTransacciones,
+                                expression: "plazoTransacciones"
                               }
                             ],
-                            attrs: {
-                              type: "radio",
-                              checked: "",
-                              id: "0",
-                              value: "0"
-                            },
-                            domProps: { checked: _vm._q(_vm.picked, "0") },
+                            attrs: { type: "date" },
+                            domProps: { value: _vm.plazoTransacciones },
                             on: {
-                              change: function($event) {
-                                _vm.picked = "0"
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.plazoTransacciones = $event.target.value
                               }
                             }
                           }),
                           _vm._v(" "),
-                          _c("label", { attrs: { for: "0" } }, [
-                            _vm._v("Nuevo")
-                          ]),
-                          _vm._v(" "),
-                          _c("br"),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.picked,
-                                expression: "picked"
-                              }
-                            ],
-                            attrs: { type: "radio", id: "1", value: "1" },
-                            domProps: { checked: _vm._q(_vm.picked, "1") },
-                            on: {
-                              change: function($event) {
-                                _vm.picked = "1"
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("label", { attrs: { for: "1" } }, [
-                            _vm._v("Usado")
-                          ]),
+                          _c("label", [_vm._v("Plazo de Arriendo")]),
                           _vm._v(" "),
                           _c("br")
                         ]
