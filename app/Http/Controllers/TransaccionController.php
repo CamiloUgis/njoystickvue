@@ -90,12 +90,14 @@ class TransaccionController extends Controller
             $transaccion->idClientes = $request->input('idClientes');
             $transaccion->save();
             DB::commit();
-            
-            $socio=Socio::where('idClientes', '=', $request->input('idClientes'));
-            $socio->increment('puntosPropiosSocios',$request->input('puntosTransacciones'));
-           
-           
-
+            $socio1=Socio::where('idClientes', '=', $request->input('idClientes'));
+            $socio1->increment('puntosPropiosSocios',$request->input('puntosTransacciones'));
+            if(!($request->input('idClientes')==99)){
+            $socio=Socio::where('idClientes', '=', $request->input('idClientes'))->select('invitador')->first();
+            $invitador=Socio::where('idClientes', $socio->invitador)->first();
+            $invitador->increment('puntosReferidosSocios', ( $request->input('puntosTransacciones'))/2);
+            $invitador->save();       
+            }
             $pivote = $request->data;
 
             foreach($pivote as $ep=>$det){
