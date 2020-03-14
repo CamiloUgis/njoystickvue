@@ -108,8 +108,11 @@ class SocioController extends Controller
     public function asignaPuntos(){
         $socios = Socio::join('clientes','socios.idClientes','=','clientes.idClientes')
         ->join('transacciones', 'clientes.idClientes','=','transacciones.idClientes')
-        ->select('*');
-        
+        ->select('transacciones.idTransacciones','transacciones.puntosTransacciones','socios.idClientes')->orderBy('transacciones.idTransacciones', 'asc')->get();
+        foreach($socios as $socio){
+            $invitador=Socio::where($socio->Socios_idClientes, 'idClientes');
+            $invitador->increment('puntosReferidosSocios',($socio->puntosTransacciones)/2);
+        }
         return['socios'=>$socios];
     }
 
