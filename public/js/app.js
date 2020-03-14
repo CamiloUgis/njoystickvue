@@ -51545,6 +51545,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___default.a);
@@ -52411,12 +52418,13 @@ var render = function() {
                               [
                                 _c("multiselect", {
                                   attrs: {
-                                    placeholder: "Agregue uno o más géneros",
-                                    label: "nombreGeneros",
-                                    "hide-selected": true,
                                     options: _vm.arrayGeneros,
                                     multiple: true,
-                                    taggable: true
+                                    taggable: true,
+                                    "tag-placeholder": "Add this as new tag",
+                                    placeholder: "Agregue uno o más géneros",
+                                    label: "nombreGeneros",
+                                    "track-by": "nombreGeneros"
                                   },
                                   model: {
                                     value: _vm.arrayGenerosSeleccionados,
