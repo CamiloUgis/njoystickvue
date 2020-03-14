@@ -54650,7 +54650,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             puntosPropiosSocios: '',
             puntosReferidosSocios: '',
             estadoSocios: '',
-            invitador: 0,
+            Socio_idClientes: 0,
             arraySocios: [],
             arrayClientes: [],
             arrayReferidos: [],
@@ -54756,7 +54756,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var me = this;
             axios.post('socios/registrar', {
                 'idClientes': this.idClientes,
-                'invitador': this.invitador
+                'Socio_idClientes': this.Socio_idClientes
 
             }).then(function (response) {
                 me.cerrarModal();
@@ -54775,7 +54775,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var me = this;
             axios.put('clientes/actualizar', {
                 'idClientes': this.idClientes,
-                'invitador': this.invitador
+                'Socio_idClientes': this.Socio_idClientes
             }).then(function (response) {
                 me.cerrarModal();
                 me.listarCliente(1, '', 'nombre');
@@ -54806,7 +54806,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                                     this.modal = 1;
                                     this.tituloModal = "Registrar Nuevo Socio";
                                     this.idClientes = 0;
-                                    this.invitador = 0;
+                                    this.Socio_idClientes = 0;
                                     this.tipoAccion = 1;
                                     break;
                                 }
@@ -54816,7 +54816,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                                     this.tipoAccion = 2;
                                     this.tituloModal = "Modificar Socio";
                                     this.idClientes = data['idClientes'];
-                                    this.invitador = data['invitador'];
+                                    this.Socio_idClientes = data['Socio_idClientes'];
                                     this.estadoSocios = data['estadoSocios'];
 
                                     break;
@@ -55068,7 +55068,7 @@ var render = function() {
                               _vm._v(" "),
                               _c("td", {
                                 domProps: {
-                                  textContent: _vm._s(socio.invitador)
+                                  textContent: _vm._s(socio.Socio_idClientes)
                                 }
                               })
                             ])
@@ -55397,7 +55397,7 @@ var render = function() {
                           staticClass: "col-md-3 form-control-label",
                           attrs: { for: "number-input" }
                         },
-                        [_vm._v("Socio invitador")]
+                        [_vm._v("Socio Socio_idClientes")]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-9" }, [
@@ -55408,8 +55408,8 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.invitador,
-                                expression: "invitador"
+                                value: _vm.Socio_idClientes,
+                                expression: "Socio_idClientes"
                               }
                             ],
                             staticClass: "form-control",
@@ -55423,7 +55423,7 @@ var render = function() {
                                     var val = "_value" in o ? o._value : o.value
                                     return val
                                   })
-                                _vm.invitador = $event.target.multiple
+                                _vm.Socio_idClientes = $event.target.multiple
                                   ? $$selectedVal
                                   : $$selectedVal[0]
                               }

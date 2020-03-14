@@ -56,7 +56,7 @@
                                                 <i class="icon-eye"></i>
                                         </button> &nbsp;
                                         </td>
-                                        <td v-text="socio.invitador"></td>
+                                        <td v-text="socio.Socio_idClientes"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -158,9 +158,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="number-input">Socio invitador</label>
+                                    <label class="col-md-3 form-control-label" for="number-input">Socio Socio_idClientes</label>
                                     <div class="col-md-9">
-                                        <select class="form-control" v-model="invitador">
+                                        <select class="form-control" v-model="Socio_idClientes">
                                             <option value="0" disabled>Seleccione</option>
                                             <option v-for="socio in arraySocios" :key="socio.idClientes"
                                             :value="socio.idClientes" v-text="socio.nombreClientes"></option>
@@ -199,7 +199,7 @@
                 puntosPropiosSocios:'',
                 puntosReferidosSocios:'',
                 estadoSocios:'',
-                invitador: 0,
+                Socio_idClientes: 0,
                 arraySocios:[],
                 arrayClientes:[],
                 arrayReferidos:[],
@@ -308,7 +308,7 @@
                 let me=this;
                 axios.post('socios/registrar',{
                     'idClientes': this.idClientes,
-                    'invitador': this.invitador,
+                    'Socio_idClientes': this.Socio_idClientes,
                     
 
                     }).then(function (response){
@@ -326,7 +326,7 @@
                 let me=this;
                 axios.put('clientes/actualizar',{
                    'idClientes': this.idClientes,
-                   'invitador': this.invitador,
+                   'Socio_idClientes': this.Socio_idClientes,
                     }).then(function (response){
                         me.cerrarModal();
                         me.listarCliente(1,'', 'nombre');
@@ -356,7 +356,7 @@
                                 this.modal = 1;
                                 this.tituloModal = "Registrar Nuevo Socio";
                                 this.idClientes=0;
-                                this.invitador=0;
+                                this.Socio_idClientes=0;
                                 this.tipoAccion = 1;
                                 break;
 
@@ -366,7 +366,7 @@
                                 this.tipoAccion = 2;
                                 this.tituloModal = "Modificar Socio";
                                 this.idClientes=data['idClientes'];
-                                this.invitador=data['invitador'];
+                                this.Socio_idClientes=data['Socio_idClientes'];
                                 this.estadoSocios=data['estadoSocios'];
                                 
                                 break;

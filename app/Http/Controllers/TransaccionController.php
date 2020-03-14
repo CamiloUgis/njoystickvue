@@ -91,11 +91,11 @@ class TransaccionController extends Controller
             $transaccion->save();
             DB::commit();
             //agregar puntos
-            $socio=Socio::where('idClientes', '=', $request->input('idClientes'))->first();
+            $socio=Socio::where('idClientes', '=', $request->input('idClientes'));
             $socio->increment('puntosPropiosSocios',$request->input('puntosTransacciones'));
-            $socio->save();
-            $invitador=DB::table('socios')->where('idClientes', $socio->invitador)->first();
-            $invitador->increment('puntosReferidosSocios',($request->input('puntosTransacciones')/2));
+           
+            // $invitador=DB::table('socios')->where('idClientes', $socio->Socio_idClientes)->first();
+            // $invitador->increment('puntosReferidosSocios',($request->input('puntosTransacciones')/2));
 
             $pivote = $request->data;
 

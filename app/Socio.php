@@ -11,7 +11,7 @@ class Socio extends Model
    
     protected $fillable=['idClientes',
     'estadoSocios',
-    'invitador',
+    'Socio_idClientes',
     'puntosReferidosSocios',
     'puntosPropiosSocios'
     ];
@@ -22,6 +22,6 @@ class Socio extends Model
         return $this->hasMany('App\Socio');
     }
     public function anfitrion(){
-        return $this->belongsTo('App\Socio', 'invitador', 'idClientes');
+        return $this->belongsTo('App\Socio', 'Socio_idClientes', 'idClientes');
     }
 }
