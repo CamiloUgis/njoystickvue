@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Socio extends Model
 {
     protected $table= 'socios';
-    protected $foreignKey= 'idClientes';
+    protected $primaryKey='idClientes';
+    public $incrementing = false;
+    protected $foreignKey= 'invitador';
    
     protected $fillable=['idClientes',
     'estadoSocios',
-    'Socio_idClientes',
+    'invitador',
     'puntosReferidosSocios',
     'puntosPropiosSocios'
     ];
@@ -22,6 +24,6 @@ class Socio extends Model
         return $this->hasMany('App\Socio');
     }
     public function anfitrion(){
-        return $this->belongsTo('App\Socio', 'Socio_idClientes', 'idClientes');
+        return $this->belongsTo('App\Socio', 'invitador', 'idClientes');
     }
 }

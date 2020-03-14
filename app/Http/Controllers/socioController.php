@@ -23,12 +23,12 @@ class SocioController extends Controller
         if($buscar==''){
             $socios = Socio::join('clientes','socios.idClientes','=','clientes.idClientes')
             ->select('socios.idClientes', 'clientes.nombreClientes','socios.estadoSocios', 
-            'socios.puntosPropiosSocios','socios.puntosReferidosSocios','socios.Socio_idClientes')
+            'socios.puntosPropiosSocios','socios.puntosReferidosSocios','socios.invitador')
             ->orderBy('idClientes', 'desc')->paginate(10);
         }else{
             $socios = Socio::join('clientes','socios.idClientes','=','clientes.idClientes')
             ->select('socios.idClientes', 'clientes.nombreClientes','socios.estadoSocios',
-            'socios.puntosPropiosSocios','socios.puntosReferidosSocios','socios.Socio_idClientes')
+            'socios.puntosPropiosSocios','socios.puntosReferidosSocios','socios.invitador')
             ->where($criterio, 'like', '%'. $buscar . '%')
             ->orderBy('idClientes', 'desc')->paginate(10);
         }
@@ -56,7 +56,7 @@ class SocioController extends Controller
         if(!$request->ajax()) return redirect('/');
         $socio = new Socio();
         $socio->idClientes=$request->input('idClientes');
-        $socio->Socio_idClientes=$request->input('Socio_idClientes');
+        $socio->invitador=$request->input('invitador');
         $socio->estadoSocios= 1;
         $socio->puntosPropiosSocios = 0;
         $socio->puntosReferidosSocios = 0;
@@ -78,7 +78,7 @@ class SocioController extends Controller
         if(!$request->ajax()) return redirect('/');
         $socio = Socio::findOrFail($request->idClientes);
         $socio->idClientes=$request->input('idClientes');
-        $socio->Socio_idClientes=$request->input('Socio_idClientes');
+        $socio->invitador=$request->input('invitador');
         $socio->save();
 
     }
@@ -89,8 +89,8 @@ class SocioController extends Controller
         $referidos= DB::table('socios')
         ->join('clientes','socios.idClientes','=','clientes.idClientes')
         ->select('socios.idClientes', 'clientes.nombreClientes','socios.estadoSocios', 'socios.puntosSocios')
-        ->where('Socio_idClientes',$request->idClientes)->get(); */
-        $referidos = Socio::where('Socio_idClientes', 'like', '%'. $filtro. '%')
+        ->where('invitador',$request->idClientes)->get(); */
+        $referidos = Socio::where('invitador', 'like', '%'. $filtro. '%')
         ->join('clientes','socios.idClientes','=','clientes.idClientes')
         ->select('socios.idClientes', 'clientes.nombreClientes', 'socios.puntosPropiosSocios', 'socios.puntosReferidosSocios')
         ->orderBy('clientes.nombreClientes', 'asc')->get();
@@ -108,12 +108,13 @@ class SocioController extends Controller
     public function asignaPuntos(){
         $socios = Socio::join('clientes','socios.idClientes','=','clientes.idClientes')
         ->join('transacciones', 'clientes.idClientes','=','transacciones.idClientes')
-        ->select('transacciones.idTransacciones','transacciones.puntosTransacciones','socios.idClientes')->orderBy('transacciones.idTransacciones', 'asc')->get();
+        ->select('transacciones.idTransacciones','transacciones.puntosTransacciones','socios.idClientes','socios.invitador')->orderBy('transacciones.idTransacciones', 'asc')->get();
         foreach($socios as $socio){
-            $invitador=Socio::where($socio->Socios_idClientes, 'idClientes');
-            $invitador->increment('puntosReferidosSocios',($socio->puntosTransacciones)/2);
+            $invitador=Socio::where('idClientes', $socio->invitador)->first();
+            $invitador->increment('puntosReferidosSocios', ($socio->puntosTransacciones)/2);
+            $invitador->save();
         }
-        return['socios'=>$socios];
+        return['invitador'=>$invitador];
     }
 
 
