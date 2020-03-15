@@ -90,17 +90,25 @@ class SocioController extends Controller
         ->join('clientes','socios.idClientes','=','clientes.idClientes')
         ->select('socios.idClientes', 'clientes.nombreClientes','socios.estadoSocios', 'socios.puntosSocios')
         ->where('invitador',$request->idClientes)->get(); */
-        $socio=Socio::where('idClientes', 'like', '%'. $filtro. '%')
-        ->join('clientes','socios.idClientes','=','clientes.idClientes')
-        ->select('socios.idClientes', 'clientes.nombreClientes', 'socios.puntosPropiosSocios', 'socios.puntosReferidosSocios')
-        ->first();
+        // $socio=Socio::where('idClientes', 'like', '%'. $filtro. '%')
+        // ->join('clientes','socios.idClientes','=','clientes.idClientes')
+        // ->select('socios.idClientes', 'clientes.nombreClientes', 'socios.puntosPropiosSocios', 'socios.puntosReferidosSocios')
+        // ->first();
         $referidos = Socio::where('invitador', 'like', '%'. $filtro. '%')
         ->join('clientes','socios.idClientes','=','clientes.idClientes')
         ->select('socios.idClientes', 'clientes.nombreClientes', 'socios.puntosPropiosSocios', 'socios.puntosReferidosSocios')
         ->orderBy('clientes.nombreClientes', 'asc')->get();
         
         
-        return ['referidos'=> $referidos]->with('socio', $socio);
+        return ['referidos'=> $referidos];
+    }
+    public function verSocio(Request $request){
+        $filtro = $request->filtro;
+        $socio=Socio::where('idClientes', 'like', '%'. $filtro. '%')
+         ->join('clientes','socios.idClientes','=','clientes.idClientes')
+         ->select('socios.idClientes', 'clientes.nombreClientes', 'socios.puntosPropiosSocios', 'socios.puntosReferidosSocios')
+         ->first();
+         return ['socio'=> $socio];
     }
     public function selectSocio(Request $request){
         if(!$request->ajax()) return redirect('/');

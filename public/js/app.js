@@ -51055,15 +51055,17 @@ var render = function() {
               staticStyle: { "background-color": "#66CCFF" }
             },
             [
-              _vm._v("\n            Ver "),
-              _c("i", {
-                staticClass: "fa fa-arrow-circle-right",
-                on: {
-                  click: function($event) {
-                    return _vm.verProductos()
+              _c("a", [
+                _vm._v(" Ver "),
+                _c("i", {
+                  staticClass: "fa fa-arrow-circle-right",
+                  on: {
+                    click: function($event) {
+                      return _vm.verProductos()
+                    }
                   }
-                }
-              })
+                })
+              ])
             ]
           )
         ])
@@ -51180,8 +51182,10 @@ var staticRenderFns = [
         staticStyle: { "background-color": "#66CCFF" }
       },
       [
-        _vm._v("\n            Ver  "),
-        _c("i", { staticClass: "fa fa-arrow-circle-right" })
+        _c("a", [
+          _vm._v("  Ver  "),
+          _c("i", { staticClass: "fa fa-arrow-circle-right" })
+        ])
       ]
     )
   },
@@ -51204,8 +51208,10 @@ var staticRenderFns = [
         staticStyle: { "background-color": "#66CCFF" }
       },
       [
-        _vm._v("\n            Ver "),
-        _c("i", { staticClass: "fa fa-arrow-circle-right" })
+        _c("a", [
+          _vm._v("  Ver "),
+          _c("i", { staticClass: "fa fa-arrow-circle-right" })
+        ])
       ]
     )
   },
@@ -51228,8 +51234,10 @@ var staticRenderFns = [
         staticStyle: { "background-color": "#66CCFF" }
       },
       [
-        _vm._v("\n            Ver "),
-        _c("i", { staticClass: "fa fa-arrow-circle-right" })
+        _c("a", [
+          _vm._v("  Ver "),
+          _c("i", { staticClass: "fa fa-arrow-circle-right" })
+        ])
       ]
     )
   }
@@ -51565,6 +51573,7 @@ Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
             idPlataformas: 0,
             idGeneros: 0,
             nombreProductos: '',
+
             descripcionProductos: '',
             stockProductos: '',
             precioNuevoProductos: '',
@@ -51595,6 +51604,7 @@ Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
 
 
     computed: {
+
         isActived: function isActived() {
             return this.pagination.current_page;
         },
@@ -51938,13 +51948,15 @@ var render = function() {
                       }),
                       _vm._v(" "),
                       producto.idProductos == _vm.listaGeneros.idProductos
-                        ? _c("td", [
-                            _vm._v(
-                              "\n                                   " +
-                                _vm._s(_vm.listaGeneros.nombreGeneros) +
-                                "\n                               "
-                            )
-                          ])
+                        ? _c(
+                            "td",
+                            [
+                              _vm._l(_vm.listaGeneros, function(genero) {
+                                return [_vm._v(_vm._s(genero.nombreGeneros))]
+                              })
+                            ],
+                            2
+                          )
                         : _c("td", [_vm._v("No posee géneros asociados")]),
                       _vm._v(" "),
                       _c("td", {
@@ -54658,6 +54670,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             puntosPropiosSocios: '',
             puntosReferidosSocios: '',
             estadoSocios: '',
+            socio: [],
             invitador: 0,
             arraySocios: [],
             arrayClientes: [],
@@ -54727,6 +54740,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 me.arrayReferidos = respuesta.referidos;
             }).catch(function (error) {
                 console.log(error.response);
+            });
+        },
+        verSocio: function verSocio() {
+            var me = this;
+            var url = '/socios/verSocio';
+            axios.get(url).then(function (response) {
+                var respuesta = response.data;
+                me.socio = respuesta.socio;
+            }).catch(function (error) {
+                console.log(error);
             });
         },
         listarSocio: function listarSocio(page, buscar, criterio) {
@@ -55072,13 +55095,7 @@ var render = function() {
                                 _vm._v(
                                   "  \n                                   "
                                 )
-                              ]),
-                              _vm._v(" "),
-                              _c("td", {
-                                domProps: {
-                                  textContent: _vm._s(socio.invitador)
-                                }
-                              })
+                              ])
                             ])
                           }),
                           0
@@ -55174,6 +55191,14 @@ var render = function() {
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "form-group row" }, [
                     _c("div", { staticClass: "col-md-12" }, [
+                      _c("h3", [
+                        _vm._v(
+                          _vm._s(_vm.socio.idClientes) +
+                            " - " +
+                            _vm._s(_vm.socio.nombreClientes)
+                        )
+                      ]),
+                      _vm._v(" "),
                       _c("div", { staticClass: "table-responsive col-md-12" }, [
                         _c("table", { staticClass: "table table-borderless" }, [
                           _vm._m(1),

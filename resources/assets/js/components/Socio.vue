@@ -56,7 +56,7 @@
                                                 <i class="icon-eye"></i>
                                         </button> &nbsp;
                                         </td>
-                                        <td v-text="socio.invitador"></td>
+                                        
                                     </tr>
                                 </tbody>
                             </table>
@@ -83,7 +83,7 @@
                         <div class="card-body">
                             <div class="form-group row">
                             <div class="col-md-12">
-                                 <!-- <h3>{{socio.idClientes}} - {{socio.nombreClientes}}</h3>  -->
+                                  <h3>{{socio.idClientes}} - {{socio.nombreClientes}}</h3>  
                                 <!-- implementar codigo visualización de socios -->
                                <div class="table-responsive col-md-12" >
                                 <table class="table table-borderless"> 
@@ -199,6 +199,7 @@
                 puntosPropiosSocios:'',
                 puntosReferidosSocios:'',
                 estadoSocios:'',
+                socio:[],
                 invitador: 0,
                 arraySocios:[],
                 arrayClientes:[],
@@ -270,6 +271,17 @@
                     console.log(error.response);
                 })
 
+            },
+            verSocio(){
+                let me=this;
+                var url= '/socios/verSocio';
+                axios.get(url).then(function (response){
+                    var respuesta = response.data;
+                    me.socio = respuesta.socio;
+                })
+                .catch(function (error){
+                    console.log(error);
+                })
             },
             listarSocio(page, buscar, criterio){
                 let me=this;

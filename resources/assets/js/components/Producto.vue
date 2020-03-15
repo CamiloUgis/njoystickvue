@@ -45,7 +45,7 @@
                                     <!-- <td v-text="producto.descripcionProductos"></td> -->
                                     <td v-text="producto.nombrePlataformas"></td>
                                     <td v-if="producto.idProductos==listaGeneros.idProductos">
-                                        {{listaGeneros.nombreGeneros}}
+                                       <template v-for="genero in listaGeneros">{{genero.nombreGeneros}}</template> 
                                     </td>
                                     <td v-else>No posee géneros asociados</td>
                                     <td v-text="producto.stockProductos"></td>
@@ -180,6 +180,7 @@ import Multiselect from 'vue-multiselect'
                 idPlataformas:0,
                 idGeneros:0,
                 nombreProductos:'',
+               
                 descripcionProductos:'',
                 stockProductos:'',
                 precioNuevoProductos:'',
@@ -209,6 +210,7 @@ import Multiselect from 'vue-multiselect'
         },
         
         computed:{
+            
             isActived: function(){
                 return this.pagination.current_page;
             },
