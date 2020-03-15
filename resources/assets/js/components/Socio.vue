@@ -216,6 +216,7 @@
                 arraySocios:[],
                 arrayClientes:[],
                 arrayReferidos:[],
+                arrayTransacciones:[],
                 modal : 0,
                 tituloModal : '',
                 tipoAccion : 0,
@@ -277,6 +278,17 @@
                 axios.get(url).then(function (response){
                     var respuesta = response.data;
                     me.socio = respuesta.socio;
+                })
+                .catch(function (error){
+                    console.log(error);
+                })
+            },
+             obtenerTransacciones(idClientes){
+                let me=this;
+                var url= '/socios/obtenerTransacciones?filtro='+idClientes;
+                axios.get(url).then(function (response){
+                    var respuesta = response.data;
+                    me.arrayTransacciones = respuesta.arrayTransacciones;
                 })
                 .catch(function (error){
                     console.log(error);

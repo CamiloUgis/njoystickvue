@@ -53442,6 +53442,7 @@ var render = function() {
                           staticClass: "form-control",
                           attrs: {
                             type: "number",
+                            min: "0",
                             name: "telefono",
                             placeholder: "Teléfono de cliente"
                           },
@@ -54687,6 +54688,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             arraySocios: [],
             arrayClientes: [],
             arrayReferidos: [],
+            arrayTransacciones: [],
             modal: 0,
             tituloModal: '',
             tipoAccion: 0,
@@ -54748,6 +54750,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get(url).then(function (response) {
                 var respuesta = response.data;
                 me.socio = respuesta.socio;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        obtenerTransacciones: function obtenerTransacciones(idClientes) {
+            var me = this;
+            var url = '/socios/obtenerTransacciones?filtro=' + idClientes;
+            axios.get(url).then(function (response) {
+                var respuesta = response.data;
+                me.arrayTransacciones = respuesta.arrayTransacciones;
             }).catch(function (error) {
                 console.log(error);
             });

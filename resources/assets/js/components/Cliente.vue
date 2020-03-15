@@ -102,7 +102,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="email-input">Teléfono</label>
                                     <div class="col-md-9">
-                                        <input type="number" v-model="telefonoClientes" name="telefono" class="form-control" placeholder="Teléfono de cliente">
+                                        <input type="number"  min="0" v-model="telefonoClientes" name="telefono" class="form-control" placeholder="Teléfono de cliente">
                                         <span v-if="errors.telefonoClientes" class="error">{{errors.telefonoClientes[0]}}</span>
                                     </div>
                                 </div>

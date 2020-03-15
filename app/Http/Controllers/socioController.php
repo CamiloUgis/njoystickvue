@@ -117,20 +117,15 @@ class SocioController extends Controller
         return ['socios' => $socios];
 
     }
-    // public function asignaPuntos(){
-    //     $socios = Socio::join('clientes','socios.idClientes','=','clientes.idClientes')
-    //     ->join('transacciones', 'clientes.idClientes','=','transacciones.idClientes')
-    //     ->select('transacciones.idTransacciones','transacciones.puntosTransacciones','socios.idClientes','socios.invitador')->orderBy('transacciones.idTransacciones', 'asc')->get();
-    //     foreach($socios as $socio){
-    //         if(!($socio->idClientes==99)){
-    //         $invitador=Socio::where('idClientes', $socio->invitador)->first();
-    //         $invitador->increment('puntosReferidosSocios', ($socio->puntosTransacciones)/2);
-    //         $invitador->save();                
-    //         }
-    //     }
-
-    //     return['invitador'=>$invitador];
-    // }
+    public function obtenerTransacciones(Request $request){
+        $filtro = $request->filtro;
+        $transacciones = Socio::where('socios.idClientes', 'like', '%'. $filtro. '%')
+        ->join('clientes','socios.idClientes','=','clientes.idClientes')
+        ->join('transacciones', 'clientes.idClientes','=','transacciones.idClientes')
+        ->select('transacciones.idTransacciones','transacciones.puntosTransacciones','socios.idClientes','transacciones.puntosGastadosTransacciones')->orderBy('transacciones.idTransacciones', 'asc')->get();
+        
+        return['transacciones'=>$transacciones];
+    }
 
 
 }
