@@ -116,7 +116,7 @@
                                 </div>
                                 
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4" >
                                 <div class="form-group">
                                     <label>Forma de Pago</label>
                                     <select class="form-control" v-model="formaPagoTransacciones">

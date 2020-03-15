@@ -82,6 +82,7 @@ class TransaccionController extends Controller
             $transaccion->fechaTransacciones = $mytime;
             $transaccion->observacionTransacciones = $request->input('observacionTransacciones');
             $transaccion->puntosTransacciones = $request->input('puntosTransacciones');
+            $transaccion->puntosGastadosTransacciones=$request->input('puntosGastadosTransacciones');
             $transaccion->descuentoTransacciones = $request->input('descuentoTransacciones');
             $transaccion->valorFinalTransacciones = $request->input('valorFinalTransacciones');
             $transaccion->formaPagoTransacciones = $request->input('formaPagoTransacciones');
@@ -91,11 +92,14 @@ class TransaccionController extends Controller
             $transaccion->save();
             DB::commit();
             $socio1=Socio::where('idClientes', '=', $request->input('idClientes'));
+            $socio1->decrement('puntosActualesSocios',$request->input('puntosGastadosTransacciones'));
             $socio1->increment('puntosPropiosSocios',$request->input('puntosTransacciones'));
+            $socio1->increment('puntosActualesSocios',$request->input('puntosTransacciones'));
             if(!($request->input('idClientes')==99)){
             $socio=Socio::where('idClientes', '=', $request->input('idClientes'))->select('invitador')->first();
             $invitador=Socio::where('idClientes', $socio->invitador)->first();
             $invitador->increment('puntosReferidosSocios', ( $request->input('puntosTransacciones'))/2);
+            $invitador->increment('puntosActualesSocios', ( $request->input('puntosTransacciones'))/2);
             $invitador->save();       
             }
             $pivote = $request->data;

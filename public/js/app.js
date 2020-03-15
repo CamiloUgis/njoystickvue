@@ -54661,6 +54661,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -54797,26 +54809,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(error.response);
             });
         },
-        actualizarCliente: function actualizarCliente() {
-            var _this = this;
 
-            // if(this.validarCliente()){
-            //     return;
-            // }
-            this.errors = [];
-            var me = this;
-            axios.put('clientes/actualizar', {
-                'idClientes': this.idClientes,
-                'invitador': this.invitador
-            }).then(function (response) {
-                me.cerrarModal();
-                me.listarCliente(1, '', 'nombre');
-            }).catch(function (error) {
-                if (error.response.status == 422) {
-                    _this.errors = error.response.data.errors;
-                }
-            });
-        },
+        //     actualizarCliente(){
+        //         // if(this.validarCliente()){
+        //     //     return;
+        //     // }
+        //     this.errors= []
+        //     let me=this;
+        //     axios.put('clientes/actualizar',{
+        //        'idClientes': this.idClientes,
+        //        'invitador': this.invitador,
+        //         }).then(function (response){
+        //             me.cerrarModal();
+        //             me.listarCliente(1,'', 'nombre');
+        //     }).catch(error=>{
+        //         if(error.response.status == 422){
+        //             this.errors = error.response.data.errors
+        //         }
+
+
+        //     })
+        // },
         cerrarModal: function cerrarModal() {
             this.modal = 0;
             this.tituloModal = '';
@@ -54842,17 +54855,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                                     this.tipoAccion = 1;
                                     break;
                                 }
-                            case 'actualizar':
-                                {
-                                    this.modal = 1;
-                                    this.tipoAccion = 2;
-                                    this.tituloModal = "Modificar Socio";
-                                    this.idClientes = data['idClientes'];
-                                    this.invitador = data['invitador'];
-                                    this.estadoSocios = data['estadoSocios'];
+                            // case 'actualizar':{
+                            //     this.modal = 1;
+                            //     this.tipoAccion = 2;
+                            //     this.tituloModal = "Modificar Socio";
+                            //     this.idClientes=data['idClientes'];
+                            //     this.invitador=data['invitador'];
+                            //     this.estadoSocios=data['estadoSocios'];
 
-                                    break;
-                                }
+                            //     break;
+
+                            // }
                         }
                     }
             }
@@ -55194,7 +55207,8 @@ var render = function() {
                     _c("div", { staticClass: "col-md-12" }, [
                       _c("h3", [
                         _vm._v(
-                          _vm._s(_vm.socio.idClientes) +
+                          " " +
+                            _vm._s("NJ" + _vm.socio.idClientes) +
                             " - " +
                             _vm._s(_vm.socio.nombreClientes)
                         )
@@ -55261,7 +55275,49 @@ var render = function() {
                                     ]
                                   ),
                                   _vm._v(" "),
-                                  _vm._m(3)
+                                  _c(
+                                    "tr",
+                                    {
+                                      staticStyle: {
+                                        "background-color": "#CEECF5"
+                                      }
+                                    },
+                                    [
+                                      _vm._m(3),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm.socio.puntosPropiosSocios +
+                                              _vm.socio.puntosReferidosSocios
+                                          )
+                                        )
+                                      ])
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _vm._m(4),
+                                  _vm._v(" "),
+                                  _c(
+                                    "tr",
+                                    {
+                                      staticStyle: {
+                                        "background-color": "#CEECF5"
+                                      }
+                                    },
+                                    [
+                                      _vm._m(5),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(
+                                          " " +
+                                            _vm._s(
+                                              _vm.socio.puntosActualesSocios
+                                            )
+                                        )
+                                      ])
+                                    ]
+                                  )
                                 ],
                                 2
                               )
@@ -55519,22 +55575,6 @@ var render = function() {
                       },
                       [_vm._v("Guardar")]
                     )
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.tipoAccion == 2
-                  ? _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function($event) {
-                            return _vm.actualizarSocio()
-                          }
-                        }
-                      },
-                      [_vm._v("Actualizar")]
-                    )
                   : _vm._e()
               ])
             ])
@@ -55593,12 +55633,28 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("td", { attrs: { colspan: "2", align: "right" } }, [
+      _c("strong", [_vm._v("Total Acumulado:")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("tr", { staticStyle: { "background-color": "#CEECF5" } }, [
       _c("td", { attrs: { colspan: "2", align: "right" } }, [
-        _c("strong", [_vm._v("Total Acumulado:")])
+        _c("strong", [_vm._v("Total de puntos gastados:")])
       ]),
       _vm._v(" "),
       _c("td", [_vm._v(" test")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { attrs: { colspan: "2", align: "right" } }, [
+      _c("strong", [_vm._v("Puntos disponibles:")])
     ])
   }
 ]
@@ -60421,6 +60477,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
             nombreClientes: '',
             fechaTransacciones: '',
             puntosTransacciones: '',
+            puntosGastadosTransacciones: '',
             descuentoTransacciones: '',
             valorFinalTransacciones: '',
             precioNuevoProductos: '',

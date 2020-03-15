@@ -394,6 +394,7 @@ Vue.component('v-select', vSelect)
                 nombreClientes:'',
                 fechaTransacciones:'',
                 puntosTransacciones:'',
+                puntosGastadosTransacciones:'',
                 descuentoTransacciones:'',
                 valorFinalTransacciones:'',
                 precioNuevoProductos:'',

@@ -24,13 +24,13 @@ class SocioController extends Controller
             $socios = Socio::join('clientes','socios.idClientes','=','clientes.idClientes')
             ->select('socios.idClientes', 'clientes.nombreClientes','socios.estadoSocios', 
             'socios.puntosPropiosSocios','socios.puntosReferidosSocios','socios.invitador')
-            ->orderBy('idClientes', 'desc')->paginate(10);
+            ->orderBy('idClientes', 'asc')->paginate(10);
         }else{
             $socios = Socio::join('clientes','socios.idClientes','=','clientes.idClientes')
             ->select('socios.idClientes', 'clientes.nombreClientes','socios.estadoSocios',
             'socios.puntosPropiosSocios','socios.puntosReferidosSocios','socios.invitador')
             ->where($criterio, 'like', '%'. $buscar . '%')
-            ->orderBy('idClientes', 'desc')->paginate(10);
+            ->orderBy('idClientes', 'asc')->paginate(10);
         }
         return [
             'pagination' =>[
@@ -106,7 +106,7 @@ class SocioController extends Controller
         $filtro = $request->filtro;
         $socio=Socio::where('socios.idClientes', 'like', '%'. $filtro. '%')
          ->join('clientes','socios.idClientes','=','clientes.idClientes')
-         ->select('socios.idClientes', 'clientes.nombreClientes', 'socios.puntosPropiosSocios', 'socios.puntosReferidosSocios')
+         ->select('socios.idClientes', 'clientes.nombreClientes', 'socios.puntosPropiosSocios', 'socios.puntosActualesSocios', 'socios.puntosReferidosSocios')
          ->first();
          return ['socio'=> $socio];
     }

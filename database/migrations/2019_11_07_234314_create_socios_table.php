@@ -19,6 +19,7 @@ class CreateSociosTable extends Migration
             $table->boolean('estadoSocios');
             $table->integer('puntosReferidosSocios');
             $table->integer('puntosPropiosSocios');
+            $table->integer('puntosActualesSocios');
             $table->timestamps();
             $table->unsignedInteger('invitador');
             $table->foreign('invitador')->references('idClientes')->on('socios');

@@ -83,7 +83,7 @@
                         <div class="card-body">
                             <div class="form-group row">
                             <div class="col-md-12">
-                                  <h3>{{socio.idClientes}} - {{socio.nombreClientes}}</h3>  
+                                  <h3> {{'NJ'+socio.idClientes}} - {{socio.nombreClientes}}</h3>  
                                 <!-- implementar codigo visualización de socios -->
                                <div class="table-responsive col-md-12" >
                                 <table class="table table-borderless"> 
@@ -110,7 +110,19 @@
                                     <td colspan="2" align="right"> 
                                         <strong>Total Acumulado:</strong>
                                     </td>
+                                    <td>{{socio.puntosPropiosSocios+socio.puntosReferidosSocios}}</td>
+                                </tr>
+                                <tr style="background-color: #CEECF5">
+                                    <td colspan="2" align="right"> 
+                                        <strong>Total de puntos gastados:</strong>
+                                    </td>
                                     <td> test</td>
+                                </tr>
+                                <tr style="background-color: #CEECF5">
+                                    <td colspan="2" align="right"> 
+                                        <strong>Puntos disponibles:</strong>
+                                    </td>
+                                    <td> {{socio.puntosActualesSocios}}</td>
                                 </tr>
                                 </tbody>
                                 
@@ -178,7 +190,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" @click="cerrarModal()" >Cerrar</button>
                             <button type="button" v-if="tipoAccion==1" class="btn btn-primary" @click="registrarSocio()" >Guardar</button>
-                            <button type="button" v-if="tipoAccion==2" class="btn btn-primary" @click="actualizarSocio()">Actualizar</button>
+                            <!-- <button type="button" v-if="tipoAccion==2" class="btn btn-primary" @click="actualizarSocio()">Actualizar</button> -->
 
                         </div>
                     </div>
@@ -332,26 +344,26 @@
                     console.log(error.response);
                 })
             },
-                actualizarCliente(){
-                    // if(this.validarCliente()){
-                //     return;
-                // }
-                this.errors= []
-                let me=this;
-                axios.put('clientes/actualizar',{
-                   'idClientes': this.idClientes,
-                   'invitador': this.invitador,
-                    }).then(function (response){
-                        me.cerrarModal();
-                        me.listarCliente(1,'', 'nombre');
-                }).catch(error=>{
-                    if(error.response.status == 422){
-                        this.errors = error.response.data.errors
-                    }
+            //     actualizarCliente(){
+            //         // if(this.validarCliente()){
+            //     //     return;
+            //     // }
+            //     this.errors= []
+            //     let me=this;
+            //     axios.put('clientes/actualizar',{
+            //        'idClientes': this.idClientes,
+            //        'invitador': this.invitador,
+            //         }).then(function (response){
+            //             me.cerrarModal();
+            //             me.listarCliente(1,'', 'nombre');
+            //     }).catch(error=>{
+            //         if(error.response.status == 422){
+            //             this.errors = error.response.data.errors
+            //         }
                     
                     
-                })
-            },
+            //     })
+            // },
             cerrarModal(){
                 this.modal=0;
                 this.tituloModal='';
@@ -375,17 +387,17 @@
                                 break;
 
                             }
-                            case 'actualizar':{
-                                this.modal = 1;
-                                this.tipoAccion = 2;
-                                this.tituloModal = "Modificar Socio";
-                                this.idClientes=data['idClientes'];
-                                this.invitador=data['invitador'];
-                                this.estadoSocios=data['estadoSocios'];
+                            // case 'actualizar':{
+                            //     this.modal = 1;
+                            //     this.tipoAccion = 2;
+                            //     this.tituloModal = "Modificar Socio";
+                            //     this.idClientes=data['idClientes'];
+                            //     this.invitador=data['invitador'];
+                            //     this.estadoSocios=data['estadoSocios'];
                                 
-                                break;
+                            //     break;
 
-                            }
+                            // }
                         }
                     }
                 }
