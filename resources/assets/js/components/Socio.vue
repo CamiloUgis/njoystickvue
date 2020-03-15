@@ -258,9 +258,22 @@
             }
         },
         methods:{
+            
+            verSocio(idClientes){
+                let me=this;
+                var url= '/socios/verSocio?filtro='+idClientes;
+                axios.get(url).then(function (response){
+                    var respuesta = response.data;
+                    me.socio = respuesta.socio;
+                })
+                .catch(function (error){
+                    console.log(error);
+                })
+            },
             esReferido(idClientes){
                 this.listado=0;
                 let me=this;
+                verSocio(idClientes);
                 var url= '/socios/equipo?filtro='+idClientes;
                 axios.get(url).then(function (response){
                     console.log(response.data);
@@ -271,17 +284,6 @@
                     console.log(error.response);
                 })
 
-            },
-            verSocio(){
-                let me=this;
-                var url= '/socios/verSocio?filtro='+idClientes;
-                axios.get(url).then(function (response){
-                    var respuesta = response.data;
-                    me.socio = respuesta.socio;
-                })
-                .catch(function (error){
-                    console.log(error);
-                })
             },
             listarSocio(page, buscar, criterio){
                 let me=this;

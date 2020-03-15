@@ -54730,19 +54730,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     methods: {
-        esReferido: function esReferido(idClientes) {
-            this.listado = 0;
-            var me = this;
-            var url = '/socios/equipo?filtro=' + idClientes;
-            axios.get(url).then(function (response) {
-                console.log(response.data);
-                var respuesta = response.data;
-                me.arrayReferidos = respuesta.referidos;
-            }).catch(function (error) {
-                console.log(error.response);
-            });
-        },
-        verSocio: function verSocio() {
+        verSocio: function verSocio(idClientes) {
             var me = this;
             var url = '/socios/verSocio?filtro=' + idClientes;
             axios.get(url).then(function (response) {
@@ -54750,6 +54738,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 me.socio = respuesta.socio;
             }).catch(function (error) {
                 console.log(error);
+            });
+        },
+        esReferido: function esReferido(idClientes) {
+            this.listado = 0;
+            var me = this;
+            verSocio(idClientes);
+            var url = '/socios/equipo?filtro=' + idClientes;
+            axios.get(url).then(function (response) {
+                console.log(response.data);
+                var respuesta = response.data;
+                me.arrayReferidos = respuesta.referidos;
+            }).catch(function (error) {
+                console.log(error.response);
             });
         },
         listarSocio: function listarSocio(page, buscar, criterio) {
