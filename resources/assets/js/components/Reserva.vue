@@ -5,7 +5,7 @@
                 <!-- Ejemplo de tabla Listado -->
                 <div class="card">
                     <div class="card-header">
-                        <i class="fa fa-align-justify"></i> Reservas
+                        <i class="fa fa-align-justify"></i> Ventas
                         <button type="button" @click="mostrarDetalle()" class="btn btn-secondary">
                             <i class="icon-plus"></i>&nbsp;Nuevo
                         </button>
@@ -86,14 +86,17 @@
                                     </v-select>
                                 </div>
                             </div>
-                                <div class="col-md-4" style="margin-top:20px">
+                            <div class="col-md-3">
+                                <label for="">Descuento (en %)</label>
+                                <input type="number" class="form-control" v-model="descuento" placeholder="5%">
+                            </div>
+                                <div class="col-md-3" style="margin-top:20px;">
                                     <div class="form-group">
-                                    <label>Estado de Transacción</label>
+                                    <label>Estado de Transacción</label> 
                                     <input v-model="estadoTransacciones" disabled>
-
                                     </div>
                                 </div>                            
-                            <div class="col-md-4" style="margin-top:20px">
+                            <div class="col-md-3" style="margin-top:20px;">
                                 <div class="form-group">
                                     <label>Tipo de Transacción</label>
                                     <input v-model="tipoTransacciones" disabled>
@@ -130,19 +133,30 @@
                                     </v-select>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                               <div class="form-group" style="margin-top: 20px;"> 
+                                    <input type="radio" checked id="0" value="0" v-model="picked">
+                                    <label for="0">Nuevo</label>
+                                    <br>
+                                    <input type="radio" id="1" value="1" v-model="picked">
+                                    <label for="1">Usado</label>
+                                    <br>              
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group row border">
                             <div class="col-md-2" style="margin-bottom: 15px;">
-                                    <label>Precio Abonado<span style="color:red;"></span></label>
-                                    <input type="number" value="0" class="form-control" v-model="abono">
-                            </div>
-                            <div class="col-md-2" style="margin-bottom: 15px;">
-                                    <label>Precio Producto<span style="color:red;"></span></label>
+                                    <label>Precio <span style="color:red;" v-show="precioPasajeroProductos==0" >(Ingrese*)</span></label>
                                     <input type="number" value="0" class="form-control" v-model="precioPasajeroProductos">
+                            </div>
+                            <div class="col-md-2">
+                                    <label>Cantidad<span style="color:red;" v-show="cantidadPasajeraProductos==0" >(Ingrese*) </span></label>
+                                    <input type="number" value="0" class="form-control" v-model="cantidadPasajeraProductos">
                             </div>
                             <div class="col-md-4" style="margin-top: 30px;">
                                     <label>Puntos por Producto</label>
                                     <input v-model="puntosPasajeroProductos" disabled>
+                                    <td>{{calcularPuntos}}</td>
                             </div>
                             <div class="col-md-3" style="margin-top:25px">
                                 <div class="form-group">
@@ -157,9 +171,10 @@
                                             <tr>
                                                 <th>Producto</th>
                                                 <th>Precio</th>
+                                                <th>Cantidad</th>
                                                 <th>Puntos</th>
                                                 <th>Subtotal</th>
-                                                <th>Opciones</th>
+                                                <th>Eliminar</th>
                                             </tr>
                                         </thead>
                                         <tbody v-if="arrayDetalles.length">
@@ -171,11 +186,15 @@
                                                     <input v-model="detalle.precioProductos" type="number" value="3" class="form-control" disabled>
                                                 </td>
                                                 <td>
+                                                    <input v-model="detalle.cantidadProductos" type="number" value="2" class="form-control" disabled>
+
+                                                </td>
+                                                <td>
                                                     <input v-model="detalle.puntosProductos" type="number" value="2" class="form-control" disabled>
 
                                                 </td>
                                                 <td>
-                                                    {{calcularTotal}}
+                                                    {{detalle.precioProductos*detalle.cantidadProductos}}
                                                 </td>
                                                 <td>
                                                     <button @click="eliminarDetalle(index)" type="button" class="btn btn-danger btn-sm">
@@ -185,9 +204,21 @@
                                             </tr>
                                             <tr style="background-color: #CEECF5">
                                                 <td colspan="4" align="right"> 
+                                                <strong>Total Parcial:</strong>
+                                                </td>
+                                                <td>${{totalParcial=(calcularTotal)}}</td>
+                                            </tr>
+                                            <tr style="background-color: #CEECF5">
+                                                <td colspan="4" align="right"> 
+                                                <strong>Total Descuento:</strong>
+                                                </td>
+                                                <td>$ {{totalDescuento=(totalParcial*(descuento/100)).toFixed(0)}}</td>
+                                            </tr>
+                                            <tr style="background-color: #CEECF5">
+                                                <td colspan="4" align="right"> 
                                                 <strong>Total Final:</strong>
                                                 </td>
-                                                <td>$ {{calcularTotal}}</td>
+                                                <td>$ {{total=(calcularTotal-totalDescuento).toFixed(0)}}</td>
                                             </tr>
                                             <tr style="background-color: #CEECF5">
                                                 <td colspan="4" align="right"> 
@@ -229,6 +260,10 @@
                                     <p v-text="nombreClientes"></p>
                                 </div>
                             </div>
+                            <div class="col-md-3">
+                                <label for="">Descuento</label>
+                                <p v-text="descuentoTransacciones">%</p>
+                            </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Estado de Transaccion</label>
@@ -262,6 +297,7 @@
                                         <tr>
                                             <th>Producto</th>
                                             <th>Precio</th>
+                                            <th>Cantidad</th>
                                             <th>Puntos</th>
                                             <th>Subtotal</th>
                                         </tr>
@@ -271,6 +307,8 @@
                                             <td v-text="detalle.nombreProductos">
                                             </td>
                                             <td v-text="detalle.precioProductos">
+                                            </td>
+                                            <td v-text="detalle.cantidadProductos">
                                             </td>
                                             <td v-text="detalle.puntosProductos">
                                             </td>
@@ -286,9 +324,15 @@
                                             </tr>
                                             <tr style="background-color: #CEECF5">
                                                 <td colspan="4" align="right"> 
+                                                <strong>Total Descuento:</strong>
+                                                </td>
+                                                <td>$ {{totalDescuento=(totalParcial*(descuento/100)).toFixed(0)}}</td>
+                                            </tr>
+                                            <tr style="background-color: #CEECF5">
+                                                <td colspan="4" align="right"> 
                                                 <strong>Total Final:</strong>
                                                 </td>
-                                                <td>$ {{total=(calcularTotal).toFixed(0)}}</td>
+                                                <td>$ {{total=(calcularTotal-totalDescuento).toFixed(0)}}</td>
                                             </tr>
                                             <tr style="background-color: #CEECF5">
                                                 <td colspan="4" align="right"> 
@@ -344,7 +388,7 @@ Vue.component('v-select', vSelect)
                 idTransacciones:0,
                 idProductos:0,
                 idClientes:0,
-                tipoTransacciones:'Reserva',
+                tipoTransacciones:'Venta',
                 observacionTransacciones:'',
                 nombreProductos:'',
                 nombreClientes:'',
@@ -357,7 +401,7 @@ Vue.component('v-select', vSelect)
                 plazoTransacciones:'',
                 precioNuevoProductos:'',
                 precioUsadoProductos:'',
-                estadoTransacciones:'Abonado',
+                estadoTransacciones:'Pagado',
                 cantidadProductos:0,
                 precioProductos:0,
                 stockProductos:'',
@@ -390,7 +434,7 @@ Vue.component('v-select', vSelect)
                 criterio: 'tipoTransaccion',
                 buscar : '',
                 arrayPlataformas:[],
-                abono:'',
+                picked:''
 
             }
         },
@@ -424,17 +468,30 @@ Vue.component('v-select', vSelect)
             },
             calcularTotal: function(){
                 var parcial='';
-                parcial=Number(this.precioPasajeroProductos-this.abono);
-                return this.parcial;
+                this.valorFinalTransacciones=0;
+                for (var i=0; i<this.arrayDetalles.length;i++) {
+                    parcial=(this.arrayDetalles[i].precioProductos*this.arrayDetalles[i].cantidadProductos).toFixed(0);
+                    this.valorFinalTransacciones=Number(this.valorFinalTransacciones)+Number(parcial);
+                }
+                return this.valorFinalTransacciones;
+            },
+            puntosTotales: function(){
+                var parcial='';
+                this.puntosTransacciones=0;
+                for (var i=0; i<this.arrayDetalles.length;i++) {
+                    parcial=(this.arrayDetalles[i].puntosProductos);
+                    this.puntosTransacciones=Number(this.puntosTransacciones)+Number(parcial);
+                }
+                return this.puntosTransacciones;
             },
             calcularPuntos: function(){
-                this.puntosPasajeroProductos=Number((this.precioPasajeroProductos*0.01).toFixed(0));
+                this.puntosPasajeroProductos=Number((this.precioPasajeroProductos*this.cantidadPasajeraProductos*0.01).toFixed(0));
             }, 
         },
         methods:{
             listarTransaccion(page, buscar, criterio){
                 let me=this;
-                var url= '/transaccionesReservas?page='+page + '&buscar='+ buscar + '&criterio=' + criterio;
+                var url= '/transaccionesVentas?page='+page + '&buscar='+ buscar + '&criterio=' + criterio;
                 axios.get(url).then(function (response){
                     var respuesta = response.data;
                     me.arrayTransacciones = respuesta.transacciones.data;
@@ -485,7 +542,8 @@ Vue.component('v-select', vSelect)
             },           
             agregarDetalle(){
                 let me=this;
-                if(me.precioPasajeroProductos==0){
+                const Swal = require('sweetalert2')
+                if(me.idProductos==0 || me.cantidadPasajeraProductos==0 || me.precioPasajeroProductos==0){
                 }
                 else{
                     if(me.encuentra(me.idProductos)){
@@ -495,24 +553,31 @@ Vue.component('v-select', vSelect)
                             text: 'Este producto ya está ingresado.'
                         })
                     }else{
+                        if(me.cantidadPasajeraProductos>(me.stockProductos)){
+                          Swal.fire({
+                            icon: 'error',
+                            title: '¡Error!',
+                            text: 'No puede ingresar más que el stock existente. Stock: '+(me.stockProductos)
+                        })
+                    }else{
                         me.arrayDetalles.push({
                             idProductos: me.idProductos,
                             producto: me.producto,
                             cantidadProductos: me.cantidadPasajeraProductos,
-                            precioProductos: me.precioPasajeroProductos-me.abono,
+                            precioProductos: me.precioPasajeroProductos,
                             puntosProductos: me.puntosPasajeroProductos,
-                            abono: me.abono,
                         });
                         me.idProductos=0;
                         me.producto='';
                         me.cantidadPasajeraProductos=0;
                         me.precioPasajeroProductos=0;
                         me.puntosPasajeroProductos=0;
-                        me.abono=0;
                     }
                 
 
-                }              
+                }
+            }
+               
 
             },
             transaccionProducto(search,loading){
@@ -537,10 +602,17 @@ Vue.component('v-select', vSelect)
                 me.precioNuevoProductos= val1.precioNuevoProductos;
                 me.precioUsadoProductos=val1.precioUsadoProductos;
                 me.stockProductos=val1.stockProductos;
-                me.precioPasajeroProductos=val1.precioNuevoProductos;
+                if(me.picked==0){
+                    me.precioPasajeroProductos=val1.precioNuevoProductos;
+                }else{
+                    me.precioPasajeroProductos=val1.precioUsadoProductos;
+
+                }
+                
             },
             
             registrarTransaccion(){
+
                 let me=this;
                 axios.post('transacciones/registrar',{
                     'idClientes': this.idClientes,
@@ -552,27 +624,25 @@ Vue.component('v-select', vSelect)
                     'formaPagoTransacciones': this.formaPagoTransacciones,
                     'plazoTransacciones': this.plazoTransacciones,
                     'estadoTransacciones': this.estadoTransacciones,
-                    'data': this.arrayDetalles,
-                    'abonoClienteProducto': this.abono,
+                    'data': this.arrayDetalles
                     }).then(function (response){
                         me.listado=1;
                         me.listarTransaccion(1,'', 'idTransacciones');
                         me.idClientes=0;
-                        me.tipoTransacciones='Reserva';
+                        me.tipoTransacciones='Venta';
                         me.observacionTransacciones='';
                         me.descuentoTransacciones='';
                         me.puntosTransacciones=0;
                         me.valorFinalTransacciones=0;
                         me.formaPagoTransacciones='';
                         me.plazoTransacciones='';
-                        me.estadoTransacciones='Abonado';
+                        me.estadoTransacciones='Pagado';
                         me.arrayDetalles=[];
                         me.idProductos=0;
                         me.producto='';
                         me.cantidadProductos=0;
                         me.precioProductos=0;
                         me.puntosProductos=0;
-                        me.abono=0;
                }).catch(function(error){
                     console.log(error.response.data.errors);
                 });
@@ -582,21 +652,20 @@ Vue.component('v-select', vSelect)
 
                 me.listado=0;
                 me.idClientes=0;
-                me.tipoTransacciones='Reserva';
+                me.tipoTransacciones='Venta';
                 me.observacionTransacciones='';
                 me.descuentoTransacciones='';
                 me.puntosTransacciones=0;
                 me.valorFinalTransacciones=0;
                 me.formaPagoTransacciones='';
                 me.plazoTransacciones='';
-                me.estadoTransacciones='Abonado';
+                me.estadoTransacciones='Pagado';
                 me.arrayDetalles=[];
                 me.idProductos=0;
                 me.producto='';
                 me.cantidadProductos=0;
                 me.precioProductos=0;
                 me.puntosProductos=0;
-                me.abono=0;
             },
             ocultarDetalle(){
                 this.listado=1;
@@ -605,7 +674,6 @@ Vue.component('v-select', vSelect)
                 this.totalDescuento=0;
                 this.valorFinalTransacciones=0;
                 this.descuento=0;
-                this.abono=0;
             },
             verTransaccion(idTransacciones){
                 let me=this;
@@ -627,7 +695,6 @@ Vue.component('v-select', vSelect)
                     me.observacionTransacciones=arrayTransaccionT[0]['observacionTransacciones'];
                     me.puntosTransacciones=arrayTransaccionT[0]['puntosTransacciones'];
                     me.valorFinalTransacciones=arrayTransaccionT[0]['valorFinalTransacciones'];
-                    me.abono=arrayTransaccionT[0]['abonoClienteProducto']
 
                 })
                 .catch(function (error) {

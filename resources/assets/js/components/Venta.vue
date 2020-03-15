@@ -153,12 +153,16 @@
                                     <label>Cantidad<span style="color:red;" v-show="cantidadPasajeraProductos==0" >(Ingrese*) </span></label>
                                     <input type="number" value="0" class="form-control" v-model="cantidadPasajeraProductos">
                             </div>
+                            <div class="col-md-2">
+                                    <label>Puntos a canjear<span style="color:red;"></span></label>
+                                    <input type="number" value="0" class="form-control" v-model="puntosPasajeroGastados" min="1" max="10000">
+                            </div>
                             <div class="col-md-4" style="margin-top: 30px;">
                                     <label>Puntos por Producto</label>
                                     <input v-model="puntosPasajeroProductos" disabled>
                                     <td>{{calcularPuntos}}</td>
                             </div>
-                            <div class="col-md-3" style="margin-top:25px">
+                            <div class="col-md-2" style="margin-top:25px">
                                 <div class="form-group">
                                     <button @click="agregarDetalle" class="btn btn-succes form-control btnagregar float-right"><i class="icon-plus"></i></button>
                                 </div>
@@ -173,6 +177,7 @@
                                                 <th>Precio</th>
                                                 <th>Cantidad</th>
                                                 <th>Puntos</th>
+                                                <th>Puntos Gastados</th>
                                                 <th>Subtotal</th>
                                                 <th>Eliminar</th>
                                             </tr>
@@ -191,6 +196,10 @@
                                                 </td>
                                                 <td>
                                                     <input v-model="detalle.puntosProductos" type="number" value="2" class="form-control" disabled>
+
+                                                </td>
+                                                <td>
+                                                    <input v-model="detalle.puntosGastadosTransacciones" type="number" value="2" class="form-control" disabled>
 
                                                 </td>
                                                 <td>
@@ -435,7 +444,8 @@ Vue.component('v-select', vSelect)
                 criterio: 'tipoTransaccion',
                 buscar : '',
                 arrayPlataformas:[],
-                picked:''
+                picked:'',
+                puntosPasajeroGastados:0,
 
             }
         },
@@ -567,12 +577,14 @@ Vue.component('v-select', vSelect)
                             cantidadProductos: me.cantidadPasajeraProductos,
                             precioProductos: me.precioPasajeroProductos,
                             puntosProductos: me.puntosPasajeroProductos,
+                            puntosGastadosTransacciones: me.puntosPasajeroGastados,
                         });
                         me.idProductos=0;
                         me.producto='';
                         me.cantidadPasajeraProductos=0;
                         me.precioPasajeroProductos=0;
                         me.puntosPasajeroProductos=0;
+                        me.puntosPasajeroGastados=0;
                     }
                 
 
@@ -616,16 +628,17 @@ Vue.component('v-select', vSelect)
 
                 let me=this;
                 axios.post('transacciones/registrar',{
-                    'idClientes': this.idClientes,
-                    'tipoTransacciones': this.tipoTransacciones,
-                    'observacionTransacciones': this.observacionTransacciones,    
-                    'descuentoTransacciones': this.descuento,
-                    'puntosTransacciones': this.puntosTransacciones,
-                    'valorFinalTransacciones': this.valorFinalTransacciones,
-                    'formaPagoTransacciones': this.formaPagoTransacciones,
-                    'plazoTransacciones': this.plazoTransacciones,
-                    'estadoTransacciones': this.estadoTransacciones,
-                    'data': this.arrayDetalles
+                    'idClientes': me.idClientes,
+                    'tipoTransacciones': me.tipoTransacciones,
+                    'observacionTransacciones': me.observacionTransacciones,    
+                    'descuentoTransacciones': me.descuento,
+                    'puntosTransacciones': me.puntosTransacciones,
+                    'valorFinalTransacciones': me.valorFinalTransacciones,
+                    'formaPagoTransacciones': me.formaPagoTransacciones,
+                    'plazoTransacciones': me.plazoTransacciones,
+                    'estadoTransacciones': me.estadoTransacciones,
+                    'puntosGastadosTransacciones': me.puntosGastadosTransacciones,
+                    'data': me.arrayDetalles
                     }).then(function (response){
                         me.listado=1;
                         me.listarTransaccion(1,'', 'idTransacciones');
@@ -644,6 +657,7 @@ Vue.component('v-select', vSelect)
                         me.cantidadProductos=0;
                         me.precioProductos=0;
                         me.puntosProductos=0;
+                        me.puntosGastadosTransacciones=0;
                }).catch(function(error){
                     console.log(error.response.data.errors);
                 });
@@ -667,6 +681,7 @@ Vue.component('v-select', vSelect)
                 me.cantidadProductos=0;
                 me.precioProductos=0;
                 me.puntosProductos=0;
+                me.puntosGastadosTransacciones=0;
             },
             ocultarDetalle(){
                 this.listado=1;
@@ -675,6 +690,7 @@ Vue.component('v-select', vSelect)
                 this.totalDescuento=0;
                 this.valorFinalTransacciones=0;
                 this.descuento=0;
+                this.puntosGastadosTransacciones=0;
             },
             verTransaccion(idTransacciones){
                 let me=this;
@@ -696,6 +712,7 @@ Vue.component('v-select', vSelect)
                     me.observacionTransacciones=arrayTransaccionT[0]['observacionTransacciones'];
                     me.puntosTransacciones=arrayTransaccionT[0]['puntosTransacciones'];
                     me.valorFinalTransacciones=arrayTransaccionT[0]['valorFinalTransacciones'];
+                    me.puntosGastadosTransacciones=arrayTransaccionT[0]['puntosGastadosTransacciones'];
 
                 })
                 .catch(function (error) {
