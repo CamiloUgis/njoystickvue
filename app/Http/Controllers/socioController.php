@@ -104,7 +104,7 @@ class SocioController extends Controller
     }
     public function verSocio(Request $request){
         $filtro = $request->filtro;
-        $socio=Socio::where('idClientes', 'like', '%'. $filtro. '%')
+        $socio=Socio::where('socios.idClientes', 'like', '%'. $filtro. '%')
          ->join('clientes','socios.idClientes','=','clientes.idClientes')
          ->select('socios.idClientes', 'clientes.nombreClientes', 'socios.puntosPropiosSocios', 'socios.puntosReferidosSocios')
          ->first();
