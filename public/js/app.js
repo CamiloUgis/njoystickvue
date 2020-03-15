@@ -54734,16 +54734,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var me = this;
             var url = '/socios/verSocio?filtro=' + idClientes;
             axios.get(url).then(function (response) {
+                console.log(response.data);
                 var respuesta = response.data;
                 me.socio = respuesta.socio;
             }).catch(function (error) {
+                console.log(response.data);
                 console.log(error);
             });
         },
         esReferido: function esReferido(idClientes) {
             this.listado = 0;
             var me = this;
-            verSocio(idClientes);
             var url = '/socios/equipo?filtro=' + idClientes;
             axios.get(url).then(function (response) {
                 console.log(response.data);
@@ -55087,7 +55088,8 @@ var render = function() {
                                     attrs: { type: "button" },
                                     on: {
                                       click: function($event) {
-                                        return _vm.esReferido(socio.idClientes)
+                                        _vm.esReferido(socio.idClientes),
+                                          _vm.verSocio(socio.idClientes)
                                       }
                                     }
                                   },

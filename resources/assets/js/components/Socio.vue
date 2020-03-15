@@ -52,7 +52,7 @@
                                             </button> &nbsp;
                                         </td>
                                         <td>
-                                            <button type="button" @click="esReferido(socio.idClientes)" class="btn btn-succes btn-sm btnvisualizar">
+                                            <button type="button" @click="esReferido(socio.idClientes), verSocio(socio.idClientes)" class="btn btn-succes btn-sm btnvisualizar">
                                                 <i class="icon-eye"></i>
                                         </button> &nbsp;
                                         </td>
@@ -263,17 +263,18 @@
                 let me=this;
                 var url= '/socios/verSocio?filtro='+idClientes;
                 axios.get(url).then(function (response){
+                    console.log(response.data);
                     var respuesta = response.data;
                     me.socio = respuesta.socio;
                 })
                 .catch(function (error){
+                    console.log(response.data);
                     console.log(error);
                 })
             },
             esReferido(idClientes){
                 this.listado=0;
                 let me=this;
-                verSocio(idClientes);
                 var url= '/socios/equipo?filtro='+idClientes;
                 axios.get(url).then(function (response){
                     console.log(response.data);
