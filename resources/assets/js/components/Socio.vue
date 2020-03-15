@@ -52,7 +52,7 @@
                                             </button> &nbsp;
                                         </td>
                                         <td>
-                                            <button type="button" @click="esReferido(socio.idClientes), verSocio(socio.idClientes)" class="btn btn-succes btn-sm btnvisualizar">
+                                            <button type="button" @click="esReferido(socio.idClientes)" class="btn btn-succes btn-sm btnvisualizar">
                                                 <i class="icon-eye"></i>
                                         </button> &nbsp;
                                         </td>
@@ -98,13 +98,13 @@
                                 <tr v-for="referido in arrayReferidos" :key="referido.idClientes">
                                     <td v-text="'NJ'+referido.idClientes"></td>
                                     <td v-text="referido.nombreClientes"> </td>
-                                    <td v-text="referido.puntosReferidosSocios"> </td>
+                                    <td v-text="referido.puntosPropiosSocios/2"> </td>
                                 </tr>
                                 <tr style="background-color: #CEECF5">
                                         <td colspan="2" align="right"> 
                                             <strong>Puntos Propios:</strong>
                                         </td>
-                                        <td>{{puntosPropiosSocios}}</td>
+                                        <td>{{socio.puntosPropiosSocios}}</td>
                                 </tr>
                                 <tr style="background-color: #CEECF5">
                                     <td colspan="2" align="right"> 
@@ -263,18 +263,17 @@
                 let me=this;
                 var url= '/socios/verSocio?filtro='+idClientes;
                 axios.get(url).then(function (response){
-                    console.log(response.data);
                     var respuesta = response.data;
                     me.socio = respuesta.socio;
                 })
                 .catch(function (error){
-                    console.log(response.data);
                     console.log(error);
                 })
             },
             esReferido(idClientes){
                 this.listado=0;
                 let me=this;
+                me.verSocio(idClientes);
                 var url= '/socios/equipo?filtro='+idClientes;
                 axios.get(url).then(function (response){
                     console.log(response.data);
