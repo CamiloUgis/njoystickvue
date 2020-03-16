@@ -274,6 +274,7 @@
             
             verSocio(idClientes){
                 let me=this;
+                me.obtenerTransacciones(idClientes);
                 var url= '/socios/verSocio?filtro='+idClientes;
                 axios.get(url).then(function (response){
                     var respuesta = response.data;

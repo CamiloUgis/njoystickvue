@@ -64,7 +64,7 @@ class ClienteController extends Controller
             'rutClientes'=> ['required', 'string', new ValidChileanRut(new ChileRut)],
             'rutClientes'=>'required|unique:clientes,rutClientes',
             'correoClientes'=>'nullable|email',
-            'telefonoClientes'=>'nullable|numeric',
+            'telefonoClientes'=>'nullable|numeric|min:0',
             ]);
         if(!$request->ajax()) return redirect('/');
         $cliente = new Cliente();

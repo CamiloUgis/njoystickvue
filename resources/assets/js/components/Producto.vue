@@ -119,19 +119,19 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="number-input">Stock</label>
                                     <div class="col-md-9">
-                                        <input type="number" v-model="stockProductos" name="stock" class="form-control" placeholder="Cantidad de stock">
+                                        <input type="number" min="0" v-model="stockProductos" name="stock" class="form-control" placeholder="Cantidad de stock">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="number-input">Precio Nuevo</label>
                                     <div class="col-md-9">
-                                        <input type="number" v-model="precioNuevoProductos" name="precionuevo" class="form-control" placeholder="Precio de juego nuevo">
+                                        <input type="number" min="0" v-model="precioNuevoProductos" name="precionuevo" class="form-control" placeholder="Precio de juego nuevo">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="number-input">Precio Usado</label>
                                     <div class="col-md-9">
-                                        <input type="number" v-model="precioUsadoProductos" name="preciousado" class="form-control" placeholder="Precio de juego usado">
+                                        <input type="number" min="0" v-model="precioUsadoProductos" name="preciousado" class="form-control" placeholder="Precio de juego usado">
                                     </div>
                                 </div>
                                 <div class="form-group row">

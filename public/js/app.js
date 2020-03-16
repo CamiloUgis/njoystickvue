@@ -52321,6 +52321,7 @@ var render = function() {
                                 staticClass: "form-control",
                                 attrs: {
                                   type: "number",
+                                  min: "0",
                                   name: "stock",
                                   placeholder: "Cantidad de stock"
                                 },
@@ -52360,6 +52361,7 @@ var render = function() {
                                 staticClass: "form-control",
                                 attrs: {
                                   type: "number",
+                                  min: "0",
                                   name: "precionuevo",
                                   placeholder: "Precio de juego nuevo"
                                 },
@@ -52400,6 +52402,7 @@ var render = function() {
                                 staticClass: "form-control",
                                 attrs: {
                                   type: "number",
+                                  min: "0",
                                   name: "preciousado",
                                   placeholder: "Precio de juego usado"
                                 },
@@ -54746,6 +54749,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         verSocio: function verSocio(idClientes) {
             var me = this;
+            me.obtenerTransacciones(idClientes);
             var url = '/socios/verSocio?filtro=' + idClientes;
             axios.get(url).then(function (response) {
                 var respuesta = response.data;
