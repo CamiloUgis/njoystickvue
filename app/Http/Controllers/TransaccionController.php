@@ -181,7 +181,6 @@ class TransaccionController extends Controller
         
         return ['detalles' => $detalles];
     }
-
     public function indexVentas(Request $request)
     {
        // if(!$request->ajax()) return redirect('/');
