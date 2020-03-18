@@ -13,7 +13,7 @@
          
       </div>
       <div class="card-footer text-center" style="background-color:  #66CCFF">
-           <a> Ver <i class="fa fa-arrow-circle-right" @click="verProductos()"></i></a>
+           <!-- <a> Ver <i class="fa fa-arrow-circle-right" @click="verProductos()"></i></a> -->
         </div>
     </div>
   </div><!--/.col-->
@@ -28,7 +28,7 @@
         
       </div>
        <div  class="card-footer text-center" style="background-color:  #66CCFF">
-          <a>  Ver  <i  class="fa fa-arrow-circle-right"></i></a>
+          <!-- <a>  Ver  <i  class="fa fa-arrow-circle-right"></i></a> -->
         </div>
     </div>
   </div><!--/.col-->
@@ -43,7 +43,7 @@
         
       </div>
       <div class="card-footer text-center" style="background-color:  #66CCFF">
-          <a>  Ver <i class="fa fa-arrow-circle-right"></i></a>
+          <!-- <a>  Ver <i class="fa fa-arrow-circle-right"></i></a> -->
         </div>
     </div>
   </div><!--/.col-->
@@ -58,7 +58,7 @@
         
       </div>
       <div class="card-footer text-center" style="background-color:  #66CCFF">
-          <a>  Ver <i class="fa fa-arrow-circle-right"></i></a>
+          <!-- <a>  Ver <i class="fa fa-arrow-circle-right"></i></a> -->
         </div>
     </div>
   </div><!--/.col-->

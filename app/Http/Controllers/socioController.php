@@ -64,26 +64,26 @@ class SocioController extends Controller
     }
 
 
-    public function update(Request $request)
-    {
-        // $validar= $request->validate([
-        //     'nombreClientes'=>'required',
-        //     'rutClientes'=> ['required', 'string', new ValidChileanRut(new ChileRut)],
-        //     'rutClientes'=>'required|unique:clientes,rutClientes',
-        //     'telefonoClientes'=>'required|unique:clientes,telefonoClientes',
-        //     'telefonoClientes'=>'integer|min:0',
-        //     'comunaClientes'=>'required',
-        //     'correoClientes'=>'required',
-        //     ]);
-        if(!$request->ajax()) return redirect('/');
-        $socio = Socio::findOrFail($request->idClientes);
-        $socio->idClientes=$request->input('idClientes');
-        $socio->invitador=$request->input('invitador');
-        $socio->save();
+    // public function update(Request $request)
+    // {
+    //     $validar= $request->validate([
+    //         'nombreClientes'=>'required',
+    //         'rutClientes'=> ['required', 'string', new ValidChileanRut(new ChileRut)],
+    //         'rutClientes'=>'required|unique:clientes,rutClientes',
+    //         'telefonoClientes'=>'required|unique:clientes,telefonoClientes',
+    //         'telefonoClientes'=>'integer|min:0',
+    //         'comunaClientes'=>'required',
+    //         'correoClientes'=>'required',
+    //         ]);
+    //     if(!$request->ajax()) return redirect('/');
+    //     $socio = Socio::findOrFail($request->idClientes);
+    //     $socio->idClientes=$request->input('idClientes');
+    //     $socio->invitador=$request->input('invitador');
+    //     $socio->save();
 
-    }
+    // }
     public function equipo(Request $request){
-       // if(!$request->ajax()) return redirect('/');
+        if(!$request->ajax()) return redirect('/');
        $filtro = $request->filtro;
        /* $socio= Socio::findOrFail($request->idClientes);
         $referidos= DB::table('socios')

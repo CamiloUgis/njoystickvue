@@ -50160,7 +50160,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -50394,10 +50393,6 @@ var render = function() {
                   [
                     _c("option", { attrs: { value: "nombreGeneros" } }, [
                       _vm._v("Nombre")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "descripcionGeneros" } }, [
-                      _vm._v("Descripción")
                     ])
                   ]
                 ),
@@ -51048,26 +51043,10 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "card-footer text-center",
-              staticStyle: { "background-color": "#66CCFF" }
-            },
-            [
-              _c("a", [
-                _vm._v(" Ver "),
-                _c("i", {
-                  staticClass: "fa fa-arrow-circle-right",
-                  on: {
-                    click: function($event) {
-                      return _vm.verProductos()
-                    }
-                  }
-                })
-              ])
-            ]
-          )
+          _c("div", {
+            staticClass: "card-footer text-center",
+            staticStyle: { "background-color": "#66CCFF" }
+          })
         ])
       ]),
       _vm._v(" "),
@@ -51094,7 +51073,40 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _vm._m(2)
+          _c("div", {
+            staticClass: "card-footer text-center",
+            staticStyle: { "background-color": "#66CCFF" }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-sm-6" }, [
+        _c("div", { staticClass: "card" }, [
+          _c(
+            "div",
+            {
+              staticClass: "card-block",
+              staticStyle: { "background-color": "#e5e5e4" }
+            },
+            [
+              _vm._m(2),
+              _vm._v(" "),
+              _c("div", { staticClass: "h4 mb-0" }, [
+                _vm._v(_vm._s(_vm.arrayClientes.length))
+              ]),
+              _vm._v(" "),
+              _c(
+                "small",
+                { staticClass: "text-muted text-uppercase font-weight-bold" },
+                [_vm._v("Clientes Registrados")]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c("div", {
+            staticClass: "card-footer text-center",
+            staticStyle: { "background-color": "#66CCFF" }
+          })
         ])
       ]),
       _vm._v(" "),
@@ -51110,33 +51122,6 @@ var render = function() {
               _vm._m(3),
               _vm._v(" "),
               _c("div", { staticClass: "h4 mb-0" }, [
-                _vm._v(_vm._s(_vm.arrayClientes.length))
-              ]),
-              _vm._v(" "),
-              _c(
-                "small",
-                { staticClass: "text-muted text-uppercase font-weight-bold" },
-                [_vm._v("Clientes Registrados")]
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _vm._m(4)
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-6" }, [
-        _c("div", { staticClass: "card" }, [
-          _c(
-            "div",
-            {
-              staticClass: "card-block",
-              staticStyle: { "background-color": "#e5e5e4" }
-            },
-            [
-              _vm._m(5),
-              _vm._v(" "),
-              _c("div", { staticClass: "h4 mb-0" }, [
                 _vm._v(_vm._s(_vm.calcularPorcentaje) + "%")
               ]),
               _vm._v(" "),
@@ -51148,7 +51133,10 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _vm._m(6)
+          _c("div", {
+            staticClass: "card-footer text-center",
+            staticStyle: { "background-color": "#66CCFF" }
+          })
         ])
       ])
     ])
@@ -51175,24 +51163,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "card-footer text-center",
-        staticStyle: { "background-color": "#66CCFF" }
-      },
-      [
-        _c("a", [
-          _vm._v("  Ver  "),
-          _c("i", { staticClass: "fa fa-arrow-circle-right" })
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "h1 text-muted text-right mb-2" }, [
       _c("i", { staticClass: "icon-user-follow" })
     ])
@@ -51201,45 +51171,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "card-footer text-center",
-        staticStyle: { "background-color": "#66CCFF" }
-      },
-      [
-        _c("a", [
-          _vm._v("  Ver "),
-          _c("i", { staticClass: "fa fa-arrow-circle-right" })
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "h1 text-muted text-right mb-2" }, [
       _c("i", { staticClass: "icon-people" })
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "card-footer text-center",
-        staticStyle: { "background-color": "#66CCFF" }
-      },
-      [
-        _c("a", [
-          _vm._v("  Ver "),
-          _c("i", { staticClass: "fa fa-arrow-circle-right" })
-        ])
-      ]
-    )
   }
 ]
 render._withStripped = true
@@ -55088,29 +55022,6 @@ var render = function() {
                                 _c(
                                   "button",
                                   {
-                                    staticClass: "btn btn-warning btn-sm",
-                                    attrs: { type: "button" },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.abrirModal(
-                                          "socio",
-                                          "actualizar",
-                                          socio
-                                        )
-                                      }
-                                    }
-                                  },
-                                  [_c("i", { staticClass: "icon-pencil" })]
-                                ),
-                                _vm._v(
-                                  "  \n                                   "
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _c(
-                                  "button",
-                                  {
                                     staticClass:
                                       "btn btn-succes btn-sm btnvisualizar",
                                     attrs: { type: "button" },
@@ -55614,8 +55525,6 @@ var staticRenderFns = [
         _c("th", { staticClass: "text-center" }, [_vm._v("Estado")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [_vm._v("Puntos")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-center" }, [_vm._v("Modificar")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [_vm._v("Ver referidos")])
       ])

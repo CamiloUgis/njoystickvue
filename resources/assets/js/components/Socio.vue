@@ -33,7 +33,7 @@
                                         <th class="text-center">Estado</th>
                                         <th class="text-center">Puntos</th>
                                        
-                                        <th class="text-center">Modificar</th>
+                                        <!-- <th class="text-center">Modificar</th> -->
                                         <th class="text-center">Ver referidos</th>
                                     </tr>
                                 </thead>
@@ -46,11 +46,11 @@
                                         <td v-else>Inactivo</td>
                                         
                                         <td v-text="socio.puntosPropiosSocios + socio.puntosReferidosSocios"></td>
-                                        <td>
+                                        <!-- <td>
                                             <button type="button" @click="abrirModal('socio', 'actualizar', socio)" class="btn btn-warning btn-sm">
                                             <i class="icon-pencil"></i>
                                             </button> &nbsp;
-                                        </td>
+                                        </td> -->
                                         <td>
                                             <button type="button" @click="esReferido(socio.idClientes)" class="btn btn-succes btn-sm btnvisualizar">
                                                 <i class="icon-eye"></i>
