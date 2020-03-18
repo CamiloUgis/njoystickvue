@@ -356,5 +356,13 @@ class TransaccionController extends Controller
 
         ] ;
     }
+    public function recomendar((id del producto o request)){
+        //obtener la lista de transacciones
+        $transacciones=DB::table('transacciones')
+        ->join('producto_transaccion', 'transacciones.idTransacciones', '=', 'producto_transaccion.idTransacciones')
+        ->select('producto_transaccion.idTransacciones')
+        ->where('producto_transaccion.idProductos','=', '(parametro)');
+        
+    }
 
 }
