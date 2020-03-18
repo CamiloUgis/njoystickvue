@@ -90,7 +90,7 @@
                             </div>
                             <div class="col-md-3">
                                 <label for="">Descuento (en %)</label>
-                                <input type="number" class="form-control" v-model="descuento" placeholder="5%">
+                                <input type="number" min="0" class="form-control" v-model="descuento" placeholder="5%">
                             </div>
                                 <div class="col-md-3" style="margin-top:20px;">
                                     <div class="form-group">
@@ -146,11 +146,11 @@
                         <div class="form-group row border">
                             <div class="col-md-2" style="margin-bottom: 15px;">
                                     <label>Precio <span style="color:red;" v-show="precioPasajeroProductos==0" >(Ingrese*)</span></label>
-                                    <input type="number" value="0" class="form-control" v-model="precioPasajeroProductos">
+                                    <input type="number" value="0" min="0" class="form-control" v-model="precioPasajeroProductos">
                             </div>
                             <div class="col-md-2">
                                     <label>Cantidad<span style="color:red;" v-show="cantidadPasajeraProductos==0" >(Ingrese*) </span></label>
-                                    <input type="number" value="0" class="form-control" v-model="cantidadPasajeraProductos">
+                                    <input type="number" value="0" min="0" class="form-control" v-model="cantidadPasajeraProductos">
                             </div>
                             <div class="col-md-4" style="margin-top: 30px;">
                                     <label>Puntos por Producto</label>

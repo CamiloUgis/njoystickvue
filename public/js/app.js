@@ -61419,7 +61419,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "number", placeholder: "5%" },
+                        attrs: { type: "number", min: "0", placeholder: "5%" },
                         domProps: { value: _vm.descuento },
                         on: {
                           input: function($event) {
@@ -61738,7 +61738,7 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: { type: "number", value: "0" },
+                          attrs: { type: "number", value: "0", min: "0" },
                           domProps: { value: _vm.precioPasajeroProductos },
                           on: {
                             input: function($event) {
@@ -61782,7 +61782,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "number", value: "0" },
+                        attrs: { type: "number", min: "0", value: "0" },
                         domProps: { value: _vm.cantidadPasajeraProductos },
                         on: {
                           input: function($event) {
@@ -63852,7 +63852,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "number", placeholder: "5%" },
+                        attrs: { type: "number", min: "0", placeholder: "5%" },
                         domProps: { value: _vm.descuento },
                         on: {
                           input: function($event) {
@@ -64143,7 +64143,7 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: { type: "number", value: "0" },
+                          attrs: { type: "number", value: "0", min: "0" },
                           domProps: { value: _vm.precioPasajeroProductos },
                           on: {
                             input: function($event) {
@@ -64187,7 +64187,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "number", value: "0" },
+                        attrs: { type: "number", value: "0", min: "0" },
                         domProps: { value: _vm.cantidadPasajeraProductos },
                         on: {
                           input: function($event) {
