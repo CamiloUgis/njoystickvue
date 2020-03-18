@@ -19,8 +19,8 @@
                                         <option value="nombreClientes">Nombre</option>
                                         <option value="idClientes">Código</option>
                                         </select>
-                                        <input type="text" v-model="buscar" @keyup.enter="listarCliente(1,buscar,criterio)" class="form-control" placeholder="Texto a buscar">
-                                        <button type="submit" @click="listarCliente(1,buscar,criterio)" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                                        <input type="text" v-model="buscar" @keyup.enter="listarSocio(1,buscar,criterio)" class="form-control" placeholder="Texto a buscar">
+                                        <button type="submit" @click="listarSocio(1,buscar,criterio)" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
                                     </div>
                                 </div>
                             </div>
@@ -352,7 +352,7 @@
 
                     }).then(function (response){
                         me.cerrarModal();
-                        me.listarCliente(1,'', 'nombre');
+                        me.listarSocio(1,'', 'nombre');
                 }).catch(function (error){
                     console.log(error.response);
                 })

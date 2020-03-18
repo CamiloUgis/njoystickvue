@@ -51801,10 +51801,6 @@ var render = function() {
                   [
                     _c("option", { attrs: { value: "nombreProductos" } }, [
                       _vm._v("Nombre")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "descripcionProductos" } }, [
-                      _vm._v("Descripción")
                     ])
                   ]
                 ),
@@ -54754,7 +54750,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             }).then(function (response) {
                 me.cerrarModal();
-                me.listarCliente(1, '', 'nombre');
+                me.listarSocio(1, '', 'nombre');
             }).catch(function (error) {
                 console.log(error.response);
             });
@@ -54939,7 +54935,7 @@ var render = function() {
                               ) {
                                 return null
                               }
-                              return _vm.listarCliente(
+                              return _vm.listarSocio(
                                 1,
                                 _vm.buscar,
                                 _vm.criterio
@@ -54961,7 +54957,7 @@ var render = function() {
                             attrs: { type: "submit" },
                             on: {
                               click: function($event) {
-                                return _vm.listarCliente(
+                                return _vm.listarSocio(
                                   1,
                                   _vm.buscar,
                                   _vm.criterio
