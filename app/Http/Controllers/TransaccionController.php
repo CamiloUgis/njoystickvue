@@ -33,7 +33,8 @@ class TransaccionController extends Controller
             'transacciones.plazoTransacciones', 'transacciones.estadoTransacciones', 'clientes.nombreClientes', 'clientes.rutClientes', 
             'producto_transaccion.idTransacciones', 'productos.nombreProductos', 'productos.stockProductos',
             'productos.precioNuevoProductos', 'productos.precioUsadoProductos')
-            ->orderBy('transacciones.idTransacciones', 'desc')->paginate(8);
+            ->orderBy('producto_transaccion.idTransacciones', 'desc')
+            ->groupby('producto_transaccion.idTransacciones')->paginate(8);
 
         }else{
             $transacciones = Transaccion::join('clientes','transacciones.idClientes','=','clientes.idClientes')
@@ -45,7 +46,8 @@ class TransaccionController extends Controller
             'producto_transaccion.idTransacciones', 'productos.nombreProductos', 'productos.stockProductos',
             'productos.precioNuevoProductos', 'productos.precioUsadoProductos')
             ->where('transacciones.'.$criterio, 'like', '%'. $buscar . '%')
-            ->orderBy('transacciones.idTransacciones', 'desc')->paginate(8);
+            ->orderBy('producto_transaccion.idTransacciones', 'desc')
+            ->groupby('producto_transaccion.idTransacciones')->paginate(8);            
         }
         return [
             'pagination' =>[
@@ -92,7 +94,7 @@ class TransaccionController extends Controller
             $transaccion->save();
             DB::commit();
             $socio1=Socio::where('idClientes', '=', $request->input('idClientes'));
-            $socio1->decrement('puntosActualesSocios',$request->input('puntosGastadosTransacciones'));
+            // $socio1->decrement('puntosActualesSocios',$request->input('puntosGastadosTransacciones'));
             $socio1->increment('puntosPropiosSocios',$request->input('puntosTransacciones'));
             $socio1->increment('puntosActualesSocios',$request->input('puntosTransacciones'));
             if(!($request->input('idClientes')==99)){
@@ -195,7 +197,8 @@ class TransaccionController extends Controller
             'producto_transaccion.idTransacciones', 'productos.nombreProductos', 'productos.stockProductos',
             'productos.precioNuevoProductos', 'productos.precioUsadoProductos')
             ->where('transacciones.tipoTransacciones','=','Venta')
-            ->orderBy('transacciones.idTransacciones', 'desc')->paginate(8);
+            ->orderBy('producto_transaccion.idTransacciones', 'desc')
+            ->groupby('producto_transaccion.idTransacciones')->paginate(8);
 
 
         }else{
@@ -209,7 +212,8 @@ class TransaccionController extends Controller
             'productos.precioNuevoProductos', 'productos.precioUsadoProductos')
             ->where('transacciones.'.$criterio, 'like', '%'. $buscar . '%')
             ->where('transacciones.tipoTransacciones','=','Venta')
-            ->orderBy('transacciones.idTransacciones', 'desc')->paginate(8);
+            ->orderBy('producto_transaccion.idTransacciones', 'desc')
+            ->groupby('producto_transaccion.idTransacciones')->paginate(8);
         }
         return [
             'pagination' =>[
@@ -239,8 +243,8 @@ class TransaccionController extends Controller
             'producto_transaccion.idTransacciones', 'productos.nombreProductos', 'productos.stockProductos',
             'productos.precioNuevoProductos', 'productos.precioUsadoProductos')
             ->where('transacciones.tipoTransacciones','=','Arriendo')
-            ->orderBy('transacciones.idTransacciones', 'desc')->paginate(8);
-
+            ->orderBy('producto_transaccion.idTransacciones', 'desc')
+            ->groupby('producto_transaccion.idTransacciones')->paginate(8);
 
         }else{
             $transacciones = Transaccion::join('clientes','transacciones.idClientes','=','clientes.idClientes')
@@ -253,7 +257,8 @@ class TransaccionController extends Controller
             'productos.precioNuevoProductos', 'productos.precioUsadoProductos')
             ->where('transacciones.'.$criterio, 'like', '%'. $buscar . '%')
             ->where('transacciones.tipoTransacciones','=','Arriendo')
-            ->orderBy('transacciones.idTransacciones', 'desc')->paginate(8);
+            ->orderBy('producto_transaccion.idTransacciones', 'desc')
+            ->groupby('producto_transaccion.idTransacciones')->paginate(8);
         }
         return [
             'pagination' =>[
@@ -283,8 +288,8 @@ class TransaccionController extends Controller
             'producto_transaccion.idTransacciones', 'productos.nombreProductos', 'productos.stockProductos',
             'productos.precioNuevoProductos', 'productos.precioUsadoProductos')
             ->where('transacciones.tipoTransacciones','=','Canje')
-            ->orderBy('transacciones.idTransacciones', 'desc')->paginate(8);
-
+            ->orderBy('producto_transaccion.idTransacciones', 'desc')
+            ->groupby('producto_transaccion.idTransacciones')->paginate(8);
 
         }else{
             $transacciones = Transaccion::join('clientes','transacciones.idClientes','=','clientes.idClientes')
@@ -297,7 +302,8 @@ class TransaccionController extends Controller
             'productos.precioNuevoProductos', 'productos.precioUsadoProductos')
             ->where('transacciones.'.$criterio, 'like', '%'. $buscar . '%')
             ->where('transacciones.tipoTransacciones','=','Canje')
-            ->orderBy('transacciones.idTransacciones', 'desc')->paginate(8);
+            ->orderBy('producto_transaccion.idTransacciones', 'desc')
+            ->groupby('producto_transaccion.idTransacciones')->paginate(8);            
         }
         return [
             'pagination' =>[
@@ -327,8 +333,8 @@ class TransaccionController extends Controller
             'producto_transaccion.idTransacciones', 'productos.nombreProductos', 'productos.stockProductos',
             'productos.precioNuevoProductos', 'productos.precioUsadoProductos')
             ->where('transacciones.tipoTransacciones','=','Reserva')
-            ->orderBy('transacciones.idTransacciones', 'desc')->paginate(8);
-
+            ->orderBy('producto_transaccion.idTransacciones', 'desc')
+            ->groupby('producto_transaccion.idTransacciones')->paginate(8);
 
         }else{
             $transacciones = Transaccion::join('clientes','transacciones.idClientes','=','clientes.idClientes')
@@ -341,7 +347,8 @@ class TransaccionController extends Controller
             'productos.precioNuevoProductos', 'productos.precioUsadoProductos')
             ->where('transacciones.'.$criterio, 'like', '%'. $buscar . '%')
             ->where('transacciones.tipoTransacciones','=','Reserva')
-            ->orderBy('transacciones.idTransacciones', 'desc')->paginate(8);
+            ->orderBy('producto_transaccion.idTransacciones', 'desc')
+            ->groupby('producto_transaccion.idTransacciones')->paginate(8);            
         }
         return [
             'pagination' =>[
@@ -364,10 +371,11 @@ class TransaccionController extends Controller
         ->join('producto_transaccion', 'transacciones.idTransacciones', '=', 'producto_transaccion.idTransacciones')
         ->select('producto_transaccion.idTransacciones')
         ->where('producto_transaccion.idProductos','=', $idProductos)->get();
-        $pSimilares=DB::table('productos_transacciones')
+        $pSimilares=DB::table('producto_transaccion')
         ->join($transacciones, $transacciones.'idTransacciones', '=', 'productos_transacciones.idTransacciones')
-        ->select('producto_transaccion.idProductos', 'count(*)')
-        ->where('transacciones.idTransacciones', "=", $transacciones->idTransacciones)
+        ->join('producto', 'producto_transaccion.idProductos','=','producto.idProductos')
+        ->select('producto_transaccion.idProductos', 'producto.nombreProductos', 'count(*)')
+        ->where('transacciones.idTransacciones', "=", $transacciones.'idTransacciones')
         ->where('transacciones.idProducto', "!=", $idProductos)
         ->groupBy("producto.idProductos")->limit(3)->get();
         return ['pSimilares'=>$pSimilares];
