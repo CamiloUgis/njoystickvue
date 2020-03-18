@@ -375,8 +375,8 @@ class TransaccionController extends Controller
          (SELECT pt.idTransacciones from producto_transaccion
          as pt join transacciones as t
          on t.idTransacciones = pt.idTransacciones 
-         where pt.idProductos = :idProductos order by pt.idTransacciones)
-         and pt.idProductos <> :compra order by pt.idTransacciones LIMIT 3)"), array(
+         where pt.idProductos = :idProductos group by pt.idTransacciones)
+         and pt.idProductos <> :compra group by pt.idTransacciones LIMIT 3)"), array(
             'idProductos' => $idProductos, 'compra'=>$compra,));
         // $transacciones=DB::table('producto_transaccion')
         // ->join('productos','productos.idProductos', '=', 'producto_transaccion.idProductos')
