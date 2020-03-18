@@ -366,6 +366,7 @@ class TransaccionController extends Controller
        // if (!$request->ajax()) return redirect('/');
         //obtener la lista de transacciones
         $idProductos=$request->idProductos;
+        $compra=$request->idProductos;
         $transacciones=DB::select( 
          DB::raw("(SELECT pt.idProductos, p.nombreProductos, count(*)
           from producto_transaccion as pt 
@@ -375,8 +376,8 @@ class TransaccionController extends Controller
          as pt join transacciones as t
          on t.idTransacciones = pt.idTransacciones 
          where pt.idProductos = :idProductos order by pt.idTransacciones)
-         and pt.idProductos <> 1 order by pt.idTransacciones LIMIT 3)"), array(
-            'idProductos' => $idProductos,));
+         and pt.idProductos <> :compra order by pt.idTransacciones LIMIT 3)"), array(
+            'idProductos' => $idProductos, 'compra'=>$compra,));
         // $transacciones=DB::table('producto_transaccion')
         // ->join('productos','productos.idProductos', '=', 'producto_transaccion.idProductos')
         // ->select('producto_transaccion.idTransacciones')
