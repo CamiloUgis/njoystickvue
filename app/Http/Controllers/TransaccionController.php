@@ -368,8 +368,8 @@ class TransaccionController extends Controller
         ->join($transacciones, $transacciones.'idTransacciones', '=', 'productos_transacciones.idTransacciones')
         ->select('producto_transaccion.idProductos', 'count(*)')
         ->where('transacciones.idTransacciones', "=", $transacciones->idTransacciones)
-        ->where('transacciones.idProducto', "!=", $idProductos)
-        ->groupBy("producto.idProductos")->limit(3)->get();
+        ->where('transacciones.idProductos', "!=", $idProductos)
+        ->groupBy("productos.idProductos")->limit(3)->get();
         return ['pSimilares'=>$pSimilares];
     }
 
