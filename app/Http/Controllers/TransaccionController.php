@@ -359,11 +359,18 @@ class TransaccionController extends Controller
     public function recomendar(Request $request){
         if (!$request->ajax()) return redirect('/');
         //obtener la lista de transacciones
+        $idProductos=$request->idProductos;
         $transacciones=DB::table('transacciones')
         ->join('producto_transaccion', 'transacciones.idTransacciones', '=', 'producto_transaccion.idTransacciones')
         ->select('producto_transaccion.idTransacciones')
-        ->where('producto_transaccion.idProductos','=', '(parametro)');
-        
+        ->where('producto_transaccion.idProductos','=', $idProductos);
+        $pSimilares=DB::table('productos_transacciones')
+        ->join($transacciones, '=', '')
+        ->select('producto_transaccion.idProductos', 'count(*)')
+        ->where('transacciones.idTransacciones', "=", $transacciones->idTransacciones)
+        ->where('transacciones.idProducto', "!=", $idProductos)
+        ->groupBy("producto.idProductos")->limit(3);
+
     }
 
 }
