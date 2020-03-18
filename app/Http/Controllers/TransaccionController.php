@@ -356,7 +356,8 @@ class TransaccionController extends Controller
 
         ] ;
     }
-    public function recomendar((id del producto o request)){
+    public function recomendar(Request $request){
+        if (!$request->ajax()) return redirect('/');
         //obtener la lista de transacciones
         $transacciones=DB::table('transacciones')
         ->join('producto_transaccion', 'transacciones.idTransacciones', '=', 'producto_transaccion.idTransacciones')
