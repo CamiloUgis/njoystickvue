@@ -366,18 +366,31 @@ class TransaccionController extends Controller
        // if (!$request->ajax()) return redirect('/');
         //obtener la lista de transacciones
         $idProductos=$request->idProductos;
-        $transacciones=DB::table('transacciones')
-        ->join('producto_transaccion', 'transacciones.idTransacciones', '=', 'producto_transaccion.idTransacciones')
-        ->select('producto_transaccion.idTransacciones')
-        ->where('producto_transaccion.idProductos','=', $idProductos)->get();
-        $pSimilares=DB::table('producto_transaccion')
-        ->join($transacciones, $transacciones.'idTransacciones', '=', 'productos_transacciones.idTransacciones')
-        ->join('producto', 'producto_transaccion.idProductos','=','producto.idProductos')
-        ->select('producto_transaccion.idProductos', 'producto.nombreProductos', 'count(*)')
-        ->where('transacciones.idTransacciones', "=", $transacciones.'idTransacciones')
-        ->where('transacciones.idProducto', "!=", $idProductos)
-        ->groupBy("producto.idProductos")->limit(3)->get();
-        return ['pSimilares'=>$pSimilares];
+        $transacciones=DB::select( 
+         DB::raw("(SELECT pt.idProductos, p.nombreProductos, count(*)
+          from producto_transaccion as pt 
+          join productos as p on pt.idProductos = p.idProductos
+           where pt.idTransacciones in
+         (SELECT pt.idTransacciones from producto_transaccion
+         as pt join transacciones as t
+         on t.idTransacciones = pt.idTransacciones 
+         where pt.idProductos = :idProductos order by pt.idTransacciones)
+         and pt.idProductos <> 1 order by pt.idTransacciones LIMIT 3)"), array(
+            'idProductos' => $idProductos,));
+        // $transacciones=DB::table('producto_transaccion')
+        // ->join('productos','productos.idProductos', '=', 'producto_transaccion.idProductos')
+        // ->select('producto_transaccion.idTransacciones')
+        // ->where('producto_transaccion.idProductos','=', $idProductos)->get();
+        // $pSimilares=DB::table('producto_transaccion')
+        // ->join($transacciones, $transacciones.'idTransacciones', '=', 'productos_transacciones.idTransacciones')
+        // ->join('producto', 'producto_transaccion.idProductos','=','producto.idProductos')
+        // ->select('producto_transaccion.idProductos', 'producto.nombreProductos', 'count(*)')
+        // ->where('transacciones.idTransacciones', "=", $transacciones.'idTransacciones')
+        // ->where('transacciones.idProducto', "!=", $idProductos)
+        // ->groupBy("producto.idProductos")->limit(3)->get();
+
+
+        return ['transacciones'=>$transacciones];
     }
 
 }
