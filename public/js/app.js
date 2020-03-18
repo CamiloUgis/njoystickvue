@@ -60961,7 +60961,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
             Swal.fire({
                 icon: 'success',
                 title: '¡Transaccion realizada!',
-                text: 'Por comprar estos juegos, te recomendamos los siguientes: \n' + nombreRecomendados1 + nombreRecomendados2 + nombreRecomendados3
+                text: 'Por comprar estos productos, te recomendamos los siguientes: \n' + nombreRecomendados1 + nombreRecomendados2 + nombreRecomendados3
             });
 
             axios.post('transacciones/registrar', {

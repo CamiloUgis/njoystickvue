@@ -664,7 +664,7 @@ Vue.component('v-select', vSelect)
                 Swal.fire({
                             icon: 'success',
                             title: '¡Transaccion realizada!',
-                            text: 'Por comprar estos juegos, te recomendamos los siguientes: \n'+(nombreRecomendados1)+ (nombreRecomendados2)+ (nombreRecomendados3)
+                            text: 'Por comprar estos productos, te recomendamos los siguientes: \n'+(nombreRecomendados1)+ (nombreRecomendados2)+ (nombreRecomendados3)
                         });
                
                 axios.post('transacciones/registrar',{
