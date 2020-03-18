@@ -367,7 +367,7 @@ class TransaccionController extends Controller
         //obtener la lista de transacciones
         $idProductos=$request->idProductos;
         $compra=$request->idProductos;
-        $transacciones=DB::select( 
+        $recomendados=DB::select( 
          DB::raw("(SELECT pt.idProductos, p.nombreProductos, count(*)
           from producto_transaccion as pt 
           join productos as p on pt.idProductos = p.idProductos
@@ -391,7 +391,7 @@ class TransaccionController extends Controller
         // ->groupBy("producto.idProductos")->limit(3)->get();
 
 
-        return ['transacciones'=>$transacciones];
+        return ['recomendados'=>$recomendados];
     }
 
 }

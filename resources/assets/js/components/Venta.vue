@@ -425,6 +425,7 @@ Vue.component('v-select', vSelect)
                 arrayProductos:[],
                 arrayDetalles:[],
                 arrayPrecioStock:[],
+                arrayRecomendados:[],
                 producto:'',
                 puntosProductos:'',
                 listado:1,
@@ -615,6 +616,7 @@ Vue.component('v-select', vSelect)
                 me.precioNuevoProductos= val1.precioNuevoProductos;
                 me.precioUsadoProductos=val1.precioUsadoProductos;
                 me.stockProductos=val1.stockProductos;
+                me.mostrarRecomendados(val1.idProductos);
                 if(me.picked==0){
                     me.precioPasajeroProductos=val1.precioNuevoProductos;
                 }else{
@@ -623,10 +625,48 @@ Vue.component('v-select', vSelect)
                 }
                 
             },
-            
-            registrarTransaccion(){
-
+            mostrarRecomendados(idProductos){
                 let me=this;
+                var urld= '/transaccionesVentas/recomendar?idProductos=' + idProductos;
+                axios.get(urld).then(function (response) {
+                    console.log(response);
+                    var respuesta= response.data;
+                    me.arrayRecomendados = respuesta.recomendados;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+                return this.arrayRecomendados;
+            },
+            registrarTransaccion(){
+                const Swal = require('sweetalert2')
+                let me=this;
+                var nombreRecomendados1='';
+                var nombreRecomendados2='';
+                var nombreRecomendados3='';
+
+                for(var i=0; i<=me.arrayRecomendados.length; i++){
+                    if(me.arrayRecomendados==0){
+                        nombreRecomendados1='No existen recomendaciones para este producto';
+                    }else{
+                        if(me.arrayRecomendados.length>0){
+                            nombreRecomendados1=me.arrayRecomendados[0].nombreProductos;
+                        }
+                        if(me.arrayRecomendados.length>1){
+                            nombreRecomendados2=' | ' + me.arrayRecomendados[1].nombreProductos;
+                        }
+                        if(me.arrayRecomendados.length>2){
+                            nombreRecomendados3=' | ' + me.arrayRecomendados[2].nombreProductos;
+                        }
+                    }
+                    
+                }
+                Swal.fire({
+                            icon: 'success',
+                            title: '¡Transaccion realizada!',
+                            text: 'Por comprar estos juegos, te recomendamos los siguientes: \n'+(nombreRecomendados1)+ (nombreRecomendados2)+ (nombreRecomendados3)
+                        });
+               
                 axios.post('transacciones/registrar',{
                     'idClientes': me.idClientes,
                     'tipoTransacciones': me.tipoTransacciones,

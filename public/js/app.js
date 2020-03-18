@@ -60752,7 +60752,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
             precioNuevoProductos: '',
             formaPagoTransacciones: 0,
             plazoTransacciones: ''
-        }, _defineProperty(_ref, 'precioNuevoProductos', ''), _defineProperty(_ref, 'precioUsadoProductos', ''), _defineProperty(_ref, 'estadoTransacciones', 'Pagado'), _defineProperty(_ref, 'cantidadProductos', 0), _defineProperty(_ref, 'precioProductos', 0), _defineProperty(_ref, 'stockProductos', ''), _defineProperty(_ref, 'descuento', 0), _defineProperty(_ref, 'total', 0.0), _defineProperty(_ref, 'totalDescuento', 0.0), _defineProperty(_ref, 'totalParcial', 0), _defineProperty(_ref, 'arrayTransacciones', []), _defineProperty(_ref, 'arrayProductoTransaccion', []), _defineProperty(_ref, 'arrayClientes', []), _defineProperty(_ref, 'arrayProductos', []), _defineProperty(_ref, 'arrayDetalles', []), _defineProperty(_ref, 'arrayPrecioStock', []), _defineProperty(_ref, 'producto', ''), _defineProperty(_ref, 'puntosProductos', ''), _defineProperty(_ref, 'listado', 1), _defineProperty(_ref, 'arrayTransaccionT', []), _defineProperty(_ref, 'cantidadPasajeraProductos', ''), _defineProperty(_ref, 'precioPasajeroProductos', ''), _defineProperty(_ref, 'puntosPasajeroProductos', ''), _defineProperty(_ref, 'pagination', {
+        }, _defineProperty(_ref, 'precioNuevoProductos', ''), _defineProperty(_ref, 'precioUsadoProductos', ''), _defineProperty(_ref, 'estadoTransacciones', 'Pagado'), _defineProperty(_ref, 'cantidadProductos', 0), _defineProperty(_ref, 'precioProductos', 0), _defineProperty(_ref, 'stockProductos', ''), _defineProperty(_ref, 'descuento', 0), _defineProperty(_ref, 'total', 0.0), _defineProperty(_ref, 'totalDescuento', 0.0), _defineProperty(_ref, 'totalParcial', 0), _defineProperty(_ref, 'arrayTransacciones', []), _defineProperty(_ref, 'arrayProductoTransaccion', []), _defineProperty(_ref, 'arrayClientes', []), _defineProperty(_ref, 'arrayProductos', []), _defineProperty(_ref, 'arrayDetalles', []), _defineProperty(_ref, 'arrayPrecioStock', []), _defineProperty(_ref, 'arrayRecomendados', []), _defineProperty(_ref, 'producto', ''), _defineProperty(_ref, 'puntosProductos', ''), _defineProperty(_ref, 'listado', 1), _defineProperty(_ref, 'arrayTransaccionT', []), _defineProperty(_ref, 'cantidadPasajeraProductos', ''), _defineProperty(_ref, 'precioPasajeroProductos', ''), _defineProperty(_ref, 'puntosPasajeroProductos', ''), _defineProperty(_ref, 'pagination', {
             'total': 0,
             'current_page': 0,
             'per_page': 0,
@@ -60917,15 +60917,53 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
             me.precioNuevoProductos = val1.precioNuevoProductos;
             me.precioUsadoProductos = val1.precioUsadoProductos;
             me.stockProductos = val1.stockProductos;
+            me.mostrarRecomendados(val1.idProductos);
             if (me.picked == 0) {
                 me.precioPasajeroProductos = val1.precioNuevoProductos;
             } else {
                 me.precioPasajeroProductos = val1.precioUsadoProductos;
             }
         },
-        registrarTransaccion: function registrarTransaccion() {
-
+        mostrarRecomendados: function mostrarRecomendados(idProductos) {
             var me = this;
+            var urld = '/transaccionesVentas/recomendar?idProductos=' + idProductos;
+            axios.get(urld).then(function (response) {
+                console.log(response);
+                var respuesta = response.data;
+                me.arrayRecomendados = respuesta.recomendados;
+            }).catch(function (error) {
+                console.log(error);
+            });
+            return this.arrayRecomendados;
+        },
+        registrarTransaccion: function registrarTransaccion() {
+            var Swal = __webpack_require__(5);
+            var me = this;
+            var nombreRecomendados1 = '';
+            var nombreRecomendados2 = '';
+            var nombreRecomendados3 = '';
+
+            for (var i = 0; i <= me.arrayRecomendados.length; i++) {
+                if (me.arrayRecomendados == 0) {
+                    nombreRecomendados1 = 'No existen recomendaciones para este producto';
+                } else {
+                    if (me.arrayRecomendados.length > 0) {
+                        nombreRecomendados1 = me.arrayRecomendados[0].nombreProductos;
+                    }
+                    if (me.arrayRecomendados.length > 1) {
+                        nombreRecomendados2 = ' | ' + me.arrayRecomendados[1].nombreProductos;
+                    }
+                    if (me.arrayRecomendados.length > 2) {
+                        nombreRecomendados3 = ' | ' + me.arrayRecomendados[2].nombreProductos;
+                    }
+                }
+            }
+            Swal.fire({
+                icon: 'success',
+                title: '¡Transaccion realizada!',
+                text: 'Por comprar estos juegos, te recomendamos los siguientes: \n' + nombreRecomendados1 + nombreRecomendados2 + nombreRecomendados3
+            });
+
             axios.post('transacciones/registrar', {
                 'idClientes': me.idClientes,
                 'tipoTransacciones': me.tipoTransacciones,
