@@ -75,9 +75,9 @@ class ProductoController extends Controller
         $validar= $request->validate([
             'nombreProductos'=>'required|unique:productos,nombreProductos',
             'descripcionProductos'=>'nullable', 
-            'precioNuevoProductos'=>'nullable|min:0',
-            'precioUsadoProductos'=>'nullable|min:0',
-            'stockProductos'=>'nullable|min:0',
+            'precioNuevoProductos'=>'nullable|numeric|min:0',
+            'precioUsadoProductos'=>'nullable|numeric|min:0',
+            'stockProductos'=>'nullable|numeric|min:0',
             
         ]);
         try{
