@@ -235,6 +235,9 @@
                     if(error.response.status == 422){
                         this.errors = error.response.data.errors
                     }
+                     if(this.validaRut(rutClientes)){
+                        this.errors = "RUT no valido"
+                    }
                 })
             },
             actualizarCliente(){
