@@ -53401,7 +53401,13 @@ var render = function() {
                               _vm.rutClientes = $event.target.value
                             }
                           }
-                        })
+                        }),
+                        _vm._v(" "),
+                        _vm.errors.rutClientes
+                          ? _c("span", { staticClass: "error" }, [
+                              _vm._v(_vm._s(_vm.errors.rutClientes[0]))
+                            ])
+                          : _vm._e()
                       ])
                     ]),
                     _vm._v(" "),

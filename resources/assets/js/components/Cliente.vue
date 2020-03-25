@@ -96,7 +96,7 @@
                                     <label class="col-md-3 form-control-label" for="email-input">Rut</label>
                                     <div class="col-md-9">
                                        <input type="text" v-rut v-model="rutClientes" name="rut" class="form-control" placeholder="Rut de Cliente">
-                                        <!-- <span v-if="errors.rutClientes" class="error">{{errors.rutClientes[0]}}</span> -->
+                                        <span v-if="errors.rutClientes" class="error">{{errors.rutClientes[0]}}</span>
                                     </div>
                                 </div>
                                 <div class="form-group row">
