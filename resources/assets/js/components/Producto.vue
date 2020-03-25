@@ -96,12 +96,15 @@
                                     <label class="col-md-3 form-control-label" for="text-input">Nombre</label>
                                     <div class="col-md-9">
                                         <input type="text" v-model="nombreProductos" name="nombre" class="form-control" placeholder="Nombre de producto">
+                                        <span v-if="errors.nombreProductos" class="error">{{errors.nombreProductos[0]}}</span>
+
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Descripción</label>
                                     <div class="col-md-9">
                                         <input type="text" v-model="descripcionProductos" name="descripcion" class="form-control" placeholder="Descripción de producto">
+                                        <span v-if="errors.descripcionProductos" class="error">{{errors.descripcionProductos[0]}}</span>
                                     </div>
                                 </div>
                                
@@ -120,18 +123,21 @@
                                     <label class="col-md-3 form-control-label" for="number-input">Stock</label>
                                     <div class="col-md-9">
                                         <input type="number" min="0" v-model="stockProductos" name="stock" class="form-control" placeholder="Cantidad de stock">
+                                        <span v-if="errors.stockProductos" class="error">{{errors.stockProductos[0]}}</span>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="number-input">Precio Nuevo</label>
                                     <div class="col-md-9">
                                         <input type="number" min="0" v-model="precioNuevoProductos" name="precionuevo" class="form-control" placeholder="Precio de juego nuevo">
+                                        <span v-if="errors.precioNuevoProductos" class="error">{{errors.precioNuevoProductos[0]}}</span>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="number-input">Precio Usado</label>
                                     <div class="col-md-9">
                                         <input type="number" min="0" v-model="precioUsadoProductos" name="preciousado" class="form-control" placeholder="Precio de juego usado">
+                                        <span v-if="errors.precioUsadoProductos" class="error">{{errors.precioUsadoProductos[0]}}</span>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -190,8 +196,9 @@ import Multiselect from 'vue-multiselect'
                 modal : 0,
                 tituloModal : '',
                 tipoAccion : 0,
-                errorProducto : 0,
-                errorMsjProducto : [],
+                errors: [],
+                // errorProducto : 0,
+                // errorMsjProducto : [],
                 pagination : {
                 'total' :0 ,
                 'current_page':0 ,
