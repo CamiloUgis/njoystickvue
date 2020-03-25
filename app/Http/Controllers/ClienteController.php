@@ -69,7 +69,12 @@ class ClienteController extends Controller
         if(!$request->ajax()) return redirect('/');
         $cliente = new Cliente();
         $cliente->nombreClientes = $request->input('nombreClientes');
-        $cliente->rutClientes = $request->input('rutClientes');
+        $a= substr($request->input('rutClientes'),-1);
+        $b= substr($request->input('rutClientes'),-4,-1);
+        $c= substr($request->input('rutClientes'),-7,-4);
+        $d= substr($request->input('rutClientes'),0,-7);
+        $e= $d."." .$c."." .$b."-" .$a;
+        $cliente->rutClientes = $e;
         $cliente->telefonoClientes = $request->input('telefonoClientes');
         $cliente->comunaClientes = $request->input('comunaClientes');
         $cliente->correoClientes = $request->input('correoClientes');
