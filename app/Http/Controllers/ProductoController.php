@@ -162,6 +162,7 @@ class ProductoController extends Controller
     }
     public function muestraGeneros(Request $request){
          //if(!$request->ajax()) return redirect('/');
+         
          $generos = Producto::join('genero_producto', 'productos.idProductos', '=', 'genero_producto.idProductos')
          ->join('generos', 'genero_producto.idGeneros', '=', 'generos.idGeneros')
          ->select('genero_producto.idProductos','generos.nombreGeneros', 'productos.nombreProductos')

@@ -51500,6 +51500,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___default.a);
@@ -51570,6 +51571,7 @@ Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
             }
             return pagesArray;
         }
+
     },
     methods: {
         muestraGeneros: function muestraGeneros() {
@@ -51578,7 +51580,6 @@ Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
             axios.get(url).then(function (response) {
                 var respuesta = response.data;
                 me.listaGeneros = respuesta.generos;
-                for (var i = 0; i < listaGeneros.length; i++) {}
             }).catch(function (error) {
                 console.log(error.response);
             });
@@ -51885,13 +51886,17 @@ var render = function() {
                         }
                       }),
                       _vm._v(" "),
-                      producto.idProductos == _vm.listaGeneros.idProductos
+                      producto.idProductos in _vm.listaGeneros
                         ? _c(
                             "td",
                             [
-                              _vm._l(_vm.listaGeneros, function(genero) {
-                                return [_vm._v(_vm._s(genero.nombreGeneros))]
-                              })
+                              [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.listaGeneros[producto].nombreGeneros
+                                  ) + " "
+                                )
+                              ]
                             ],
                             2
                           )

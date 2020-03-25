@@ -44,8 +44,9 @@
                                     <td v-text="producto.nombreProductos"></td>
                                     <!-- <td v-text="producto.descripcionProductos"></td> -->
                                     <td v-text="producto.nombrePlataformas"></td>
-                                    <td v-if="producto.idProductos==listaGeneros.idProductos">
-                                       <template v-for="genero in listaGeneros">{{genero.nombreGeneros}}</template> 
+                                    <!-- Se requiere obtener un objeto de listaGeneros a comparar con el producto -->
+                                    <td v-if="producto.idProductos in listaGeneros">
+                                       <template  >{{listaGeneros[producto].nombreGeneros}} </template> 
                                     </td>
                                     <td v-else>No posee géneros asociados</td>
                                     <td v-text="producto.stockProductos"></td>
@@ -242,6 +243,7 @@ import Multiselect from 'vue-multiselect'
                 }
                 return pagesArray;
             }
+           
         },
         methods:{
             muestraGeneros(){
@@ -250,9 +252,7 @@ import Multiselect from 'vue-multiselect'
                 axios.get(url).then(function (response){
                     var respuesta = response.data;
                     me.listaGeneros = respuesta.generos;
-                    for(var i=0;i<listaGeneros.length;i++){
-                        
-                    }
+                   
                 })
                 .catch(function (error){
                     console.log(error.response);
