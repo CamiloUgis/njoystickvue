@@ -74,9 +74,10 @@ class ProductoController extends Controller
         if(!$request->ajax()) return redirect('/');
         $validar= $request->validate([
             'nombreProductos'=>'required|unique:productos,nombreProductos',
-            'precioNuevoProductos'=>'min:0',
-            'precioUsadoProductos'=>'min:0',
-            'stockProductos'=>'min:0',
+            'descripcionProductos'=>'nullable', 
+            'precioNuevoProductos'=>'nullable|min:0',
+            'precioUsadoProductos'=>'nullable|min:0',
+            'stockProductos'=>'nullable|min:0',
             
         ]);
         try{
