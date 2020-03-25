@@ -95,8 +95,8 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="email-input">Rut</label>
                                     <div class="col-md-9">
-                                        <input type="text" v-model="rutClientes" name="rut" class="form-control" placeholder="Rut de Cliente">
-                                        <span v-if="errors.rutClientes" class="error">{{errors.rutClientes[0]}}</span>
+                                       <input type="text" v-rut v-model="rutClientes" name="rut" class="form-control" placeholder="Rut de Cliente">
+                                        <!-- <span v-if="errors.rutClientes" class="error">{{errors.rutClientes[0]}}</span> -->
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -142,8 +142,11 @@
             <!--Fin del modal-->
         </main>
 </template>
+<script src="validarRUT.js"></script>
 
 <script>
+    var vueRut = require('vue-rut');
+    Vue.use(vueRut);
     export default {
         data(){
             return{
@@ -173,6 +176,7 @@
             }
         },
         computed:{
+            
             isActived: function(){
                 return this.pagination.current_page;
             },
@@ -235,9 +239,9 @@
                     if(error.response.status == 422){
                         this.errors = error.response.data.errors
                     }
-                     if(this.validaRut(rutClientes)){
-                        this.errors = "RUT no valido"
-                    }
+                    //  if(this.validaRut(rutClientes)){
+                    //     this.errors = "RUT no valido"
+                    // }
                 })
             },
             actualizarCliente(){
@@ -266,23 +270,23 @@
                     
                 })
             },
-            validaRut: function(rutCompleto) {
-                rutCompleto = rutCompleto.replace("‐","-");
-                if (!/^[0-9]+[-|‐]{1}[0-9kK]{1}$/.test( rutCompleto ))
-                    return false;
-                var tmp     = rutCompleto.split('-');
-                var digv    = tmp[1];
-                var rut     = tmp[0];
-                if ( digv == 'K' ) digv = 'k' ;
+            // validaRut: function(rutCompleto) {
+            //     rutCompleto = rutCompleto.replace("‐","-");
+            //     if (!/^[0-9]+[-|‐]{1}[0-9kK]{1}$/.test( rutCompleto ))
+            //         return false;
+            //     var tmp     = rutCompleto.split('-');
+            //     var digv    = tmp[1];
+            //     var rut     = tmp[0];
+            //     if ( digv == 'K' ) digv = 'k' ;
 
-                return (this.dv(rut) == digv );
-            },
-            dv : function(T){
-                var M=0,S=1;
-                for(;T;T=Math.floor(T/10))
-                    S=(S+T%10*(9-M++%6))%11;
-                return S?S-1:'k';
-            },
+            //     return (this.dv(rut) == digv );
+            // },
+            // dv : function(T){
+            //     var M=0,S=1;
+            //     for(;T;T=Math.floor(T/10))
+            //         S=(S+T%10*(9-M++%6))%11;
+            //     return S?S-1:'k';
+            // },
             // validarCliente(){
             //     this.errorCliente=0;
             //     this.errorMsjCliente = [];

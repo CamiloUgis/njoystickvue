@@ -23,6 +23,7 @@
         "sweetalert2": "^9.8.2",
         "v-selectpage": "^2.1.4",
         "vue-multiselect": "^2.1.6",
+        "vue-rut": "^2.0.2",
         "vue-select": "^3.4.0",
         "vue-sweetalert2": "^3.0.3",
         "vuelidate": "^0.7.5"
