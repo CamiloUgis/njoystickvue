@@ -87,7 +87,7 @@ class ClienteController extends Controller
         $validar= $request->validate([
             'nombreClientes'=>'required',
             'rutClientes'=> ['required', 'string', new ValidChileanRut(new ChileRut)],
-            'rutClientes'=>'required|unique:clientes,rutClientes',
+            'rutClientes'=>'required|unique:clientes,rutClientes,'. $request->idClientes.',idClientes',
             'telefonoClientes'=>'required|unique:clientes,telefonoClientes',
             'telefonoClientes'=>'integer|min:0',
             'comunaClientes'=>'required',
@@ -96,7 +96,12 @@ class ClienteController extends Controller
         if(!$request->ajax()) return redirect('/');
         $cliente = Cliente::findOrFail($request->idClientes);;
         $cliente->nombreClientes = $request->input('nombreClientes');
-        $cliente->rutClientes = $request->input('rutClientes');
+        $a= substr($request->input('rutClientes'),-1);
+        $b= substr($request->input('rutClientes'),-4,-1);
+        $c= substr($request->input('rutClientes'),-7,-4);
+        $d= substr($request->input('rutClientes'),0,-7);
+        $e= $d."." .$c."." .$b."-" .$a;
+        $cliente->rutClientes = $e;
         $cliente->telefonoClientes = $request->input('telefonoClientes');
         $cliente->comunaClientes = $request->input('comunaClientes');
         $cliente->correoClientes = $request->input('correoClientes');
