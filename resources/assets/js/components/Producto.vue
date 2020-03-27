@@ -30,7 +30,7 @@
                                     <th class="text-center">Nombre</th>
                                   <!--  <th class="text-center">Descripción</th>-->
                                     <th class="text-center">Plataforma</th>
-                                    <th class="text-center">Género(s)</th>
+                                    <!-- <th class="text-center">Género(s)</th> -->
                                     <th class="text-center">Stock</th>
                                     <th class="text-center">Precio Nuevo</th>
                                     <th class="text-center">Precio Usado</th>
@@ -45,10 +45,10 @@
                                     <!-- <td v-text="producto.descripcionProductos"></td> -->
                                     <td v-text="producto.nombrePlataformas"></td>
                                     <!-- Se requiere obtener un objeto de listaGeneros a comparar con el producto -->
-                                    <td v-if="producto.idProductos in listaGeneros">
+                                    <!-- <td v-if="producto.idProductos in listaGeneros">
                                        <template  >{{listaGeneros[producto].nombreGeneros}} </template> 
                                     </td>
-                                    <td v-else>No posee géneros asociados</td>
+                                    <td v-else>No posee géneros asociados</td> -->
                                     <td v-text="producto.stockProductos"></td>
                                     <td v-text="producto.precioNuevoProductos"></td>
                                     <td v-text="producto.precioUsadoProductos"></td>

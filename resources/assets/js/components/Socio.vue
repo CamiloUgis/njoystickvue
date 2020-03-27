@@ -116,7 +116,7 @@
                                     <td colspan="2" align="right"> 
                                         <strong>Total de puntos gastados:</strong>
                                     </td>
-                                    <td> test</td>
+                                    <td> {{socio.puntosGastadosTransacciones}}</td>
                                 </tr>
                                 <tr style="background-color: #CEECF5">
                                     <td colspan="2" align="right"> 
@@ -131,8 +131,32 @@
                                         <td colspan="12"> 
                                         <center>   NO hay referidos asociados. </center>
                                         </td>
+                                        
                                     </tr>
-
+<tr style="background-color: #CEECF5">
+                                        <td colspan="2" align="right"> 
+                                            <strong>Puntos Propios:</strong>
+                                        </td>
+                                        <td>{{socio.puntosPropiosSocios}}</td>
+                                </tr>
+                                <tr style="background-color: #CEECF5">
+                                    <td colspan="2" align="right"> 
+                                        <strong>Total Acumulado:</strong>
+                                    </td>
+                                    <td>{{socio.puntosPropiosSocios+socio.puntosReferidosSocios}}</td>
+                                </tr>
+                                <tr style="background-color: #CEECF5">
+                                    <td colspan="2" align="right"> 
+                                        <strong>Total de puntos gastados:</strong>
+                                    </td>
+                                    <td> {{socio.puntosGastadosTransacciones}}</td>
+                                </tr>
+                                <tr style="background-color: #CEECF5">
+                                    <td colspan="2" align="right"> 
+                                        <strong>Puntos disponibles:</strong>
+                                    </td>
+                                    <td> {{socio.puntosActualesSocios}}</td>
+                                </tr>
                                 </tbody>
                                 </table>
                                </div>
@@ -289,7 +313,8 @@
                 var url= '/socios/obtenerTransacciones?filtro='+idClientes;
                 axios.get(url).then(function (response){
                     var respuesta = response.data;
-                    me.arrayTransacciones = respuesta.arrayTransacciones;
+                    me.arrayTransacciones = respuesta.transacciones;
+
                 })
                 .catch(function (error){
                     console.log(error);

@@ -155,7 +155,7 @@
                             </div>
                             <div class="col-md-2">
                                     <label>Puntos a canjear<span style="color:red;"></span></label>
-                                    <input type="number" value="0" class="form-control" v-model="puntosPasajeroGastados" min="1" max="10000">
+                                    <input type="number" value="0" class="form-control" v-model="puntosPasajeroGastados" min="0" max="10000">
                             </div>
                             <div class="col-md-4" style="margin-top: 30px;">
                                     <label>Puntos por Producto</label>
@@ -446,7 +446,7 @@ Vue.component('v-select', vSelect)
                 buscar : '',
                 arrayPlataformas:[],
                 picked:'',
-                puntosPasajeroGastados:0,
+                puntosPasajeroGastados:'',
 
             }
         },
