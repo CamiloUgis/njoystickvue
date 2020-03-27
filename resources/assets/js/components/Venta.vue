@@ -275,7 +275,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Estado de Transaccion</label>
+                                    <label>Estado de transacción</label>
                                     <p v-text="estadoTransacciones"></p>
                                 </div>
                             </div>

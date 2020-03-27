@@ -58157,7 +58157,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-4" }, [
                       _c("div", { staticClass: "form-group" }, [
-                        _c("label", [_vm._v("Estado de Transaccion")]),
+                        _c("label", [_vm._v("Estado de transacción")]),
                         _vm._v(" "),
                         _c("p", {
                           domProps: {
@@ -60421,7 +60421,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-4" }, [
                       _c("div", { staticClass: "form-group" }, [
-                        _c("label", [_vm._v("Estado de Transaccion")]),
+                        _c("label", [_vm._v("Estado de transacción")]),
                         _vm._v(" "),
                         _c("p", {
                           domProps: {
@@ -62863,7 +62863,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-4" }, [
                       _c("div", { staticClass: "form-group" }, [
-                        _c("label", [_vm._v("Estado de Transaccion")]),
+                        _c("label", [_vm._v("Estado de transacción")]),
                         _vm._v(" "),
                         _c("p", {
                           domProps: {
@@ -65191,7 +65191,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-4" }, [
                       _c("div", { staticClass: "form-group" }, [
-                        _c("label", [_vm._v("Estado de Transaccion")]),
+                        _c("label", [_vm._v("Estado de transacción")]),
                         _vm._v(" "),
                         _c("p", {
                           domProps: {
@@ -67512,7 +67512,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-4" }, [
                       _c("div", { staticClass: "form-group" }, [
-                        _c("label", [_vm._v("Estado de Transaccion")]),
+                        _c("label", [_vm._v("Estado de transacción")]),
                         _vm._v(" "),
                         _c("p", {
                           domProps: {
