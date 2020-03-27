@@ -153,10 +153,10 @@
                                     <label>Cantidad<span style="color:red;" v-show="cantidadPasajeraProductos==0" >(Ingrese*) </span></label>
                                     <input type="number" min="0" value="0" class="form-control" v-model="cantidadPasajeraProductos">
                             </div>
-                            <div class="col-md-2">
+                            <!-- <div class="col-md-2">
                                     <label>Puntos a canjear<span style="color:red;"></span></label>
                                     <input type="number" value="0" class="form-control" v-model="puntosPasajeroGastados" min="0" max="10000">
-                            </div>
+                            </div> -->
                             <div class="col-md-4" style="margin-top: 30px;">
                                     <label>Puntos por Producto</label>
                                     <input v-model="puntosPasajeroProductos" disabled>
@@ -578,7 +578,7 @@ Vue.component('v-select', vSelect)
                             cantidadProductos: me.cantidadPasajeraProductos,
                             precioProductos: me.precioPasajeroProductos,
                             puntosProductos: me.puntosPasajeroProductos,
-                            puntosGastadosTransacciones: me.puntosPasajeroGastados,
+                            // puntosGastadosTransacciones: me.puntosPasajeroGastados,
                         });
                         me.idProductos=0;
                         me.producto='';

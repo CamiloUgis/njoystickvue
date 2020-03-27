@@ -112,12 +112,12 @@
                                     </td>
                                     <td>{{socio.puntosPropiosSocios+socio.puntosReferidosSocios}}</td>
                                 </tr>
-                                <tr style="background-color: #CEECF5">
+                                <!-- <tr style="background-color: #CEECF5">
                                     <td colspan="2" align="right"> 
                                         <strong>Total de puntos gastados:</strong>
                                     </td>
                                     <td> {{socio.puntosGastadosTransacciones}}</td>
-                                </tr>
+                                </tr> -->
                                 <tr style="background-color: #CEECF5">
                                     <td colspan="2" align="right"> 
                                         <strong>Puntos disponibles:</strong>
@@ -145,12 +145,12 @@
                                     </td>
                                     <td>{{socio.puntosPropiosSocios+socio.puntosReferidosSocios}}</td>
                                 </tr>
-                                <tr style="background-color: #CEECF5">
+                                <!-- <tr style="background-color: #CEECF5">
                                     <td colspan="2" align="right"> 
                                         <strong>Total de puntos gastados:</strong>
                                     </td>
                                     <td> {{socio.puntosGastadosTransacciones}}</td>
-                                </tr>
+                                </tr> -->
                                 <tr style="background-color: #CEECF5">
                                     <td colspan="2" align="right"> 
                                         <strong>Puntos disponibles:</strong>

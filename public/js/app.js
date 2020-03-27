@@ -55818,28 +55818,6 @@ var render = function() {
                                         _vm._v(
                                           " " +
                                             _vm._s(
-                                              _vm.socio
-                                                .puntosGastadosTransacciones
-                                            )
-                                        )
-                                      ])
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "tr",
-                                    {
-                                      staticStyle: {
-                                        "background-color": "#CEECF5"
-                                      }
-                                    },
-                                    [
-                                      _vm._m(5),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _vm._v(
-                                          " " +
-                                            _vm._s(
                                               _vm.socio.puntosActualesSocios
                                             )
                                         )
@@ -55873,7 +55851,7 @@ var render = function() {
                                     }
                                   },
                                   [
-                                    _vm._m(6),
+                                    _vm._m(5),
                                     _vm._v(" "),
                                     _c("td", [
                                       _vm._v(
@@ -55891,7 +55869,7 @@ var render = function() {
                                     }
                                   },
                                   [
-                                    _vm._m(7),
+                                    _vm._m(6),
                                     _vm._v(" "),
                                     _c("td", [
                                       _vm._v(
@@ -55912,29 +55890,7 @@ var render = function() {
                                     }
                                   },
                                   [
-                                    _vm._m(8),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _vm._v(
-                                        " " +
-                                          _vm._s(
-                                            _vm.socio
-                                              .puntosGastadosTransacciones
-                                          )
-                                      )
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "tr",
-                                  {
-                                    staticStyle: {
-                                      "background-color": "#CEECF5"
-                                    }
-                                  },
-                                  [
-                                    _vm._m(9),
+                                    _vm._m(7),
                                     _vm._v(" "),
                                     _c("td", [
                                       _vm._v(
@@ -56248,14 +56204,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("td", { attrs: { colspan: "2", align: "right" } }, [
-      _c("strong", [_vm._v("Total de puntos gastados:")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", { attrs: { colspan: "2", align: "right" } }, [
       _c("strong", [_vm._v("Puntos disponibles:")])
     ])
   },
@@ -56273,14 +56221,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("td", { attrs: { colspan: "2", align: "right" } }, [
       _c("strong", [_vm._v("Total Acumulado:")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", { attrs: { colspan: "2", align: "right" } }, [
-      _c("strong", [_vm._v("Total de puntos gastados:")])
     ])
   },
   function() {
@@ -61553,8 +61493,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
                             producto: me.producto,
                             cantidadProductos: me.cantidadPasajeraProductos,
                             precioProductos: me.precioPasajeroProductos,
-                            puntosProductos: me.puntosPasajeroProductos,
-                            puntosGastadosTransacciones: me.puntosPasajeroGastados
+                            puntosProductos: me.puntosPasajeroProductos
+                            // puntosGastadosTransacciones: me.puntosPasajeroGastados,
                         });
                         me.idProductos = 0;
                         me.producto = '';
@@ -62469,37 +62409,6 @@ var render = function() {
                       })
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-md-2" }, [
-                      _vm._m(1),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.puntosPasajeroGastados,
-                            expression: "puntosPasajeroGastados"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "number",
-                          value: "0",
-                          min: "0",
-                          max: "10000"
-                        },
-                        domProps: { value: _vm.puntosPasajeroGastados },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.puntosPasajeroGastados = $event.target.value
-                          }
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
                     _c(
                       "div",
                       {
@@ -62571,7 +62480,7 @@ var render = function() {
                               "table table-bordered table-striped table-sm"
                           },
                           [
-                            _vm._m(2),
+                            _vm._m(1),
                             _vm._v(" "),
                             _vm.arrayDetalles.length
                               ? _c(
@@ -62783,7 +62692,7 @@ var render = function() {
                                         }
                                       },
                                       [
-                                        _vm._m(3),
+                                        _vm._m(2),
                                         _vm._v(" "),
                                         _c("td", [
                                           _vm._v(
@@ -62805,7 +62714,7 @@ var render = function() {
                                         }
                                       },
                                       [
-                                        _vm._m(4),
+                                        _vm._m(3),
                                         _vm._v(" "),
                                         _c("td", [
                                           _vm._v(
@@ -62829,7 +62738,7 @@ var render = function() {
                                         }
                                       },
                                       [
-                                        _vm._m(5),
+                                        _vm._m(4),
                                         _vm._v(" "),
                                         _c("td", [
                                           _vm._v(
@@ -62853,7 +62762,7 @@ var render = function() {
                                         }
                                       },
                                       [
-                                        _vm._m(6),
+                                        _vm._m(5),
                                         _vm._v(" "),
                                         _c("td", [
                                           _vm._v(_vm._s(_vm.puntosTotales))
@@ -63012,7 +62921,7 @@ var render = function() {
                             "table table-bordered table-striped table-sm"
                         },
                         [
-                          _vm._m(7),
+                          _vm._m(6),
                           _vm._v(" "),
                           _vm.arrayDetalles.length
                             ? _c(
@@ -63073,7 +62982,7 @@ var render = function() {
                                       }
                                     },
                                     [
-                                      _vm._m(8),
+                                      _vm._m(7),
                                       _vm._v(" "),
                                       _c("td", [
                                         _vm._v(
@@ -63095,7 +63004,7 @@ var render = function() {
                                       }
                                     },
                                     [
-                                      _vm._m(9),
+                                      _vm._m(8),
                                       _vm._v(" "),
                                       _c("td", [
                                         _vm._v(
@@ -63119,7 +63028,7 @@ var render = function() {
                                       }
                                     },
                                     [
-                                      _vm._m(10),
+                                      _vm._m(9),
                                       _vm._v(" "),
                                       _c("td", [
                                         _vm._v(
@@ -63143,7 +63052,7 @@ var render = function() {
                                       }
                                     },
                                     [
-                                      _vm._m(11),
+                                      _vm._m(10),
                                       _vm._v(" "),
                                       _c("td", [
                                         _vm._v(_vm._s(_vm.puntosTotales))
@@ -63219,15 +63128,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [_vm._v("Visualizar")])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", [
-      _vm._v("Puntos a canjear"),
-      _c("span", { staticStyle: { color: "red" } })
     ])
   },
   function() {
