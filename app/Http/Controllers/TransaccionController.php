@@ -86,7 +86,7 @@ class TransaccionController extends Controller
             $transaccion->fechaTransacciones = $mytime;
             $transaccion->observacionTransacciones = $request->input('observacionTransacciones');
             $transaccion->puntosTransacciones = $request->input('puntosTransacciones');
-            $transaccion->puntosGastadosTransacciones=$request->input('puntosGastadosTransacciones');
+            $transaccion->puntosGastadosTransacciones=0;
             $transaccion->descuentoTransacciones = $request->input('descuentoTransacciones');
             $transaccion->valorFinalTransacciones = $request->input('valorFinalTransacciones');
             $transaccion->formaPagoTransacciones = $request->input('formaPagoTransacciones');
