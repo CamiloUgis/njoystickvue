@@ -61582,9 +61582,9 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
                 'puntosTransacciones': me.puntosTransacciones,
                 'valorFinalTransacciones': me.valorFinalTransacciones,
                 'formaPagoTransacciones': me.formaPagoTransacciones,
-                'plazoTransacciones': me.plazoTransacciones,
+                'plazoTransacciones': '0000-00-00',
                 'estadoTransacciones': me.estadoTransacciones,
-                'puntosGastadosTransacciones': me.puntosGastadosTransacciones,
+                // 'puntosGastadosTransacciones': me.puntosGastadosTransacciones,
                 'data': me.arrayDetalles
             }).then(function (response) {
                 me.listado = 1;
@@ -61604,7 +61604,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
                 me.cantidadProductos = 0;
                 me.precioProductos = 0;
                 me.puntosProductos = 0;
-                me.puntosGastadosTransacciones = 0;
+                // me.puntosGastadosTransacciones=0;
             }).catch(function (error) {
                 console.log(error.response.data.errors);
             });
@@ -61628,7 +61628,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
             me.cantidadProductos = 0;
             me.precioProductos = 0;
             me.puntosProductos = 0;
-            me.puntosGastadosTransacciones = 0;
+            // me.puntosGastadosTransacciones=0;
         },
         ocultarDetalle: function ocultarDetalle() {
             this.listado = 1;
@@ -61637,7 +61637,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
             this.totalDescuento = 0;
             this.valorFinalTransacciones = 0;
             this.descuento = 0;
-            this.puntosGastadosTransacciones = 0;
+            // this.puntosGastadosTransacciones=0;
         },
         verTransaccion: function verTransaccion(idTransacciones) {
             var me = this;
@@ -61659,7 +61659,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
                 me.observacionTransacciones = arrayTransaccionT[0]['observacionTransacciones'];
                 me.puntosTransacciones = arrayTransaccionT[0]['puntosTransacciones'];
                 me.valorFinalTransacciones = arrayTransaccionT[0]['valorFinalTransacciones'];
-                me.puntosGastadosTransacciones = arrayTransaccionT[0]['puntosGastadosTransacciones'];
+                // me.puntosGastadosTransacciones=arrayTransaccionT[0]['puntosGastadosTransacciones'];
             }).catch(function (error) {
                 console.log(error);
             });
@@ -62611,43 +62611,6 @@ var render = function() {
                                           ]),
                                           _vm._v(" "),
                                           _c("td", [
-                                            _c("input", {
-                                              directives: [
-                                                {
-                                                  name: "model",
-                                                  rawName: "v-model",
-                                                  value:
-                                                    detalle.puntosGastadosTransacciones,
-                                                  expression:
-                                                    "detalle.puntosGastadosTransacciones"
-                                                }
-                                              ],
-                                              staticClass: "form-control",
-                                              attrs: {
-                                                type: "number",
-                                                value: "2",
-                                                disabled: ""
-                                              },
-                                              domProps: {
-                                                value:
-                                                  detalle.puntosGastadosTransacciones
-                                              },
-                                              on: {
-                                                input: function($event) {
-                                                  if ($event.target.composing) {
-                                                    return
-                                                  }
-                                                  _vm.$set(
-                                                    detalle,
-                                                    "puntosGastadosTransacciones",
-                                                    $event.target.value
-                                                  )
-                                                }
-                                              }
-                                            })
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("td", [
                                             _vm._v(
                                               "\n                                               " +
                                                 _vm._s(
@@ -63143,8 +63106,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("Cantidad")]),
         _vm._v(" "),
         _c("th", [_vm._v("Puntos")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Puntos Gastados")]),
         _vm._v(" "),
         _c("th", [_vm._v("Subtotal")]),
         _vm._v(" "),
