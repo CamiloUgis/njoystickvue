@@ -419,7 +419,7 @@ class TransaccionController extends Controller
             $transaccion->descuentoTransacciones = $request->input('descuentoTransacciones');
             $transaccion->valorFinalTransacciones = $request->input('valorFinalTransacciones');
             $transaccion->formaPagoTransacciones = $request->input('formaPagoTransacciones');
-            $transaccion->plazoTransacciones = $request->input('plazoTransacciones');
+            $transaccion->plazoTransacciones = '0000-00-00';
             $transaccion->estadoTransacciones = $request->input('estadoTransacciones');
             $transaccion->idClientes = $request->input('idClientes');
             $transaccion->save();
