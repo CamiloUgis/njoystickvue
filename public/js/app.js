@@ -52792,10 +52792,10 @@ var render = function() {
                                   "div",
                                   {
                                     key: ngen.idProductos,
-                                    staticClass: "col-md-9"
+                                    staticClass: "col-md-1"
                                   },
                                   [
-                                    _c("label", [
+                                    _c("li", [
                                       _vm._v(_vm._s(ngen.nombreGeneros))
                                     ])
                                   ]
