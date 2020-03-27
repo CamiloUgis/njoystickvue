@@ -35,6 +35,8 @@
                                     <th class="text-center">Precio Nuevo</th>
                                     <th class="text-center">Precio Usado</th>
                                     <th class="text-center">Modificar</th>
+                                    <th class="text-center">Ver Producto</th>
+
 
 
                                 </tr>
@@ -55,6 +57,11 @@
                                     <td>
                                         <button type="button" @click="abrirModal('producto', 'actualizar', producto)" class="btn btn-warning btn-sm">
                                           <i class="icon-pencil"></i>
+                                        </button> &nbsp;
+                                    </td>
+                                    <td>
+                                        <button type="button" @click="abrirModal('producto', 'verProducto', producto)" class="btn btn-warning btn-sm">
+                                          <i class="icon-eye"></i>
                                         </button> &nbsp;
                                     </td>
                                 </tr>
@@ -82,7 +89,7 @@
             </div>
             <!--Inicio del modal agregar/actualizar-->
             <div v-if="tipoAccion==1 || tipoAccion==2">
-            <div class="modal fade" :class="{'mostrar' :modal}" role="dialog"  tabindex="-1" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal fade" :class="{'mostrar' :modal}" role="dialog"  tabindex="-1" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -168,7 +175,91 @@
                     <!-- /.modal-content -->
                 </div>
                 <!-- /.modal-dialog -->
+                </div>
             </div>
+            <div v-if="tipoAccion==3">
+                <div class="modal fade" :class="{'mostrar' :modal}" role="dialog"  tabindex="-1" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" v-text="tituloModal"></h4>
+                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Nombre</label>
+                                    <div class="col-md-9">
+                                        <input type="text" v-model="nombreProductos" name="nombre" class="form-control" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Descripción</label>
+                                    <div class="col-md-9">
+                                        <input type="text" v-model="descripcionProductos" name="descripcion" class="form-control" placeholder="Descripción de producto" disabled>
+                                    </div>
+                                </div>
+                               
+
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="number-input">Plataforma</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control" v-model="idPlataformas">
+                                            <option value="0" disabled>Seleccione</option>
+                                            <option v-for="plataforma in arrayPlataformas" :key="plataforma.idPlataformas"
+                                            :value="plataforma.idPlataformas" v-text="plataforma.nombrePlataformas"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="number-input">Stock</label>
+                                    <div class="col-md-9">
+                                        <input type="number" min="0" v-model="stockProductos" name="stock" class="form-control" placeholder="Cantidad de stock">
+                                        <span v-if="errors.stockProductos" class="error">{{errors.stockProductos[0]}}</span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="number-input">Precio Nuevo</label>
+                                    <div class="col-md-9">
+                                        <input type="number" min="0" v-model="precioNuevoProductos" name="precionuevo" class="form-control" placeholder="Precio de juego nuevo">
+                                        <span v-if="errors.precioNuevoProductos" class="error">{{errors.precioNuevoProductos[0]}}</span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="number-input">Precio Usado</label>
+                                    <div class="col-md-9">
+                                        <input type="number" min="0" v-model="precioUsadoProductos" name="preciousado" class="form-control" placeholder="Precio de juego usado">
+                                        <span v-if="errors.precioUsadoProductos" class="error">{{errors.precioUsadoProductos[0]}}</span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 typo__label">Géneros</label>
+                                    <div class="col-md-9">
+                                    <multiselect
+                                        v-model="arrayGenerosSeleccionados"
+                                        :options="arrayGeneros"
+                                        :multiple="true"
+                                        :taggable="true"
+                                        tag-placeholder="Add this as new tag"
+                                        placeholder="Agregue uno o más géneros"
+                                        label="nombreGeneros"
+                                        track-by="nombreGeneros">
+                                    </multiselect>
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" @click="cerrarModal()" >Cerrar</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+                </div>
             </div>
             <!--Fin del modal-->
         </main>
@@ -385,6 +476,20 @@ import Multiselect from 'vue-multiselect'
                                 this.modal = 1;
                                 this.tipoAccion = 2;
                                 this.tituloModal = "Actualizar Producto";
+                                this.idProductos=data['idProductos'];                                
+                                this.idPlataformas=data['idPlataformas'];
+                                this.nombreProductos=data['nombreProductos'];
+                                this.descripcionProductos=data['descripcionProductos'];
+                                this.stockProductos=data['stockProductos'];
+                                this.precioNuevoProductos=data['precioNuevoProductos'];
+                                this.precioUsadoProductos=data['precioUsadoProductos'];
+                                break;
+
+                            }
+                            case 'verProducto':{
+                                this.modal = 1;
+                                this.tipoAccion = 3;
+                                this.tituloModal = "Ver Producto";
                                 this.idProductos=data['idProductos'];                                
                                 this.idPlataformas=data['idPlataformas'];
                                 this.nombreProductos=data['nombreProductos'];
