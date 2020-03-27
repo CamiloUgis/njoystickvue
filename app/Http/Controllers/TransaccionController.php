@@ -9,6 +9,8 @@ use App\Socio;
 use App\Cliente;
 use App\Producto;
 use App\ProductoTransaccion;
+use App\ClienteProducto;
+
 use Carbon\Carbon;
 
 class TransaccionController extends Controller
@@ -20,7 +22,7 @@ class TransaccionController extends Controller
      */
     public function index(Request $request)
     {
-        if(!$request->ajax()) return redirect('/');
+        //if(!$request->ajax()) return redirect('/');
         $buscar= $request->buscar;
         $criterio = $request->criterio;
 
@@ -47,7 +49,7 @@ class TransaccionController extends Controller
             'productos.precioNuevoProductos', 'productos.precioUsadoProductos')
             ->where('transacciones.'.$criterio, 'like', '%'. $buscar . '%')
             ->orderBy('producto_transaccion.idTransacciones', 'desc')
-            ->groupby('producto_transaccion.idTransacciones')->paginate(8);            
+            ->groupby('producto_transaccion.idTransacciones')->paginate(8);              
         }
         return [
             'pagination' =>[
@@ -176,8 +178,9 @@ class TransaccionController extends Controller
 
         $idTransacciones = $request->idTransacciones;
         $detalles = ProductoTransaccion::join('productos','producto_transaccion.idProductos','=','productos.idProductos')
+        ->join('cliente_producto', 'productos.idProductos','=', 'cliente_producto.idProductos')
         ->select('producto_transaccion.precioProductos','producto_transaccion.cantidadProductos','producto_transaccion.puntosProductos',
-        'productos.nombreProductos', 'productos.idProductos')
+        'productos.nombreProductos', 'productos.idProductos', 'cliente_producto.abonoClienteProducto')
         ->where('producto_transaccion.idTransacciones','=',$idTransacciones)
         ->orderBy('producto_transaccion.idTransacciones', 'desc')->get();
         
@@ -328,11 +331,12 @@ class TransaccionController extends Controller
             $transacciones = Transaccion::join('clientes','transacciones.idClientes','=','clientes.idClientes')
             ->join('producto_transaccion', 'transacciones.idTransacciones', '=', 'producto_transaccion.idTransacciones')
             ->join('productos', 'producto_transaccion.idProductos','=','productos.idProductos')
+            ->join('cliente_producto', 'clientes.idClientes','=', 'cliente_producto.idClientes')
             ->select('transacciones.tipoTransacciones', 'transacciones.observacionTransacciones', 'transacciones.fechaTransacciones', 
             'transacciones.puntosTransacciones', 'transacciones.descuentoTransacciones', 'transacciones.valorFinalTransacciones', 'transacciones.formaPagoTransacciones',
             'transacciones.plazoTransacciones', 'transacciones.estadoTransacciones', 'clientes.nombreClientes', 'clientes.rutClientes', 
             'producto_transaccion.idTransacciones', 'productos.nombreProductos', 'productos.stockProductos',
-            'productos.precioNuevoProductos', 'productos.precioUsadoProductos')
+            'productos.precioNuevoProductos', 'productos.precioUsadoProductos', 'cliente_producto.abonoClienteProducto')
             ->where('transacciones.tipoTransacciones','=','Reserva')
             ->orderBy('producto_transaccion.idTransacciones', 'desc')
             ->groupby('producto_transaccion.idTransacciones')->paginate(8);
@@ -341,11 +345,12 @@ class TransaccionController extends Controller
             $transacciones = Transaccion::join('clientes','transacciones.idClientes','=','clientes.idClientes')
             ->join('producto_transaccion', 'transacciones.idTransacciones', '=', 'producto_transaccion.idTransacciones')
             ->join('productos', 'producto_transaccion.idProductos','=','productos.idProductos')
+            ->join('cliente_producto', 'clientes.idClientes','=', 'cliente_producto.idClientes')
             ->select('transacciones.tipoTransacciones', 'transacciones.observacionTransacciones', 'transacciones.fechaTransacciones', 
             'transacciones.puntosTransacciones', 'transacciones.descuentoTransacciones', 'transacciones.valorFinalTransacciones', 'transacciones.formaPagoTransacciones',
             'transacciones.plazoTransacciones', 'transacciones.estadoTransacciones', 'clientes.nombreClientes', 'clientes.rutClientes', 
             'producto_transaccion.idTransacciones', 'productos.nombreProductos', 'productos.stockProductos',
-            'productos.precioNuevoProductos', 'productos.precioUsadoProductos')
+            'productos.precioNuevoProductos', 'productos.precioUsadoProductos', 'cliente_producto.abonoClienteProducto')
             ->where('transacciones.'.$criterio, 'like', '%'. $buscar . '%')
             ->where('transacciones.tipoTransacciones','=','Reserva')
             ->orderBy('producto_transaccion.idTransacciones', 'desc')
@@ -395,5 +400,70 @@ class TransaccionController extends Controller
 
         return ['recomendados'=>$recomendados];
     }
+
+
+    public function registrarReserva(Request $request)
+    {
+
+        if(!$request->ajax()) return redirect('/');
+        try{
+            DB::beginTransaction();
+            $mytime= Carbon::now('America/Santiago');
+            $transaccion = new Transaccion();
+            $transaccion->idTransacciones = $request->input('idTransacciones');
+            $transaccion->tipoTransacciones = $request->input('tipoTransacciones');
+            $transaccion->fechaTransacciones = $mytime;
+            $transaccion->observacionTransacciones = $request->input('observacionTransacciones');
+            $transaccion->puntosTransacciones = $request->input('puntosTransacciones');
+            $transaccion->puntosGastadosTransacciones=0;
+            $transaccion->descuentoTransacciones = $request->input('descuentoTransacciones');
+            $transaccion->valorFinalTransacciones = $request->input('valorFinalTransacciones');
+            $transaccion->formaPagoTransacciones = $request->input('formaPagoTransacciones');
+            $transaccion->plazoTransacciones = $request->input('plazoTransacciones');
+            $transaccion->estadoTransacciones = $request->input('estadoTransacciones');
+            $transaccion->idClientes = $request->input('idClientes');
+            $transaccion->save();
+            DB::commit();
+            $socio1=Socio::where('idClientes', '=', $request->input('idClientes'));
+            $socio1->decrement('puntosActualesSocios',500);
+            
+            $socio1->increment('puntosPropiosSocios',$request->input('puntosTransacciones'));
+            $socio1->increment('puntosActualesSocios',$request->input('puntosTransacciones'));
+           
+            if(!($request->input('idClientes')==99)){
+                $socio=Socio::where('idClientes', '=', $request->input('idClientes'))->select('invitador')->first();
+                $invitador=Socio::where('idClientes', $socio->invitador)->first();
+                $invitador->increment('puntosReferidosSocios', ( $request->input('puntosTransacciones'))/2);
+                $invitador->increment('puntosActualesSocios', ( $request->input('puntosTransacciones'))/2);
+                $invitador->save();       
+            }
+            $pivote = $request->data;
+
+            foreach($pivote as $cp=>$test){
+                $cp= new ClienteProducto();
+                $cp->idClientes = $transaccion->idClientes;
+                $cp->idProductos = $test['idProductos'];
+                $cp->abonoClienteProducto = $test['abonoClienteProducto'];
+                $cp->save();
+            }
+            foreach($pivote as $ep=>$det){
+                $ep= new ProductoTransaccion();
+                $ep->idTransacciones = $transaccion->idTransacciones;
+                $ep->idProductos = $det['idProductos'];
+                $ep->precioProductos = $det['precioProductos'];
+                $ep->cantidadProductos =1;
+                $ep->puntosProductos = $det['puntosProductos'];
+                $ep->save();
+            }
+            
+            DB::commit();
+            }catch(Exception $e){
+                DB::rollback();
+            }
+        
+
+        $transaccion->save();
+    }
+
 
 }
