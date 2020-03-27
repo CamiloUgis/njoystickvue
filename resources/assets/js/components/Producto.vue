@@ -60,7 +60,7 @@
                                         </button> &nbsp;
                                     </td>
                                     <td>
-                                        <button type="button" @click="abrirModal('producto', 'verProducto', producto)" class="btn btn-warning btn-sm">
+                                        <button type="button" @click="abrirModal('producto', 'verProducto', producto)" class="btn btn-succes btn-sm btnvisualizar">
                                           <i class="icon-eye"></i>
                                         </button> &nbsp;
                                     </td>
@@ -192,13 +192,13 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Nombre</label>
                                     <div class="col-md-9">
-                                        <input type="text" v-model="nombreProductos" name="nombre" class="form-control" disabled>
+                                        <h5  v-text="nombreProductos"> </h5>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Descripción</label>
                                     <div class="col-md-9">
-                                        <input type="text" v-model="descripcionProductos" name="descripcion" class="form-control" placeholder="Descripción de producto" disabled>
+                                        <label  v-text="descripcionProductos"> </label>
                                     </div>
                                 </div>
                                
@@ -206,32 +206,29 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="number-input">Plataforma</label>
                                     <div class="col-md-9">
-                                        <select class="form-control" v-model="idPlataformas">
-                                            <option value="0" disabled>Seleccione</option>
-                                            <option v-for="plataforma in arrayPlataformas" :key="plataforma.idPlataformas"
-                                            :value="plataforma.idPlataformas" v-text="plataforma.nombrePlataformas"></option>
-                                        </select>
+                                        
+                                        
+                                            
+                                            <label >{{muestraPlataformas(idPlataformas)}}</label>
+                                       
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="number-input">Stock</label>
                                     <div class="col-md-9">
-                                        <input type="number" min="0" v-model="stockProductos" name="stock" class="form-control" placeholder="Cantidad de stock">
-                                        <span v-if="errors.stockProductos" class="error">{{errors.stockProductos[0]}}</span>
+                                        <label v-text="stockProductos"></label>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="number-input">Precio Nuevo</label>
                                     <div class="col-md-9">
-                                        <input type="number" min="0" v-model="precioNuevoProductos" name="precionuevo" class="form-control" placeholder="Precio de juego nuevo">
-                                        <span v-if="errors.precioNuevoProductos" class="error">{{errors.precioNuevoProductos[0]}}</span>
+                                        <label v-text="precioNuevoProductos"></label>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="number-input">Precio Usado</label>
                                     <div class="col-md-9">
-                                        <input type="number" min="0" v-model="precioUsadoProductos" name="preciousado" class="form-control" placeholder="Precio de juego usado">
-                                        <span v-if="errors.precioUsadoProductos" class="error">{{errors.precioUsadoProductos[0]}}</span>
+                                        <label v-text="precioUsadoProductos"></label>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -337,6 +334,12 @@ import Multiselect from 'vue-multiselect'
            
         },
         methods:{
+            muestraPlataformas(idPlataformas){
+                let me=this;
+                for (var i = 0; i < arrayPlataformas.length; i++) {
+                        if (arrayPlataformas[i][nombrePlataformas] !== null) return arrayPlataformas[i][nombrePlataformas];
+                    }
+            },
             muestraGeneros(){
                 let me=this;
                 var url= '/productos/muestraGeneros';
@@ -538,5 +541,12 @@ import Multiselect from 'vue-multiselect'
     .text-error{
         color: red !important;
         font-weight: bold;
+    }
+     @media (min-width:600px){
+        
+        .btnvisualizar{
+            background-color: #20a8d8;
+            border-radius: 15px;
+        }
     }
 </style>

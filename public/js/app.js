@@ -51312,7 +51312,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.modal-content{\n    width: 100% !important;\n    position: absolute !important;\n}\n.mostrar{\n    display: list-item !important;\n    opacity: 1 !important;\n    position: absolute !important;\n    background-color: #3c29297a !important;\n}\n.div-error{\n    display: flex;\n    justify-content: center;\n}\n.text-error{\n    color: red !important;\n    font-weight: bold;\n}\n", ""]);
+exports.push([module.i, "\n.modal-content{\n    width: 100% !important;\n    position: absolute !important;\n}\n.mostrar{\n    display: list-item !important;\n    opacity: 1 !important;\n    position: absolute !important;\n    background-color: #3c29297a !important;\n}\n.div-error{\n    display: flex;\n    justify-content: center;\n}\n.text-error{\n    color: red !important;\n    font-weight: bold;\n}\n@media (min-width:600px){\n.btnvisualizar{\n        background-color: #20a8d8;\n        border-radius: 15px;\n}\n}\n", ""]);
 
 // exports
 
@@ -51325,9 +51325,6 @@ exports.push([module.i, "\n.modal-content{\n    width: 100% !important;\n    pos
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_multiselect__ = __webpack_require__(91);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_multiselect__);
-//
-//
-//
 //
 //
 //
@@ -51665,6 +51662,12 @@ Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
 
     },
     methods: {
+        muestraPlataformas: function muestraPlataformas(idPlataformas) {
+            var me = this;
+            for (var i = 0; i < arrayPlataformas.length; i++) {
+                if (arrayPlataformas[i][nombrePlataformas] !== null) return arrayPlataformas[i][nombrePlataformas];
+            }
+        },
         muestraGeneros: function muestraGeneros() {
             var me = this;
             var url = '/productos/muestraGeneros';
@@ -52034,7 +52037,7 @@ var render = function() {
                         _c(
                           "button",
                           {
-                            staticClass: "btn btn-warning btn-sm",
+                            staticClass: "btn btn-succes btn-sm btnvisualizar",
                             attrs: { type: "button" },
                             on: {
                               click: function($event) {
@@ -52675,29 +52678,9 @@ var render = function() {
                             ),
                             _vm._v(" "),
                             _c("div", { staticClass: "col-md-9" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.nombreProductos,
-                                    expression: "nombreProductos"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: {
-                                  type: "text",
-                                  name: "nombre",
-                                  disabled: ""
-                                },
-                                domProps: { value: _vm.nombreProductos },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.nombreProductos = $event.target.value
-                                  }
+                              _c("h5", {
+                                domProps: {
+                                  textContent: _vm._s(_vm.nombreProductos)
                                 }
                               })
                             ])
@@ -52714,31 +52697,9 @@ var render = function() {
                             ),
                             _vm._v(" "),
                             _c("div", { staticClass: "col-md-9" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.descripcionProductos,
-                                    expression: "descripcionProductos"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: {
-                                  type: "text",
-                                  name: "descripcion",
-                                  placeholder: "Descripción de producto",
-                                  disabled: ""
-                                },
-                                domProps: { value: _vm.descripcionProductos },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.descripcionProductos =
-                                      $event.target.value
-                                  }
+                              _c("label", {
+                                domProps: {
+                                  textContent: _vm._s(_vm.descripcionProductos)
                                 }
                               })
                             ])
@@ -52755,60 +52716,13 @@ var render = function() {
                             ),
                             _vm._v(" "),
                             _c("div", { staticClass: "col-md-9" }, [
-                              _c(
-                                "select",
-                                {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.idPlataformas,
-                                      expression: "idPlataformas"
-                                    }
-                                  ],
-                                  staticClass: "form-control",
-                                  on: {
-                                    change: function($event) {
-                                      var $$selectedVal = Array.prototype.filter
-                                        .call($event.target.options, function(
-                                          o
-                                        ) {
-                                          return o.selected
-                                        })
-                                        .map(function(o) {
-                                          var val =
-                                            "_value" in o ? o._value : o.value
-                                          return val
-                                        })
-                                      _vm.idPlataformas = $event.target.multiple
-                                        ? $$selectedVal
-                                        : $$selectedVal[0]
-                                    }
-                                  }
-                                },
-                                [
-                                  _c(
-                                    "option",
-                                    { attrs: { value: "0", disabled: "" } },
-                                    [_vm._v("Seleccione")]
-                                  ),
-                                  _vm._v(" "),
-                                  _vm._l(_vm.arrayPlataformas, function(
-                                    plataforma
-                                  ) {
-                                    return _c("option", {
-                                      key: plataforma.idPlataformas,
-                                      domProps: {
-                                        value: plataforma.idPlataformas,
-                                        textContent: _vm._s(
-                                          plataforma.nombrePlataformas
-                                        )
-                                      }
-                                    })
-                                  })
-                                ],
-                                2
-                              )
+                              _c("label", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.muestraPlataformas(_vm.idPlataformas)
+                                  )
+                                )
+                              ])
                             ])
                           ]),
                           _vm._v(" "),
@@ -52823,38 +52737,11 @@ var render = function() {
                             ),
                             _vm._v(" "),
                             _c("div", { staticClass: "col-md-9" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.stockProductos,
-                                    expression: "stockProductos"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: {
-                                  type: "number",
-                                  min: "0",
-                                  name: "stock",
-                                  placeholder: "Cantidad de stock"
-                                },
-                                domProps: { value: _vm.stockProductos },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.stockProductos = $event.target.value
-                                  }
+                              _c("label", {
+                                domProps: {
+                                  textContent: _vm._s(_vm.stockProductos)
                                 }
-                              }),
-                              _vm._v(" "),
-                              _vm.errors.stockProductos
-                                ? _c("span", { staticClass: "error" }, [
-                                    _vm._v(_vm._s(_vm.errors.stockProductos[0]))
-                                  ])
-                                : _vm._e()
+                              })
                             ])
                           ]),
                           _vm._v(" "),
@@ -52869,41 +52756,11 @@ var render = function() {
                             ),
                             _vm._v(" "),
                             _c("div", { staticClass: "col-md-9" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.precioNuevoProductos,
-                                    expression: "precioNuevoProductos"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: {
-                                  type: "number",
-                                  min: "0",
-                                  name: "precionuevo",
-                                  placeholder: "Precio de juego nuevo"
-                                },
-                                domProps: { value: _vm.precioNuevoProductos },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.precioNuevoProductos =
-                                      $event.target.value
-                                  }
+                              _c("label", {
+                                domProps: {
+                                  textContent: _vm._s(_vm.precioNuevoProductos)
                                 }
-                              }),
-                              _vm._v(" "),
-                              _vm.errors.precioNuevoProductos
-                                ? _c("span", { staticClass: "error" }, [
-                                    _vm._v(
-                                      _vm._s(_vm.errors.precioNuevoProductos[0])
-                                    )
-                                  ])
-                                : _vm._e()
+                              })
                             ])
                           ]),
                           _vm._v(" "),
@@ -52918,41 +52775,11 @@ var render = function() {
                             ),
                             _vm._v(" "),
                             _c("div", { staticClass: "col-md-9" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.precioUsadoProductos,
-                                    expression: "precioUsadoProductos"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: {
-                                  type: "number",
-                                  min: "0",
-                                  name: "preciousado",
-                                  placeholder: "Precio de juego usado"
-                                },
-                                domProps: { value: _vm.precioUsadoProductos },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.precioUsadoProductos =
-                                      $event.target.value
-                                  }
+                              _c("label", {
+                                domProps: {
+                                  textContent: _vm._s(_vm.precioUsadoProductos)
                                 }
-                              }),
-                              _vm._v(" "),
-                              _vm.errors.precioUsadoProductos
-                                ? _c("span", { staticClass: "error" }, [
-                                    _vm._v(
-                                      _vm._s(_vm.errors.precioUsadoProductos[0])
-                                    )
-                                  ])
-                                : _vm._e()
+                              })
                             ])
                           ]),
                           _vm._v(" "),
