@@ -51586,9 +51586,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 
 Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___default.a);
@@ -51602,7 +51599,8 @@ Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
             idPlataformas: 0,
             idGeneros: 0,
             nombreProductos: '',
-
+            nombrePlataformas: '',
+            arrayPlataformasNombre: [],
             descripcionProductos: '',
             stockProductos: '',
             precioNuevoProductos: '',
@@ -51662,12 +51660,6 @@ Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
 
     },
     methods: {
-        muestraPlataformas: function muestraPlataformas(idPlataformas) {
-            var me = this;
-            for (var i = 0; i < arrayPlataformas.length; i++) {
-                if (arrayPlataformas[i][nombrePlataformas] !== null) return arrayPlataformas[i][nombrePlataformas];
-            }
-        },
         muestraGeneros: function muestraGeneros() {
             var me = this;
             var url = '/productos/muestraGeneros';
@@ -51825,6 +51817,7 @@ Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
                                     this.idProductos = data['idProductos'];
                                     this.idPlataformas = data['idPlataformas'];
                                     this.nombreProductos = data['nombreProductos'];
+                                    this.nombrePlataformas = data['nombrePlataformas'];
                                     this.descripcionProductos = data['descripcionProductos'];
                                     this.stockProductos = data['stockProductos'];
                                     this.precioNuevoProductos = data['precioNuevoProductos'];
@@ -52716,13 +52709,11 @@ var render = function() {
                             ),
                             _vm._v(" "),
                             _c("div", { staticClass: "col-md-9" }, [
-                              _c("label", [
-                                _vm._v(
-                                  _vm._s(
-                                    _vm.muestraPlataformas(_vm.idPlataformas)
-                                  )
-                                )
-                              ])
+                              _c("label", {
+                                domProps: {
+                                  textContent: _vm._s(_vm.nombrePlataformas)
+                                }
+                              })
                             ])
                           ]),
                           _vm._v(" "),
@@ -59106,7 +59097,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
             idTransacciones: 0,
             idProductos: 0,
             idClientes: 0,
-            tipoTransacciones: 'Venta',
+            tipoTransacciones: 'Reserva',
             observacionTransacciones: '',
             nombreProductos: '',
             nombreClientes: '',
@@ -59117,7 +59108,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
             precioNuevoProductos: '',
             formaPagoTransacciones: 0,
             plazoTransacciones: ''
-        }, _defineProperty(_ref, 'precioNuevoProductos', ''), _defineProperty(_ref, 'precioUsadoProductos', ''), _defineProperty(_ref, 'estadoTransacciones', 'Pagado'), _defineProperty(_ref, 'cantidadProductos', 0), _defineProperty(_ref, 'precioProductos', 0), _defineProperty(_ref, 'stockProductos', ''), _defineProperty(_ref, 'descuento', 0), _defineProperty(_ref, 'total', 0.0), _defineProperty(_ref, 'totalDescuento', 0.0), _defineProperty(_ref, 'totalParcial', 0), _defineProperty(_ref, 'arrayTransacciones', []), _defineProperty(_ref, 'arrayProductoTransaccion', []), _defineProperty(_ref, 'arrayClientes', []), _defineProperty(_ref, 'arrayProductos', []), _defineProperty(_ref, 'arrayDetalles', []), _defineProperty(_ref, 'arrayPrecioStock', []), _defineProperty(_ref, 'producto', ''), _defineProperty(_ref, 'puntosProductos', ''), _defineProperty(_ref, 'listado', 1), _defineProperty(_ref, 'arrayTransaccionT', []), _defineProperty(_ref, 'cantidadPasajeraProductos', ''), _defineProperty(_ref, 'precioPasajeroProductos', ''), _defineProperty(_ref, 'puntosPasajeroProductos', ''), _defineProperty(_ref, 'pagination', {
+        }, _defineProperty(_ref, 'precioNuevoProductos', ''), _defineProperty(_ref, 'precioUsadoProductos', ''), _defineProperty(_ref, 'estadoTransacciones', 'Abonado'), _defineProperty(_ref, 'cantidadProductos', 0), _defineProperty(_ref, 'precioProductos', 0), _defineProperty(_ref, 'stockProductos', ''), _defineProperty(_ref, 'descuento', 0), _defineProperty(_ref, 'total', 0.0), _defineProperty(_ref, 'totalDescuento', 0.0), _defineProperty(_ref, 'totalParcial', 0), _defineProperty(_ref, 'arrayTransacciones', []), _defineProperty(_ref, 'arrayProductoTransaccion', []), _defineProperty(_ref, 'arrayClientes', []), _defineProperty(_ref, 'arrayProductos', []), _defineProperty(_ref, 'arrayDetalles', []), _defineProperty(_ref, 'arrayPrecioStock', []), _defineProperty(_ref, 'producto', ''), _defineProperty(_ref, 'puntosProductos', ''), _defineProperty(_ref, 'listado', 1), _defineProperty(_ref, 'arrayTransaccionT', []), _defineProperty(_ref, 'cantidadPasajeraProductos', ''), _defineProperty(_ref, 'precioPasajeroProductos', ''), _defineProperty(_ref, 'puntosPasajeroProductos', ''), _defineProperty(_ref, 'pagination', {
             'total': 0,
             'current_page': 0,
             'per_page': 0,
@@ -59180,7 +59171,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
     methods: {
         listarTransaccion: function listarTransaccion(page, buscar, criterio) {
             var me = this;
-            var url = '/transaccionesVentas?page=' + page + '&buscar=' + buscar + '&criterio=' + criterio;
+            var url = '/transaccionesReservas?page=' + page + '&buscar=' + buscar + '&criterio=' + criterio;
             axios.get(url).then(function (response) {
                 var respuesta = response.data;
                 me.arrayTransacciones = respuesta.transacciones.data;
@@ -59304,14 +59295,14 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
                 me.listado = 1;
                 me.listarTransaccion(1, '', 'idTransacciones');
                 me.idClientes = 0;
-                me.tipoTransacciones = 'Venta';
+                me.tipoTransacciones = 'Reserva';
                 me.observacionTransacciones = '';
                 me.descuentoTransacciones = '';
                 me.puntosTransacciones = 0;
                 me.valorFinalTransacciones = 0;
                 me.formaPagoTransacciones = '';
                 me.plazoTransacciones = '';
-                me.estadoTransacciones = 'Pagado';
+                me.estadoTransacciones = 'Abonado';
                 me.arrayDetalles = [];
                 me.idProductos = 0;
                 me.producto = '';
@@ -59327,14 +59318,14 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
 
             me.listado = 0;
             me.idClientes = 0;
-            me.tipoTransacciones = 'Venta';
+            me.tipoTransacciones = 'Reserva';
             me.observacionTransacciones = '';
             me.descuentoTransacciones = '';
             me.puntosTransacciones = 0;
             me.valorFinalTransacciones = 0;
             me.formaPagoTransacciones = '';
             me.plazoTransacciones = '';
-            me.estadoTransacciones = 'Pagado';
+            me.estadoTransacciones = 'Abonado';
             me.arrayDetalles = [];
             me.idProductos = 0;
             me.producto = '';
@@ -59408,7 +59399,7 @@ var render = function() {
         [
           _c("div", { staticClass: "card-header" }, [
             _c("i", { staticClass: "fa fa-align-justify" }),
-            _vm._v(" Ventas\n                   "),
+            _vm._v(" Reserva\n                   "),
             _c(
               "button",
               {

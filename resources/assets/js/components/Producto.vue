@@ -206,10 +206,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="number-input">Plataforma</label>
                                     <div class="col-md-9">
-                                        
-                                        
-                                            
-                                            <label >{{muestraPlataformas(idPlataformas)}}</label>
+                                            <label v-text="nombrePlataformas"></label>
                                        
                                     </div>
                                 </div>
@@ -275,7 +272,8 @@ import Multiselect from 'vue-multiselect'
                 idPlataformas:0,
                 idGeneros:0,
                 nombreProductos:'',
-               
+                nombrePlataformas:'',
+                arrayPlataformasNombre:[],
                 descripcionProductos:'',
                 stockProductos:'',
                 precioNuevoProductos:'',
@@ -334,12 +332,6 @@ import Multiselect from 'vue-multiselect'
            
         },
         methods:{
-            muestraPlataformas(idPlataformas){
-                let me=this;
-                for (var i = 0; i < arrayPlataformas.length; i++) {
-                        if (arrayPlataformas[i][nombrePlataformas] !== null) return arrayPlataformas[i][nombrePlataformas];
-                    }
-            },
             muestraGeneros(){
                 let me=this;
                 var url= '/productos/muestraGeneros';
@@ -496,6 +488,7 @@ import Multiselect from 'vue-multiselect'
                                 this.idProductos=data['idProductos'];                                
                                 this.idPlataformas=data['idPlataformas'];
                                 this.nombreProductos=data['nombreProductos'];
+                                this.nombrePlataformas=data['nombrePlataformas'];
                                 this.descripcionProductos=data['descripcionProductos'];
                                 this.stockProductos=data['stockProductos'];
                                 this.precioNuevoProductos=data['precioNuevoProductos'];

@@ -38,6 +38,7 @@ Route::put('/plataformas/actualizar','PlataformaController@update');
 Route::get('/plataformas/selectPlataformas','PlataformaController@selectPlataformas');
 Route::get('/plataformas/countJuegos','PlataformaController@countJuegos');
 
+
 Route::get('/productos','ProductoController@index');
 Route::post('/productos/registrar', 'ProductoController@store');
 Route::put('/productos/actualizar','ProductoController@update');

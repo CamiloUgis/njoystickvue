@@ -5,7 +5,7 @@
                 <!-- Ejemplo de tabla Listado -->
                 <div class="card">
                     <div class="card-header">
-                        <i class="fa fa-align-justify"></i> Ventas
+                        <i class="fa fa-align-justify"></i> Reserva
                         <button type="button" @click="mostrarDetalle()" class="btn btn-secondary">
                             <i class="icon-plus"></i>&nbsp;Nuevo
                         </button>
@@ -388,7 +388,7 @@ Vue.component('v-select', vSelect)
                 idTransacciones:0,
                 idProductos:0,
                 idClientes:0,
-                tipoTransacciones:'Venta',
+                tipoTransacciones:'Reserva',
                 observacionTransacciones:'',
                 nombreProductos:'',
                 nombreClientes:'',
@@ -401,7 +401,7 @@ Vue.component('v-select', vSelect)
                 plazoTransacciones:'',
                 precioNuevoProductos:'',
                 precioUsadoProductos:'',
-                estadoTransacciones:'Pagado',
+                estadoTransacciones:'Abonado',
                 cantidadProductos:0,
                 precioProductos:0,
                 stockProductos:'',
@@ -491,7 +491,7 @@ Vue.component('v-select', vSelect)
         methods:{
             listarTransaccion(page, buscar, criterio){
                 let me=this;
-                var url= '/transaccionesVentas?page='+page + '&buscar='+ buscar + '&criterio=' + criterio;
+                var url= '/transaccionesReservas?page='+page + '&buscar='+ buscar + '&criterio=' + criterio;
                 axios.get(url).then(function (response){
                     var respuesta = response.data;
                     me.arrayTransacciones = respuesta.transacciones.data;
@@ -629,14 +629,14 @@ Vue.component('v-select', vSelect)
                         me.listado=1;
                         me.listarTransaccion(1,'', 'idTransacciones');
                         me.idClientes=0;
-                        me.tipoTransacciones='Venta';
+                        me.tipoTransacciones='Reserva';
                         me.observacionTransacciones='';
                         me.descuentoTransacciones='';
                         me.puntosTransacciones=0;
                         me.valorFinalTransacciones=0;
                         me.formaPagoTransacciones='';
                         me.plazoTransacciones='';
-                        me.estadoTransacciones='Pagado';
+                        me.estadoTransacciones='Abonado';
                         me.arrayDetalles=[];
                         me.idProductos=0;
                         me.producto='';
@@ -652,14 +652,14 @@ Vue.component('v-select', vSelect)
 
                 me.listado=0;
                 me.idClientes=0;
-                me.tipoTransacciones='Venta';
+                me.tipoTransacciones='Reserva';
                 me.observacionTransacciones='';
                 me.descuentoTransacciones='';
                 me.puntosTransacciones=0;
                 me.valorFinalTransacciones=0;
                 me.formaPagoTransacciones='';
                 me.plazoTransacciones='';
-                me.estadoTransacciones='Pagado';
+                me.estadoTransacciones='Abonado';
                 me.arrayDetalles=[];
                 me.idProductos=0;
                 me.producto='';

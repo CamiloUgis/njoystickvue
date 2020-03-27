@@ -80,7 +80,5 @@ class PlataformaController extends Controller
         $plataforma->descripcionPlataformas = $request->input("descripcionPlataformas");
        
         $plataforma->save();       
-    }
-
-    
+    }    
 }
