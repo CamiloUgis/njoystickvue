@@ -51577,15 +51577,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___default.a);
@@ -51606,6 +51597,7 @@ Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
             precioNuevoProductos: '',
             precioUsadoProductos: '',
             arrayProductos: [],
+            arrayNGeneros: [],
             listaGeneros: [],
             modal: 0,
             tituloModal: '',
@@ -51660,6 +51652,16 @@ Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
 
     },
     methods: {
+        listarnGeneros: function listarnGeneros(idProductos) {
+            var me = this;
+            var url = '/productos/nGeneros?filtro=' + idProductos;
+            axios.get(url).then(function (response) {
+                var respuesta = response.data;
+                me.arrayNGeneros = respuesta.productos;
+            }).catch(function (error) {
+                console.log(error.response);
+            });
+        },
         muestraGeneros: function muestraGeneros() {
             var me = this;
             var url = '/productos/muestraGeneros';
@@ -51822,6 +51824,7 @@ Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
                                     this.stockProductos = data['stockProductos'];
                                     this.precioNuevoProductos = data['precioNuevoProductos'];
                                     this.precioUsadoProductos = data['precioUsadoProductos'];
+                                    this.listarnGeneros(data['idProductos']);
                                     break;
                                 }
 
@@ -52774,39 +52777,33 @@ var render = function() {
                             ])
                           ]),
                           _vm._v(" "),
-                          _c("div", { staticClass: "form-group row" }, [
-                            _c(
-                              "label",
-                              { staticClass: "col-md-3 typo__label" },
-                              [_vm._v("Géneros")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "col-md-9" },
-                              [
-                                _c("multiselect", {
-                                  attrs: {
-                                    options: _vm.arrayGeneros,
-                                    multiple: true,
-                                    taggable: true,
-                                    "tag-placeholder": "Add this as new tag",
-                                    placeholder: "Agregue uno o más géneros",
-                                    label: "nombreGeneros",
-                                    "track-by": "nombreGeneros"
+                          _c(
+                            "div",
+                            { staticClass: "form-group row" },
+                            [
+                              _c(
+                                "label",
+                                { staticClass: "col-md-3 form-control-label" },
+                                [_vm._v("Géneros")]
+                              ),
+                              _vm._v(" "),
+                              _vm._l(_vm.arrayNGeneros, function(ngen) {
+                                return _c(
+                                  "div",
+                                  {
+                                    key: ngen.idProductos,
+                                    staticClass: "col-md-9"
                                   },
-                                  model: {
-                                    value: _vm.arrayGenerosSeleccionados,
-                                    callback: function($$v) {
-                                      _vm.arrayGenerosSeleccionados = $$v
-                                    },
-                                    expression: "arrayGenerosSeleccionados"
-                                  }
-                                })
-                              ],
-                              1
-                            )
-                          ])
+                                  [
+                                    _c("label", [
+                                      _vm._v(_vm._s(ngen.nombreGeneros))
+                                    ])
+                                  ]
+                                )
+                              })
+                            ],
+                            2
+                          )
                         ]
                       )
                     ]),

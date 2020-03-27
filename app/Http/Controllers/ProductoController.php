@@ -12,7 +12,7 @@ class ProductoController extends Controller
 {
     public function index(Request $request)
     {
-        //if(!$request->ajax()) return redirect('/');
+        if(!$request->ajax()) return redirect('/');
         $buscar= $request->buscar;
         $criterio = $request->criterio;
     /*
@@ -161,7 +161,7 @@ class ProductoController extends Controller
 
     }
     public function muestraGeneros(Request $request){
-         //if(!$request->ajax()) return redirect('/');
+         if(!$request->ajax()) return redirect('/');
          
          $generos = Producto::join('genero_producto', 'productos.idProductos', '=', 'genero_producto.idProductos')
          ->join('generos', 'genero_producto.idGeneros', '=', 'generos.idGeneros')
@@ -171,6 +171,18 @@ class ProductoController extends Controller
          
          return ['generos'=> $generos];
      }
+     public function nGeneros(Request $request){
+        if(!$request->ajax()) return redirect('/');
+        $filtro = $request->filtro;
+        $productos = Producto::join('genero_producto', 'productos.idProductos', '=', 'genero_producto.idProductos')
+        ->join('generos', 'genero_producto.idGeneros', '=', 'generos.idGeneros')
+        ->select('generos.nombreGeneros')
+        ->where('genero_producto.idProductos', 'like', '%'. $filtro. '%')
+        ->orderBy('genero_producto.idProductos', 'asc')->get();
+
+        return ['productos'=>$productos];
+
+    }
 
 
     

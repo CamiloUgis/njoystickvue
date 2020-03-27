@@ -229,18 +229,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 typo__label">Géneros</label>
-                                    <div class="col-md-9">
-                                    <multiselect
-                                        v-model="arrayGenerosSeleccionados"
-                                        :options="arrayGeneros"
-                                        :multiple="true"
-                                        :taggable="true"
-                                        tag-placeholder="Add this as new tag"
-                                        placeholder="Agregue uno o más géneros"
-                                        label="nombreGeneros"
-                                        track-by="nombreGeneros">
-                                    </multiselect>
+                                    <label class="col-md-3 form-control-label">Géneros</label>
+                                    <div class="col-md-9" v-for="ngen in arrayNGeneros" :key="ngen.idProductos">
+                                    <label >{{ngen.nombreGeneros}}</label>
 
                                     </div>
                                 </div>
@@ -279,6 +270,7 @@ import Multiselect from 'vue-multiselect'
                 precioNuevoProductos:'',
                 precioUsadoProductos:'',
                 arrayProductos:[],
+                arrayNGeneros:[],
                 listaGeneros:[],
                 modal : 0,
                 tituloModal : '',
@@ -332,6 +324,17 @@ import Multiselect from 'vue-multiselect'
            
         },
         methods:{
+            listarnGeneros(idProductos){
+                let me=this;
+                var url= '/productos/nGeneros?filtro='+idProductos;
+                axios.get(url).then(function (response){
+                    var respuesta = response.data;
+                    me.arrayNGeneros = respuesta.productos;
+                })
+                .catch(function (error){
+                    console.log(error.response);
+                })
+            },
             muestraGeneros(){
                 let me=this;
                 var url= '/productos/muestraGeneros';
@@ -493,6 +496,7 @@ import Multiselect from 'vue-multiselect'
                                 this.stockProductos=data['stockProductos'];
                                 this.precioNuevoProductos=data['precioNuevoProductos'];
                                 this.precioUsadoProductos=data['precioUsadoProductos'];
+                                this.listarnGeneros(data['idProductos']);
                                 break;
 
                             }

@@ -20,7 +20,7 @@ class TransaccionController extends Controller
      */
     public function index(Request $request)
     {
-       // if(!$request->ajax()) return redirect('/');
+        if(!$request->ajax()) return redirect('/');
         $buscar= $request->buscar;
         $criterio = $request->criterio;
 
@@ -185,7 +185,7 @@ class TransaccionController extends Controller
     }
     public function indexVentas(Request $request)
     {
-       // if(!$request->ajax()) return redirect('/');
+        if(!$request->ajax()) return redirect('/');
         $buscar= $request->buscar;
         $criterio = $request->criterio;
         if($buscar==''){
@@ -231,7 +231,7 @@ class TransaccionController extends Controller
     }
     public function indexArriendos(Request $request)
     {
-       // if(!$request->ajax()) return redirect('/');
+        if(!$request->ajax()) return redirect('/');
         $buscar= $request->buscar;
         $criterio = $request->criterio;
         if($buscar==''){
@@ -276,7 +276,7 @@ class TransaccionController extends Controller
     }
     public function indexCanjes(Request $request)
     {
-       // if(!$request->ajax()) return redirect('/');
+        if(!$request->ajax()) return redirect('/');
         $buscar= $request->buscar;
         $criterio = $request->criterio;
         if($buscar==''){
@@ -321,7 +321,7 @@ class TransaccionController extends Controller
     }
     public function indexReservas(Request $request)
     {
-       // if(!$request->ajax()) return redirect('/');
+        if(!$request->ajax()) return redirect('/');
         $buscar= $request->buscar;
         $criterio = $request->criterio;
         if($buscar==''){
@@ -365,7 +365,7 @@ class TransaccionController extends Controller
         ] ;
     }
     public function recomendar(Request $request){
-       // if (!$request->ajax()) return redirect('/');
+        if (!$request->ajax()) return redirect('/');
         //obtener la lista de transacciones
         $idProductos=$request->idProductos;
         $compra=$request->idProductos;
