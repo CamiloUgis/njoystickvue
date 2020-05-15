@@ -110,6 +110,13 @@ class TransaccionController extends Controller
             }
             $pivote = $request->data;
 
+            foreach($pivote as $cp=>$test){
+                $cp= new ClienteProducto();
+                $cp->idClientes = $transaccion->idClientes;
+                $cp->idProductos = $test['idProductos'];
+                $cp->abonoClienteProducto = '0';
+                $cp->save();
+            }
             foreach($pivote as $ep=>$det){
                 $ep= new ProductoTransaccion();
                 $ep->idTransacciones = $transaccion->idTransacciones;
@@ -180,7 +187,7 @@ class TransaccionController extends Controller
         $detalles = ProductoTransaccion::join('productos','producto_transaccion.idProductos','=','productos.idProductos')
         ->join('cliente_producto', 'productos.idProductos','=', 'cliente_producto.idProductos')
         ->select('producto_transaccion.precioProductos','producto_transaccion.cantidadProductos','producto_transaccion.puntosProductos',
-        'productos.nombreProductos', 'productos.idProductos', 'cliente_producto.abonoClienteProducto')
+        'productos.nombreProductos', 'productos.idProductos', 'cliente_producto.abonoClienteProducto', 'cliente_producto.idClientes')
         ->where('producto_transaccion.idTransacciones','=',$idTransacciones)
         ->orderBy('producto_transaccion.idTransacciones', 'desc')->get();
         
