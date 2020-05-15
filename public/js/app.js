@@ -61332,6 +61332,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 
@@ -61423,6 +61426,9 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
         }
     },
     methods: {
+        cargarPdf: function cargarPdf() {
+            window.open('http://127.0.0.1:8000/transacciones/listarpdf', '_blank');
+        },
         listarTransaccion: function listarTransaccion(page, buscar, criterio) {
             var me = this;
             var url = '/transaccionesVentas?page=' + page + '&buscar=' + buscar + '&criterio=' + criterio;
@@ -61713,6 +61719,23 @@ var render = function() {
               [
                 _c("i", { staticClass: "icon-plus" }),
                 _vm._v(" Nuevo\n                   ")
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-secondary",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    return _vm.cargarPdf()
+                  }
+                }
+              },
+              [
+                _c("i", { staticClass: "icon-doc" }),
+                _vm._v(" Reporte\n                   ")
               ]
             )
           ]),

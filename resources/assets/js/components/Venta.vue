@@ -9,6 +9,9 @@
                         <button type="button" @click="mostrarDetalle()" class="btn btn-secondary">
                             <i class="icon-plus"></i>&nbsp;Nuevo
                         </button>
+                        <button type="button" @click="cargarPdf()" class="btn btn-secondary">
+                            <i class="icon-doc"></i>&nbsp;Reporte
+                        </button>
                     </div>
                     <!-- Listado -->
                     <template v-if="listado==1">
@@ -501,6 +504,9 @@ Vue.component('v-select', vSelect)
             }, 
         },
         methods:{
+            cargarPdf(){
+                window.open('http://127.0.0.1:8000/transacciones/listarpdf','_blank');
+            },
             listarTransaccion(page, buscar, criterio){
                 let me=this;
                 var url= '/transaccionesVentas?page='+page + '&buscar='+ buscar + '&criterio=' + criterio;

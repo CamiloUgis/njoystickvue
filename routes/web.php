@@ -87,6 +87,7 @@ Route::get('/transaccionesCanjes','TransaccionController@indexCanjes');
 Route::get('/transaccionesReservas','TransaccionController@indexReservas');
 Route::get('/transaccionesVentas/recomendar','TransaccionController@recomendar');
 Route::post('/transacciones/registrarReserva','TransaccionController@registrarReserva');
+Route::get('/transacciones/listarpdf','TransaccionController@listarPdf')->name('transacciones_pdf');
 
 
 

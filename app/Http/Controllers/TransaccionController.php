@@ -181,7 +181,7 @@ class TransaccionController extends Controller
         return ['transacciones' => $transacciones];
     }
     public function obtenerDetalles(Request $request){
-        if (!$request->ajax()) return redirect('/');
+            if (!$request->ajax()) return redirect('/');
 
         $idTransacciones = $request->idTransacciones;
         $detalles = ProductoTransaccion::join('productos','producto_transaccion.idProductos','=','productos.idProductos')
@@ -470,6 +470,22 @@ class TransaccionController extends Controller
         
 
         $transaccion->save();
+    }
+    public function listarPdf(Request $request){
+        
+        $transacciones = Transaccion::join('clientes','transacciones.idClientes','=','clientes.idClientes')
+        ->join('producto_transaccion', 'transacciones.idTransacciones', '=', 'producto_transaccion.idTransacciones')
+        ->join('productos', 'producto_transaccion.idProductos','=','productos.idProductos')
+        ->select('transacciones.tipoTransacciones', 'transacciones.observacionTransacciones', 'transacciones.fechaTransacciones', 
+        'transacciones.puntosTransacciones', 'transacciones.descuentoTransacciones', 'transacciones.valorFinalTransacciones', 'transacciones.formaPagoTransacciones',
+        'transacciones.plazoTransacciones', 'transacciones.estadoTransacciones', 'clientes.nombreClientes', 'clientes.rutClientes', 
+        'producto_transaccion.idTransacciones', 'productos.nombreProductos', 'productos.stockProductos',
+        'productos.precioNuevoProductos', 'productos.precioUsadoProductos')
+        ->orderBy('producto_transaccion.idTransacciones', 'desc')->get();
+
+        $cont=Transaccion::count();
+        $pdf=\PDF::loadview('pdf.transaccionespdf', ['transacciones'=>$transacciones,'cont'=>$cont]);
+        return $pdf->download('transacciones.pdf');
     }
 
 
