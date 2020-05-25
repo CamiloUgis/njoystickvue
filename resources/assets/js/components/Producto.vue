@@ -422,6 +422,8 @@ import Multiselect from 'vue-multiselect'
                     'precioNuevoProductos': this.precioNuevoProductos,
                     'precioUsadoProductos': this.precioUsadoProductos,
                     'idProductos': this.idProductos,
+                    'data': me.arrayGenerosSeleccionados 
+
                     }).then(function (response){
                         me.cerrarModal();
                         me.listarProducto(1,'', 'nombre');
@@ -520,6 +522,7 @@ import Multiselect from 'vue-multiselect'
 </script>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style>
+
     .modal-content{
         width: 100% !important;
         position: absolute !important;

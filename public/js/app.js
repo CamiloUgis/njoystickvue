@@ -51745,7 +51745,9 @@ Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
                 'stockProductos': this.stockProductos,
                 'precioNuevoProductos': this.precioNuevoProductos,
                 'precioUsadoProductos': this.precioUsadoProductos,
-                'idProductos': this.idProductos
+                'idProductos': this.idProductos,
+                'data': me.arrayGenerosSeleccionados
+
             }).then(function (response) {
                 me.cerrarModal();
                 me.listarProducto(1, '', 'nombre');
