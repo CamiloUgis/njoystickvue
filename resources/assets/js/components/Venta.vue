@@ -93,13 +93,17 @@
                                 <label for="">Descuento (en %)</label>
                                 <input type="number" min= "0" class="form-control" v-model="descuento" placeholder="5%">
                             </div>
-                                <div class="col-md-3" style="margin-top:20px;">
+                            <div class="col-md-3">
+                                <label for="">Puntos disponibles</label>
+                                <input type="number" min= "0" class="form-control" v-model="descuento" placeholder="5%">
+                            </div>
+                                <div class="col-md-2" >
                                     <div class="form-group">
                                     <label>Estado de Transacción</label> 
                                     <input v-model="estadoTransacciones" disabled>
                                     </div>
                                 </div>                            
-                            <div class="col-md-3" style="margin-top:20px;">
+                            <div class="col-md-2" >
                                 <div class="form-group">
                                     <label>Tipo de Transacción</label>
                                     <input v-model="tipoTransacciones" disabled>
@@ -156,15 +160,16 @@
                                     <label>Cantidad<span style="color:red;" v-show="cantidadPasajeraProductos==0" >(Ingrese*) </span></label>
                                     <input type="number" min="0" value="0" class="form-control" v-model="cantidadPasajeraProductos">
                             </div>
-                            <!-- <div class="col-md-2">
-                                    <label>Puntos a canjear<span style="color:red;"></span></label>
+                           <div class="col-md-2">
+                                    <label>Puntos a canjear</label>
                                     <input type="number" value="0" class="form-control" v-model="puntosPasajeroGastados" min="0" max="10000">
-                            </div> -->
-                            <div class="col-md-4" style="margin-top: 30px;">
+                            </div> 
+                            <div class="col-md-3" >
                                     <label>Puntos por Producto</label>
                                     <input v-model="puntosPasajeroProductos" disabled>
                                     <td>{{calcularPuntos}}</td>
                             </div>
+                            
                             <div class="col-md-2" style="margin-top:25px">
                                 <div class="form-group">
                                     <button @click="agregarDetalle" class="btn btn-succes form-control btnagregar float-right"><i class="icon-plus"></i></button>
@@ -180,7 +185,7 @@
                                                 <th>Precio</th>
                                                 <th>Cantidad</th>
                                                 <th>Puntos</th>
-                                                <!-- <th>Puntos Gastados</th> -->
+                                                 <th>Puntos Gastados</th> 
                                                 <th>Subtotal</th>
                                                 <th>Eliminar</th>
                                             </tr>
@@ -201,10 +206,10 @@
                                                     <input v-model="detalle.puntosProductos" type="number" value="2" class="form-control" disabled>
 
                                                 </td>
-                                                <!-- <td>
+                                                <td>
                                                     <input v-model="detalle.puntosGastadosTransacciones" type="number" value="2" class="form-control" disabled>
 
-                                                </td> -->
+                                                </td>
                                                 <td>
                                                     {{detalle.precioProductos*detalle.cantidadProductos}}
                                                 </td>

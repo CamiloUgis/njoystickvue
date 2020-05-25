@@ -61337,6 +61337,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -62071,73 +62076,87 @@ var render = function() {
                       })
                     ]),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "col-md-3",
-                        staticStyle: { "margin-top": "20px" }
-                      },
-                      [
-                        _c("div", { staticClass: "form-group" }, [
-                          _c("label", [_vm._v("Estado de Transacción")]),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.estadoTransacciones,
-                                expression: "estadoTransacciones"
-                              }
-                            ],
-                            attrs: { disabled: "" },
-                            domProps: { value: _vm.estadoTransacciones },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.estadoTransacciones = $event.target.value
-                              }
+                    _c("div", { staticClass: "col-md-3" }, [
+                      _c("label", { attrs: { for: "" } }, [
+                        _vm._v("Puntos disponibles")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.descuento,
+                            expression: "descuento"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "number", min: "0", placeholder: "5%" },
+                        domProps: { value: _vm.descuento },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
                             }
-                          })
-                        ])
-                      ]
-                    ),
+                            _vm.descuento = $event.target.value
+                          }
+                        }
+                      })
+                    ]),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "col-md-3",
-                        staticStyle: { "margin-top": "20px" }
-                      },
-                      [
-                        _c("div", { staticClass: "form-group" }, [
-                          _c("label", [_vm._v("Tipo de Transacción")]),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.tipoTransacciones,
-                                expression: "tipoTransacciones"
-                              }
-                            ],
-                            attrs: { disabled: "" },
-                            domProps: { value: _vm.tipoTransacciones },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.tipoTransacciones = $event.target.value
-                              }
+                    _c("div", { staticClass: "col-md-2" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", [_vm._v("Estado de Transacción")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.estadoTransacciones,
+                              expression: "estadoTransacciones"
                             }
-                          })
-                        ])
-                      ]
-                    ),
+                          ],
+                          attrs: { disabled: "" },
+                          domProps: { value: _vm.estadoTransacciones },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.estadoTransacciones = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-2" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", [_vm._v("Tipo de Transacción")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.tipoTransacciones,
+                              expression: "tipoTransacciones"
+                            }
+                          ],
+                          attrs: { disabled: "" },
+                          domProps: { value: _vm.tipoTransacciones },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.tipoTransacciones = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-4" }, [
                       _c("div", { staticClass: "form-group" }, [
@@ -62434,39 +62453,63 @@ var render = function() {
                       })
                     ]),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "col-md-4",
-                        staticStyle: { "margin-top": "30px" }
-                      },
-                      [
-                        _c("label", [_vm._v("Puntos por Producto")]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.puntosPasajeroProductos,
-                              expression: "puntosPasajeroProductos"
-                            }
-                          ],
-                          attrs: { disabled: "" },
-                          domProps: { value: _vm.puntosPasajeroProductos },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.puntosPasajeroProductos = $event.target.value
-                            }
+                    _c("div", { staticClass: "col-md-2" }, [
+                      _c("label", [_vm._v("Puntos a canjear")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.puntosPasajeroGastados,
+                            expression: "puntosPasajeroGastados"
                           }
-                        }),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(_vm.calcularPuntos))])
-                      ]
-                    ),
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "number",
+                          value: "0",
+                          min: "0",
+                          max: "10000"
+                        },
+                        domProps: { value: _vm.puntosPasajeroGastados },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.puntosPasajeroGastados = $event.target.value
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-3" }, [
+                      _c("label", [_vm._v("Puntos por Producto")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.puntosPasajeroProductos,
+                            expression: "puntosPasajeroProductos"
+                          }
+                        ],
+                        attrs: { disabled: "" },
+                        domProps: { value: _vm.puntosPasajeroProductos },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.puntosPasajeroProductos = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(_vm.calcularPuntos))])
+                    ]),
                     _vm._v(" "),
                     _c(
                       "div",
@@ -62628,6 +62671,43 @@ var render = function() {
                                                   _vm.$set(
                                                     detalle,
                                                     "puntosProductos",
+                                                    $event.target.value
+                                                  )
+                                                }
+                                              }
+                                            })
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("td", [
+                                            _c("input", {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value:
+                                                    detalle.puntosGastadosTransacciones,
+                                                  expression:
+                                                    "detalle.puntosGastadosTransacciones"
+                                                }
+                                              ],
+                                              staticClass: "form-control",
+                                              attrs: {
+                                                type: "number",
+                                                value: "2",
+                                                disabled: ""
+                                              },
+                                              domProps: {
+                                                value:
+                                                  detalle.puntosGastadosTransacciones
+                                              },
+                                              on: {
+                                                input: function($event) {
+                                                  if ($event.target.composing) {
+                                                    return
+                                                  }
+                                                  _vm.$set(
+                                                    detalle,
+                                                    "puntosGastadosTransacciones",
                                                     $event.target.value
                                                   )
                                                 }
@@ -63131,6 +63211,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("Cantidad")]),
         _vm._v(" "),
         _c("th", [_vm._v("Puntos")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Puntos Gastados")]),
         _vm._v(" "),
         _c("th", [_vm._v("Subtotal")]),
         _vm._v(" "),
