@@ -176,7 +176,7 @@ class ProductoController extends Controller
         $filtro = $request->filtro;
         $productos = Producto::join('genero_producto', 'productos.idProductos', '=', 'genero_producto.idProductos')
         ->join('generos', 'genero_producto.idGeneros', '=', 'generos.idGeneros')
-        ->select('generos.nombreGeneros')
+        ->distinct('generos.nombreGeneros')
         ->where('genero_producto.idProductos', 'like', '%'. $filtro. '%')
         ->orderBy('genero_producto.idProductos', 'asc')->get();
 

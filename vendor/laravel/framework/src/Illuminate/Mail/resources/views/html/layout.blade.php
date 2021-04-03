@@ -12,6 +12,8 @@
             }
 
             .footer {
+                /* cambio */
+                position: fixed;
                 width: 100% !important;
             }
         }

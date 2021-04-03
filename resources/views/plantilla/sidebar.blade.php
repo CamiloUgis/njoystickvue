@@ -28,9 +28,9 @@
                             </ul>
                     </li>
                     
-                    <li @click="menu=2" class="nav-item">
+                    <!-- <li @click="menu=2" class="nav-item">
                                 <a class="nav-link" href="#"><i class="icon-user-following"></i>Listado de Socios</a>
-                    </li>
+                    </li> -->
                     <li @click="menu=5" class="nav-item">
                                 <a class="nav-link" href="i#"><i class="icon-ghost"></i>Productos</a>
                     </li>

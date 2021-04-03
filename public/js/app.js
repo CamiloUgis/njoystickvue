@@ -51020,7 +51020,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("main", { staticClass: "main" }, [
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-sm-6" }, [
+      _c("div", { staticClass: "col-sm-4" }, [
         _c("div", { staticClass: "card" }, [
           _c(
             "div",
@@ -51050,7 +51050,7 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-sm-6" }, [
+      _c("div", { staticClass: "col-sm-4" }, [
         _c("div", { staticClass: "card" }, [
           _c(
             "div",
@@ -51080,7 +51080,7 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-sm-6" }, [
+      _c("div", { staticClass: "col-sm-4" }, [
         _c("div", { staticClass: "card" }, [
           _c(
             "div",
@@ -51099,36 +51099,6 @@ var render = function() {
                 "small",
                 { staticClass: "text-muted text-uppercase font-weight-bold" },
                 [_vm._v("Clientes Registrados")]
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c("div", {
-            staticClass: "card-footer text-center",
-            staticStyle: { "background-color": "#66CCFF" }
-          })
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-6" }, [
-        _c("div", { staticClass: "card" }, [
-          _c(
-            "div",
-            {
-              staticClass: "card-block",
-              staticStyle: { "background-color": "#e5e5e4" }
-            },
-            [
-              _vm._m(3),
-              _vm._v(" "),
-              _c("div", { staticClass: "h4 mb-0" }, [
-                _vm._v(_vm._s(_vm.calcularPorcentaje) + "%")
-              ]),
-              _vm._v(" "),
-              _c(
-                "small",
-                { staticClass: "text-muted text-uppercase font-weight-bold" },
-                [_vm._v("Socios registrados en redes Njoystick")]
               )
             ]
           ),
@@ -51165,14 +51135,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "h1 text-muted text-right mb-2" }, [
       _c("i", { staticClass: "icon-user-follow" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "h1 text-muted text-right mb-2" }, [
-      _c("i", { staticClass: "icon-people" })
     ])
   }
 ]
@@ -51325,6 +51287,7 @@ exports.push([module.i, "\n.modal-content{\n    width: 100% !important;\n    pos
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_multiselect__ = __webpack_require__(91);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_multiselect__);
+//
 //
 //
 //
@@ -52797,9 +52760,11 @@ var render = function() {
                                     staticClass: "col-md-1"
                                   },
                                   [
-                                    _c("li", [
-                                      _vm._v(_vm._s(ngen.nombreGeneros))
-                                    ])
+                                    _c("label", {
+                                      domProps: {
+                                        textContent: _vm._s(ngen.nombreGeneros)
+                                      }
+                                    })
                                   ]
                                 )
                               })
@@ -61364,6 +61329,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
             observacionTransacciones: '',
             nombreProductos: '',
             nombreClientes: '',
+            //27-05
+            puntosDisponiblesSocios: '',
             fechaTransacciones: '',
             puntosTransacciones: '',
             puntosGastadosTransacciones: '',
@@ -62086,19 +62053,19 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.descuento,
-                            expression: "descuento"
+                            value: _vm.puntosDisponiblesSocios,
+                            expression: "puntosDisponiblesSocios"
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "number", min: "0", placeholder: "5%" },
-                        domProps: { value: _vm.descuento },
+                        attrs: { type: "number", min: "0", placeholder: "0" },
+                        domProps: { value: _vm.puntosDisponiblesSocios },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.descuento = $event.target.value
+                            _vm.puntosDisponiblesSocios = $event.target.value
                           }
                         }
                       })

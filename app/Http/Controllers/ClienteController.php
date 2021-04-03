@@ -47,16 +47,28 @@ class ClienteController extends Controller
     public function transaccionClientes(Request $request){
         if(!$request->ajax()) return redirect('/');
         $filtro = $request->filtro;
-        $clientes = Cliente::where('nombreClientes', 'like', '%'. $filtro. '%')
+        $clientes = Cliente::join('socio', 'clientes.idClientes', '=', 'socio.idClientes')
+        ->where('nombreClientes', 'like', '%'. $filtro. '%')
         ->orWhere('rutClientes', 'like', '%'. $filtro. '%')
-        ->select('idClientes', 'nombreClientes', 'rutClientes')
+        ->select('idClientes', 'nombreClientes', 'rutClientes', 'puntosActualesSocios')
         ->orderBy('nombreClientes', 'asc')->get();
 
         return ['clientes'=>$clientes];
 
     }
 
-    
+    public function puntosActualesClientes(Request $request){
+        if(!$request->ajax()) return redirect('/');
+        $filtro = $request->filtro;
+        $clientes = Cliente::join('socio', 'clientes.idClientes', '=', 'socio.idClientes')
+        ->where('nombreClientes', 'like', '%'. $filtro. '%')
+        ->orWhere('rutClientes', 'like', '%'. $filtro. '%')
+        ->select('idClientes', 'nombreClientes', 'rutClientes', 'puntosActualesSocios')
+        ->orderBy('nombreClientes', 'asc')->get();
+
+        return ['clientes'=>$clientes];
+
+    }
     public function store(Request $request)
     {
         $validar= $request->validate([

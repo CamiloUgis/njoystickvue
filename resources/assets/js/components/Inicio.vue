@@ -2,7 +2,7 @@
      <main class="main">
 
            <div class="row">
-  <div class="col-sm-6">
+  <div class="col-sm-4">
     <div class="card">
       <div class="card-block" style="background-color: #e5e5e4">
         <div class="h1 text-muted text-right mb-2">
@@ -17,7 +17,7 @@
         </div>
     </div>
   </div><!--/.col-->
-  <div class="col-sm-6">
+  <div class="col-sm-4">
     <div class="card">
       <div class="card-block" style="background-color: #e5e5e4" >
         <div class="h1 text-muted text-right mb-2">
@@ -32,7 +32,7 @@
         </div>
     </div>
   </div><!--/.col-->
-  <div class="col-sm-6">
+  <div class="col-sm-4">
     <div class="card">
       <div class="card-block"  style="background-color: #e5e5e4">
         <div class="h1 text-muted text-right mb-2">
@@ -46,8 +46,8 @@
           <!-- <a>  Ver <i class="fa fa-arrow-circle-right"></i></a> -->
         </div>
     </div>
-  </div><!--/.col-->
-  <div class="col-sm-6">
+  </div>
+  <!-- <div class="col-sm-6">
     <div class="card">
       <div class="card-block" style="background-color: #e5e5e4">
         <div class="h1 text-muted text-right mb-2">
@@ -58,10 +58,10 @@
         
       </div>
       <div class="card-footer text-center" style="background-color:  #66CCFF">
-          <!-- <a>  Ver <i class="fa fa-arrow-circle-right"></i></a> -->
+         
         </div>
     </div>
-  </div><!--/.col-->
+  </div> -->
   
  
 </div><!--/.row-->

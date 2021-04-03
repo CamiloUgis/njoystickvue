@@ -231,7 +231,8 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label">Géneros</label>
                                     <div class="col-md-1" v-for="ngen in arrayNGeneros" :key="ngen.idProductos">
-                                    <li>{{ngen.nombreGeneros}}</li>
+                                        <label v-text=ngen.nombreGeneros></label>
+                                    <!-- <li>{{ngen.nombreGeneros}}</li> -->
 
                                     </div>
                                 </div>

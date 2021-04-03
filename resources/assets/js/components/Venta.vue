@@ -95,7 +95,7 @@
                             </div>
                             <div class="col-md-3">
                                 <label for="">Puntos disponibles</label>
-                                <input type="number" min= "0" class="form-control" v-model="descuento" placeholder="5%">
+                                <input type="number" min= "0" class="form-control" v-model="puntosDisponiblesSocios" placeholder="0">
                             </div>
                                 <div class="col-md-2" >
                                     <div class="form-group">
@@ -409,6 +409,8 @@ Vue.component('v-select', vSelect)
                 observacionTransacciones:'',
                 nombreProductos:'',
                 nombreClientes:'',
+                //27-05
+                puntosDisponiblesSocios:'',
                 fechaTransacciones:'',
                 puntosTransacciones:'',
                 puntosGastadosTransacciones:'',
