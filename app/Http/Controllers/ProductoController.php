@@ -21,29 +21,29 @@ class ProductoController extends Controller
             ->join('genero_producto','genero_producto.idProductos','=','productos.idProductos')
             ->join('generos', 'genero_producto.idGeneros', '=', 'generos.idGeneros')
             ->select('productos.idProductos', 'productos.idPlataformas','productos.nombreProductos', 'productos.descripcionProductos',
-            'productos.stockNuevoProductos', 'productos.stockUsadoProductos','productos.precioNuevoProductos',
-            'productos.precioUsadoProductos','plataformas.nombrePlataformas','generos.nombreGeneros')
+            'productos.stockProductos', 'productos.precioProductos',
+            'plataformas.nombrePlataformas','generos.nombreGeneros')
             ->orderBy('productos.idProductos', 'desc')->paginate(8);
         }else{
             $productos = Producto::join('plataformas','productos.idPlataformas','=','plataformas.idPlataformas')
             ->join('genero_producto','genero_producto.idProductos','=','productos.idProductos')
             ->join('generos', 'genero_producto.idGeneros', '=', 'generos.idGeneros')
             ->select('productos.idProductos', 'productos.idPlataformas','productos.nombreProductos', 'productos.descripcionProductos',
-            'productos.stockNuevoProductos', 'productos.stockUsadoProductos','productos.precioNuevoProductos',
-            'productos.precioUsadoProductos','plataformas.nombrePlataformas','generos.nombreGeneros')
+            'productos.stockProductos', 'productos.precioProductos',
+            'plataformas.nombrePlataformas','generos.nombreGeneros')
             ->where('productos.'.$criterio, 'like', '%'. $buscar . '%')
             ->orderBy('productos.idProductos', 'desc')->paginate(8);*/
             if($buscar==''){
                 $productos = Producto::join('plataformas','productos.idPlataformas','=','plataformas.idPlataformas')
                 ->select('productos.idProductos', 'productos.idPlataformas','productos.nombreProductos', 'productos.descripcionProductos',
-                'productos.stockNuevoProductos', 'productos.stockUsadoProductos','productos.precioNuevoProductos',
-                'productos.precioUsadoProductos','plataformas.nombrePlataformas')
+                'productos.stockProductos', 'productos.precioProductos',
+                'plataformas.nombrePlataformas')
                 ->orderBy('productos.idProductos', 'desc')->paginate(8);
             }else{
                 $productos = Producto::join('plataformas','productos.idPlataformas','=','plataformas.idPlataformas')
                 ->select('productos.idProductos', 'productos.idPlataformas','productos.nombreProductos', 'productos.descripcionProductos',
-                'productos.stockNuevoProductos', 'productos.stockUsadoProductos','productos.precioNuevoProductos',
-                'productos.precioUsadoProductos','plataformas.nombrePlataformas')
+                'productos.stockProductos', 'productos.precioProductos',
+                'plataformas.nombrePlataformas')
                 ->where('productos.'.$criterio, 'like', '%'. $buscar . '%')
                 ->orderBy('productos.idProductos', 'desc')->paginate(8);
             }
@@ -66,10 +66,8 @@ class ProductoController extends Controller
         $producto = new Producto();
         $producto->nombreProductos = $request->input('nombreProductos');
         $producto->descripcionProductos = $request->input('descripcionProductos');
-        $producto->precioNuevoProductos = $request->input('precioNuevoProductos');
-        $producto->precioUsadoProductos = $request->input('precioUsadoProductos');
-        $producto->stockNuevoProductos = $request->input('stockNuevoProductos');
-        $producto->stockUsadoProductos = $request->input('stockUsadoProductos');
+        $producto->precioProductos = $request->input('precioProductos');
+        $producto->stockProductos = $request->input('stockProductos');
         $producto->idPlataformas = $request->input('idPlataformas');
         $producto->save();    
     }
@@ -81,10 +79,8 @@ class ProductoController extends Controller
         $producto->nombreProductos = $request->input('nombreProductos');
         $producto->idPlataformas = $request->input('idPlataformas');
         $producto->descripcionProductos = $request->input('descripcionProductos');
-        $producto->precioNuevoProductos = $request->input('precioNuevoProductos');
-        $producto->precioUsadoProductos = $request->input('precioUsadoProductos');
-        $producto->stockNuevoProductos = $request->input('stockNuevoProductos');
-        $producto->stockUsadoProductos = $request->input('stockUsadoProductos');
+        $producto->precioProductos = $request->input('precioProductos');
+        $producto->stockProductos = $request->input('stockProductos');
         $producto->save();
     }
     public function asociar(Request $request)

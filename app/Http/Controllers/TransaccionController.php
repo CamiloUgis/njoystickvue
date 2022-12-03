@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Transaccion;
-use App\Cliente;
 use App\Producto;
 use App\ProductoTransaccion;
 use Carbon\Carbon;
@@ -24,25 +23,23 @@ class TransaccionController extends Controller
         $criterio = $request->criterio;
 
         if($buscar==''){
-            $transacciones = Transaccion::join('clientes','transacciones.idClientes','=','clientes.idClientes')
-            ->join('producto_transaccion', 'transacciones.idTransacciones', '=', 'producto_transaccion.idTransacciones')
+            $transacciones = Transaccion::join('producto_transaccion', 'transacciones.idTransacciones', '=', 'producto_transaccion.idTransacciones')
             ->join('productos', 'producto_transaccion.idProductos','=','productos.idProductos')
             ->select('transacciones.tipoTransacciones', 'transacciones.observacionTransacciones', 'transacciones.fechaTransacciones', 
             'transacciones.puntosTransacciones', 'transacciones.valorFinalTransacciones', 'transacciones.formaPagoTransacciones',
-            'transacciones.plazoTransacciones', 'transacciones.estadoTransacciones', 'clientes.nombreClientes', 'clientes.rutClientes', 
-            'producto_transaccion.idTransacciones', 'productos.nombreProductos', 'productos.stockNuevoProductos', 'productos.stockUsadoProductos',
-            'productos.precioNuevoProductos', 'productos.precioUsadoProductos')
+            'transacciones.plazoTransacciones', 'transacciones.estadoTransacciones', 
+            'producto_transaccion.idTransacciones', 'productos.nombreProductos', 'productos.stockProductos',
+            'productos.precioProductos')
             ->orderBy('transacciones.idTransacciones', 'desc')->paginate(8);
 
         }else{
-            $transacciones = Transaccion::join('clientes','transacciones.idClientes','=','clientes.idClientes')
-            ->join('producto_transaccion', 'transacciones.idTransacciones', '=', 'producto_transaccion.idTransacciones')
+            $transacciones = Transaccion::join('producto_transaccion', 'transacciones.idTransacciones', '=', 'producto_transaccion.idTransacciones')
             ->join('productos', 'producto_transaccion.idProductos','=','productos.idProductos')
             ->select('transacciones.tipoTransacciones', 'transacciones.observacionTransacciones', 'transacciones.fechaTransacciones', 
             'transacciones.puntosTransacciones', 'transacciones.valorFinalTransacciones', 'transacciones.formaPagoTransacciones',
-            'transacciones.plazoTransacciones', 'transacciones.estadoTransacciones', 'clientes.nombreClientes', 'clientes.rutClientes', 
-            'producto_transaccion.idTransacciones', 'productos.nombreProductos', 'productos.stockNuevoProductos', 'productos.stockUsadoProductos',
-            'productos.precioNuevoProductos', 'productos.precioUsadoProductos')
+            'transacciones.plazoTransacciones', 'transacciones.estadoTransacciones', 
+            'producto_transaccion.idTransacciones', 'productos.nombreProductos', 'productos.stockProductos',
+            'productos.precioProductos')
             ->where('transacciones.'.$criterio, 'like', '%'. $buscar . '%')
             ->orderBy('transacciones.idTransacciones', 'desc')->paginate(8);
         }

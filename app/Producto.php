@@ -11,10 +11,8 @@ class Producto extends Model
     protected $fillable = [
         'nombreProductos',
         'descripcionProductos',
-        'precioNuevoProductos',
-        'precioUsadoProductos',
-        'stockNuevoProductos',
-        'stockUsadoProductos',
+        'precioProductos',
+        'stockProductos',
     ];
    
     public function plataforma(){

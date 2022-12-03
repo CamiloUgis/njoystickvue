@@ -26,14 +26,11 @@ class CreateTransaccionesTable extends Migration
             $table->string('tipoTransacciones', 8);
             $table->string('observacionTransacciones', 500);
             $table->dateTime('fechaTransacciones');
-            $table->integer('puntosTransacciones');
             $table->integer('valorFinalTransacciones');
             $table->string('formaPagoTransacciones', 8);
             $table->date('plazoTransacciones');
             $table->string('EstadoTransacciones', 20);
             //compra o canje es null
-            $table->unsignedInteger('idClientes');
-            $table->foreign('idClientes')->references('idClientes')->on('clientes');
         });
     }
 
