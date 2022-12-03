@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Producto;
 use App\Plataforma;
-use App\Genero;
-use App\GeneroProducto;
+use App\Tipo;
+use App\TipoProducto;
 class ProductoController extends Controller
 {
     public function index(Request $request)
@@ -17,33 +17,33 @@ class ProductoController extends Controller
         $criterio = $request->criterio;
 /*
         if($buscar==''){
-            $productos = Producto::join('plataformas','productos.idPlataformas','=','plataformas.idPlataformas')
-            ->join('genero_producto','genero_producto.idProductos','=','productos.idProductos')
-            ->join('generos', 'genero_producto.idGeneros', '=', 'generos.idGeneros')
-            ->select('productos.idProductos', 'productos.idPlataformas','productos.nombreProductos', 'productos.descripcionProductos',
+            $productos = Producto::join('marcas','productos.idMarcas','=','marcas.idMarcas')
+            ->join('tipo_producto','tipo_producto.idProductos','=','productos.idProductos')
+            ->join('tipos', 'tipo_producto.idTipos', '=', 'tipos.idTipos')
+            ->select('productos.idProductos', 'productos.idMarcas','productos.nombreProductos', 'productos.descripcionProductos',
             'productos.stockProductos', 'productos.precioProductos',
-            'plataformas.nombrePlataformas','generos.nombreGeneros')
+            'marcas.nombrePlataformas','tipos.nombreTipos')
             ->orderBy('productos.idProductos', 'desc')->paginate(8);
         }else{
-            $productos = Producto::join('plataformas','productos.idPlataformas','=','plataformas.idPlataformas')
-            ->join('genero_producto','genero_producto.idProductos','=','productos.idProductos')
-            ->join('generos', 'genero_producto.idGeneros', '=', 'generos.idGeneros')
-            ->select('productos.idProductos', 'productos.idPlataformas','productos.nombreProductos', 'productos.descripcionProductos',
+            $productos = Producto::join('marcas','productos.idMarcas','=','marcas.idMarcas')
+            ->join('tipo_producto','tipo_producto.idProductos','=','productos.idProductos')
+            ->join('tipos', 'tipo_producto.idTipos', '=', 'tipos.idTipos')
+            ->select('productos.idProductos', 'productos.idMarcas','productos.nombreProductos', 'productos.descripcionProductos',
             'productos.stockProductos', 'productos.precioProductos',
-            'plataformas.nombrePlataformas','generos.nombreGeneros')
+            'marcas.nombrePlataformas','tipos.nombreTipos')
             ->where('productos.'.$criterio, 'like', '%'. $buscar . '%')
             ->orderBy('productos.idProductos', 'desc')->paginate(8);*/
             if($buscar==''){
-                $productos = Producto::join('plataformas','productos.idPlataformas','=','plataformas.idPlataformas')
-                ->select('productos.idProductos', 'productos.idPlataformas','productos.nombreProductos', 'productos.descripcionProductos',
+                $productos = Producto::join('marcas','productos.idMarcas','=','marcas.idMarcas')
+                ->select('productos.idProductos', 'productos.idmarcas','productos.nombreProductos', 'productos.descripcionProductos',
                 'productos.stockProductos', 'productos.precioProductos',
-                'plataformas.nombrePlataformas')
+                'marcas.nombreMarcas')
                 ->orderBy('productos.idProductos', 'desc')->paginate(8);
             }else{
-                $productos = Producto::join('plataformas','productos.idPlataformas','=','plataformas.idPlataformas')
-                ->select('productos.idProductos', 'productos.idPlataformas','productos.nombreProductos', 'productos.descripcionProductos',
+                $productos = Producto::join('marcas','productos.idMarcas','=','marcas.idMarcas')
+                ->select('productos.idProductos', 'productos.idMarcas','productos.nombreProductos', 'productos.descripcionProductos',
                 'productos.stockProductos', 'productos.precioProductos',
-                'plataformas.nombrePlataformas')
+                'marcas.nombrePlataformas')
                 ->where('productos.'.$criterio, 'like', '%'. $buscar . '%')
                 ->orderBy('productos.idProductos', 'desc')->paginate(8);
             }
@@ -68,7 +68,7 @@ class ProductoController extends Controller
         $producto->descripcionProductos = $request->input('descripcionProductos');
         $producto->precioProductos = $request->input('precioProductos');
         $producto->stockProductos = $request->input('stockProductos');
-        $producto->idPlataformas = $request->input('idPlataformas');
+        $producto->idMarcas = $request->input('idMarcas');
         $producto->save();    
     }
     public function update(Request $request)
@@ -77,7 +77,7 @@ class ProductoController extends Controller
         if(!$request->ajax()) return redirect('/');
         $producto = Producto::findOrFail($request->idProductos);
         $producto->nombreProductos = $request->input('nombreProductos');
-        $producto->idPlataformas = $request->input('idPlataformas');
+        $producto->idMarcas = $request->input('idMarcas');
         $producto->descripcionProductos = $request->input('descripcionProductos');
         $producto->precioProductos = $request->input('precioProductos');
         $producto->stockProductos = $request->input('stockProductos');
@@ -88,12 +88,12 @@ class ProductoController extends Controller
         if(!$request->ajax()) return redirect('/');
         try{
             DB::beginTransaction();
-            $pivote = $request->input('arrayGenerosSeleccionados');
+            $pivote = $request->input('arrayTiposSeleccionados');
      
             foreach($pivote as $ep){
-                $gp = new GeneroProducto();  
+                $gp = new TipoProducto();  
                 $gp->idProductos = $request->input('idProductos');
-                $gp->idGeneros = $ep['idGeneros'];
+                $gp->idTipos = $ep['idTipos'];
                 $gp->save();
             }
         }catch(Exception $e){

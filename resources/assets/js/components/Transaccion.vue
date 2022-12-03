@@ -74,21 +74,15 @@
                                         <th class="text-center">
                                             Fecha de Transacción
                                         </th>
-                                        <th class="text-center">
-                                            Puntos de la Transacción
-                                        </th>
+
                                         <th class="text-center">
                                             Valor Total de la Transacción
                                         </th>
                                         <th class="text-center">
                                             Forma de Pago
                                         </th>
-                                        <th class="text-center">
-                                            Plazo de arriendo
-                                        </th>
-                                        <th class="text-center">
-                                            Estado de Transacción
-                                        </th>
+
+
                                         <th class="text-center">Visualizar</th>
                                     </tr>
                                 </thead>
@@ -112,11 +106,7 @@
                                                 transaccion.fechaTransacciones
                                             "
                                         ></td>
-                                        <td
-                                            v-text="
-                                                transaccion.puntosTransacciones
-                                            "
-                                        ></td>
+
                                         <td
                                             v-text="
                                                 transaccion.valorFinalTransacciones
@@ -127,16 +117,7 @@
                                                 transaccion.formaPagoTransacciones
                                             "
                                         ></td>
-                                        <td
-                                            v-text="
-                                                transaccion.plazoTransacciones
-                                            "
-                                        ></td>
-                                        <td
-                                            v-text="
-                                                transaccion.estadoTransacciones
-                                            "
-                                        ></td>
+
                                         <td>
                                             <button
                                                 type="button"
@@ -230,17 +211,7 @@
                     <div class="card-body">
                         <div class="form-group row border">
                             <div class="col-md-9">
-                                <div class="form-group" id="cli">
-                                    <label for="">Cliente</label>
-                                    <v-select
-                                        :on-search="transaccionClientes"
-                                        label="nombreClientes"
-                                        :options="arrayClientes"
-                                        placeholder="Buscar Clientes..."
-                                        :onChange="getDatosClientes"
-                                    >
-                                    </v-select>
-                                </div>
+
                             </div>
                             <div class="col-md-3">
                                 <label for="">Descuento</label>
@@ -262,17 +233,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Puntos por Transacción</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        v-model="puntosTransacciones"
-                                        placeholder="150"
-                                    />
-                                </div>
-                            </div>
+
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Forma de Pago</label>
@@ -285,6 +246,8 @@
                                             >Efectivo</option
                                         >
                                         <option value="Débito">Débito</option>
+                                        <option value="Transferencia">Transferencia</option>
+
                                     </select>
                                 </div>
                             </div>
@@ -537,17 +500,13 @@ export default {
             tipoTransacciones: 0,
             observacionTransacciones: "",
             fechaTransacciones: "",
-            puntosTransacciones: "",
             valorFinalTransacciones: "",
             precioNuevoProductos: "",
             formaPagoTransacciones: 0,
-            plazoTransacciones: "",
-            estadoTransacciones: "",
             cantidadProductos: "",
             descuento: 0.0,
             arrayTransacciones: [],
             arrayProductoTransaccion: [],
-            arrayClientes: [],
             modal: 0,
             listado: 1,
             tituloModal: "",
@@ -565,7 +524,7 @@ export default {
             offset: 3,
             criterio: "tipoTransaccion",
             buscar: "",
-            arrayPlataformas: []
+            arrayMarcas: []
         };
     },
     component: {
@@ -618,27 +577,7 @@ export default {
                     console.log(error.response);
                 });
         },
-        transaccionClientes(search, loading) {
-            let me = this;
-            loading(true);
-            var url = "/clientes/transaccionClientes?filtro=" + search;
-            axios
-                .get(url)
-                .then(function(response) {
-                    let respuesta = response.data;
-                    q: search;
-                    me.arrayClientes = respuesta.clientes;
-                    loading(false);
-                })
-                .catch(function(error) {
-                    console.log(error.response);
-                });
-        },
-        getDatosClientes(val1) {
-            let me = this;
-            me.loading = true;
-            me.idClientes = val1.idClientes;
-        },
+        
         cambiarPagina(page, buscar, criterio) {
             let me = this;
             me.pagination.current_page = page;
@@ -652,7 +591,7 @@ export default {
             axios
                 .post("productos/registrar", {
                     nombreProductos: this.nombreProductos,
-                    idPlataformas: this.idPlataformas,
+                    idMarcas: this.idMarcas,
                     descripcionProductos: this.descripcionProductos,
                     stockProductos: this.stockProductos,
                     precioProductos: this.precioProductos
@@ -673,7 +612,7 @@ export default {
             axios
                 .put("productos/actualizar", {
                     nombreProductos: this.nombreProductos,
-                    idPlataformas: this.idPlataformas,
+                    idMarcas: this.idMarcas,
                     descripcionProductos: this.descripcionProductos,
                     stockProductos: this.stockProductos,
                     precioProductos: this.precioProductos,
@@ -691,8 +630,8 @@ export default {
             this.errorProducto = 0;
             this.errorMsjProducto = [];
 
-            if (this.idPlataformas == 0)
-                this.errorMsjProducto.push("Seleccione una plataforma");
+            if (this.idMarcas == 0)
+                this.errorMsjProducto.push("Seleccione una Marca");
             if (!this.nombreProductos)
                 this.errorMsjProducto.push(
                     "El nombre del Producto no debe estar vacío"
@@ -713,7 +652,7 @@ export default {
             this.modal = 0;
             this.tituloModal = "";
             this.nombreProductos = "";
-            (this.idPlataformas = 0), (this.descripcionProductos = "");
+            (this.idMarcas = 0), (this.descripcionProductos = "");
             this.stockProductos = "";
             this.precioProductos = "";
         },
@@ -724,7 +663,7 @@ export default {
                         case "registrar": {
                             this.modal = 1;
                             this.tituloModal = "Registrar Producto";
-                            this.idPlataformas = 0;
+                            this.idMarcas = 0;
                             this.nombreProductos = "";
                             this.descripcionProductos = "";
                             this.stockProductos = "";
@@ -737,7 +676,7 @@ export default {
                             this.tipoAccion = 2;
                             this.tituloModal = "Actualizar Producto";
                             this.idProductos = data["idProductos"];
-                            this.idPlataformas = data["idPlataformas"];
+                            this.idMarcas = data["idMarcas"];
                             this.nombreProductos = data["nombreProductos"];
                             this.descripcionProductos =
                                 data["descripcionProductos"];
@@ -748,7 +687,7 @@ export default {
                     }
                 }
             }
-            this.selectPlataformas();
+            this.selectMarcas();
         }
     },
 

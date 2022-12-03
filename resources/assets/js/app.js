@@ -14,15 +14,12 @@ window.Vue = require('vue');
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-Vue.component('plataformas', require('./components/Plataforma.vue'));
-Vue.component('generos', require('./components/Genero.vue'));
+Vue.component('marcas', require('./components/Marca.vue'));
+Vue.component('tipos', require('./components/Tipo.vue'));
 Vue.component('inicio', require('./components/Inicio.vue'));
 Vue.component('productos', require('./components/Producto.vue'));
-Vue.component('clientes', require('./components/Cliente.vue'));
 Vue.component('usuarios', require('./components/Usuario.vue'));
-Vue.component('socios', require('./components/Socio.vue'));
 Vue.component('transacciones', require('./components/Transaccion.vue'));
-Vue.component('reservas', require('./components/Reserva.vue'));
 
 import Vuelidate from 'vuelidate'
 Vue.use(Vuelidate)

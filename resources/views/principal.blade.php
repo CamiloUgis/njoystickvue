@@ -9,7 +9,7 @@
     <meta name="author" content="PramP-Ugis">
     <meta name="keyword" content="Redes NJ">
     <link rel="shortcut icon" href="img/favicon.png">
-    <title>Redes NJ</title>
+    <title>Inventario NJ</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Icons -->
     <link href="css/plantilla.css" rel="stylesheet">
@@ -79,7 +79,7 @@
     </div>   
     </div>
     <footer class="app-footer">
-    <strong>Copyright </strong>&copy; 2020 Njoystick
+    <strong>Copyright </strong>&copy; 2022 Njoystick
     </footer>
 
     <!-- Bootstrap and necessary plugins -->

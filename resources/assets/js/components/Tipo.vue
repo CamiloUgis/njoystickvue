@@ -5,8 +5,8 @@
                 <!-- Ejemplo de tabla Listado -->
                 <div class="card">
                     <div class="card-header">
-                        <i class="fa fa-align-justify"></i> Plataformas
-                        <button type="button" @click="abrirModal('plataforma', 'registrar')" class="btn btn-secondary">
+                        <i class="fa fa-align-justify"></i> Tipos
+                        <button type="button" @click="abrirModal('tipo', 'registrar')" class="btn btn-secondary">
                             <i class="icon-plus"></i>&nbsp;Nuevo
                         </button>
                     </div>
@@ -15,11 +15,11 @@
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <select class="form-control col-md-3" v-model="criterio">
-                                      <option value="nombrePlataformas">Nombre</option>
-                                      <option value="descripcionPlataformas">Descripción</option>
+                                      <option value="nombreTipos">Nombre</option>
+                                      <option value="descripcionTipos">Descripción</option>
                                     </select>
-                                    <input type="text" v-model="buscar" @keyup.enter="listarPlataforma(1,buscar,criterio)" class="form-control" placeholder="Texto a buscar">
-                                    <button type="submit" @click="listarPlataforma(1,buscar,criterio)" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                                    <input type="text" v-model="buscar" @keyup.enter="listarTipo(1,buscar,criterio)" class="form-control" placeholder="Texto a buscar">
+                                    <button type="submit" @click="listarTipo(1,buscar,criterio)" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
                                 </div>
                             </div>
                         </div>
@@ -28,19 +28,16 @@
                                 <tr>
                                     <th class="text-center">Nombre</th>
                                     <th class="text-center">Descripción</th>
-                                    <th class="text-center">Cantidad de juegos</th>
                                     <th class="text-center">Modificar</th>
                                 </tr>
                             </thead>
                             <tbody class="text-center">
-                                <tr v-for="plataforma in arrayPlataformas" :key="plataforma.idPlataformas">
-                                    <td v-text="plataforma.nombrePlataformas"></td>
-                                    <td v-text="plataforma.descripcionPlataformas"></td>
-                                    <td v-text="plataforma.cantidadPlataformas"></td>
-
+                                <tr v-for="tipo in arrayTipos" :key="tipo.idTipos">
+                                    <td v-text="tipo.nombreTipos"></td>
+                                    <td v-text="tipo.descripcionTipos"></td>
 
                                     <td>
-                                        <button type="button" @click="abrirModal('plataforma', 'actualizar', plataforma)" class="btn btn-warning btn-sm">
+                                        <button type="button" @click="abrirModal('tipo', 'actualizar', tipo)" class="btn btn-warning btn-sm">
                                           <i class="icon-pencil"></i>
                                         </button> &nbsp;
                                     </td>
@@ -51,7 +48,7 @@
                             <ul class="pagination">
                                 <li class = "page-item" v-if="pagination.current_page>1">
                                     <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page -1, buscar, criterio)"> Ant</a>
-                                
+                                </li>
                                 <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[page == isActived ? 'active' : '']">
                                     <a class="page-link" href="#" @click.prevent="cambiarPagina(page, buscar, criterio)" v-text="page"></a>
                                 </li>
@@ -81,27 +78,25 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Nombre</label>
                                     <div class="col-md-9">
-                                        <input type="text" v-model="nombrePlataformas" name="nombre" class="form-control" placeholder="Nombre de plataforma">
-                                        <span v-if="errors.nombrePlataformas" class="error">{{errors.nombrePlataformas[0]}}</span>
+                                        <input type="text" v-model="nombreTipos" name="nombre" class="form-control" placeholder="Nombre de tipo">
+                                        <span v-if="errors.nombreTipos" class="error">{{errors.nombreTipos[0]}}</span>
+
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="email-input">Descripción</label>
                                     <div class="col-md-9">
-                                        <input type="text" v-model="descripcionPlataformas" name="descripcion" class="form-control" placeholder="Descripción de plataforma">
+                                        <input type="text" v-model="descripcionTipos" name="descripcion" class="form-control" placeholder="Descripción de tipo">
+                                        <span v-if="errors.descripcionTipos" class="error">{{errors.descripcionTipos[0]}}</span>
                                     </div>
                                 </div>
-                                <!-- <div v-show="errorPlataforma" class="form-group row div-error">
-                                    <div class="text-center text-error">
-                                        <div v-for="error in errorMsjPlataforma" :key="error" v-text="error"></div>
-                                    </div>
-                                </div> -->
+                                
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" @click="cerrarModal()" >Cerrar</button>
-                            <button type="button" v-if="tipoAccion==1" class="btn btn-primary" @click="registrarPlataforma()" >Guardar</button>
-                            <button type="button" v-if="tipoAccion==2" class="btn btn-primary" @click="actualizarPlataforma()">Actualizar</button>
+                            <button type="button" v-if="tipoAccion==1" class="btn btn-primary" @click="registrarTipo()" >Guardar</button>
+                            <button type="button" v-if="tipoAccion==2" class="btn btn-primary" @click="actualizarTipo()">Actualizar</button>
 
                         </div>
                     </div>
@@ -114,20 +109,19 @@
 </template>
 
 <script>
-import { required, minLength, between } from 'vuelidate/lib/validators'
     export default {
         data(){
             return{
-                idPlataformas:'0',
-                nombrePlataformas:'',
-                descripcionPlataformas:'',
-                arrayPlataformas:[],
+                idTipos:'0',
+                nombreTipos:'',
+                descripcionTipos:'',
+                arrayTipos:[],
                 modal : 0,
                 tituloModal : '',
                 tipoAccion : 0,
                 errors: [],
-                // errorPlataforma : 0,
-                // errorMsjPlataforma : [],
+                // errorTipo : 0,
+                // errorMsjTipo : [],
                 pagination : {
                 'total' :0 ,
                 'current_page':0 ,
@@ -142,7 +136,6 @@ import { required, minLength, between } from 'vuelidate/lib/validators'
 
             }
         },
-        
         computed:{
             isActived: function(){
                 return this.pagination.current_page;
@@ -170,12 +163,12 @@ import { required, minLength, between } from 'vuelidate/lib/validators'
             }
         },
         methods:{
-            listarPlataforma(page, buscar, criterio){
+            listarTipo(page, buscar, criterio){
                 let me=this;
-                var url= '/plataformas?page='+page + '&buscar='+ buscar + '&criterio=' + criterio;
+                var url= '/tipos?page='+page + '&buscar='+ buscar + '&criterio=' + criterio;
                 axios.get(url).then(function (response){
                     var respuesta = response.data;
-                    me.arrayPlataformas = respuesta.plataformas.data;
+                    me.arrayTipos = respuesta.tipos.data;
                     me.pagination=respuesta.pagination;
                 })
                 .catch(function (error){
@@ -185,71 +178,71 @@ import { required, minLength, between } from 'vuelidate/lib/validators'
             cambiarPagina(page, buscar, criterio){
                 let me=this;
                 me.pagination.current_page=page;
-                me.listarPlataforma(page, buscar, criterio);
+                me.listarTipo(page, buscar, criterio);
             },
-            registrarPlataforma(){
-                // if(this.validarPlataforma()){
+            registrarTipo(){
+                // if(this.validarTipo()){
                 //     return;
                 // }
-                this.errors =[]
-
+                this.errors= []
                 let me=this;
-                axios.post('plataformas/registrar',{
-                    'nombrePlataformas': this.nombrePlataformas,
-                    'descripcionPlataformas': this.descripcionPlataformas
+                axios.post('tipos/registrar',{
+                    'nombreTipos': this.nombreTipos,
+                    'descripcionTipos': this.descripcionTipos
                     }).then(function (response){
                         me.cerrarModal();
-                        me.listarPlataforma(1,'', 'nombre');
+                        me.listarTipo(1,'', 'nombre');
                 }).catch(error=>{
                     if(error.response.status == 422){
                         this.errors = error.response.data.errors
                     }
                 })
             },
-            actualizarPlataforma(){
-                // if(this.validarPlataforma()){
+            actualizarTipo(){
+                // if(this.validarTipo()){
                 //     return;
                 // }
+                this.errors= []
                 let me=this;
-                axios.put('plataformas/actualizar',{
-                    'nombrePlataformas': this.nombrePlataformas,
-                    'descripcionPlataformas': this.descripcionPlataformas,
-                    'idPlataformas': this.idPlataformas
+                axios.put('tipos/actualizar',{
+                    'nombreTipos': this.nombreTipos,
+                    'descripcionTipos': this.descripcionTipos,
+                    'idTipos': this.idTipos
                     }).then(function (response){
                         me.cerrarModal();
-                        me.listarPlataforma(1,'', 'nombre');
+                        me.listarTipo(1,'', 'nombre');
                 }).catch(error=>{
                     if(error.response.status == 422){
                         this.errors = error.response.data.errors
                     }
                 })
             },
-            // validarPlataforma(){
-            //     this.errorPlataforma=0;
-            //     this.errorMsjPlataforma = [];
+            // validarTipo(){
+            //     this.errorTipo=0;
+            //     this.errorMsjTipo = [];
 
-            //     if(!this.nombrePlataformas) this.errorMsjPlataforma.push("El nombre de la plataforma no debe estar vacío");
+            //     if(!this.nombreTipos) this.errorMsjTipo.push("El nombre del tipo no debe estar vacío");
 
-            //     if(this.errorMsjPlataforma.length) this.errorPlataforma=1;
-            //     return this.errorPlataforma;
+            //     if(this.errorMsjTipo.length) this.errorTipo=1;
+            //     return this.errorTipo;
             // },
             cerrarModal(){
                 this.modal=0;
                 this.tituloModal='';
-                this.nombrePlataformas='';
-                this.descripcionPlataformas='';
+                this.nombreTipos='';
+                this.descripcionTipos='';
                 this.errors='';
             },
             abrirModal(modelo, accion, data = []){
                 switch(modelo){
-                    case "plataforma":
+                    case "tipo":
                         {
                         switch(accion){
                             case 'registrar':{
                                 this.modal = 1;
-                                this.tituloModal = "Registrar Plataforma";
-                                this.nombrePlataformas='';
-                                this.descripcionPlataformas='';
+                                this.tituloModal = "Registrar Tipo";
+                                this.nombreTipos='';
+                                this.descripcionTipos='';
                                 this.tipoAccion = 1;
                                 break;
 
@@ -257,10 +250,10 @@ import { required, minLength, between } from 'vuelidate/lib/validators'
                             case 'actualizar':{
                                 this.modal = 1;
                                 this.tipoAccion = 2;
-                                this.tituloModal = "Actualizar Plataforma";
-                                this.idPlataformas=data['idPlataformas'];
-                                this.nombrePlataformas=data['nombrePlataformas'];
-                                this.descripcionPlataformas=data['descripcionPlataformas'];
+                                this.tituloModal = "Actualizar Tipo";
+                                this.idTipos=data['idTipos'];
+                                this.nombreTipos=data['nombreTipos'];
+                                this.descripcionTipos=data['descripcionTipos'];
                                 break;
 
                             }
@@ -271,7 +264,7 @@ import { required, minLength, between } from 'vuelidate/lib/validators'
         },
         
         mounted() {
-            this.listarPlataforma(1, this.buscar, this.criterio);
+            this.listarTipo(1, this.buscar, this.criterio);
         }
     }
 </script>

@@ -23,7 +23,7 @@
         <div class="h1 text-muted text-right mb-2">
           <i class="icon-bag"></i>
         </div>
-        <div class="h4 mb-0">{{arrayGeneros.length}}</div>
+        <div class="h4 mb-0">{{arrayTipos.length}}</div>
         <small class="text-muted text-uppercase font-weight-bold">Últimas Transacciones</small>
         
       </div>
@@ -73,15 +73,15 @@
     export default {
         data(){
             return{
-                idGeneros:'0',
-                nombreGeneros:'',
-                descripcionGeneros:'',
-                arrayGeneros:[],
+                idTipos:'0',
+                nombreTipos:'',
+                descripcionTipos:'',
+                arrayTipos:[],
                 modal : 0,
                 tituloModal : '',
                 tipoAccion : 0,
-                errorGenero : 0,
-                errorMsjGenero : [],
+                errorTipo : 0,
+                errorMsjTipo : [],
                 pagination : {
                 'total' :0 ,
                 'current_page':0 ,
@@ -124,12 +124,12 @@
         },
         methods:{
           
-            listarGenero(page, buscar, criterio){
+            listarTipo(page, buscar, criterio){
                 let me=this;
-                var url= '/generos?page='+page + '&buscar='+ buscar + '&criterio=' + criterio;
+                var url= '/tipos?page='+page + '&buscar='+ buscar + '&criterio=' + criterio;
                 axios.get(url).then(function (response){
                     var respuesta = response.data;
-                    me.arrayGeneros = respuesta.generos.data;
+                    me.arrayTipos = respuesta.tipos.data;
                     me.pagination=respuesta.pagination;
                 })
                 .catch(function (error){
@@ -139,65 +139,65 @@
             cambiarPagina(page, buscar, criterio){
                 let me=this;
                 me.pagination.current_page=page;
-                me.listarGenero(page, buscar, criterio);
+                me.listarTipo(page, buscar, criterio);
             },
-            registrarGenero(){
-                if(this.validarGenero()){
+            registrarTipo(){
+                if(this.validarTipo()){
                     return;
                 }
 
                 let me=this;
-                axios.post('generos/registrar',{
-                    'nombreGeneros': this.nombreGeneros,
-                    'descripcionGeneros': this.descripcionGeneros
+                axios.post('tipos/registrar',{
+                    'nombreTipos': this.nombreTipos,
+                    'descripcionTipos': this.descripcionTipos
                     }).then(function (response){
                         me.cerrarModal();
-                        me.listarGenero(1,'', 'nombre');
+                        me.listarTipo(1,'', 'nombre');
                 }).catch(function (error){
                     console.log(error);
                 })
             },
-            actualizarGenero(){
-                if(this.validarGenero()){
+            actualizarTipo(){
+                if(this.validarTipo()){
                     return;
                 }
                 let me=this;
-                axios.put('generos/actualizar',{
-                    'nombreGeneros': this.nombreGeneros,
-                    'descripcionGeneros': this.descripcionGeneros,
-                    'idGeneros': this.idGeneros
+                axios.put('tipos/actualizar',{
+                    'nombreTipos': this.nombreTipos,
+                    'descripcionTipos': this.descripcionTipos,
+                    'idTipos': this.idTipos
                     }).then(function (response){
                         me.cerrarModal();
-                        me.listarGenero(1,'', 'nombre');
+                        me.listarTipo(1,'', 'nombre');
                 }).catch(function (error){
                     console.log(error);
                 })
             },
-            validarGenero(){
-                this.errorGenero=0;
-                this.errorMsjGenero = [];
+            validarTipo(){
+                this.errorTipo=0;
+                this.errorMsjTipo = [];
 
-                if(!this.nombreGeneros) this.errorMsjGenero.push("El nombre del género no debe estar vacío");
+                if(!this.nombreTipos) this.errorMsjTipo.push("El nombre del Tipo no debe estar vacío");
 
-                if(this.errorMsjGenero.length) this.errorGenero=1;
-                return this.errorGenero;
+                if(this.errorMsjTipo.length) this.errorTipo=1;
+                return this.errorTipo;
             },
             cerrarModal(){
                 this.modal=0;
                 this.tituloModal='';
-                this.nombreGeneros='';
-                this.descripcionGeneros='';
+                this.nombreTipos='';
+                this.descripcionTipos='';
             },
             abrirModal(modelo, accion, data = []){
                 switch(modelo){
-                    case "genero":
+                    case "tipo":
                         {
                         switch(accion){
                             case 'registrar':{
                                 this.modal = 1;
-                                this.tituloModal = "Registrar Género";
-                                this.nombreGeneros='';
-                                this.descripcionGeneros='';
+                                this.tituloModal = "Registrar Tipo";
+                                this.nombreTipos='';
+                                this.descripcionTipos='';
                                 this.tipoAccion = 1;
                                 break;
 
@@ -205,10 +205,10 @@
                             case 'actualizar':{
                                 this.modal = 1;
                                 this.tipoAccion = 2;
-                                this.tituloModal = "Actualizar Género";
-                                this.idGeneros=data['idGeneros'];
-                                this.nombreGeneros=data['nombreGeneros'];
-                                this.descripcionGeneros=data['descripcionGeneros'];
+                                this.tituloModal = "Actualizar Tipo";
+                                this.idTipos=data['idTipos'];
+                                this.nombreTipos=data['nombreTipos'];
+                                this.descripcionTipos=data['descripcionTipos'];
                                 break;
 
                             }
@@ -219,7 +219,7 @@
         },
         
         mounted() {
-            this.listarGenero(1, this.buscar, this.criterio);
+            this.listarTipo(1, this.buscar, this.criterio);
         }
     }
 </script>

@@ -9,10 +9,6 @@ class Transaccion extends Model
     protected $table= 'transacciones';
     protected $primaryKey= 'idTransacciones';
     protected $fillable= ['tipoTransacciones', 'observacionTransacciones', 'fechaTransacciones',
-    'puntosTransacciones', 'valorFinalTransacciones'. 'formaPagoTransacciones', 'plazoTransacciones',
-    'estadoTransacciones'];
+     'valorFinalTransacciones'. 'formaPagoTransacciones', ];
 
-
-    
-    
 }

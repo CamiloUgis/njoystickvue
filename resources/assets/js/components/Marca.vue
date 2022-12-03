@@ -5,8 +5,8 @@
                 <!-- Ejemplo de tabla Listado -->
                 <div class="card">
                     <div class="card-header">
-                        <i class="fa fa-align-justify"></i> Socios
-                        <button type="button" @click="abrirModal('socio', 'registrar')" class="btn btn-secondary">
+                        <i class="fa fa-align-justify"></i> Marcas
+                        <button type="button" @click="abrirModal('marca', 'registrar')" class="btn btn-secondary">
                             <i class="icon-plus"></i>&nbsp;Nuevo
                         </button>
                     </div>
@@ -15,43 +15,29 @@
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <select class="form-control col-md-3" v-model="criterio">
-                                      <option value="nombreClientes">Nombre</option>
-                                      <option value="idClientes">Código</option>
+                                      <option value="nombreMarcas">Nombre</option>
+                                      <option value="descripcionMarcas">Descripción</option>
                                     </select>
-                                    <input type="text" v-model="buscar" @keyup.enter="listarCliente(1,buscar,criterio)" class="form-control" placeholder="Texto a buscar">
-                                    <button type="submit" @click="listarCliente(1,buscar,criterio)" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                                    <input type="text" v-model="buscar" @keyup.enter="listarMarca(1,buscar,criterio)" class="form-control" placeholder="Texto a buscar">
+                                    <button type="submit" @click="listarMarca(1,buscar,criterio)" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
                                 </div>
                             </div>
                         </div>
                         <table class="table table-bordered table-striped table-sm">
                             <thead>
                                 <tr>
-                                    <th class="text-center">Código Njoystick</th>
                                     <th class="text-center">Nombre</th>
-                                    <th class="text-center">Estado</th>
-                                    <th class="text-center">Puntos</th>
+                                    <th class="text-center">Descripción</th>
                                     <th class="text-center">Modificar</th>
-                                    <th class="text-center">Visualizar</th>
                                 </tr>
                             </thead>
                             <tbody class="text-center">
-                                <tr v-for="socio in arraySocios" :key="socio.idClientes">
-                                    <td v-text="'NJ'+socio.idClientes"></td>
-                                    <td v-text="socio.nombreClientes"></td>
-                                    
-                                    <td v-if="socio.estadoSocios==1">Activo</td>
-                                    <td v-else>Inactivo</td>
-
-                                    <td v-text="socio.puntosSocios"></td>
-                                    
+                                <tr v-for="marca in arrayMarcas" :key="marca.idMarcas">
+                                    <td v-text="marca.nombreMarcas"></td>
+                                    <td v-text="marca.descripcionMarcas"></td>
                                     <td>
-                                        <button type="button" @click="abrirModal('socio', 'actualizar', socio)" class="btn btn-warning btn-sm">
+                                        <button type="button" @click="abrirModal('marca', 'actualizar', marca)" class="btn btn-warning btn-sm">
                                           <i class="icon-pencil"></i>
-                                        </button> &nbsp;
-                                    </td>
-                                     <td>
-                                        <button type="button" @click="abrirModal('socio', 'visualizar', socio)" class="btn btn-succes btn-sm btnvisualizar">
-                                          <i class="icon-eye"></i>
                                         </button> &nbsp;
                                     </td>
                                 </tr>
@@ -61,7 +47,7 @@
                             <ul class="pagination">
                                 <li class = "page-item" v-if="pagination.current_page>1">
                                     <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page -1, buscar, criterio)"> Ant</a>
-                                
+                                </li>
                                 <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[page == isActived ? 'active' : '']">
                                     <a class="page-link" href="#" @click.prevent="cambiarPagina(page, buscar, criterio)" v-text="page"></a>
                                 </li>
@@ -89,35 +75,29 @@
                         <div class="modal-body">
                             <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
                                 <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="number-input">Nuevo socio</label>
+                                    <label class="col-md-3 form-control-label" for="text-input">Nombre</label>
                                     <div class="col-md-9">
-                                        <select class="form-control" v-model="idClientes">
-                                            <option value="0" disabled>Seleccione</option>
-                                            <option v-for="cliente in arrayClientes" :key="cliente.idClientes"
-                                            :value="cliente.idClientes" v-text="cliente.nombreClientes"></option>
-                                        </select>
+                                        <input type="text" v-model="nombreMarcas" name="nombre" class="form-control" placeholder="Nombre de Marca">
+                                        <span v-if="errors.nombreMarcas" class="error">{{errors.nombreMarcas[0]}}</span>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="number-input">Socio invitador</label>
+                                    <label class="col-md-3 form-control-label" for="email-input">Descripción</label>
                                     <div class="col-md-9">
-                                        <select class="form-control" v-model="Socio_idClientes">
-                                            <option value="0" disabled>Seleccione</option>
-                                            <option v-for="socio in arraySocios" :key="socio.idClientes"
-                                            :value="socio.idClientes" v-text="socio.nombreClientes"></option>
-                                        </select>
+                                        <input type="text" v-model="descripcionMarcas" name="descripcion" class="form-control" placeholder="Descripción de Marca">
                                     </div>
                                 </div>
-                                <!-- listado de socios -->
-                                
-                                <!-- fin listado de socios -->
-                                
+                                <!-- <div v-show="errorMarca" class="form-group row div-error">
+                                    <div class="text-center text-error">
+                                        <div v-for="error in errorMsjMarca" :key="error" v-text="error"></div>
+                                    </div>
+                                </div> -->
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" @click="cerrarModal()" >Cerrar</button>
-                            <button type="button" v-if="tipoAccion==1" class="btn btn-primary" @click="registrarSocio()" >Guardar</button>
-                            <button type="button" v-if="tipoAccion==2" class="btn btn-primary" @click="actualizarSocio()">Actualizar</button>
+                            <button type="button" v-if="tipoAccion==1" class="btn btn-primary" @click="registrarMarca()" >Guardar</button>
+                            <button type="button" v-if="tipoAccion==2" class="btn btn-primary" @click="actualizarMarca()">Actualizar</button>
 
                         </div>
                     </div>
@@ -130,20 +110,20 @@
 </template>
 
 <script>
+import { required, minLength, between } from 'vuelidate/lib/validators'
     export default {
         data(){
             return{
-                idClientes:0,
-                nombreClientes:'',
-                puntosSocios:'',
-                estadoSocios:'',
-                Socio_idClientes: 0,
-                arraySocios:[],
-                arrayClientes:[],
+                idMarcas:'0',
+                nombreMarcas:'',
+                descripcionMarcas:'',
+                arrayMarcas:[],
                 modal : 0,
                 tituloModal : '',
                 tipoAccion : 0,
                 errors: [],
+                // errorMarca : 0,
+                // errorMsjMarca : [],
                 pagination : {
                 'total' :0 ,
                 'current_page':0 ,
@@ -158,14 +138,8 @@
 
             }
         },
+        
         computed:{
-            // filterClientes: function() {
-            //     var aSoc= this.arraySocios;
-            //     return this.arrayClientes.filter(function(cliente) {
-            //     return (!(cliente.idClientes in aSoc));
-
-            //     })
-            // },
             isActived: function(){
                 return this.pagination.current_page;
             },
@@ -192,90 +166,86 @@
             }
         },
         methods:{
-           
-            listarSocio(page, buscar, criterio){
+            listarMarca(page, buscar, criterio){
                 let me=this;
-                var url= '/socios?page='+page + '&buscar='+ buscar + '&criterio=' + criterio;
+                var url= '/marcas?page='+page + '&buscar='+ buscar + '&criterio=' + criterio;
                 axios.get(url).then(function (response){
                     var respuesta = response.data;
-                    me.arraySocios = respuesta.socios.data;
+                    me.arrayMarcas = respuesta.marcas.data;
                     me.pagination=respuesta.pagination;
                 })
                 .catch(function (error){
                     console.log(error);
                 })
             },
-            selectClientes(){
-                let me=this;
-                var url= '/clientes/selectClientes';
-                axios.get(url).then(function (response){
-                    //console.log(response);
-                    var respuesta = response.data;
-                    me.arrayClientes = respuesta.clientes;
-                })
-                .catch(function (error){
-                    console.log(error.response);
-                })
-            },
             cambiarPagina(page, buscar, criterio){
                 let me=this;
                 me.pagination.current_page=page;
-                me.listarSocio(page, buscar, criterio);
+                me.listarMarca(page, buscar, criterio);
             },
-            registrarSocio(){
-                // if(this.validarCliente()){
+            registrarMarca(){
+                // if(this.validarMarca()){
                 //     return;
                 // }
-                this.errors= []
-                let me=this;
-                axios.post('socios/registrar',{
-                    'idClientes': this.idClientes,
-                    'Socio_idClientes': this.Socio_idClientes,
-                    
+                this.errors =[]
 
-                    }).then(function (response){
-                        me.cerrarModal();
-                        me.listarCliente(1,'', 'nombre');
-                }).catch(function (error){
-                    console.log(error.response);
-                })
-            },
-                actualizarCliente(){
-                    // if(this.validarCliente()){
-                //     return;
-                // }
-                this.errors= []
                 let me=this;
-                axios.put('clientes/actualizar',{
-                   'idClientes': this.idClientes,
-                   'Socio_idClientes': this.Socio_idClientes,
+                axios.post('marcas/registrar',{
+                    'nombreMarcas': this.nombreMarcas,
+                    'descripcionMarcas': this.descripcionMarcas
                     }).then(function (response){
                         me.cerrarModal();
-                        me.listarCliente(1,'', 'nombre');
+                        me.listarMarca(1,'', 'nombre');
                 }).catch(error=>{
                     if(error.response.status == 422){
                         this.errors = error.response.data.errors
                     }
-                    
-                    
                 })
             },
+            actualizarMarca(){
+                // if(this.validarMarca()){
+                //     return;
+                // }
+                let me=this;
+                axios.put('marcas/actualizar',{
+                    'nombreMarcas': this.nombreMarcas,
+                    'descripcionMarcas': this.descripcionMarcas,
+                    'idMarcas': this.idMarcas
+                    }).then(function (response){
+                        me.cerrarModal();
+                        me.listarMarca(1,'', 'nombre');
+                }).catch(error=>{
+                    if(error.response.status == 422){
+                        this.errors = error.response.data.errors
+                    }
+                })
+            },
+            // validarMarca(){
+            //     this.errorMarca=0;
+            //     this.errorMsjMarca = [];
+
+            //     if(!this.nombreMarcas) this.errorMsjMarca.push("El nombre de la Marca no debe estar vacío");
+
+            //     if(this.errorMsjMarca.length) this.errorMarca=1;
+            //     return this.errorMarca;
+            // },
             cerrarModal(){
                 this.modal=0;
                 this.tituloModal='';
-                this.nombreClientes='';
-                this.errorMsjCliente='';
+                this.nombreMarcas='';
+                this.descripcionMarcas='';
+                this.errors='';
             },
             abrirModal(modelo, accion, data = []){
                 switch(modelo){
-                    case "socio":
+                    case "marca":
                         {
                         switch(accion){
                             case 'registrar':{
                                 this.modal = 1;
-                                this.tituloModal = "Registrar Nuevo Socio";
-                                this.idClientes=0;
-                                this.Socio_idClientes=0;
+                                this.tituloModal = "Registrar Marca";
+                                this.nombreMarcas='';
+                                this.descripcionMarcas='';
                                 this.tipoAccion = 1;
                                 break;
 
@@ -283,23 +253,21 @@
                             case 'actualizar':{
                                 this.modal = 1;
                                 this.tipoAccion = 2;
-                                this.tituloModal = "Modificar Socio";
-                                this.idClientes=data['idClientes'];
-                                this.Socio_idClientes=data['Socio_idClientes'];
-                                this.estadoSocios=data['estadoSocios'];
-                                
+                                this.tituloModal = "Actualizar Marca";
+                                this.idMarcas=data['idMarcas'];
+                                this.nombreMarcas=data['nombreMarcas'];
+                                this.descripcionMarcas=data['descripcionMarcas'];
                                 break;
 
                             }
                         }
                     }
                 }
-                this.selectClientes();
             }
         },
         
         mounted() {
-            this.listarSocio(1, this.buscar, this.criterio);
+            this.listarMarca(1, this.buscar, this.criterio);
         }
     }
 </script>
@@ -308,6 +276,7 @@
         width: 100% !important;
         position: absolute !important;
     }
+
     .mostrar{
         display: list-item !important;
         opacity: 1 !important;

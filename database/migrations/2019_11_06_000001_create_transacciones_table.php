@@ -28,8 +28,6 @@ class CreateTransaccionesTable extends Migration
             $table->dateTime('fechaTransacciones');
             $table->integer('valorFinalTransacciones');
             $table->string('formaPagoTransacciones', 8);
-            $table->date('plazoTransacciones');
-            $table->string('EstadoTransacciones', 20);
             //compra o canje es null
         });
     }

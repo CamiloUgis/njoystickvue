@@ -10,10 +10,6 @@
        <clientes></clientes>
        </template>
 
-       <template v-if="menu==2">
-       <socios></socios>
-       </template>
-
        <template v-if="menu==3">
        <transacciones></transacciones>
        </template>
@@ -27,11 +23,11 @@
        </template>
 
        <template v-if="menu==6">
-       <generos></generos>
+       <tipos></tipos>
        </template>
 
        <template v-if="menu==7">
-       <plataformas></plataformas>
+       <marcas></marcas>
        </template>
        <template v-if="menu==8">
        <usuarios></usuarios>

@@ -52,11 +52,11 @@
                             <tr>
                                 <th class="text-center">Nombre</th>
                                 <th class="text-center">Descripción</th>
-                                <th class="text-center">Plataforma</th>
+                                <th class="text-center">Marca</th>
                                 <th class="text-center">Stock</th>
                                 <th class="text-center">Precio</th>
                                 <th class="text-center">Modificar</th>
-                                <th class="text-center">Asociar Género</th>
+                                <th class="text-center">Asociar Tipo</th>
                             </tr>
                         </thead>
                         <tbody class="text-center">
@@ -66,7 +66,7 @@
                             >
                                 <td v-text="producto.nombreProductos"></td>
                                 <td v-text="producto.descripcionProductos"></td>
-                                <td v-text="producto.nombrePlataformas"></td>
+                                <td v-text="producto.nombreMarcas"></td>
                                 <td v-text="producto.stockProductos"></td>
                                 <td v-text="producto.precioProductos"></td>
                                 <td>
@@ -239,24 +239,24 @@
                                     <label
                                         class="col-md-3 form-control-label"
                                         for="number-input"
-                                        >Plataforma</label
+                                        >Marca</label
                                     >
                                     <div class="col-md-9">
                                         <select
                                             class="form-control"
-                                            v-model="idPlataformas"
+                                            v-model="idMarcas"
                                         >
                                             <option value="0" disabled
                                                 >Seleccione</option
                                             >
                                             <option
-                                                v-for="plataforma in arrayPlataformas"
-                                                :key="plataforma.idPlataformas"
+                                                v-for="marca in arrayMarcas"
+                                                :key="marca.idMarcas"
                                                 :value="
-                                                    plataforma.idPlataformas
+                                                    marca.idMarcas
                                                 "
                                                 v-text="
-                                                    plataforma.nombrePlataformas
+                                                    marca.nombreMarcas
                                                 "
                                             ></option>
                                         </select>
@@ -363,15 +363,15 @@
                             >
                                 <div class="form-group row">
                                     <label class="col-md-3 typo__label"
-                                        >Géneros</label
+                                        >Tipos</label
                                     >
                                     <div class="col-md-9">
                                         <multiselect
-                                            v-model="arrayGenerosSeleccionados"
-                                            placeholder="Agregue uno o más géneros"
-                                            label="nombreGeneros"
+                                            v-model="arrayTiposSeleccionados"
+                                            placeholder="Agregue uno o más tipos"
+                                            label="nombreTipos"
                                             :hide-selected="true"
-                                            :options="arrayGeneros"
+                                            :options="arrayTipos"
                                             :multiple="true"
                                             :taggable="true"
                                         ></multiselect>
@@ -391,9 +391,9 @@
                                 type="button"
                                 v-if="tipoAccion == 3"
                                 class="btn btn-primary"
-                                @click="asociarGenero()"
+                                @click="asociarTipo()"
                             >
-                                Asociar Género
+                                Asociar Tipo
                             </button>
                         </div>
                     </div>
@@ -416,8 +416,8 @@ export default {
     data() {
         return {
             idProductos: 0,
-            idPlataformas: 0,
-            idGeneros: 0,
+            idMarcas: 0,
+            idTipos: 0,
             nombreProductos: "",
             descripcionProductos: "",
             stockProductos: "",
@@ -439,9 +439,9 @@ export default {
             offset: 3,
             criterio: "nombre",
             buscar: "",
-            arrayPlataformas: [],
-            arrayGeneros: [],
-            arrayGenerosSeleccionados: []
+            arrayMarcas: [],
+            arrayTipos: [],
+            arrayTiposSeleccionados: []
         };
     },
 
@@ -492,29 +492,29 @@ export default {
                     console.log(error.response);
                 });
         },
-        selectPlataformas() {
+        selectMarcas() {
             let me = this;
-            var url = "/plataformas/selectPlataformas";
+            var url = "/marcas/selectMarcas";
             axios
                 .get(url)
                 .then(function(response) {
                     //console.log(response);
                     var respuesta = response.data;
-                    me.arrayPlataformas = respuesta.plataformas;
+                    me.arrayMarcas = respuesta.marcas;
                 })
                 .catch(function(error) {
                     console.log(error.response);
                 });
         },
-        selectGeneros() {
+        selectTipos() {
             let me = this;
-            var url = "/generos/selectGeneros";
+            var url = "/tipos/selectTipos";
             axios
                 .get(url)
                 .then(function(response) {
                     //console.log(response);
                     var respuesta = response.data;
-                    me.arrayGeneros = respuesta.generos;
+                    me.arrayTipos = respuesta.tipos;
                 })
                 .catch(function(error) {
                     console.log(error.response);
@@ -533,7 +533,7 @@ export default {
             axios
                 .post("productos/registrar", {
                     nombreProductos: this.nombreProductos,
-                    idPlataformas: this.idPlataformas,
+                    idMarcas: this.idMarcas,
                     descripcionProductos: this.descripcionProductos,
                     stockProductos: this.stockProductos,
                     precioProductos: this.precioProductos
@@ -555,7 +555,7 @@ export default {
             axios
                 .put("productos/actualizar", {
                     nombreProductos: this.nombreProductos,
-                    idPlataformas: this.idPlataformas,
+                    idMarcas: this.idMarcas,
                     descripcionProductos: this.descripcionProductos,
                     stockProductos: this.stockProductos,
                     precioProductos: this.precioProductos,
@@ -569,15 +569,15 @@ export default {
                     console.log(error.response);
                 });
         },
-        asociarGenero() {
+        asociarTipo() {
             if (this.validarProducto()) {
                 return;
             }
             let me = this;
             axios
-                .post("productos/asociarGenero", {
+                .post("productos/asociarTipo", {
                     idProductos: this.idProductos,
-                    arrayGenerosSeleccionados: this.arrayGenerosSeleccionados
+                    arrayTiposSeleccionados: this.arrayTiposSeleccionados
                 })
                 .then(function(response) {
                     me.cerrarModal();
@@ -606,8 +606,8 @@ export default {
             this.modal = 0;
             this.tituloModal = "";
             this.nombreProductos = "";
-            this.idPlataformas = 0;
-            this.arrayGenerosSeleccionados = [];
+            this.idMarcas = 0;
+            this.arrayTiposSeleccionados = [];
             this.descripcionProductos = "";
             this.stockProductos = "";
             this.precioProductos = "";
@@ -620,8 +620,8 @@ export default {
                         case "registrar": {
                             this.modal = 1;
                             this.tituloModal = "Registrar Producto";
-                            this.idPlataformas = 0;
-                            this.arrayGenerosSeleccionados = [];
+                            this.idMarcas = 0;
+                            this.arrayTiposSeleccionados = [];
                             this.nombreProductos = "";
                             this.descripcionProductos = "";
                             this.stockProductos = "";
@@ -634,7 +634,7 @@ export default {
                             this.tipoAccion = 2;
                             this.tituloModal = "Actualizar Producto";
                             this.idProductos = data["idProductos"];
-                            this.idPlataformas = data["idPlataformas"];
+                            this.idMarcas = data["idMarcas"];
                             this.nombreProductos = data["nombreProductos"];
                             this.descripcionProductos =
                                 data["descripcionProductos"];
@@ -645,17 +645,17 @@ export default {
                         case "asociar": {
                             this.modal = 1;
                             this.tipoAccion = 3;
-                            this.tituloModal = "Asociar Géneros";
+                            this.tituloModal = "Asociar Tipos";
                             this.idProductos = data["idProductos"];
-                            this.arrayGenerosSeleccionados =
-                                data["arrayGenerosSeleccionados"];
+                            this.arrayTiposSeleccionados =
+                                data["arrayTiposSeleccionados"];
                             break;
                         }
                     }
                 }
             }
-            this.selectGeneros();
-            this.selectPlataformas();
+            this.selectTipos();
+            this.selectMarcas();
         }
     },
 

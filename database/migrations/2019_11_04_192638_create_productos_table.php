@@ -20,8 +20,8 @@ class CreateProductosTable extends Migration
                 $table->integer('stockProductos')->nullable();
                 $table->integer('precioProductos')->nullable();
                 $table->timestamps();
-                $table->unsignedInteger('idPlataformas');
-                $table->foreign('idPlataformas')->references('idPlataformas')->on('plataformas');
+                $table->unsignedInteger('idMarcas');
+                $table->foreign('idMarcas')->references('idMarcas')->on('marcas');
         });
     }
 

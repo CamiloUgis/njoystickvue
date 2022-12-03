@@ -4,17 +4,17 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class GeneroProducto extends Model
+class TipoProducto extends Model
 {
-    protected $table = 'genero_producto';
+    protected $table = 'tipo_producto';
     protected $fillable = [
-        'idGeneros', 'idProductos'
+        'idTipos', 'idProductos'
     ];
     public function productos(){
         return $this->hasMany('App\Producto');
     }
-    public function generos(){
-        return $this->hasMany('App\Genero');
+    public function tipos(){
+        return $this->hasMany('App\Tipo');
     }
     public $timestamps = false;
 }

@@ -26,8 +26,7 @@ class TransaccionController extends Controller
             $transacciones = Transaccion::join('producto_transaccion', 'transacciones.idTransacciones', '=', 'producto_transaccion.idTransacciones')
             ->join('productos', 'producto_transaccion.idProductos','=','productos.idProductos')
             ->select('transacciones.tipoTransacciones', 'transacciones.observacionTransacciones', 'transacciones.fechaTransacciones', 
-            'transacciones.puntosTransacciones', 'transacciones.valorFinalTransacciones', 'transacciones.formaPagoTransacciones',
-            'transacciones.plazoTransacciones', 'transacciones.estadoTransacciones', 
+            'transacciones.valorFinalTransacciones', 'transacciones.formaPagoTransacciones', 
             'producto_transaccion.idTransacciones', 'productos.nombreProductos', 'productos.stockProductos',
             'productos.precioProductos')
             ->orderBy('transacciones.idTransacciones', 'desc')->paginate(8);
@@ -36,8 +35,7 @@ class TransaccionController extends Controller
             $transacciones = Transaccion::join('producto_transaccion', 'transacciones.idTransacciones', '=', 'producto_transaccion.idTransacciones')
             ->join('productos', 'producto_transaccion.idProductos','=','productos.idProductos')
             ->select('transacciones.tipoTransacciones', 'transacciones.observacionTransacciones', 'transacciones.fechaTransacciones', 
-            'transacciones.puntosTransacciones', 'transacciones.valorFinalTransacciones', 'transacciones.formaPagoTransacciones',
-            'transacciones.plazoTransacciones', 'transacciones.estadoTransacciones', 
+            'transacciones.valorFinalTransacciones', 'transacciones.formaPagoTransacciones', 
             'producto_transaccion.idTransacciones', 'productos.nombreProductos', 'productos.stockProductos',
             'productos.precioProductos')
             ->where('transacciones.'.$criterio, 'like', '%'. $buscar . '%')
@@ -69,11 +67,8 @@ class TransaccionController extends Controller
             $transaccion->tipoTransacciones = $request->input('tipoTransacciones');
             $transaccion->fechaTransacciones = $mytime->toDateString();
             $transaccion->observacionTransacciones = $request->input('observacionTransacciones');
-            $transaccion->puntosTransacciones = $request->input('puntosTransacciones');
             $transaccion->valorFinalTransacciones = $request->input('valorFinalTransacciones');
             $transaccion->formaPagoTransacciones = $request->input('formaPagoTransacciones');
-            $transaccion->plazoTransacciones = $request->input('plazoTransacciones');
-            $transaccion->estadoTransacciones = $request->input('estadoTransacciones');
 
             $pivote = $request->data;
 
@@ -102,11 +97,8 @@ class TransaccionController extends Controller
         $transaccion->idTransacciones = $request->input('idTransacciones');
         $transaccion->tipoTransacciones = $request->input('tipoTransacciones');
         $transaccion->observacionTransacciones = $request->input('observacionTransacciones');
-        $transaccion->puntosTransacciones = $request->input('puntosTransacciones');
         $transaccion->valorFinalTransacciones = $request->input('valorFinalTransacciones');
         $transaccion->formaPagoTransacciones = $request->input('formaPagoTransacciones');
-        $transaccion->plazoTransacciones = $request->input('plazoTransacciones');
-        $transaccion->estadoTransacciones = $request->input('estadoTransacciones');
         $transaccion->save();
     }
 

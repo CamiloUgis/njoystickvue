@@ -15,11 +15,11 @@ class Producto extends Model
         'stockProductos',
     ];
    
-    public function plataforma(){
-        return $this->hasOne('App\Plataforma');
+    public function marca(){
+        return $this->hasOne('App\Marca');
     }
-    public function generoProducto(){
-        return $this->belongsTo('App\GeneroProducto');
+    public function tipoProducto(){
+        return $this->belongsTo('App\TipoProducto');
     }
     
 }

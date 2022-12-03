@@ -27,34 +27,22 @@ Route::get('/main', function () {
 // Route::get('/actualizareferido/{idSocios}','SocioController@actualizar');
 // Route::post('/actualizareferido/{idSocios}','SocioController@update');
 
-Route::get('/generos','GeneroController@index');
-Route::post('generos/registrar', 'GeneroController@store');
-Route::put('generos/actualizar','GeneroController@update');
-Route::get('/generos/selectGeneros','GeneroController@selectGeneros');
+Route::get('/tipos','TipoController@index');
+Route::post('tipos/registrar', 'TipoController@store');
+Route::put('tipos/actualizar','TipoController@update');
+Route::get('/tipos/selectTipos','TipoController@selectTipos');
 
-Route::get('/plataformas','PlataformaController@index');
-Route::post('/plataformas/registrar', 'PlataformaController@store');
-Route::put('/plataformas/actualizar','PlataformaController@update');
-Route::get('/plataformas/selectPlataformas','PlataformaController@selectPlataformas');
+Route::get('/marcas','MarcaController@index');
+Route::post('/marcas/registrar', 'MarcaController@store');
+Route::put('/marcas/actualizar','MarcaController@update');
+Route::get('/marcas/selectMarcas','MarcaController@selectMarcas');
 
 
 Route::get('/productos','ProductoController@index');
 Route::post('/productos/registrar', 'ProductoController@store');
 Route::put('/productos/actualizar','ProductoController@update');
-Route::put('/productos/asociarGenero','ProductoController@asociar');
+Route::put('/productos/asociarTipo','ProductoController@asociar');
 
-
-Route::get('/clientes','ClienteController@index');
-Route::post('/clientes/registrar','ClienteController@store');
-Route::put('/clientes/actualizar', 'ClienteController@update');
-Route::get('/clientes/selectClientes','ClienteController@selectClientes');
-Route::get('/clientes/transaccionClientes','ClienteController@transaccionClientes');
-
-
-
-Route::get('/socios','SocioController@index');
-Route::post('/socios/registrar','SocioController@store');
-Route::put('/socios/actualizar', 'SocioController@update');
 
 Route::get('/roles','RolController@index');
 Route::get('/roles/selectRoles','RolController@selectRoles');
