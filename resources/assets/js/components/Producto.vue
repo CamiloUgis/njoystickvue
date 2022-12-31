@@ -50,13 +50,14 @@
                     <table class="table table-bordered table-striped table-sm">
                         <thead>
                             <tr>
+                                <th class="text-center">Tipo</th>
                                 <th class="text-center">Nombre</th>
                                 <th class="text-center">Descripción</th>
                                 <th class="text-center">Marca</th>
                                 <th class="text-center">Stock</th>
                                 <th class="text-center">Precio</th>
                                 <th class="text-center">Modificar</th>
-                                <th class="text-center">Asociar Tipo</th>
+                                <!-- <th class="text-center">Asociar Tipo</th> -->
                             </tr>
                         </thead>
                         <tbody class="text-center">
@@ -64,6 +65,7 @@
                                 v-for="producto in arrayProductos"
                                 :key="producto.idProductos"
                             >
+                                <td v-text= "producto.nombreTipos"></td>
                                 <td v-text="producto.nombreProductos"></td>
                                 <td v-text="producto.descripcionProductos"></td>
                                 <td v-text="producto.nombreMarcas"></td>
@@ -85,7 +87,7 @@
                                     </button>
                                     &nbsp;
                                 </td>
-                                <td>
+                                <!-- <td>
                                     <button
                                         type="button"
                                         @click="
@@ -100,7 +102,7 @@
                                         <i class="icon-pencil"></i>
                                     </button>
                                     &nbsp;
-                                </td>
+                                </td> -->
                             </tr>
                         </tbody>
                     </table>
@@ -267,6 +269,34 @@
                                     <label
                                         class="col-md-3 form-control-label"
                                         for="number-input"
+                                        >Tipo</label
+                                    >
+                                    <div class="col-md-9">
+                                        <select
+                                            class="form-control"
+                                            v-model="idTipos"
+                                        >
+                                            <option value="0" disabled
+                                                >Seleccione</option
+                                            >
+                                            <option
+                                                v-for="tipo in arrayTipos"
+                                                :key="tipo.idTipos"
+                                                :value="
+                                                    tipo.idTipos
+                                                "
+                                                v-text="
+                                                    tipo.nombreTipos
+                                                "
+                                            ></option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label
+                                        class="col-md-3 form-control-label"
+                                        for="number-input"
                                         >Stock</label
                                     >
                                     <div class="col-md-9">
@@ -291,7 +321,7 @@
                                             v-model="precioProductos"
                                             name="precio"
                                             class="form-control"
-                                            placeholder="Precio de juego"
+                                            placeholder="Precio referencial"
                                         />
                                     </div>
                                 </div>
@@ -354,7 +384,8 @@
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                        <div class="modal-body">
+                        <!-- no se si comentar todo esto -->
+                        <!-- <div class="modal-body">
                             <form
                                 action=""
                                 method="post"
@@ -378,7 +409,7 @@
                                     </div>
                                 </div>
                             </form>
-                        </div>
+                        </div> -->
                         <div class="modal-footer">
                             <button
                                 type="button"
@@ -387,14 +418,14 @@
                             >
                                 Cerrar
                             </button>
-                            <button
+                            <!-- <button
                                 type="button"
                                 v-if="tipoAccion == 3"
                                 class="btn btn-primary"
                                 @click="asociarTipo()"
                             >
                                 Asociar Tipo
-                            </button>
+                            </button> -->
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -441,7 +472,7 @@ export default {
             buscar: "",
             arrayMarcas: [],
             arrayTipos: [],
-            arrayTiposSeleccionados: []
+            // arrayTiposSeleccionados: []
         };
     },
 
@@ -534,6 +565,7 @@ export default {
                 .post("productos/registrar", {
                     nombreProductos: this.nombreProductos,
                     idMarcas: this.idMarcas,
+                    idTipos: this.idTipos,
                     descripcionProductos: this.descripcionProductos,
                     stockProductos: this.stockProductos,
                     precioProductos: this.precioProductos
@@ -556,6 +588,7 @@ export default {
                 .put("productos/actualizar", {
                     nombreProductos: this.nombreProductos,
                     idMarcas: this.idMarcas,
+                    idTipos: this.idTipos,
                     descripcionProductos: this.descripcionProductos,
                     stockProductos: this.stockProductos,
                     precioProductos: this.precioProductos,
@@ -607,7 +640,7 @@ export default {
             this.tituloModal = "";
             this.nombreProductos = "";
             this.idMarcas = 0;
-            this.arrayTiposSeleccionados = [];
+            this.idTipos= 0;
             this.descripcionProductos = "";
             this.stockProductos = "";
             this.precioProductos = "";
@@ -621,6 +654,7 @@ export default {
                             this.modal = 1;
                             this.tituloModal = "Registrar Producto";
                             this.idMarcas = 0;
+                            this.idTipos = 0;
                             this.arrayTiposSeleccionados = [];
                             this.nombreProductos = "";
                             this.descripcionProductos = "";
@@ -635,6 +669,7 @@ export default {
                             this.tituloModal = "Actualizar Producto";
                             this.idProductos = data["idProductos"];
                             this.idMarcas = data["idMarcas"];
+                            this.idTipos = data["idTipos"];
                             this.nombreProductos = data["nombreProductos"];
                             this.descripcionProductos =
                                 data["descripcionProductos"];
@@ -642,7 +677,7 @@ export default {
                             this.precioProductos = data["precioProductos"];
                             break;
                         }
-                        case "asociar": {
+                        /* case "asociar": {
                             this.modal = 1;
                             this.tipoAccion = 3;
                             this.tituloModal = "Asociar Tipos";
@@ -650,7 +685,7 @@ export default {
                             this.arrayTiposSeleccionados =
                                 data["arrayTiposSeleccionados"];
                             break;
-                        }
+                        } */
                     }
                 }
             }

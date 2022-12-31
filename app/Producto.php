@@ -19,7 +19,7 @@ class Producto extends Model
         return $this->hasOne('App\Marca');
     }
     public function tipoProducto(){
-        return $this->belongsTo('App\TipoProducto');
+        return $this->hasOne('App\Tipo');
     }
     
 }

@@ -48292,7 +48292,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.modal-content {\n    width: 100% !important;\n    position: absolute !important;\n}\n.mostrar {\n    display: list-item !important;\n    opacity: 1 !important;\n    position: absolute !important;\n    background-color: #3c29297a !important;\n}\n.div-error {\n    display: flex;\n    justify-content: center;\n}\n.text-error {\n    color: red !important;\n    font-weight: bold;\n}\n", ""]);
+exports.push([module.i, "\n.modal-content {\r\n    width: 100% !important;\r\n    position: absolute !important;\n}\n.mostrar {\r\n    display: list-item !important;\r\n    opacity: 1 !important;\r\n    position: absolute !important;\r\n    background-color: #3c29297a !important;\n}\n.div-error {\r\n    display: flex;\r\n    justify-content: center;\n}\n.text-error {\r\n    color: red !important;\r\n    font-weight: bold;\n}\r\n", ""]);
 
 // exports
 
@@ -48305,6 +48305,37 @@ exports.push([module.i, "\n.modal-content {\n    width: 100% !important;\n    po
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_multiselect__ = __webpack_require__(90);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_multiselect__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -48747,8 +48778,8 @@ Vue.component("multiselect", __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
             criterio: "nombre",
             buscar: "",
             arrayMarcas: [],
-            arrayTipos: [],
-            arrayTiposSeleccionados: []
+            arrayTipos: []
+            // arrayTiposSeleccionados: []
         };
     },
 
@@ -48826,6 +48857,7 @@ Vue.component("multiselect", __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
             axios.post("productos/registrar", {
                 nombreProductos: this.nombreProductos,
                 idMarcas: this.idMarcas,
+                idTipos: this.idTipos,
                 descripcionProductos: this.descripcionProductos,
                 stockProductos: this.stockProductos,
                 precioProductos: this.precioProductos
@@ -48845,6 +48877,7 @@ Vue.component("multiselect", __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
             axios.put("productos/actualizar", {
                 nombreProductos: this.nombreProductos,
                 idMarcas: this.idMarcas,
+                idTipos: this.idTipos,
                 descripcionProductos: this.descripcionProductos,
                 stockProductos: this.stockProductos,
                 precioProductos: this.precioProductos,
@@ -48887,7 +48920,7 @@ Vue.component("multiselect", __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
             this.tituloModal = "";
             this.nombreProductos = "";
             this.idMarcas = 0;
-            this.arrayTiposSeleccionados = [];
+            this.idTipos = 0;
             this.descripcionProductos = "";
             this.stockProductos = "";
             this.precioProductos = "";
@@ -48905,6 +48938,7 @@ Vue.component("multiselect", __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
                                     this.modal = 1;
                                     this.tituloModal = "Registrar Producto";
                                     this.idMarcas = 0;
+                                    this.idTipos = 0;
                                     this.arrayTiposSeleccionados = [];
                                     this.nombreProductos = "";
                                     this.descripcionProductos = "";
@@ -48920,21 +48954,22 @@ Vue.component("multiselect", __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
                                     this.tituloModal = "Actualizar Producto";
                                     this.idProductos = data["idProductos"];
                                     this.idMarcas = data["idMarcas"];
+                                    this.idTipos = data["idTipos"];
                                     this.nombreProductos = data["nombreProductos"];
                                     this.descripcionProductos = data["descripcionProductos"];
                                     this.stockProductos = data["stockProductos"];
                                     this.precioProductos = data["precioProductos"];
                                     break;
                                 }
-                            case "asociar":
-                                {
-                                    this.modal = 1;
-                                    this.tipoAccion = 3;
-                                    this.tituloModal = "Asociar Tipos";
-                                    this.idProductos = data["idProductos"];
-                                    this.arrayTiposSeleccionados = data["arrayTiposSeleccionados"];
-                                    break;
-                                }
+                            /* case "asociar": {
+                                this.modal = 1;
+                                this.tipoAccion = 3;
+                                this.tituloModal = "Asociar Tipos";
+                                this.idProductos = data["idProductos"];
+                                this.arrayTiposSeleccionados =
+                                    data["arrayTiposSeleccionados"];
+                                break;
+                            } */
                         }
                     }
             }
@@ -49092,6 +49127,10 @@ var render = function() {
                 _vm._l(_vm.arrayProductos, function(producto) {
                   return _c("tr", { key: producto.idProductos }, [
                     _c("td", {
+                      domProps: { textContent: _vm._s(producto.nombreTipos) }
+                    }),
+                    _vm._v(" "),
+                    _c("td", {
                       domProps: {
                         textContent: _vm._s(producto.nombreProductos)
                       }
@@ -49128,29 +49167,6 @@ var render = function() {
                               return _vm.abrirModal(
                                 "producto",
                                 "actualizar",
-                                producto
-                              )
-                            }
-                          }
-                        },
-                        [_c("i", { staticClass: "icon-pencil" })]
-                      ),
-                      _vm._v(
-                        "\n                                 \n                            "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-warning btn-sm",
-                          attrs: { type: "button" },
-                          on: {
-                            click: function($event) {
-                              return _vm.abrirModal(
-                                "producto",
-                                "asociar",
                                 producto
                               )
                             }
@@ -49466,6 +49482,70 @@ var render = function() {
                                 staticClass: "col-md-3 form-control-label",
                                 attrs: { for: "number-input" }
                               },
+                              [_vm._v("Tipo")]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-9" }, [
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.idTipos,
+                                      expression: "idTipos"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.idTipos = $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    }
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "0", disabled: "" } },
+                                    [_vm._v("Seleccione")]
+                                  ),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.arrayTipos, function(tipo) {
+                                    return _c("option", {
+                                      key: tipo.idTipos,
+                                      domProps: {
+                                        value: tipo.idTipos,
+                                        textContent: _vm._s(tipo.nombreTipos)
+                                      }
+                                    })
+                                  })
+                                ],
+                                2
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group row" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "col-md-3 form-control-label",
+                                attrs: { for: "number-input" }
+                              },
                               [_vm._v("Stock")]
                             ),
                             _vm._v(" "),
@@ -49522,7 +49602,7 @@ var render = function() {
                                 attrs: {
                                   type: "number",
                                   name: "precio",
-                                  placeholder: "Precio de juego"
+                                  placeholder: "Precio referencial"
                                 },
                                 domProps: { value: _vm.precioProductos },
                                 on: {
@@ -49656,54 +49736,6 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "modal-body" }, [
-                      _c(
-                        "form",
-                        {
-                          staticClass: "form-horizontal",
-                          attrs: {
-                            action: "",
-                            method: "post",
-                            enctype: "multipart/form-data"
-                          }
-                        },
-                        [
-                          _c("div", { staticClass: "form-group row" }, [
-                            _c(
-                              "label",
-                              { staticClass: "col-md-3 typo__label" },
-                              [_vm._v("Tipos")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "col-md-9" },
-                              [
-                                _c("multiselect", {
-                                  attrs: {
-                                    placeholder: "Agregue uno o más tipos",
-                                    label: "nombreTipos",
-                                    "hide-selected": true,
-                                    options: _vm.arrayTipos,
-                                    multiple: true,
-                                    taggable: true
-                                  },
-                                  model: {
-                                    value: _vm.arrayTiposSeleccionados,
-                                    callback: function($$v) {
-                                      _vm.arrayTiposSeleccionados = $$v
-                                    },
-                                    expression: "arrayTiposSeleccionados"
-                                  }
-                                })
-                              ],
-                              1
-                            )
-                          ])
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
                     _c("div", { staticClass: "modal-footer" }, [
                       _c(
                         "button",
@@ -49721,27 +49753,7 @@ var render = function() {
                             "\n                            Cerrar\n                        "
                           )
                         ]
-                      ),
-                      _vm._v(" "),
-                      _vm.tipoAccion == 3
-                        ? _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-primary",
-                              attrs: { type: "button" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.asociarTipo()
-                                }
-                              }
-                            },
-                            [
-                              _vm._v(
-                                "\n                            Asociar Tipo\n                        "
-                              )
-                            ]
-                          )
-                        : _vm._e()
+                      )
                     ])
                   ])
                 ]
@@ -49759,6 +49771,8 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
+        _c("th", { staticClass: "text-center" }, [_vm._v("Tipo")]),
+        _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [_vm._v("Nombre")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [_vm._v("Descripción")]),
@@ -49769,9 +49783,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [_vm._v("Precio")]),
         _vm._v(" "),
-        _c("th", { staticClass: "text-center" }, [_vm._v("Modificar")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-center" }, [_vm._v("Asociar Tipo")])
+        _c("th", { staticClass: "text-center" }, [_vm._v("Modificar")])
       ])
     ])
   }
@@ -50638,7 +50650,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.modal-content {\n    width: 100% !important;\n    position: absolute !important;\n}\n.mostrar {\n    display: list-item !important;\n    opacity: 1 !important;\n    position: absolute !important;\n    background-color: #3c29297a !important;\n}\n.div-error {\n    display: flex;\n    justify-content: center;\n}\n.text-error {\n    color: red !important;\n    font-weight: bold;\n}\n@media (min-width: 600px) {\n.btnagregar {\n        margin-top: 2rem;\n        background-color: #40c36e;\n}\n.btnvisualizar {\n        background-color: #20a8d8;\n        border-radius: 15px;\n}\n}\n", ""]);
+exports.push([module.i, "\n.modal-content {\r\n    width: 100% !important;\r\n    position: absolute !important;\n}\n.mostrar {\r\n    display: list-item !important;\r\n    opacity: 1 !important;\r\n    position: absolute !important;\r\n    background-color: #3c29297a !important;\n}\n.div-error {\r\n    display: flex;\r\n    justify-content: center;\n}\n.text-error {\r\n    color: red !important;\r\n    font-weight: bold;\n}\n@media (min-width: 600px) {\n.btnagregar {\r\n        margin-top: 2rem;\r\n        background-color: #40c36e;\n}\n.btnvisualizar {\r\n        background-color: #20a8d8;\r\n        border-radius: 15px;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -51123,25 +51135,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -51152,7 +51145,6 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component("v-select", __WEBPACK_IMPO
         return {
             idTransacciones: 0,
             idProductos: 0,
-            tipoTransacciones: 0,
             observacionTransacciones: "",
             fechaTransacciones: "",
             valorFinalTransacciones: "",
@@ -51177,7 +51169,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component("v-select", __WEBPACK_IMPO
                 to: 0
             },
             offset: 3,
-            criterio: "tipoTransaccion",
+            //no se como reemplazar el criterio help
+            //criterio: "tipoTransaccion",
             buscar: "",
             arrayMarcas: []
         };
@@ -51414,12 +51407,6 @@ var render = function() {
                           [
                             _c(
                               "option",
-                              { attrs: { value: "tipoTransacciones" } },
-                              [_vm._v("Tipo de Transacciones")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "option",
                               { attrs: { value: "formaPagoTransacciones" } },
                               [_vm._v("Forma de Pago")]
                             )
@@ -51512,14 +51499,6 @@ var render = function() {
                               "tr",
                               { key: transaccion.idTransacciones },
                               [
-                                _c("td", {
-                                  domProps: {
-                                    textContent: _vm._s(
-                                      transaccion.tipoTransacciones
-                                    )
-                                  }
-                                }),
-                                _vm._v(" "),
                                 _c("td", {
                                   domProps: {
                                     textContent: _vm._s(
@@ -51683,58 +51662,7 @@ var render = function() {
                     _vm._v(" "),
                     _vm._m(1),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-md-4" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", [_vm._v("Tipo de Venta")]),
-                        _vm._v(" "),
-                        _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.tipoTransacciones,
-                                expression: "tipoTransacciones"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.tipoTransacciones = $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              }
-                            }
-                          },
-                          [
-                            _c("option", { attrs: { value: "0" } }, [
-                              _vm._v("Seleccione")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "Venta" } }, [
-                              _vm._v("Venta")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "Arriendo" } }, [
-                              _vm._v("Arriendo")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "Cambio" } }, [
-                              _vm._v("Cambio")
-                            ])
-                          ]
-                        )
-                      ])
-                    ]),
+                    _vm._m(2),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-4" }, [
                       _c("div", { staticClass: "form-group" }, [
@@ -51893,10 +51821,10 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _vm._m(2)
+                    _vm._m(3)
                   ]),
                   _vm._v(" "),
-                  _vm._m(3),
+                  _vm._m(4),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group row" }, [
                     _c("div", { staticClass: "col-md-12" }, [
@@ -52108,6 +52036,14 @@ var staticRenderFns = [
       _c("label", { attrs: { for: "" } }, [_vm._v("Descuento")]),
       _vm._v(" "),
       _c("input", { staticClass: "form-control", attrs: { type: "number" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-4" }, [
+      _c("div", { staticClass: "form-group" })
     ])
   },
   function() {

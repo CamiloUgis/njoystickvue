@@ -66,7 +66,7 @@ class MarcaController extends Controller
         if(!$request->ajax()) return redirect('/');
         
         $validar= $request->validate([
-            'nombreMarcas'=>'required|unique:marcas,nombreMarcas',
+            'nombreMarcas'=>'required',
              
         ]);
         $Marca = Marca::findOrFail($request->idMarcas);;

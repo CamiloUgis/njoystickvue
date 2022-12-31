@@ -22,7 +22,7 @@ class ProductoController extends Controller
             ->join('tipos', 'tipo_producto.idTipos', '=', 'tipos.idTipos')
             ->select('productos.idProductos', 'productos.idMarcas','productos.nombreProductos', 'productos.descripcionProductos',
             'productos.stockProductos', 'productos.precioProductos',
-            'marcas.nombrePlataformas','tipos.nombreTipos')
+            'marcas.nombreMarcas','tipos.nombreTipos')
             ->orderBy('productos.idProductos', 'desc')->paginate(8);
         }else{
             $productos = Producto::join('marcas','productos.idMarcas','=','marcas.idMarcas')
@@ -30,20 +30,22 @@ class ProductoController extends Controller
             ->join('tipos', 'tipo_producto.idTipos', '=', 'tipos.idTipos')
             ->select('productos.idProductos', 'productos.idMarcas','productos.nombreProductos', 'productos.descripcionProductos',
             'productos.stockProductos', 'productos.precioProductos',
-            'marcas.nombrePlataformas','tipos.nombreTipos')
+            'marcas.nombreMarcas','tipos.nombreTipos')
             ->where('productos.'.$criterio, 'like', '%'. $buscar . '%')
             ->orderBy('productos.idProductos', 'desc')->paginate(8);*/
             if($buscar==''){
                 $productos = Producto::join('marcas','productos.idMarcas','=','marcas.idMarcas')
-                ->select('productos.idProductos', 'productos.idmarcas','productos.nombreProductos', 'productos.descripcionProductos',
+                ->join('tipos', 'productos.idTipos', '=','tipos.idTipos')
+                ->select('productos.idProductos', 'productos.idMarcas', 'productos.idTipos' ,'productos.nombreProductos', 'productos.descripcionProductos',
                 'productos.stockProductos', 'productos.precioProductos',
-                'marcas.nombreMarcas')
+                'marcas.nombreMarcas', 'tipos.nombreTipos')
                 ->orderBy('productos.idProductos', 'desc')->paginate(8);
             }else{
                 $productos = Producto::join('marcas','productos.idMarcas','=','marcas.idMarcas')
-                ->select('productos.idProductos', 'productos.idMarcas','productos.nombreProductos', 'productos.descripcionProductos',
+                ->join('tipos', 'productos.idTipos', '=','tipos.idTipos')
+                ->select('productos.idProductos', 'productos.idMarcas', 'tipos.idTipos','productos.nombreProductos', 'productos.descripcionProductos',
                 'productos.stockProductos', 'productos.precioProductos',
-                'marcas.nombrePlataformas')
+                'marcas.nombreMarcas', 'tipos.idTipos')
                 ->where('productos.'.$criterio, 'like', '%'. $buscar . '%')
                 ->orderBy('productos.idProductos', 'desc')->paginate(8);
             }
@@ -69,6 +71,7 @@ class ProductoController extends Controller
         $producto->precioProductos = $request->input('precioProductos');
         $producto->stockProductos = $request->input('stockProductos');
         $producto->idMarcas = $request->input('idMarcas');
+        $producto->idTipos = $request->input('idTipos');
         $producto->save();    
     }
     public function update(Request $request)
@@ -78,12 +81,13 @@ class ProductoController extends Controller
         $producto = Producto::findOrFail($request->idProductos);
         $producto->nombreProductos = $request->input('nombreProductos');
         $producto->idMarcas = $request->input('idMarcas');
+        $producto->idTipos= $request->input('idTipos');
         $producto->descripcionProductos = $request->input('descripcionProductos');
         $producto->precioProductos = $request->input('precioProductos');
         $producto->stockProductos = $request->input('stockProductos');
         $producto->save();
     }
-    public function asociar(Request $request)
+    /* public function asociar(Request $request)
     {
         if(!$request->ajax()) return redirect('/');
         try{
@@ -99,7 +103,7 @@ class ProductoController extends Controller
         }catch(Exception $e){
             DB:rollback();
         }
-    }
+    } */
 
     
 }

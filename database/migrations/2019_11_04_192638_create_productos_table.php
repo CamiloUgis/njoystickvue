@@ -22,6 +22,8 @@ class CreateProductosTable extends Migration
                 $table->timestamps();
                 $table->unsignedInteger('idMarcas');
                 $table->foreign('idMarcas')->references('idMarcas')->on('marcas');
+                $table->unsignedInteger('idTipos');
+                $table->foreign('idTipos')->references('idTipos')->on('tipos');
         });
     }
 
