@@ -12,6 +12,13 @@
                     >
                         <i class="icon-plus"></i>&nbsp;Nuevo
                     </button>
+                    <button
+                        type="button"
+                        @click="abrirModal('producto', 'registrar')"
+                        class="btn btn-secondary"
+                    >
+                        <i class="fa fa-file-excel-o"></i>&nbsp;Importar CSV
+                    </button>
                 </div>
                 <div class="card-body">
                     <div class="form-group row">
@@ -57,6 +64,7 @@
                                 <th class="text-center">Stock</th>
                                 <th class="text-center">Precio</th>
                                 <th class="text-center">Modificar</th>
+                                <th class="text-center">Alterar Stock</th>
                                 <!-- <th class="text-center">Asociar Tipo</th> -->
                             </tr>
                         </thead>
@@ -87,7 +95,7 @@
                                     </button>
                                     &nbsp;
                                 </td>
-                                <!-- <td>
+                                  <td>
                                     <button
                                         type="button"
                                         @click="
@@ -97,12 +105,26 @@
                                                 producto
                                             )
                                         "
-                                        class="btn btn-warning btn-sm"
+                                        class="btn btn-danger btn-sm"
                                     >
-                                        <i class="icon-pencil"></i>
+                                        <i class="fa fa-minus"></i>
                                     </button>
                                     &nbsp;
-                                </td> -->
+                                    <button
+                                        type="button"
+                                        @click="
+                                            abrirModal(
+                                                'producto',
+                                                'asociar',
+                                                producto
+                                            )
+                                        "
+                                        class="btn btn-primary btn-sm"
+                                    >
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                    &nbsp;
+                                </td>  
                             </tr>
                         </tbody>
                     </table>

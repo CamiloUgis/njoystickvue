@@ -48744,6 +48744,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 Vue.component("multiselect", __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___default.a);
@@ -49018,6 +49040,23 @@ var render = function() {
               _c("i", { staticClass: "icon-plus" }),
               _vm._v(" Nuevo\n                ")
             ]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-secondary",
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  return _vm.abrirModal("producto", "registrar")
+                }
+              }
+            },
+            [
+              _c("i", { staticClass: "fa fa-file-excel-o" }),
+              _vm._v(" Importar CSV\n                ")
+            ]
           )
         ]),
         _vm._v(" "),
@@ -49173,6 +49212,49 @@ var render = function() {
                           }
                         },
                         [_c("i", { staticClass: "icon-pencil" })]
+                      ),
+                      _vm._v(
+                        "\n                                 \n                            "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger btn-sm",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.abrirModal(
+                                "producto",
+                                "asociar",
+                                producto
+                              )
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fa fa-minus" })]
+                      ),
+                      _vm._v(
+                        "\n                                 \n                                "
+                      ),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary btn-sm",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.abrirModal(
+                                "producto",
+                                "asociar",
+                                producto
+                              )
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fa fa-plus" })]
                       ),
                       _vm._v(
                         "\n                                 \n                            "
@@ -49783,7 +49865,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [_vm._v("Precio")]),
         _vm._v(" "),
-        _c("th", { staticClass: "text-center" }, [_vm._v("Modificar")])
+        _c("th", { staticClass: "text-center" }, [_vm._v("Modificar")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center" }, [_vm._v("Alterar Stock")])
       ])
     ])
   }
@@ -51135,6 +51219,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -51145,6 +51248,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component("v-select", __WEBPACK_IMPO
         return {
             idTransacciones: 0,
             idProductos: 0,
+            tipoTransacciones: 0,
             observacionTransacciones: "",
             fechaTransacciones: "",
             valorFinalTransacciones: "",
@@ -51169,8 +51273,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component("v-select", __WEBPACK_IMPO
                 to: 0
             },
             offset: 3,
-            //no se como reemplazar el criterio help
-            //criterio: "tipoTransaccion",
+            criterio: "tipoTransaccion",
             buscar: "",
             arrayMarcas: []
         };
@@ -51407,6 +51510,12 @@ var render = function() {
                           [
                             _c(
                               "option",
+                              { attrs: { value: "tipoTransacciones" } },
+                              [_vm._v("Tipo de Transacciones")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "option",
                               { attrs: { value: "formaPagoTransacciones" } },
                               [_vm._v("Forma de Pago")]
                             )
@@ -51499,6 +51608,14 @@ var render = function() {
                               "tr",
                               { key: transaccion.idTransacciones },
                               [
+                                _c("td", {
+                                  domProps: {
+                                    textContent: _vm._s(
+                                      transaccion.tipoTransacciones
+                                    )
+                                  }
+                                }),
+                                _vm._v(" "),
                                 _c("td", {
                                   domProps: {
                                     textContent: _vm._s(
@@ -51662,7 +51779,58 @@ var render = function() {
                     _vm._v(" "),
                     _vm._m(1),
                     _vm._v(" "),
-                    _vm._m(2),
+                    _c("div", { staticClass: "col-md-4" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", [_vm._v("Tipo de Venta")]),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.tipoTransacciones,
+                                expression: "tipoTransacciones"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.tipoTransacciones = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "0" } }, [
+                              _vm._v("Seleccione")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "Venta" } }, [
+                              _vm._v("Venta")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "Arriendo" } }, [
+                              _vm._v("Arriendo")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "Cambio" } }, [
+                              _vm._v("Cambio")
+                            ])
+                          ]
+                        )
+                      ])
+                    ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-4" }, [
                       _c("div", { staticClass: "form-group" }, [
@@ -51821,10 +51989,10 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _vm._m(3)
+                    _vm._m(2)
                   ]),
                   _vm._v(" "),
-                  _vm._m(4),
+                  _vm._m(3),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group row" }, [
                     _c("div", { staticClass: "col-md-12" }, [
@@ -52036,14 +52204,6 @@ var staticRenderFns = [
       _c("label", { attrs: { for: "" } }, [_vm._v("Descuento")]),
       _vm._v(" "),
       _c("input", { staticClass: "form-control", attrs: { type: "number" } })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-4" }, [
-      _c("div", { staticClass: "form-group" })
     ])
   },
   function() {
