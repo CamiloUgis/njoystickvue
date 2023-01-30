@@ -17,6 +17,8 @@ class CreateProductosTable extends Migration
             $table->increments('idProductos');
                 $table->string('nombreProductos', 100)->unique();
                 $table->string('descripcionProductos', 200)->nullable();
+                $table->string('marcaProductos', 30);
+                $table->string('tipoProductos', 30);
                 $table->integer('stockProductos')->nullable();
                 $table->integer('precioProductos')->nullable();
                 $table->timestamps();
